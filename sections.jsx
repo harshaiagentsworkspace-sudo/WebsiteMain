@@ -527,76 +527,117 @@ function Process() {
 function Testimonials() {
   const cards = [
   {
+    site: { name: 'LaunchMirror', url: 'https://launchmirror.vercel.app/' },
     name: 'Maren Holloway',
     role: 'Founder, Quarry',
     quote: 'They shipped our entire onboarding flow plus a working lead-qual agent in nine days. Our trial-to-paid jumped from 6% to 18% in the first month.',
-    stars: 5
+    stars: 5,
+    hl: false
   },
   {
+    site: { name: 'TruReview', url: 'https://tru-review-lilac.vercel.app/' },
     name: 'Devon Asare',
     role: 'CEO, Marlin Labs',
-    quote: 'Vexel is the closest thing I have found to a senior product team I can rent for two weeks. The work feels in-house, not agency.',
+    quote: 'The closest thing I have found to a senior product team I can rent for two weeks. The work feels in-house, not agency.',
     stars: 5,
     hl: true
   },
   {
+    site: { name: 'ViralCheckContent', url: 'https://viralcheckcontent.vercel.app/' },
     name: 'Priya Chen',
     role: 'Co-founder, Orbital',
     quote: 'They rebuilt our pricing page and wired the AI quote-builder into Stripe. We saw results in the first 48 hours after launch.',
-    stars: 5
+    stars: 5,
+    hl: false
   }];
 
-
-  // Original avatar — abstract gradient initials, not photographs
-  const Avatar = ({ name, hl }) => {
+  const Avatar = ({ name }) => {
     const init = name.split(' ').map((n) => n[0]).slice(0, 2).join('');
     return (
-      <div className={"w-12 h-12 rounded-full flex items-center justify-center font-semibold text-[14px] " + (hl ? 'text-white' : 'text-white/85')}
+      <div className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-[13px] text-white shrink-0"
       style={{ background: 'linear-gradient(135deg,#C084FC,#7C5CFF)' }}>
         {init}
       </div>);
-
   };
 
   return (
     <section id="testimonials" className="relative py-[100px] md:py-[140px]" data-screen-label="05 Testimonials">
       <div className="max-w-[1240px] mx-auto px-5 md:px-8">
         <div className="text-center max-w-[760px] mx-auto">
-          <span className="pill"><span className="dot" />Client Wins</span>
+          <span className="pill"><span className="dot" />Our Work</span>
           <h2 className="h-section grad-text-tight mt-5">
-            Founders Who Stopped<br />Waiting and Started Shipping
+            Real Sites. Real Results.<br />Shipped Fast.
           </h2>
+          <p className="mt-5 text-[17px] leading-[1.55] text-white/55 max-w-[520px] mx-auto">
+            Every project below went from brief to live in under two weeks.
+          </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((c, i) =>
           <div key={i}
-          className={"rounded-2xl p-7 md:p-8 lift relative " + (c.hl ?
-          "glass-strong" :
-          "glass")}
-          style={c.hl ? {
-            transform: 'translateY(-12px)',
-            boxShadow: '0 30px 80px -30px rgba(124,92,255,.65), 0 0 0 1px rgba(168,85,247,.45) inset'
-          } : {}}>
-              {c.hl && <div className="absolute -inset-px rounded-2xl pointer-events-none"
-            style={{ background: 'radial-gradient(120% 80% at 50% 0%, rgba(192,132,252,.25), transparent 70%)' }} />}
-              <div className="relative">
-                <Avatar name={c.name} hl={c.hl} />
-                <div className="mt-4">
-                  <div className="font-semibold text-[15px]">{c.name}</div>
-                  <div className="text-[13px] text-white/45 font-mono">{c.role}</div>
+          className={"rounded-2xl lift relative flex flex-col overflow-hidden " + (c.hl ? "glass-strong" : "glass")}
+          style={c.hl ? { boxShadow: '0 30px 80px -30px rgba(124,92,255,.65), 0 0 0 1px rgba(168,85,247,.45) inset' } : {}}>
+
+            {c.hl && <div className="absolute -inset-px rounded-2xl pointer-events-none z-10"
+              style={{ background: 'radial-gradient(120% 60% at 50% 0%, rgba(192,132,252,.2), transparent 70%)' }} />}
+
+            {/* Browser screenshot */}
+            <div className="relative w-full" style={{ paddingTop: '62%' }}>
+              {/* Browser chrome bar */}
+              <div className="absolute top-0 left-0 right-0 h-8 flex items-center gap-1.5 px-3 z-10"
+                style={{ background: 'rgba(10,10,20,0.85)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/70" />
+                <div className="ml-2 flex-1 h-4 rounded-full bg-white/[0.06] flex items-center px-2">
+                  <span className="text-[9px] font-mono text-white/35 truncate">{c.site.url}</span>
                 </div>
-                <div className="mt-3 flex gap-0.5 star">
-                  {Array.from({ length: c.stars }).map((_, j) => <IconStar key={j} size={14} />)}
+              </div>
+              {/* Screenshot */}
+              <img
+                src={'https://image.thum.io/get/width/1200/crop/740/' + c.site.url}
+                alt={c.site.name}
+                className="absolute inset-0 w-full h-full object-cover object-top"
+                style={{ marginTop: '32px', height: 'calc(100% - 32px)' }}
+                loading="lazy"
+              />
+            </div>
+
+            {/* Site name + link */}
+            <div className="relative z-10 px-6 pt-5 flex items-center justify-between">
+              <div>
+                <div className="font-semibold text-[17px] tracking-tight">{c.site.name}</div>
+                <div className="text-[12px] font-mono text-white/35 mt-0.5 truncate">{c.site.url.replace('https://', '')}</div>
+              </div>
+              <a href={c.site.url} target="_blank" rel="noopener noreferrer"
+                className="shrink-0 ml-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-medium border border-violet-soft/40 text-violet-soft hover:bg-violet-deep/20 transition-colors">
+                Visit <IconArrowRight size={11} />
+              </a>
+            </div>
+
+            {/* Divider */}
+            <div className="mx-6 mt-4 hairline" />
+
+            {/* Review */}
+            <div className="relative z-10 px-6 py-5 flex flex-col gap-3 flex-1">
+              <div className="flex gap-0.5 star">
+                {Array.from({ length: c.stars }).map((_, j) => <IconStar key={j} size={13} />)}
+              </div>
+              <p className="text-[14px] leading-[1.65] text-white/70 flex-1">"{c.quote}"</p>
+              <div className="flex items-center gap-2.5 mt-2">
+                <Avatar name={c.name} />
+                <div>
+                  <div className="font-semibold text-[13.5px]">{c.name}</div>
+                  <div className="text-[12px] text-white/40 font-mono">{c.role}</div>
                 </div>
-                <p className="mt-4 text-[15px] leading-[1.6] text-white/75">"{c.quote}"</p>
               </div>
             </div>
+          </div>
           )}
         </div>
       </div>
     </section>);
-
 }
 
 // ───────────────────────── PRICING ─────────────────────────
