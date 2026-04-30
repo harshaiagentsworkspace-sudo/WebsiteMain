@@ -540,7 +540,7 @@ function Testimonials() {
     role: 'CEO, Marlin Labs',
     quote: 'The closest thing I have found to a senior product team I can rent for two weeks. The work feels in-house, not agency.',
     stars: 5,
-    hl: true
+    hl: false
   },
   {
     site: { name: 'ViralCheckContent', url: 'https://viralcheckcontent.vercel.app/' },
@@ -655,7 +655,7 @@ function Pricing() {
   },
   {
     name: 'Growth',
-    price: '$499',
+    price: '$999',
     sub: 'per build sprint',
     desc: 'Full web app or marketing site with one production-grade AI feature wired in.',
     features: ['Full app build (up to 6 routes)', '1 production AI feature', 'Stripe + auth + email', '14-day delivery', '2 weeks of post-launch tuning'],
