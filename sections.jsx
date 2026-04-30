@@ -583,10 +583,10 @@ function Testimonials() {
               style={{ background: 'radial-gradient(120% 60% at 50% 0%, rgba(192,132,252,.2), transparent 70%)' }} />}
 
             {/* Browser screenshot */}
-            <div className="relative w-full" style={{ paddingTop: '62%' }}>
+            <div className="w-full overflow-hidden">
               {/* Browser chrome bar */}
-              <div className="absolute top-0 left-0 right-0 h-8 flex items-center gap-1.5 px-3 z-10"
-                style={{ background: 'rgba(10,10,20,0.85)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="flex items-center gap-1.5 px-3 h-8"
+                style={{ background: 'rgba(10,10,20,0.9)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/70" />
@@ -594,14 +594,15 @@ function Testimonials() {
                   <span className="text-[9px] font-mono text-white/35 truncate">{c.site.url}</span>
                 </div>
               </div>
-              {/* Screenshot */}
-              <img
-                src={'https://image.thum.io/get/width/1200/crop/740/' + c.site.url}
-                alt={c.site.name}
-                className="absolute inset-0 w-full h-full object-cover object-top"
-                style={{ marginTop: '32px', height: 'calc(100% - 32px)' }}
-                loading="lazy"
-              />
+              {/* Screenshot — natural width, clipped at bottom, no stretch */}
+              <div className="overflow-hidden" style={{ height: '220px' }}>
+                <img
+                  src={'https://image.thum.io/get/width/1200/' + c.site.url}
+                  alt={c.site.name}
+                  className="w-full block"
+                  loading="lazy"
+                />
+              </div>
             </div>
 
             {/* Site name + link */}
