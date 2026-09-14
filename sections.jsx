@@ -1,5 +1,12 @@
 // All landing page sections.
 
+// Link to a home-page section: a plain hash on the home page (no reload),
+// "/#id" from other pages such as Resources.html.
+function sectionHref(id) {
+  const onHome = !/\/resources(\.html)?$/i.test(window.location.pathname);
+  return (onHome ? '' : '/') + '#' + id;
+}
+
 // ───────────────────────── NAVBAR ─────────────────────────
 function Navbar({ onOpenMenu, active = 'home' }) {
   const [scrolled, setScrolled] = React.useState(false);
@@ -11,18 +18,18 @@ function Navbar({ onOpenMenu, active = 'home' }) {
   }, []);
 
   const links = [
-  ['Home', 'Vexel Landing.html#hero', 'home'],
-  ['Services', 'Vexel Landing.html#services', 'services'],
-  ['Work', 'Vexel Landing.html#testimonials', 'work'],
+  ['Home', sectionHref('hero'), 'home'],
+  ['Services', sectionHref('services'), 'services'],
+  ['Work', sectionHref('testimonials'), 'work'],
   ['Resources', 'Resources.html', 'resources'],
-  ['Pricing', 'Vexel Landing.html#pricing', 'pricing'],
-  ['FAQ', 'Vexel Landing.html#faq', 'faq']];
+  ['Pricing', sectionHref('pricing'), 'pricing'],
+  ['FAQ', sectionHref('faq'), 'faq']];
 
 
   return (
     <header className={"fixed top-0 inset-x-0 z-50 transition-all duration-300 " + (scrolled ? 'nav-scrolled' : '')}>
       <div className="max-w-[1240px] mx-auto px-5 md:px-8 h-[68px] flex items-center justify-between">
-        <a href="Vexel Landing.html" className="shrink-0"><Wordmark /></a>
+        <a href="/" className="shrink-0"><Wordmark /></a>
 
         <nav className="hidden md:flex items-center gap-1 p-1 rounded-full glass">
           {links.map(([label, href, key]) => {
@@ -40,7 +47,7 @@ function Navbar({ onOpenMenu, active = 'home' }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href="#cta" className="hidden sm:inline-flex items-center gap-2 btn-grad text-white text-[13.5px] font-medium px-4 py-2 rounded-full">
+          <a href={sectionHref('cta')} className="hidden sm:inline-flex items-center gap-2 btn-grad text-white text-[13.5px] font-medium px-4 py-2 rounded-full">
             Book a Call <IconArrowRight size={14} />
           </a>
           <button onClick={onOpenMenu} className="md:hidden p-2 rounded-lg btn-ghost text-white/80" aria-label="Menu">
@@ -943,12 +950,12 @@ function Footer() {
               An AI-native studio shipping production websites and agents for ambitious founders.
             </p>
             <div className="mt-5 flex gap-2">
-              <a href="#cta" className="btn-grad inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium">Get Started</a>
+              <a href={sectionHref('cta')} className="btn-grad inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium">Get Started</a>
               <a href="#" className="btn-ghost inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium">Sign Up</a>
             </div>
           </div>
 
-          <FooterCol title="Navigation" links={[['Home', '#hero'], ['Services', '#services'], ['Work', '#testimonials'], ['Pricing', '#pricing']]} />
+          <FooterCol title="Navigation" links={[['Home', sectionHref('hero')], ['Services', sectionHref('services')], ['Work', sectionHref('testimonials')], ['Pricing', sectionHref('pricing')]]} />
           <FooterCol title="Resources" links={[['Privacy', '#'], ['Terms', '#'], ['Contact', '#'], ['Blog', '#']]} />
           <div>
             <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/40 mb-4">Socials</div>
@@ -991,12 +998,12 @@ function FooterCol({ title, links }) {
 function MobileMenu({ open, onClose }) {
   if (!open) return null;
   const links = [
-  ['Home', 'Vexel Landing.html#hero'],
-  ['Services', 'Vexel Landing.html#services'],
-  ['Work', 'Vexel Landing.html#testimonials'],
+  ['Home', sectionHref('hero')],
+  ['Services', sectionHref('services')],
+  ['Work', sectionHref('testimonials')],
   ['Resources', 'Resources.html'],
-  ['Pricing', 'Vexel Landing.html#pricing'],
-  ['FAQ', 'Vexel Landing.html#faq']];
+  ['Pricing', sectionHref('pricing')],
+  ['FAQ', sectionHref('faq')]];
 
   return (
     <div className="md:hidden fixed inset-0 z-[60] bg-ink-900/95 backdrop-blur-xl">
@@ -1011,7 +1018,7 @@ function MobileMenu({ open, onClose }) {
             {l}
           </a>
         )}
-        <a href="#cta" onClick={onClose} className="mt-4 btn-grad inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl text-[15px] font-medium">
+        <a href={sectionHref('cta')} onClick={onClose} className="mt-4 btn-grad inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl text-[15px] font-medium">
           Book a Call <IconArrowRight size={16} />
         </a>
       </div>

@@ -13,6 +13,13 @@ function App() {
   const [openResource, setOpenResource] = React.useState(null);
   const [contactOpen, setContactOpen] = React.useState(false);
 
+  // Sections render client-side, so the browser can't jump to a #hash on load
+  // (e.g. ostendic.com/#pricing or a link from Resources.html); do it after mount.
+  React.useEffect(() => {
+    const el = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    if (el) el.scrollIntoView();
+  }, []);
+
   // Apply accentHue live by overriding violet stops via CSS vars
   React.useEffect(() => {
     const root = document.documentElement;
