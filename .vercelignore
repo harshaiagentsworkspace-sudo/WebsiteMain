@@ -1,0 +1,7 @@
+# Not part of the deployed site — kept in the repo, excluded from the upload.
+# orbix-reference alone is ~208 MB of research screenshots and would slow
+# every deployment while serving no production purpose.
+orbix-reference/
+legacy/
+build/
+uploads/
