@@ -163,7 +163,7 @@ const Wordmark = ({ className = "" }) =>
       {/* orbiting satellite */}
       <circle cx="19.5" cy="8.2" r="1.5" fill="#C084FC" />
     </svg>
-    <span className="text-[18px] font-semibold tracking-tight">Build AI Solutions</span>
+    <span className="text-[18px] font-semibold tracking-tight">Ostendic</span>
   </div>;
 
 

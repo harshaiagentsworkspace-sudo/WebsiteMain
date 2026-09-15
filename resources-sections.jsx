@@ -300,7 +300,7 @@ function InstagramTeaser() {
                   {/* Top bar */}
                   <div className="absolute top-3 left-3 right-3 flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full border border-white/30 bg-gradient-to-br from-violet-mid to-violet-deep"/>
-                    <div className="text-white text-[12px] font-semibold leading-tight">@vexel.studio</div>
+                    <div className="text-white text-[12px] font-semibold leading-tight">@ostendic</div>
                     <div className="ml-auto text-white/70 text-[16px] leading-none">···</div>
                   </div>
 

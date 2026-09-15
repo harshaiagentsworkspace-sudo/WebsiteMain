@@ -179,7 +179,7 @@ function DashboardMock() {
           </div>
           <div className="ml-3 flex-1 max-w-[280px]">
             <div className="h-6 rounded-md bg-white/5 border border-white/5 px-3 flex items-center text-[11px] font-mono text-white/40">
-              vexel.studio / dashboard
+              ostendic.com / dashboard
             </div>
           </div>
           <div className="ml-auto flex items-center gap-2">
@@ -383,7 +383,7 @@ const ArtCode = () =>
 <div className="rounded-xl bg-black/40 border border-white/5 p-3 font-mono text-[11px] leading-[1.55] text-white/55 relative overflow-hidden">
     <div className="absolute -inset-px rounded-xl pointer-events-none" style={{ background: 'radial-gradient(60% 100% at 30% 0%, rgba(168,85,247,.18), transparent 60%)' }} />
     <div className="relative">
-      <div><span className="text-violet-soft">const</span> <span className="text-white">site</span> = <span className="text-emerald-300/80">await</span> <span className="text-violet-soft">vexel</span>.build({"{"}</div>
+      <div><span className="text-violet-soft">const</span> <span className="text-white">site</span> = <span className="text-emerald-300/80">await</span> <span className="text-violet-soft">ostendic</span>.build({"{"}</div>
       <div className="pl-4">stack: <span className="text-emerald-300/80">'next'</span>,</div>
       <div className="pl-4">ai: <span className="text-emerald-300/80">'agentic'</span> <span className="text-white/35">// ✦</span></div>
       <div>{"})"}</div>
@@ -475,6 +475,112 @@ function Process() {
   { n: '02', title: 'Build Sprint', desc: 'Design, develop, and integrate AI in a focused 7–14 day sprint with daily Loom updates.' },
   { n: '03', title: 'Launch & Iterate', desc: 'Deploy, monitor, and optimize — we stay on for two weeks of post-launch tuning.' }];
 
+  const CURVE = 'M0 130 C 250 30, 350 30, 600 100 S 950 170, 1200 70';
+  const curveRef = React.useRef(null);
+  const svgRef = React.useRef(null);
+  const pathRefs = React.useRef([]);
+  const nodeRefs = React.useRef([]);
+
+  // Scroll-linked draw of the curve (01 → 02 → 03, reversible). Progress comes
+  // from where the curve block sits in the viewport and is written straight to
+  // the DOM in a rAF, so scrolling never re-renders the component.
+  React.useLayoutEffect(() => {
+    const wrap = curveRef.current;
+    const svg = svgRef.current;
+    const paths = pathRefs.current.filter(Boolean);
+    const nodes = nodeRefs.current.filter(Boolean);
+    const desktopMQ = window.matchMedia('(min-width: 768px)');
+    const reducedMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const clamp = (v) => Math.min(1, Math.max(0, v));
+    const setAct = (el, a) => el.style.setProperty('--act', a.toFixed(3));
+    let raf = 0;
+    let metrics = null; // desktop only: { total, ramp, stops: path length at each node }
+
+    const showComplete = () => {
+      paths.forEach((p) => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; });
+      nodes.forEach((n) => setAct(n, 1));
+    };
+
+    const measure = () => {
+      metrics = null;
+      if (!desktopMQ.matches) return;
+      const box = svg.getBoundingClientRect();
+      if (!box.width) return;
+      const main = paths[0];
+      const total = main.getTotalLength();
+      // The curve is monotonic in x, so binary-search the length where it passes each node.
+      const stops = nodes.map((n) => {
+        const r = n.getBoundingClientRect();
+        const x = (r.left + r.width / 2 - box.left) / box.width * 1200;
+        let lo = 0, hi = total;
+        for (let k = 0; k < 20; k++) {
+          const mid = (lo + hi) / 2;
+          if (main.getPointAtLength(mid).x < x) lo = mid; else hi = mid;
+        }
+        return lo;
+      });
+      metrics = { total, ramp: total * 0.06, stops };
+    };
+
+    const update = () => {
+      raf = 0;
+      if (reducedMQ.matches) return;
+      const vh = window.innerHeight;
+
+      // Mobile: the curve is hidden, so nodes simply light up as each scrolls into view.
+      if (!metrics) {
+        nodes.forEach((n) => {
+          const r = n.getBoundingClientRect();
+          setAct(n, clamp((vh * 0.85 - (r.top + r.height / 2)) / (vh * 0.2)));
+        });
+        return;
+      }
+
+      const { total, ramp, stops: [l1, l2, l3] } = metrics;
+      const p = clamp((vh * 0.85 - wrap.getBoundingClientRect().top) / (vh * 0.55));
+      // Keyframes: just short of 01 at the start, 02 at the midpoint, 03 near the end.
+      const keys = [[0, Math.max(0, l1 - ramp)], [0.5, l2], [0.9, l3], [1, total]];
+      let drawn = total;
+      for (let k = 1; k < keys.length; k++) {
+        if (p <= keys[k][0]) {
+          const [p0, a] = keys[k - 1], [p1, b] = keys[k];
+          drawn = a + (b - a) * (p - p0) / (p1 - p0);
+          break;
+        }
+      }
+      const dash = total + 1;
+      paths.forEach((path) => {
+        path.style.strokeDasharray = dash + ' ' + dash;
+        path.style.strokeDashoffset = String(dash - drawn);
+      });
+      nodes.forEach((n, i) => setAct(n, clamp((drawn - (metrics.stops[i] - ramp)) / ramp)));
+    };
+
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const refresh = () => {
+      if (reducedMQ.matches) { metrics = null; showComplete(); return; }
+      measure();
+      update();
+    };
+
+    refresh();
+    // Node positions settle only once the Tailwind CDN has styled the grid, so
+    // re-measure whenever the curve block or SVG changes size (fires on observe too).
+    const ro = new ResizeObserver(refresh);
+    ro.observe(wrap);
+    ro.observe(svg);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', refresh);
+    reducedMQ.addEventListener('change', refresh);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', refresh);
+      reducedMQ.removeEventListener('change', refresh);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section id="process" className="relative py-[100px] md:py-[140px] overflow-hidden" data-screen-label="04 Process">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 glow-orb violet"
@@ -491,9 +597,9 @@ function Process() {
         </div>
 
         {/* Curve + nodes */}
-        <div className="mt-16 md:mt-20 relative">
+        <div ref={curveRef} className="mt-16 md:mt-20 relative">
           {/* SVG curve only on md+ */}
-          <svg className="hidden md:block absolute inset-0 w-full h-[200px] pointer-events-none" viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <svg ref={svgRef} className="hidden md:block absolute inset-0 w-full h-[200px] pointer-events-none" viewBox="0 0 1200 200" preserveAspectRatio="none">
             <defs>
               <linearGradient id="proc" x1="0" x2="1">
                 <stop offset="0" stopColor="#C084FC" stopOpacity=".0" />
@@ -503,9 +609,11 @@ function Process() {
                 <stop offset="1" stopColor="#A855F7" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <path d="M0 130 C 250 30, 350 30, 600 100 S 950 170, 1200 70"
+            {/* Faint track so the curve reads before it is drawn */}
+            <path d={CURVE} fill="none" stroke="url(#proc)" strokeWidth="2" opacity=".14" />
+            <path ref={(el) => pathRefs.current[0] = el} d={CURVE}
             fill="none" stroke="url(#proc)" strokeWidth="2" />
-            <path d="M0 130 C 250 30, 350 30, 600 100 S 950 170, 1200 70"
+            <path ref={(el) => pathRefs.current[1] = el} d={CURVE}
             fill="none" stroke="#C084FC" strokeWidth="6" opacity=".15" filter="url(#blur)" />
           </svg>
 
@@ -513,7 +621,7 @@ function Process() {
             {steps.map((s, i) =>
             <div key={s.n} className="relative" style={{ marginTop: i === 1 ? '40px' : i === 2 ? '80px' : 0 }}>
                 <div className="flex flex-col items-center text-center">
-                  <div className="relative w-14 h-14 rounded-full flex items-center justify-center node-dot bg-gradient-to-br from-violet-mid to-violet-deep">
+                  <div ref={(el) => nodeRefs.current[i] = el} className="relative w-14 h-14 rounded-full flex items-center justify-center node-dot bg-gradient-to-br from-violet-mid to-violet-deep">
                     <span className="font-mono text-[13px] font-semibold">{s.n}</span>
                   </div>
                   <div className="mt-5 glass rounded-2xl px-6 py-5 max-w-[320px]">
@@ -534,10 +642,14 @@ function Process() {
 function Testimonials() {
   const cards = [
   {
-    site: { name: 'LaunchMirror', url: 'https://launchmirror.vercel.app/' },
-    name: 'Maren Holloway',
-    role: 'Founder, Quarry',
-    quote: 'They shipped our entire onboarding flow plus a working lead-qual agent in nine days. Our trial-to-paid jumped from 6% to 18% in the first month.',
+    site: {
+      name: 'VMS Careline',
+      url: 'https://vmscareline.com/',
+      image: 'assets/work/vms-careline.jpg' // local capture; thum.io refuses this URL on the free plan
+    },
+    name: 'VMS Careline',
+    role: 'Healthcare E-commerce',
+    quote: 'A complete e-commerce experience built for a healthcare brand, combining product discovery, trust, accessibility, and a conversion-focused shopping journey.',
     stars: 5,
     hl: false
   },
@@ -604,7 +716,7 @@ function Testimonials() {
               {/* Screenshot — natural width, clipped at bottom, no stretch */}
               <div className="overflow-hidden" style={{ height: '220px' }}>
                 <img
-                  src={'https://image.thum.io/get/width/1200/' + c.site.url}
+                  src={c.site.image || 'https://image.thum.io/get/width/1200/' + c.site.url}
                   alt={c.site.name}
                   className="w-full block"
                   loading="lazy"
@@ -632,7 +744,8 @@ function Testimonials() {
               <div className="flex gap-0.5 star">
                 {Array.from({ length: c.stars }).map((_, j) => <IconStar key={j} size={13} />)}
               </div>
-              <p className="text-[14px] leading-[1.65] text-white/70 flex-1">"{c.quote}"</p>
+              {/* Attributed to the project itself (no client testimonial): show as a description, not a quote */}
+              <p className="text-[14px] leading-[1.65] text-white/70 flex-1">{c.name === c.site.name ? c.quote : '"' + c.quote + '"'}</p>
               <div className="flex items-center gap-2.5 mt-2">
                 <Avatar name={c.name} />
                 <div>
@@ -971,7 +1084,7 @@ function Footer() {
 
         <div className="hairline mt-12 mb-6" />
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px] font-mono text-white/35">
-          <div>© 2026 Vexel Studio · All rights reserved.</div>
+          <div>© 2026 Ostendic · All rights reserved.</div>
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> All systems online
           </div>

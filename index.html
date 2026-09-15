@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vexel — AI-Powered Websites That Ship</title>
+<title>Ostendic — AI-Powered Websites That Ship</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -190,9 +190,14 @@
     transform-origin: 50% 100%;
   }
 
-  /* Process curve dot */
+  /* Process curve dot. --act (0 = subdued, 1 = lit) is driven by scroll in
+     Process(); it defaults to 1 so the static/no-JS look is unchanged. */
   .node-dot {
-    box-shadow: 0 0 0 6px rgba(124,92,255,0.18), 0 0 24px rgba(168,85,247,0.7);
+    --act: 1;
+    box-shadow:
+      0 0 0 6px rgba(124,92,255, calc(0.06 + 0.12 * var(--act))),
+      0 0 calc(10px + 14px * var(--act)) rgba(168,85,247, calc(0.2 + 0.5 * var(--act)));
+    filter: saturate(calc(0.55 + 0.45 * var(--act))) brightness(calc(0.7 + 0.3 * var(--act)));
   }
 
   /* Pricing highlighted */
