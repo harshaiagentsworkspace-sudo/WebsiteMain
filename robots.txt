@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /legacy/
+Disallow: /orbix-reference/
+
+Sitemap: https://www.ostendic.com/sitemap.xml

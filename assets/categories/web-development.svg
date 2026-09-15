@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img">
+<rect width="1200" height="900" fill="#EDEDEA"/>
+
+  
+  <rect x="110" y="150" width="980" height="600" rx="18" fill="#FFFFFF" stroke="#D8D8D2" stroke-width="2"/>
+  <path d="M110 196h980" stroke="#D8D8D2" stroke-width="2"/>
+  <circle cx="134" cy="173" r="5" fill="#D8D8D2"/>
+  <circle cx="152" cy="173" r="5" fill="#D8D8D2"/>
+  <circle cx="170" cy="173" r="5" fill="#D8D8D2"/>
+  <rect x="150" y="70" width="240" height="60" rx="14" fill="#FFFFFF" stroke="#D8D8D2" stroke-width="2"/>
+  <rect x="174" y="92" width="190" height="16" rx="8" fill="#E3E3DE"/>
+  <rect x="150" y="232" width="420" height="34" rx="6" fill="#111314"/>
+  <rect x="150" y="284" width="300" height="16" rx="6" fill="#E3E3DE"/>
+  <rect x="150" y="330" width="150" height="40" rx="20" fill="#0E4F47"/>
+  <rect x="640" y="232" width="410" height="230" rx="14" fill="#E3E3DE"/>
+  <g font-family="ui-monospace,monospace" font-size="21" fill="#6E7378">
+    <text x="150" y="470">&lt;section class="hero"&gt;</text>
+    <text x="182" y="506" fill="#0E4F47">&lt;h1&gt;Ostendic&lt;/h1&gt;</text>
+    <text x="182" y="542">&lt;p&gt;…&lt;/p&gt;</text>
+    <text x="150" y="578">&lt;/section&gt;</text>
+  </g>
+  <rect x="640" y="494" width="410" height="14" rx="6" fill="#E3E3DE"/> <rect x="640" y="522" width="330" height="14" rx="6" fill="#E3E3DE"/> <rect x="640" y="550" width="380" height="14" rx="6" fill="#E3E3DE"/>
+  <rect x="640" y="596" width="176" height="44" rx="22" fill="#111314"/>
+
+</svg>

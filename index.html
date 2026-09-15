@@ -1,276 +1,747 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ostendic — AI-Powered Websites That Ship</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Geist', 'ui-sans-serif', 'system-ui'],
-          mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
-        },
-        colors: {
-          ink: {
-            900: '#0A0A0F',
-            800: '#0E0E15',
-            700: '#14141E',
-            600: '#1A1A26',
-          },
-          violet: {
-            soft: '#C084FC',
-            mid: '#A855F7',
-            deep: '#7C5CFF',
-          },
-        },
-        backdropBlur: { xs: '2px' },
-      }
-    }
-  }
-</script>
-
-<style>
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Geist', ui-sans-serif, system-ui;
-    background: #0A0A0F;
-    color: #F5F5F7;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  .font-mono { font-family: 'Geist Mono', ui-monospace, monospace; }
-
-  /* Gradient text */
-  .grad-text {
-    background: linear-gradient(180deg, #FFFFFF 0%, #E9DBFF 55%, #C084FC 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .grad-text-tight {
-    background: linear-gradient(180deg, #FFFFFF 0%, #D9C4FF 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* Glass card */
-  .glass {
-    background: rgba(20,20,30,0.6);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  .glass-strong {
-    background: rgba(24,20,38,0.72);
-    border: 1px solid rgba(255,255,255,0.10);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-  }
-
-  /* Radial purple glow base */
-  .glow-orb {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(80px);
-    pointer-events: none;
-    opacity: 0.55;
-  }
-  .glow-orb.violet {
-    background: radial-gradient(closest-side, rgba(168,85,247,0.55), rgba(124,92,255,0.0) 70%);
-  }
-  .glow-orb.deep {
-    background: radial-gradient(closest-side, rgba(124,92,255,0.5), rgba(0,0,0,0) 70%);
-  }
-
-  /* Subtle grid backdrop */
-  .grid-bg {
-    background-image:
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 56px 56px;
-    background-position: -1px -1px;
-    mask-image: radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
-  }
-
-  /* Noise overlay */
-  .noise::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    opacity: .35;
-  }
-
-  /* Glow ring button */
-  .btn-grad {
-    background: linear-gradient(180deg, #9B7CFF 0%, #7C5CFF 60%, #6B42E8 100%);
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.10) inset,
-      0 8px 30px -8px rgba(124,92,255,0.65),
-      0 0 32px rgba(168,85,247,0.25);
-  }
-  .btn-grad:hover { filter: brightness(1.07); }
-
-  .btn-ghost {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.10);
-  }
-  .btn-ghost:hover { background: rgba(255,255,255,0.07); }
-
-  /* Pill tag */
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px 6px 10px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #C8C8D2;
-  }
-  .pill .dot {
-    width: 7px; height: 7px; border-radius: 9999px;
-    background: #34D399;
-    box-shadow: 0 0 10px rgba(52,211,153,0.7);
-  }
-
-  /* Hover lift */
-  .lift { transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .25s, box-shadow .35s; }
-  .lift:hover { transform: translateY(-4px); border-color: rgba(168,85,247,0.35); box-shadow: 0 20px 60px -20px rgba(124,92,255,0.35); }
-
-  /* Hide scrollbars on marquee */
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { scrollbar-width: none; }
-
-  /* FAQ */
-  details > summary { list-style: none; cursor: pointer; }
-  details > summary::-webkit-details-marker { display: none; }
-  details[open] .faq-icon { transform: rotate(45deg); }
-  .faq-icon { transition: transform .25s ease; }
-
-  /* Star */
-  .star { color: #C084FC; }
-
-  /* Soft section divider */
-  .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent); }
-
-  /* Animated pulse for hero glow */
-  @keyframes pulseGlow {
-    0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: .7; transform: translate(-50%, -50%) scale(1.06); }
-  }
-  .pulse-glow { animation: pulseGlow 7s ease-in-out infinite; }
-
-  /* Marquee */
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .marquee-track { animation: marquee 40s linear infinite; }
-
-  /* Tilted dashboard */
-  .tilt-3d {
-    transform: perspective(1800px) rotateX(14deg);
-    transform-origin: 50% 100%;
-  }
-
-  /* Process curve dot. --act (0 = subdued, 1 = lit) is driven by scroll in
-     Process(); it defaults to 1 so the static/no-JS look is unchanged. */
-  .node-dot {
-    --act: 1;
-    box-shadow:
-      0 0 0 6px rgba(124,92,255, calc(0.06 + 0.12 * var(--act))),
-      0 0 calc(10px + 14px * var(--act)) rgba(168,85,247, calc(0.2 + 0.5 * var(--act)));
-    filter: saturate(calc(0.55 + 0.45 * var(--act))) brightness(calc(0.7 + 0.3 * var(--act)));
-  }
-
-  /* Pricing highlighted */
-  .price-hl {
-    background:
-      radial-gradient(120% 90% at 50% 0%, rgba(192,132,252,0.45), rgba(124,92,255,0.0) 60%),
-      linear-gradient(180deg, #5E3BD1 0%, #3B1E9F 100%);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0 30px 80px -30px rgba(124,92,255,0.7), 0 0 0 1px rgba(168,85,247,0.4) inset;
-  }
-
-  /* Scroll-shrink navbar */
-  .nav-scrolled {
-    background: rgba(10,10,15,0.7);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  /* Responsive headline scaling */
-  .h-display {
-    font-size: clamp(40px, 7.5vw, 84px);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-    font-weight: 700;
-  }
-  .h-section {
-    font-size: clamp(34px, 4.6vw, 60px);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    font-weight: 700;
-  }
-  .h-cta {
-    font-size: clamp(36px, 5.5vw, 68px);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    font-weight: 700;
-  }
-
-  /* Subtle border on hover for cards */
-  .card-edge { position: relative; }
-  .card-edge::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(180deg, rgba(168,85,247,0.4), rgba(124,92,255,0));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    opacity: 0;
-    transition: opacity .3s;
-    pointer-events: none;
-  }
-  .card-edge:hover::after { opacity: 1; }
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ostendic — Digital studio for brand, web and automation</title>
+<meta name="description" content="From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.">
+<link rel="canonical" href="https://www.ostendic.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ostendic">
+<meta property="og:title" content="Ostendic — Digital studio for brand, web and automation">
+<meta property="og:description" content="From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.">
+<meta property="og:url" content="https://www.ostendic.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ostendic — Digital studio for brand, web and automation">
+<meta name="twitter:description" content="From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="/styles/ostendic.css">
+<link rel="stylesheet" href="/styles/motion.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Ostendic","url":"https://www.ostendic.com","email":"harsh@ostendic.com","description":"From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.","founder":{"@type":"Person","name":"Harsh Dubey","jobTitle":"Founder & CEO"},"areaServed":["United States","United Kingdom","Europe","India"]}</script>
 </head>
-<body class="bg-ink-900 text-white antialiased">
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
 
-<div id="root"></div>
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="brand" href="/" aria-label="Ostendic home">Ostendic</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/services">Services</a><a href="/work">Work</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/blog">Insights</a><a href="/resources">Resources</a>
+    </nav>
+    <div class="hdr__cta">
+      <a aria-label="Contact us" class="btn btn--primary" href="/contact">
+    <span class="btn-label">Contact us</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a>
+      <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mnav" id="mnav" aria-hidden="true">
+  <div class="mnav__in">
+    <a class="mnav__link" href="/services">Services<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="mnav__link" href="/work">Work<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="mnav__link" href="/pricing">Pricing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="mnav__link" href="/about">About<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="mnav__link" href="/blog">Insights<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="mnav__link" href="/resources">Resources<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <p class="mnav__lbl">Services</p>
+    <div class="mnav__svc">
+      <a href="/services/ui-ux-design">UI/UX Design</a><a href="/services/web-development">Web Development</a><a href="/services/brand-design">Brand &amp; Identity</a><a href="/services/ai-automation">AI &amp; Automation</a><a href="/services/ecommerce">E-commerce</a><a href="/services/saas-product-design">SaaS &amp; Product</a><a href="/services/mvp-development">MVP Development</a><a href="/services/motion-design">Motion Design</a>
+    </div>
+    <div class="mnav__foot">
+      <a class="btn btn--primary" href="/contact">
+    <span class="btn-label">Contact us</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a>
+      <a class="alink" href="mailto:harsh@ostendic.com">harsh@ostendic.com<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div>
+</div>
+<main id="main">
 
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="db.js"></script>
 
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="icons.jsx"></script>
-<script type="text/babel" src="sections.jsx"></script>
-<script type="text/babel" src="resources-sections.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
+<section class="section hero hero--center guides" style="padding-top:clamp(56px,7vw,110px)">
+  <span class="gline" style="left:max(var(--pad-x),calc((100% - var(--max))/2 + var(--pad-x)))"></span><span class="gline" style="right:max(var(--pad-x),calc((100% - var(--max))/2 + var(--pad-x)))"></span>
+  <div class="wrap stack gap-24" style="align-items:center;position:relative;z-index:1">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>Digital studio · Brand, web &amp; automation</span>
+    <h1 class="display">Ostendic builds better digital <br> experiences for businesses <br> <em class="em">ready to grow</em></h1>
+    <p class="lead" style="text-align:center;max-width:52ch">From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.</p>
+    <div class="btn-row center" style="margin-top:8px">
+      <a class="btn btn--primary" href="/contact">
+    <span class="btn-label">Book a 30-minute call</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a>
+      <a class="btn btn--ghost" href="https://wa.me/" target="_blank" rel="noopener">
+        <span class="btn__lead"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg></span>
+        <span class="btn-label">Chat on WhatsApp</span>
+        <span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+    <p class="body-sm" style="margin-top:10px">Led by Harsh Dubey · AI + Brand Strategist · United States · United Kingdom · Europe · India</p>
+  </div>
+</section>
 
+<section class="section section--sm section--white" data-deck>
+  <div class="wrap stack gap-32">
+    <p class="body-sm center" style="text-align:center;margin-inline:auto">What we do, and where it has shipped</p>
+    <div class="deck">
+      
+        <div class="flip">
+          <div class="flip__f"><span class="flip__k">Brand &amp; identity</span><span class="flip__s">Structure + system</span></div>
+          <div class="flip__b"><span class="flip__k">Shipped</span><span class="flip__s">VMS Careline</span></div>
+        </div>
+        <div class="flip">
+          <div class="flip__f"><span class="flip__k">UI/UX design</span><span class="flip__s">Journeys + interfaces</span></div>
+          <div class="flip__b"><span class="flip__k">Shipped</span><span class="flip__s">VMS Careline</span></div>
+        </div>
+        <div class="flip">
+          <div class="flip__f"><span class="flip__k">Web development</span><span class="flip__s">Fast, measured builds</span></div>
+          <div class="flip__b"><span class="flip__k">Shipped</span><span class="flip__s">VMS Careline</span></div>
+        </div>
+        <div class="flip">
+          <div class="flip__f"><span class="flip__k">E-commerce</span><span class="flip__s">Discovery → checkout</span></div>
+          <div class="flip__b"><span class="flip__k">Shipped</span><span class="flip__s">VMS Cart</span></div>
+        </div>
+        <div class="flip">
+          <div class="flip__f"><span class="flip__k">AI &amp; automation</span><span class="flip__s">Enquiry → follow-up</span></div>
+          <div class="flip__b"><span class="flip__k">Live</span><span class="flip__s">Lead handling</span></div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" data-rv>
+  <div class="wrap founder">
+    <div class="founder__media">
+      <img src="/assets/harsh-dubey.jpg" alt="Harsh Dubey, Founder &amp; CEO of Ostendic"
+           width="800" height="800" loading="lazy">
+      <div class="founder__badge">
+        <div class="h4" style="color:var(--ink-inv)">Harsh Dubey</div>
+        <div class="body-sm" style="color:var(--ink-inv-2);margin-top:2px">Founder &amp; CEO · AI + Brand Strategist</div>
+      </div>
+    </div>
+    <div class="stack gap-24">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 7v6c0 4.5 3.3 7.6 8 8.7 4.7-1.1 8-4.2 8-8.7V7l-8-4Z"/></svg>Who you are working with</span>
+      <p class="founder__q">We don't just make the site look better. <em class="em">We make the system around it work better.</em></p>
+      <p class="lead">A website that looks better but still loses enquiries has not solved anything. Ostendic works across the whole path — positioning, interface, build, and the automation that runs after someone fills in the form.</p>
+      <p class="body-sm">Every engagement is led directly by Harsh Dubey. You talk to the person making the decisions, not an account manager relaying them.</p>
+      <div class="btn-row"><a class="btn btn--ghost" href="/about">
+    <span class="btn-label">About the studio</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark section--flush-t" data-rv>
+  <div class="wrap stack gap-40">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Credibility</span>
+    <h2 class="h2">What we can <br> actually <em class="em">stand behind</em></h2>
+    <p class="lead">No borrowed logos and no invented metrics. These are the things we will put in writing.</p>
+    
+  </div>
+    <div class="metrics">
+      
+        <div class="metric metric--figure">
+          <span class="metric__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 7v6c0 4.5 3.3 7.6 8 8.7 4.7-1.1 8-4.2 8-8.7V7l-8-4Z"/></svg></span>
+          
+          <span class="metric__n">50+</span>
+          <span class="metric__l">Client engagements across Harsh’s career in brand, UI/UX and automation</span>
+        </div>
+        <div class="metric metric--phrase">
+          <span class="metric__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M5 8.5V14a4 4 0 0 0 4 4h7.5"/></svg></span>
+          <span class="metric__k">How we deliver</span>
+          <span class="metric__n">End to end</span>
+          <span class="metric__l">Brand, interface, build and automation delivered by one team</span>
+        </div>
+        <div class="metric metric--rule">
+          <span class="metric__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg></span>
+          
+          <span class="metric__n">Fixed date</span>
+          <span class="metric__l">Scope, fee and delivery date agreed before work starts</span>
+        </div>
+        <div class="metric metric--list">
+          <span class="metric__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg></span>
+          <span class="metric__k">Working across</span>
+          <ul class="metric__markets"><li>United States</li><li>United Kingdom</li><li>Europe</li><li>India</li></ul>
+        </div>
+    </div>
+    <p class="body-sm" style="color:var(--ink-inv-2)">The 50+ figure is Harsh Dubey’s personal track record, not a studio claim — stated that way deliberately.</p>
+  </div>
+</section>
+
+<section class="section dark section--flush-t" data-rv>
+  <div class="wrap stack gap-40">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Proof</span>
+    <h2 class="h2">Evidence, not <em class="em">promises</em></h2>
+    <p class="lead">One client-reported outcome and two commitments you can hold us to. When more results are cleared for publication they replace these.</p>
+    
+  </div>
+    <div class="reviews">
+      
+        <article class="review">
+          <span class="tag" style="border-color:#7FD3C4;color:#7FD3C4">Client-reported</span>
+          <p class="review__q">The business reports an improved conversion ratio following the rebuild.</p>
+          <div class="review__by">
+            <span class="review__av">VC</span>
+            <span><span class="review__n">VMS Careline</span><br><span class="review__r">Healthcare e-commerce · India</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <span class="tag" style="border-color:#7FD3C4;color:#7FD3C4">Commitment</span>
+          <p class="review__q">Fixed scope, fixed fee and a date we commit to. If we miss it and it is our fault, we absorb it.</p>
+          <div class="review__by">
+            <span class="review__av">01</span>
+            <span><span class="review__n">How we engage</span><br><span class="review__r">Written into every scope</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <span class="tag" style="border-color:#7FD3C4;color:#7FD3C4">Commitment</span>
+          <p class="review__q">Every build launches with analytics in place and two weeks of post-launch tuning, so the first reading is real.</p>
+          <div class="review__by">
+            <span class="review__av">02</span>
+            <span><span class="review__n">How we measure</span><br><span class="review__r">Included as standard</span></span>
+          </div>
+        </article>
+    </div>
+  </div>
+</section>
+
+<section class="section dark section--flush-t" data-rv>
+  <div class="wrap stack gap-40">
+    <div class="tm__head">
+      
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>What clients say</span>
+    <h2 class="h2">Working with a studio <br> that <em class="em">shows its work</em></h2>
+    
+    
+  </div>
+      <span class="tm__flag">Sample layout · awaiting real quotes</span>
+    </div>
+    <div class="reviews">
+      
+        <article class="review">
+          <span class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg></span>
+          <p class="review__q">The brief was a site that converts, not a site that wins awards. That is what we got — and the reporting to prove which changes did it.</p>
+          <div class="review__by">
+            <span class="review__av">AM</span>
+            <span><span class="review__n">Alex Morgan</span><br><span class="review__r">Placeholder role, placeholder company</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <span class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg></span>
+          <p class="review__q">Scope, price and date were agreed up front and none of them moved. The handover documentation meant our own team could take it from there.</p>
+          <div class="review__by">
+            <span class="review__av">DC</span>
+            <span><span class="review__n">Daniel Carter</span><br><span class="review__r">Placeholder role, placeholder company</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <span class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true" class="on"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg></span>
+          <p class="review__q">Design and build happened in the same conversation, so decisions that normally take a week took an afternoon.</p>
+          <div class="review__by">
+            <span class="review__av">SW</span>
+            <span><span class="review__n">Sarah Williams</span><br><span class="review__r">Placeholder role, placeholder company</span></span>
+          </div>
+        </article>
+    </div>
+    <p class="body-sm" style="color:var(--ink-inv-2)">These are placeholder entries used to complete the layout — not client endorsements. They are replaced as real, attributed quotes are cleared for publication.</p>
+  </div>
+</section>
+
+<section class="section section--flush-b">
+  <div class="wrap stack gap-24">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>What we build</span>
+    <h2 class="h2">Six capabilities, <br> one <em class="em">team</em></h2>
+    <p class="lead">Most engagements combine several. Scroll through them.</p>
+    
+  </div>
+  </div>
+</section>
+<div class="stage" data-stack>
+  <div class="stage__pin">
+    <div class="stage__inner">
+      
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">01 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">UI/UX Design</h3>
+            <p class="panel__kick">Interfaces people <em class="em">understand</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/ui-ux-design.svg" alt="UI/UX Design — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">We map the path a customer takes through your product or site, then design the screens that remove the friction on it — not just the ones that look good in a portfolio.</p>
+            <div class="panel__caps">
+              <span class="tag">UX audit</span><span class="tag">User flows &amp; journey mapping</span><span class="tag">Wireframing &amp; prototyping</span><span class="tag">Visual UI design</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/ui-ux-design">
+    <span class="btn-label">Explore UI/UX Design</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">02 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">Web Development</h3>
+            <p class="panel__kick">Sites built to a <em class="em">date</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/web-development.svg" alt="Web Development — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">Fast, accessible, well-structured builds with analytics and tracking in place before launch — so the first week produces data, not guesses.</p>
+            <div class="panel__caps">
+              <span class="tag">Marketing sites</span><span class="tag">Web applications</span><span class="tag">CMS integration</span><span class="tag">Performance &amp; Core Web Vitals</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/web-development">
+    <span class="btn-label">Explore Web Development</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">03 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">Brand &amp; Visual Identity</h3>
+            <p class="panel__kick">A structure people <em class="em">recognise</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/brand-design.svg" alt="Brand &amp; Visual Identity — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">Clear positioning, a usable visual system, and the structure to separate distinct offerings so customers know which part of the business they are in.</p>
+            <div class="panel__caps">
+              <span class="tag">Brand strategy &amp; positioning</span><span class="tag">Visual identity</span><span class="tag">Logo &amp; wordmark</span><span class="tag">Design system &amp; guidelines</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/brand-design">
+    <span class="btn-label">Explore Brand &amp; Identity</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">04 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">AI &amp; Automation</h3>
+            <p class="panel__kick">The system behind the <em class="em">site</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/ai-automation.svg" alt="AI &amp; Automation — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">AI earns its place when it removes work. We automate the handling around a lead — intake, routing, first response, follow-up — so response time stops depending on who is available.</p>
+            <div class="panel__caps">
+              <span class="tag">Lead capture &amp; routing</span><span class="tag">Automated first response</span><span class="tag">Follow-up sequences</span><span class="tag">CRM &amp; tool integration</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/ai-automation">
+    <span class="btn-label">Explore AI &amp; Automation</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">05 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">E-commerce</h3>
+            <p class="panel__kick">Discovery through <em class="em">checkout</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/ecommerce.svg" alt="E-commerce — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">Product discovery, trust surfaces and a checkout flow designed around the real buying decision — with the analytics to show what changed.</p>
+            <div class="panel__caps">
+              <span class="tag">Storefront design &amp; build</span><span class="tag">Product discovery &amp; navigation</span><span class="tag">Trust &amp; compliance surfaces</span><span class="tag">Checkout optimisation</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/ecommerce">
+    <span class="btn-label">Explore E-commerce</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__head">
+            <span class="panel__n">06 <span class="panel__n-of">/ 06</span></span>
+            <h3 class="panel__t">SaaS &amp; Product Design</h3>
+            <p class="panel__kick">Complex made <em class="em">usable</em></p>
+          </div>
+          <div class="panel__media">
+            <img src="/assets/categories/saas-product-design.svg" alt="SaaS &amp; Product Design — illustrative visual" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="panel__body">
+            <p class="panel__lead">Dashboards, onboarding and workflows for software people use every day — designed so density stays readable and the next action is always clear.</p>
+            <div class="panel__caps">
+              <span class="tag">Dashboard &amp; data UI</span><span class="tag">Onboarding flows</span><span class="tag">Information architecture</span><span class="tag">Design systems</span>
+            </div>
+            <div class="btn-row"><a class="btn btn--ghost" href="/services/saas-product-design">
+    <span class="btn-label">Explore SaaS &amp; Product</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+          </div>
+        </article>
+    </div>
+  </div>
+</div>
+
+<section class="section section--white" data-road>
+  <div class="wrap stack gap-40">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Our process</span>
+    <h2 class="h2">A short path, because <br> the date is <em class="em">the product</em></h2>
+    <p class="lead">Four stages. You always know which one you are in and what happens next.</p>
+    
+  </div>
+    <div class="road">
+      <div class="road__steps">
+        <div class="road__rail"><span class="road__fill"></span></div>
+        
+          <div class="step is-on">
+            <span class="step__dot"><i></i></span>
+            <span class="eyebrow" style="margin-bottom:10px">Step 01</span>
+            <div class="step__ph">Understand</div>
+            <h3 class="step__t">Diagnose</h3>
+            <p class="body-sm" style="max-width:48ch">We look at what the site and the process behind it are actually doing — the funnel, the friction, the baseline numbers — before proposing anything.</p>
+          </div>
+          <div class="step">
+            <span class="step__dot"><i></i></span>
+            <span class="eyebrow" style="margin-bottom:10px">Step 02</span>
+            <div class="step__ph">Agree</div>
+            <h3 class="step__t">Scope</h3>
+            <p class="body-sm" style="max-width:48ch">A fixed scope, a fixed fee and a date. What is included, what is not, and what happens if the date slips.</p>
+          </div>
+          <div class="step">
+            <span class="step__dot"><i></i></span>
+            <span class="eyebrow" style="margin-bottom:10px">Step 03</span>
+            <div class="step__ph">Make</div>
+            <h3 class="step__t">Build</h3>
+            <p class="body-sm" style="max-width:48ch">Design and development run together rather than in sequence, with regular reviews so nothing lands as a surprise at handover.</p>
+          </div>
+          <div class="step">
+            <span class="step__dot"><i></i></span>
+            <span class="eyebrow" style="margin-bottom:10px">Step 04</span>
+            <div class="step__ph">Prove</div>
+            <h3 class="step__t">Measure</h3>
+            <p class="body-sm" style="max-width:48ch">We launch with analytics in place and stay on for two weeks of tuning, so the first reading is real rather than anecdotal.</p>
+          </div>
+      </div>
+      <div class="road__visuals">
+        <div class="road__vwrap">
+          
+            <div class="road__v is-on">
+              <div class="road__frame">
+                <span class="panel__n">Step 01 · Understand</span>
+                <h3 class="h3">Diagnose</h3>
+                <hr class="divider">
+                <p class="body-sm">Analytics review, funnel walk-through and a measured baseline before anything is proposed.</p>
+              </div>
+            </div>
+            <div class="road__v">
+              <div class="road__frame">
+                <span class="panel__n">Step 02 · Agree</span>
+                <h3 class="h3">Scope</h3>
+                <hr class="divider">
+                <p class="body-sm">A written scope: what is included, what is not, the fee, and the date we hold.</p>
+              </div>
+            </div>
+            <div class="road__v">
+              <div class="road__frame">
+                <span class="panel__n">Step 03 · Make</span>
+                <h3 class="h3">Build</h3>
+                <hr class="divider">
+                <p class="body-sm">Design and build run together, with reviews at the points where a decision actually changes something.</p>
+              </div>
+            </div>
+            <div class="road__v">
+              <div class="road__frame">
+                <span class="panel__n">Step 04 · Prove</span>
+                <h3 class="h3">Measure</h3>
+                <hr class="divider">
+                <p class="body-sm">Launch with tracking in place, then two weeks of tuning against what real traffic reveals.</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section collab" data-rv>
+  <div class="wrap">
+    <div class="grid g2" style="gap:clamp(32px,5vw,72px);align-items:center">
+      <div class="stack gap-24">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M5 8.5V14a4 4 0 0 0 4 4h7.5"/></svg>How it actually works</span>
+        <h2 class="h2">Close enough to <br> change things <em class="em">mid-build</em></h2>
+        <p class="lead">No account managers, no ticket queue, no waiting a week for a reply. You send a note and it reaches the person building the thing.</p>
+        <div class="btn-row"><a class="btn btn--primary" href="/contact">
+    <span class="btn-label">Start a conversation</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+      </div>
+      <div class="chatwin">
+        <div class="chatwin__bar"><i></i><i></i><i></i><span>Project channel</span></div>
+        <div class="msg msg--them">The category page is live — can we make the product filters clearer?<span class="msg__t">Client · 09:14</span></div>
+        <div class="msg msg--us">Yes. I will restructure the filters around the two questions customers actually ask first.<span class="msg__t">Ostendic · 09:21</span></div>
+        <div class="msg msg--them">How long?<span class="msg__t">Client · 09:22</span></div>
+        <div class="msg msg--us">In the build by Thursday, measured from the following Monday.<span class="msg__t">Ostendic · 09:23</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-rv>
+  <div class="wrap stack gap-40">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Selected work</span>
+    <h2 class="h2">What we built, and <br> what <em class="em">changed</em></h2>
+    <p class="lead">Client projects are labelled as client projects. Demo builds are labelled as demos.</p>
+    <div class="btn-row mt-8"><a class="btn btn--ghost" href="/work">
+    <span class="btn-label">All work</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+  </div>
+    <div class="posts">
+      
+        <a class="post" href="/work/vms-careline">
+          <div class="post__media">
+            <img src="/assets/work/vms-careline.jpg" alt="VMS Careline — Brand structure, digital experience and lead handling rebuilt across two business verticals." loading="lazy" width="900" height="620">
+          </div>
+          <div class="post__meta">
+            <span class="tag tag--live">Client project</span>
+            <span>E-commerce</span><span class="dot"></span><span>2026</span>
+          </div>
+          <h3 class="post__t">VMS Careline</h3>
+          <p class="body-sm">Brand structure, digital experience and lead handling rebuilt across two business verticals.</p>
+          <span class="alink" style="align-self:flex-start">Read the case<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="post" href="/work/trureview">
+          <div class="post__media">
+            <img src="/assets/work/trureview.jpg" alt="TruReview — A review-collection interface built as a working demonstration of the product design approach." loading="lazy" width="900" height="620">
+          </div>
+          <div class="post__meta">
+            <span class="tag tag--demo">Demo build</span>
+            <span>SaaS &amp; Product</span><span class="dot"></span><span>2026</span>
+          </div>
+          <h3 class="post__t">TruReview</h3>
+          <p class="body-sm">A review-collection interface built as a working demonstration of the product design approach.</p>
+          <span class="alink" style="align-self:flex-start">Read the case<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="post" href="/work/viralcheck">
+          <div class="post__media">
+            <img src="/assets/work/viralcheck.jpg" alt="ViralCheck Content — A content-scoring tool built as a working demonstration of AI-assisted product interfaces." loading="lazy" width="900" height="620">
+          </div>
+          <div class="post__meta">
+            <span class="tag tag--demo">Demo build</span>
+            <span>SaaS &amp; Product</span><span class="dot"></span><span>2026</span>
+          </div>
+          <h3 class="post__t">ViralCheck Content</h3>
+          <p class="body-sm">A content-scoring tool built as a working demonstration of AI-assisted product interfaces.</p>
+          <span class="alink" style="align-self:flex-start">Read the case<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--white" data-rv>
+  <div class="wrap stack gap-40">
+    
+  <div class="sec-head center">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Insights</span>
+    <h2 class="h2">Deeper notes, practical tips <br> and <em class="em">real talk from the studio</em></h2>
+    <p class="lead">Working notes on design, build and automation — written from live engagements rather than to a content calendar.</p>
+    
+  </div>
+    <div class="posts">
+      
+        <a class="post" href="/blog">
+          <div class="post__media">
+            <img src="/assets/insights/ai.svg" alt="Where AI actually pays for itself in a small business" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="post__meta">
+            <span class="tag">AI &amp; Automation</span>
+            <span class="dot"></span><span>10 min</span>
+            <span class="dot"></span><span class="post__draft">Draft</span>
+          </div>
+          <h3 class="post__t">Where AI actually pays for itself in a small business</h3>
+          <p class="body-sm">A working note on the difference between automation that removes work and automation that just adds another dashboard to check.</p>
+          <span class="alink" style="align-self:flex-start">Read the note<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="post" href="/blog">
+          <div class="post__media">
+            <img src="/assets/insights/web.svg" alt="What makes a website feel expensive" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="post__meta">
+            <span class="tag">Design</span>
+            <span class="dot"></span><span>8 min</span>
+            <span class="dot"></span><span class="post__draft">Draft</span>
+          </div>
+          <h3 class="post__t">What makes a website feel expensive</h3>
+          <p class="body-sm">Restraint, typography and evidence — why the sites that look costly are usually the ones doing the least on screen.</p>
+          <span class="alink" style="align-self:flex-start">Read the note<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="post" href="/blog">
+          <div class="post__media">
+            <img src="/assets/insights/automation.svg" alt="The gap between an enquiry and a reply" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="post__meta">
+            <span class="tag">Automation</span>
+            <span class="dot"></span><span>12 min</span>
+            <span class="dot"></span><span class="post__draft">Draft</span>
+          </div>
+          <h3 class="post__t">The gap between an enquiry and a reply</h3>
+          <p class="body-sm">Most businesses lose more at the follow-up stage than on the page itself. How we map that path before touching a design.</p>
+          <span class="alink" style="align-self:flex-start">Read the note<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+    </div>
+    <div class="btn-row center"><a class="btn btn--primary" href="/blog">
+    <span class="btn-label">View all insights</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+  </div>
+</section>
+
+<section class="section section--white" data-rv>
+  <div class="wrap stack gap-32">
+    
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>Engagement</span>
+    <h2 class="h2">Fixed scope. Fixed fee. <br> A date we <em class="em">hold</em>.</h2>
+    <p class="lead">Three ways to work together. Pricing is scoped per project rather than published as a menu.</p>
+    <div class="btn-row mt-8"><a class="btn btn--ghost" href="/pricing">
+    <span class="btn-label">How engagement works</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+  </div>
+    <div class="grid g3">
+      
+        <div class="card">
+          <div class="stack gap-8">
+            <h3 class="h3">Diagnostic</h3>
+            <span class="body-sm" style="color:var(--ink-3)">Fixed fee · one week</span>
+          </div>
+          <p class="body-sm">For teams who know something is not working but not what.</p>
+          <a class="alink mt-8" style="align-self:flex-start" href="/pricing">Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+        <div class="card" style="border-color:var(--ink)">
+          <div class="stack gap-8">
+            <h3 class="h3">Project</h3>
+            <span class="body-sm" style="color:var(--ink-3)">Scoped · fixed fee, fixed date</span>
+          </div>
+          <p class="body-sm">For defined work with a clear outcome and a deadline.</p>
+          <a class="alink mt-8" style="align-self:flex-start" href="/pricing">Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+        <div class="card">
+          <div class="stack gap-8">
+            <h3 class="h3">Ongoing</h3>
+            <span class="body-sm" style="color:var(--ink-3)">Monthly · retained capacity</span>
+          </div>
+          <p class="body-sm">For teams that need continuing design and build capacity.</p>
+          <a class="alink mt-8" style="align-self:flex-start" href="/pricing">Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+    </div>
+  </div>
+</section>
+
+  <section class="section" id="faq">
+    <div class="wrap faq">
+      <div class="faq__grid">
+        <div class="stack gap-24">
+          
+  <div class="sec-head">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>FAQ</span>
+    <h2 class="h2">Got questions? <br> We’ve <em class="em">got answers</em></h2>
+    <p class="lead">If you are not sure where to start, or want to see whether we can help, get in touch and we will walk you through it.</p>
+    
+  </div>
+          <div class="faq__aside">
+            <h3 class="h4">Book an intro call</h3>
+            <p class="body-sm">A 30-minute conversation about your goals, your timeline and whether Ostendic is the right fit. No deck, no pitch.</p>
+            <div class="btn-row"><a class="btn btn--primary" href="/contact">
+    <span class="btn-label">Book a call</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a></div>
+            <p class="body-sm" style="margin-top:4px">Prefer email? <a class="alink" href="mailto:harsh@ostendic.com">harsh@ostendic.com<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
+          </div>
+        </div>
+        <div class="faq__list">
+          
+            <details open>
+              <summary><span>How long does a project usually take?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>Most focused builds run two to four weeks; larger product and commerce work runs longer and is scoped explicitly. We agree the delivery date during scoping and work backwards from it rather than estimating forwards.</p></div>
+            </details>
+            <details>
+              <summary><span>How do you price work?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>Fixed fee against a fixed scope, agreed before anything starts. Retained monthly work is priced on capacity. We do not bill hourly — you should know the number before you commit, and it should not move unless the scope does.</p></div>
+            </details>
+            <details>
+              <summary><span>What happens if the date slips?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>We tell you as soon as we know, not at the deadline. Where the slip is ours, we absorb it. Where it comes from a change in scope, we re-scope and re-price openly before continuing.</p></div>
+            </details>
+            <details>
+              <summary><span>Do you work with our existing team?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>Yes. Most engagements sit alongside an in-house team or an existing developer. We work in whatever tools you already use and you deal directly with the person doing the work, not an account manager.</p></div>
+            </details>
+            <details>
+              <summary><span>Do you do both design and development?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>Yes, and they run in parallel rather than as a handover. That is the main reason the timelines are short — decisions that would normally wait for a handoff get made once, together.</p></div>
+            </details>
+            <details>
+              <summary><span>Where do you work?</span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+              <div class="faq__a"><p>We work with businesses in United States, United Kingdom, Europe and India. Delivery is remote, with overlap hours agreed at the start of each engagement.</p></div>
+            </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__cta">
+      <div class="stack gap-20">
+        <h2 class="h2">Ready to build something <br> worth <em class="em">showing</em>?</h2>
+        <p class="lead">Tell us what is not working. We will tell you honestly whether we are the right people to fix it.</p>
+      </div>
+      <div class="btn-row" style="justify-content:flex-start">
+        <a class="btn btn--primary" href="/contact">
+    <span class="btn-label">Start a project</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a>
+        <a class="btn btn--ghost" href="/work">
+    <span class="btn-label">See the work</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+  </a>
+      </div>
+    </div>
+
+    <div class="ftr__cols">
+      <div class="ftr__brand">
+        <a class="brand" href="/" style="color:var(--ink-inv)">Ostendic</a>
+        <p>From brand and UI/UX to websites and AI-powered automation, we improve the way customers discover, understand and engage with a business.</p>
+        <p style="margin-top:18px"><a class="alink" href="mailto:harsh@ostendic.com" style="color:var(--ink-inv)">harsh@ostendic.com<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul><li><a href="/services/ui-ux-design">UI/UX Design</a></li><li><a href="/services/web-development">Web Development</a></li><li><a href="/services/brand-design">Brand &amp; Identity</a></li><li><a href="/services/ai-automation">AI &amp; Automation</a></li><li><a href="/services/ecommerce">E-commerce</a></li><li><a href="/services/saas-product-design">SaaS &amp; Product</a></li><li><a href="/services/mvp-development">MVP Development</a></li></ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="/work">Work</a></li><li><a href="/about">About</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/blog">Insights</a></li><li><a href="/resources">Resources</a></li><li><a href="/careers">Careers</a></li><li><a href="/contact">Contact</a></li></ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul><li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.behance.net/" target="_blank" rel="noopener">Behance</a></li><li><a href="https://dribbble.com/" target="_blank" rel="noopener">Dribbble</a></li></ul>
+        <h4 style="margin-top:26px">Working with</h4>
+        <ul><li style="color:var(--ink-inv-2);font-size:var(--t-sm)">United States · United Kingdom · Europe · India</li></ul>
+      </div>
+    </div>
+
+    <div class="ftr__bar">
+      <span>© 2024–2026 Ostendic. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/site.js" defer></script>
+<script src="/scripts/motion.js" defer></script>
 </body>
 </html>

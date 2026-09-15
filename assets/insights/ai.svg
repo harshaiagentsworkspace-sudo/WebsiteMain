@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img">
+<rect width="1200" height="900" fill="#DCEAE6"/>
+
+  <rect x="0" y="0" width="1200" height="900" fill="#DCEAE6"/>
+  <g opacity=".92">
+  <circle cx="600" cy="450" r="210" fill="none" stroke="#0E4F47" stroke-width="4"/>
+  <circle cx="600" cy="450" r="120" fill="none" stroke="#0E4F47" stroke-width="4" opacity=".55"/>
+  <circle cx="600" cy="450" r="34" fill="#0E4F47"/>
+  <circle cx="810.0" cy="450.0" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L810.0 450.0" stroke="#0E4F47" stroke-width="3" opacity=".4"/><circle cx="705.0" cy="631.9" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L705.0 631.9" stroke="#0E4F47" stroke-width="3" opacity=".4"/><circle cx="495.0" cy="631.9" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L495.0 631.9" stroke="#0E4F47" stroke-width="3" opacity=".4"/><circle cx="390.0" cy="450.0" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L390.0 450.0" stroke="#0E4F47" stroke-width="3" opacity=".4"/><circle cx="495.0" cy="268.1" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L495.0 268.1" stroke="#0E4F47" stroke-width="3" opacity=".4"/><circle cx="705.0" cy="268.1" r="18" fill="#FFFFFF" stroke="#0E4F47" stroke-width="4"/>
+            <path d="M600 450L705.0 268.1" stroke="#0E4F47" stroke-width="3" opacity=".4"/>
+</g>
+
+</svg>

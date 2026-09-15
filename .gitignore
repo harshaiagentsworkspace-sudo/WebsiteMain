@@ -1,0 +1,5 @@
+# local build/QA noise
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
