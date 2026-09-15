@@ -1,0 +1,632 @@
+[
+ {
+  "file": "01-home-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 26744,
+  "mb": 5.1,
+  "blank_pct": 41,
+  "max_gap_px": 840,
+  "flags": []
+ },
+ {
+  "file": "02-about-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 15824,
+  "mb": 3.6,
+  "blank_pct": 49,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "03-services-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 23072,
+  "mb": 6.0,
+  "blank_pct": 39,
+  "max_gap_px": 600,
+  "flags": []
+ },
+ {
+  "file": "04-work-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 27953,
+  "mb": 9.4,
+  "blank_pct": 17,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "05-pricing-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 8017,
+  "mb": 2.0,
+  "blank_pct": 41,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "06-contact-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 4852,
+  "mb": 0.8,
+  "blank_pct": 47,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "07-blog-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 20878,
+  "mb": 16.2,
+  "blank_pct": 28,
+  "max_gap_px": 600,
+  "flags": []
+ },
+ {
+  "file": "08-career-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 3775,
+  "mb": 0.4,
+  "blank_pct": 59,
+  "max_gap_px": 540,
+  "flags": []
+ },
+ {
+  "file": "09-resources-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 6097,
+  "mb": 2.1,
+  "blank_pct": 36,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "10-platforms-free-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 5735,
+  "mb": 1.7,
+  "blank_pct": 39,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "11-svc-ui-ux-design-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 25424,
+  "mb": 6.1,
+  "blank_pct": 39,
+  "max_gap_px": 600,
+  "flags": []
+ },
+ {
+  "file": "12-svc-saas-design-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 19900,
+  "mb": 5.0,
+  "blank_pct": 38,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "13-svc-brand-design-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 25685,
+  "mb": 7.1,
+  "blank_pct": 41,
+  "max_gap_px": 780,
+  "flags": []
+ },
+ {
+  "file": "14-svc-mvp-development-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 14841,
+  "mb": 3.5,
+  "blank_pct": 42,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "15-svc-mobile-app-development-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 16253,
+  "mb": 3.4,
+  "blank_pct": 45,
+  "max_gap_px": 660,
+  "flags": []
+ },
+ {
+  "file": "16-svc-webflow-expert-agency-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 15632,
+  "mb": 3.4,
+  "blank_pct": 47,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "17-svc-dashboard-design-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 14736,
+  "mb": 3.3,
+  "blank_pct": 47,
+  "max_gap_px": 600,
+  "flags": []
+ },
+ {
+  "file": "18-svc-motion-design-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 14153,
+  "mb": 3.1,
+  "blank_pct": 44,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "19-svc-creative-marketing-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 12143,
+  "mb": 3.1,
+  "blank_pct": 45,
+  "max_gap_px": 660,
+  "flags": []
+ },
+ {
+  "file": "20-svc-ai-creative-production-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 14492,
+  "mb": 3.9,
+  "blank_pct": 45,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "21-svc-custom-illustration-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 13975,
+  "mb": 3.0,
+  "blank_pct": 45,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "22-svc-full-stack-development-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 11848,
+  "mb": 2.6,
+  "blank_pct": 48,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "23-case-01-adplist-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 18996,
+  "mb": 5.4,
+  "blank_pct": 23,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "24-case-02-maven-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 26722,
+  "mb": 4.6,
+  "blank_pct": 17,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "25-case-03-gourmeat-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 18648,
+  "mb": 5.9,
+  "blank_pct": 24,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "26-case-04-avara-branding-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 15980,
+  "mb": 6.0,
+  "blank_pct": 25,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "27-blogpost-best-ai-coding-tools-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 40321,
+  "mb": 7.9,
+  "blank_pct": 36,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "28-location-dubai-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 15624,
+  "mb": 4.2,
+  "blank_pct": 36,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "29-privacy-policy-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 5706,
+  "mb": 0.7,
+  "blank_pct": 61,
+  "max_gap_px": 1500,
+  "flags": []
+ },
+ {
+  "file": "30-terms-of-service-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 10960,
+  "mb": 1.4,
+  "blank_pct": 56,
+  "max_gap_px": 780,
+  "flags": []
+ },
+ {
+  "file": "31-refund-policy-desktop.png",
+  "dir": "desktop",
+  "w": 1440,
+  "h": 6144,
+  "mb": 0.7,
+  "blank_pct": 61,
+  "max_gap_px": 720,
+  "flags": []
+ },
+ {
+  "file": "01-home-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 10318,
+  "mb": 1.1,
+  "blank_pct": 35,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "02-about-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 11297,
+  "mb": 1.3,
+  "blank_pct": 43,
+  "max_gap_px": 480,
+  "flags": []
+ },
+ {
+  "file": "03-services-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 25577,
+  "mb": 2.8,
+  "blank_pct": 26,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "04-work-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 31101,
+  "mb": 3.7,
+  "blank_pct": 35,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "05-pricing-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 5526,
+  "mb": 0.5,
+  "blank_pct": 47,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "06-contact-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 5796,
+  "mb": 0.4,
+  "blank_pct": 33,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "07-blog-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 48118,
+  "mb": 12.3,
+  "blank_pct": 28,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "08-career-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 4159,
+  "mb": 0.2,
+  "blank_pct": 57,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "09-resources-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 9896,
+  "mb": 1.7,
+  "blank_pct": 27,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "10-platforms-free-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 7999,
+  "mb": 1.3,
+  "blank_pct": 31,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "11-svc-ui-ux-design-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 26337,
+  "mb": 2.5,
+  "blank_pct": 31,
+  "max_gap_px": 660,
+  "flags": []
+ },
+ {
+  "file": "12-svc-saas-design-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 21633,
+  "mb": 2.4,
+  "blank_pct": 27,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "13-svc-brand-design-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 27345,
+  "mb": 3.2,
+  "blank_pct": 28,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "14-svc-mvp-development-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 13401,
+  "mb": 2.0,
+  "blank_pct": 33,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "15-svc-mobile-app-development-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 14785,
+  "mb": 2.0,
+  "blank_pct": 33,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "16-svc-webflow-expert-agency-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 14159,
+  "mb": 2.0,
+  "blank_pct": 36,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "17-svc-dashboard-design-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 14780,
+  "mb": 2.0,
+  "blank_pct": 34,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "18-svc-motion-design-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 13194,
+  "mb": 1.8,
+  "blank_pct": 32,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "19-svc-creative-marketing-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 11742,
+  "mb": 1.8,
+  "blank_pct": 36,
+  "max_gap_px": 540,
+  "flags": []
+ },
+ {
+  "file": "20-svc-ai-creative-production-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 12695,
+  "mb": 2.0,
+  "blank_pct": 34,
+  "max_gap_px": 540,
+  "flags": []
+ },
+ {
+  "file": "21-svc-custom-illustration-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 12977,
+  "mb": 1.8,
+  "blank_pct": 37,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "22-svc-full-stack-development-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 11245,
+  "mb": 1.5,
+  "blank_pct": 36,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "23-case-01-adplist-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 15990,
+  "mb": 1.9,
+  "blank_pct": 24,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "24-case-02-maven-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 18156,
+  "mb": 1.7,
+  "blank_pct": 23,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "25-case-03-gourmeat-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 15483,
+  "mb": 1.9,
+  "blank_pct": 33,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "26-case-04-avara-branding-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 13625,
+  "mb": 1.7,
+  "blank_pct": 29,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "27-blogpost-best-ai-coding-tools-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 42980,
+  "mb": 4.4,
+  "blank_pct": 43,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "28-location-dubai-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 15375,
+  "mb": 2.2,
+  "blank_pct": 29,
+  "max_gap_px": 300,
+  "flags": []
+ },
+ {
+  "file": "29-privacy-policy-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 6336,
+  "mb": 0.5,
+  "blank_pct": 47,
+  "max_gap_px": 240,
+  "flags": []
+ },
+ {
+  "file": "30-terms-of-service-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 12138,
+  "mb": 1.0,
+  "blank_pct": 48,
+  "max_gap_px": 360,
+  "flags": []
+ },
+ {
+  "file": "31-refund-policy-mobile.png",
+  "dir": "mobile",
+  "w": 390,
+  "h": 6009,
+  "mb": 0.5,
+  "blank_pct": 52,
+  "max_gap_px": 420,
+  "flags": []
+ },
+ {
+  "file": "02-home-tablet.png",
+  "dir": "tablet",
+  "w": 768,
+  "h": 26766,
+  "mb": 3.6,
+  "blank_pct": 41,
+  "max_gap_px": 540,
+  "flags": []
+ }
+]
