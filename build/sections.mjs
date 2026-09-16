@@ -39,9 +39,10 @@ export const hero = () => `
    height; the rest of the roster cycles through them on the flip mechanism
    rather than being laid out as another five rows of static grid.
 
-   The two real clients are pinned to the first two slots and never flip, so
-   they are always on screen. Everything after them is a placeholder mark and
-   rotates through the remaining slots.
+   One sequence, no special cases: every slot flips, starting at the first
+   card of the first row and running through both rows in order. The real
+   clients open the deck and then rotate with everything else, so no card is
+   excluded from the effect and none is treated differently.
 
    HONESTY: only the entries in `clients` are real. The rest are fictitious
    placeholder marks completing the layout, and the copy around the deck says
@@ -54,8 +55,8 @@ export const logoWall = () => {
   const onDeck = placeholderLogos.slice(0, SLOTS - clients.length);
   const queued = placeholderLogos.slice(SLOTS - clients.length);
 
-  const slot = (lockup, isClient) => `
-    <div class="lw__card${isClient ? ' is-client' : ''}"${isClient ? '' : ' data-cycle'}>
+  const slot = (lockup) => `
+    <div class="lw__card">
       <div class="lw__slot">
         <div class="lw__f">${lockup}</div>
         <div class="lw__b" aria-hidden="true"></div>
@@ -63,8 +64,8 @@ export const logoWall = () => {
     </div>`;
 
   const cards =
-    clients.map((c, i) => slot(logoLockup(c.name, { mark: c.mark, src: c.src, client: true, i }), true)).join('') +
-    onDeck.map((n, i) => slot(logoLockup(n, { i }), false)).join('');
+    clients.map((c, i) => slot(logoLockup(c.name, { mark: c.mark, src: c.src, client: true, i }))).join('') +
+    onDeck.map((n, i) => slot(logoLockup(n, { i }))).join('');
 
   return `
 <section class="section section--sm logowall" data-deck>
@@ -290,7 +291,7 @@ export const stack = () => {
            without duplicating the component */
         const kicker = s.kicker.split(' ');
         return `
-        <article class="panel">
+        <article class="panel" style="--i:${i}">
           <div class="panel__head">
             <span class="panel__n">${String(i + 1).padStart(2, '0')} <span class="panel__n-of">/ ${String(cats.length).padStart(2, '0')}</span></span>
             <h3 class="panel__t">${esc(s.title)}</h3>

@@ -71,7 +71,7 @@ export const logoLockup = (name, { mark, src = '', client = false, i = 0 } = {})
   const glyph = src
     ? `<img class="lw__img" src="/${src}" alt="" width="120" height="40" loading="lazy">`
     : `<span class="lw__mark">${marks[mark] || marks[markAt(i)]}</span>`;
-  return `<span class="lw__logo" data-n="${esc(name)}">`
+  return `<span class="lw__logo${client ? ' is-client' : ''}" data-n="${esc(name)}">`
     + `${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>`
     + `</span>`;
 };

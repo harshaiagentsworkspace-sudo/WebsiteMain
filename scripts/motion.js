@@ -206,9 +206,8 @@
       });
       if (!queue.length) return;
 
-      // real clients are pinned to their slots; only the rest ever turn
-      var slots = cards.filter(function (c) { return c.hasAttribute('data-cycle'); });
-      if (!slots.length) return;
+      // every card turns, in DOM order: row one card one is where it starts
+      var slots = cards;
 
       var q = 0, i = 0, visible = true, timer = null;
       if ('IntersectionObserver' in window) {
