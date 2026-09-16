@@ -92,6 +92,19 @@
 </section>
 
 <section class="section section--sm logowall" data-deck>
+  <!-- Environmental layer only. It sits under every card, takes no pointer
+       events and is aria-hidden, so the flip deck above it is untouched:
+       same DOM, same z-order, same observers, same timer. -->
+  <div class="lw__bg" aria-hidden="true">
+    <div class="lw__media">
+      <video class="lw__vid" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/clients-vortex-poster.jpg" tabindex="-1"
+             disablepictureinpicture>
+        <source src="/assets/clients-vortex.mp4" type="video/mp4">
+      </video>
+    </div>
+    <span class="lw__veil"></span>
+  </div>
   <div class="wrap stack gap-32">
     <div class="lw__head">
       <p class="lw__lede">Live client brands, and the shape of the teams <em class="em">Ostendic is built for</em></p>

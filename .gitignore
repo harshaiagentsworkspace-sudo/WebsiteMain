@@ -8,3 +8,6 @@ Thumbs.db
 # background layer. assets/hero-vortex.mp4 is the 3 MB web encode made from it
 # (1280 wide, audio stripped, faststart) and is the file the site loads.
 assets/Vortex_rotating_over_static_land*.mp4
+# Same for the client-section master: 14.6 MB at 1920x1080. The site loads
+# assets/clients-vortex.mp4, the 1.7 MB web encode made from it.
+assets/Animate_swirling_sky_vortex_*.mp4
