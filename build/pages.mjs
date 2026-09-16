@@ -18,8 +18,8 @@ const flagship = projects[0];
 
 /* ========================= HOME =========================
    Narrative rhythm:
-   LIGHT hero → LIGHT trust deck → DARK founder → DARK metrics → DARK proof
-   → LIGHT services intro → 3D STACK → LIGHT roadmap → GRADIENT collab
+   LIGHT hero → LIGHT trust deck → DARK founder → DARK metrics
+   → DARK testimonials → 3D STACK → LIGHT roadmap → GRADIENT collab
    → LIGHT work → LIGHT engagement → LIGHT FAQ → DARK footer
    ======================================================== */
 export const home = () => `
@@ -27,7 +27,6 @@ ${S.hero()}
 ${S.trustDeck()}
 ${S.founder()}
 ${S.credibility()}
-${S.proof()}
 ${S.testimonialWall()}
 ${S.stack()}
 ${S.roadmap()}
@@ -89,7 +88,7 @@ export const about = () => `
       <div class="stack gap-20">
         ${eyebrow('The principal', 'mark')}
         ${head([site.principal], 'h2', 'h2')}
-        <p class="body-sm" style="color:var(--ink-3)">${esc(site.principalRole)} · ${esc(site.principalBio)}</p>
+        <p class="body-sm" style="color:var(--ink-3)">${esc(site.principalRole)}<br>${esc(site.principalBio)}</p>
         <p class="lead">Brand, UI/UX and automation experience across 50+ client engagements. Harsh leads every Ostendic engagement directly — scoping it, designing it and standing behind the result.</p>
         <p class="body-sm">Ostendic works with businesses in ${esc(site.markets.join(', '))}. Delivery is remote, with overlap hours agreed at the start of each engagement.</p>
         <div class="btn-row">${btn('Work with us', '/contact', 'primary')}</div>

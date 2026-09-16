@@ -1,13 +1,13 @@
 /* ===========================================================================
    OSTENDIC — MOTION ENGINE
 
-   SCROLL POLICY: keyboard, scrollbar, touch and anchors are 100% native.
-   Wheel gets a light glide (see Glide) that never scales distance and snaps
-   instantly if it falls behind. No scroll library.
+   SCROLL POLICY: the browser owns scrolling. Wheel, trackpad, keyboard,
+   scrollbar and touch are all 100% native — no wheel listener, no
+   preventDefault, no window.scrollTo, no scroll library.
 
-   Depth and pacing come from ANIMATION, not from scroll resistance:
-   scroll position drives a progress value, and that *progress* is damped so
-   panels settle over ~600ms while the page itself never lags behind the user.
+   Weight comes from the ANIMATIONS, not from the page. Scroll position is
+   read cheaply (window.scrollY) and drives a damped progress value, so
+   panels settle over ~600ms while the page itself never lags the user.
 
    One rAF loop (idles when nothing is moving), one passive scroll listener,
    one IntersectionObserver. Without JS every section is static and readable.
@@ -20,65 +20,6 @@
 
   var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
   var ease = function (t) { return t * t * (3 - 2 * t); };
-
-  /* =======================================================================
-     LIGHT WHEEL GLIDE
-     A small amount of easing on wheel scrolling only — enough to feel
-     controlled, not enough to feel delayed.
-
-     This is deliberately conservative, because an earlier version of this
-     file broke scrolling badly. Three rules keep that from recurring:
-       1. lerp is FAST (0.26 ≈ 94% of the distance in ~160ms).
-       2. Distance is never scaled — one notch still travels one notch.
-       3. A hard bail-out: if we ever fall >1000px behind, snap instantly.
-     It also stays off entirely for touch, reduced-motion, and any scroll we
-     did not originate (keyboard, scrollbar, anchors, find-in-page).
-     ======================================================================= */
-  var Glide = {
-    on: false, target: 0, current: 0, active: false,
-    init: function () {
-      if (reduce.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      this.target = this.current = window.scrollY;
-      this.on = true;
-      window.addEventListener('wheel', this.onWheel.bind(this), { passive: false });
-      window.addEventListener('scroll', function () {
-        if (!Glide.active) { Glide.target = Glide.current = window.scrollY; }
-      }, { passive: true });
-      ['keydown', 'mousedown', 'touchstart'].forEach(function (ev) {
-        window.addEventListener(ev, function () { Glide.active = false; }, { passive: true });
-      });
-    },
-    max: function () {
-      return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    },
-    onWheel: function (e) {
-      if (!this.on || e.ctrlKey || e.deltaMode === 2) return;
-      if (document.body.classList.contains('menu-open')) return;
-      if (e.target && e.target.closest && e.target.closest('[data-native-scroll]')) return;
-      var max = this.max();
-      var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1);   // 1:1, never reduced
-      if (!this.active) this.target = this.current = window.scrollY;
-      var next = this.target + delta;
-      // hand the edges back so overscroll/bounce stays native
-      if ((next <= 0 && delta < 0) || (next >= max && delta > 0)) { this.active = false; return; }
-      e.preventDefault();
-      this.target = next < 0 ? 0 : next > max ? max : next;
-      this.active = true;
-      // preventDefault suppresses the scroll event, so wake the loop directly
-      // or step() would never run and the page would not move at all
-      wake();
-    },
-    step: function () {
-      if (!this.on || !this.active) return false;
-      var d = this.target - this.current;
-      // safety valve — never let the page lag behind the user
-      if (Math.abs(d) > 1000) { this.current = this.target; }
-      else if (Math.abs(d) < 0.5) { this.current = this.target; this.active = false; }
-      else { this.current += d * 0.26; }
-      window.scrollTo(0, this.current);
-      return this.active;
-    }
-  };
 
   /* =======================================================================
      SMOOTH ANCHORS
@@ -111,17 +52,23 @@
         /* ~0.5 viewport of scroll per panel: about 4-5 wheel notches each,
            enough for the transition to read without making the page long. */
         stage.style.height = (panels.length * 48 + 55) + 'vh';
-        var s = { el: stage, panels: panels, shown: null, target: 0 };
+        var s = { el: stage, panels: panels, shown: null, target: 0, top: 0, span: 1 };
+        self.measure(s);
         s.target = self.progress(s);
         s.shown = s.target;
         self.stages.push(s);
         self.paint(s);
       });
     },
+    /* measured once per layout change, never per frame */
+    measure: function (s) {
+      var y = 0, el = s.el;
+      while (el) { y += el.offsetTop; el = el.offsetParent; }
+      s.top = y;
+      s.span = Math.max(1, s.el.offsetHeight - window.innerHeight);
+    },
     progress: function (s) {
-      var r = s.el.getBoundingClientRect();
-      var span = s.el.offsetHeight - window.innerHeight;
-      return clamp(-r.top / (span || 1), 0, 1) * (s.panels.length - 1);
+      return clamp((window.scrollY - s.top) / s.span, 0, 1) * (s.panels.length - 1);
     },
     /* returns true while still settling, so the loop knows to keep running */
     tick: function (s) {
@@ -167,21 +114,30 @@
           fill: el.querySelector('.road__fill'),
           vis: [].slice.call(el.querySelectorAll('.road__v')),
           line: el.querySelector('.road__steps'),
-          active: -1
+          active: -1, top: 0, height: 1, stepTops: []
         };
+        self.measure(r);
         self.roads.push(r);
         self.tick(r);
       });
     },
+    /* measured once per layout change, never per frame */
+    measure: function (r) {
+      var abs = function (el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+      r.top = abs(r.line);
+      r.height = Math.max(1, r.line.offsetHeight);
+      r.stepTops = r.steps.map(abs);
+    },
     tick: function (r) {
-      var box = r.line.getBoundingClientRect();
-      if (box.bottom < -200 || box.top > window.innerHeight + 200) return;
-      var mark = window.innerHeight * 0.58;
-      var p = clamp((mark - box.top) / (box.height || 1), 0, 1);
+      var scroll = window.scrollY, vh = window.innerHeight;
+      var lineTop = r.top - scroll;
+      if (lineTop + r.height < -200 || lineTop > vh + 200) return;
+      var mark = vh * 0.58;
+      var p = clamp((mark - lineTop) / r.height, 0, 1);
       if (r.fill) r.fill.style.height = (p * 100).toFixed(2) + '%';
       var idx = 0;
       for (var i = 0; i < r.steps.length; i++) {
-        if (r.steps[i].getBoundingClientRect().top <= mark) idx = i;
+        if (r.stepTops[i] - scroll <= mark) idx = i;
       }
       if (idx === r.active) return;
       r.active = idx;
@@ -241,7 +197,6 @@
 
   function frame() {
     var busy = false;
-    if (Glide.step()) busy = true;
     for (var i = 0; i < Stack.stages.length; i++) { if (Stack.tick(Stack.stages[i])) busy = true; }
     for (var j = 0; j < Road.roads.length; j++) Road.tick(Road.roads[j]);
     // keep spinning briefly after the last change so nothing stops mid-settle
@@ -256,17 +211,20 @@
   }
 
   function boot() {
-    Glide.init();
     Stack.init();
     Road.init();
     Deck.init();
     Reveal.init();
     // passive: the browser is never blocked waiting on us
     window.addEventListener('scroll', wake, { passive: true });
-    window.addEventListener('resize', function () {
+    var relayout = function () {
       Stack.stages.length = 0; Road.roads.length = 0;
       Stack.init(); Road.init(); wake();
-    });
+    };
+    window.addEventListener('resize', relayout);
+    // fonts and images change layout after first paint
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+    window.addEventListener('load', relayout);
     wake();
   }
 

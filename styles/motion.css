@@ -82,15 +82,31 @@
   display: grid; place-items: center; position: relative;
 }
 .founder__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; }
-.founder__media::after { content: ""; position: absolute; inset: auto 0 0 0; height: 46%;
-  background: linear-gradient(to top, rgba(8,9,10,.88), rgba(8,9,10,0)); pointer-events: none; }
+.founder__media::after { content: ""; position: absolute; inset: auto 0 0 0; height: 52%;
+  background: linear-gradient(to top, rgba(6,7,8,.94), rgba(6,7,8,.55) 45%, rgba(6,7,8,0));
+  pointer-events: none; }
 .founder__initials { display: none; }
 .founder__badge { position: absolute; left: 18px; right: 18px; bottom: 18px;
-  background: rgba(10,11,12,.66); border: 1px solid rgba(255,255,255,.14);
-  border-radius: 14px; padding: 14px 16px;
-  backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
-.founder__badge .h4 { color: #fff !important; }
-.founder__badge .body-sm { color: rgba(255,255,255,.80) !important; }
+  background: rgba(6,7,8,.90); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 14px; padding: 16px 18px;
+  backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); }
+/* Name / role / discipline. Text is fully opaque — the hierarchy is carried
+   by size and weight, not by fading the colour out. */
+.founder__name {
+  color: #FFFFFF;
+  font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem);
+  font-weight: 700; letter-spacing: -.024em; line-height: 1.12;
+}
+.founder__role {
+  color: #FFFFFF;
+  font-size: clamp(.95rem, .9rem + .2vw, 1.05rem);
+  font-weight: 600; line-height: 1.3; margin-top: 5px;
+}
+.founder__disc {
+  color: #E4E6E8;
+  font-size: clamp(.9rem, .87rem + .15vw, 1rem);
+  font-weight: 400; line-height: 1.35; margin-top: 3px;
+}
 .founder__q { font-size: clamp(1.32rem,.85rem + 1.5vw,2.2rem); line-height: 1.34; letter-spacing: -.024em; }
 
 /* ---------- 4. metrics ---------- */

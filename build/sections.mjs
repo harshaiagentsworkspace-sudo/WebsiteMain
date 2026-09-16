@@ -6,7 +6,6 @@
 import { site, services, projects, process, engagements, testimonials, posts } from './data.mjs';
 import { esc, ico, eyebrow, btn, head, secHead } from './ui.mjs';
 
-const flagship = projects[0];
 
 /* faint structural guides at the container edges */
 export const guides = () => '<span class="gline" style="left:max(var(--pad-x),calc((100% - var(--max))/2 + var(--pad-x)))"></span>' +
@@ -66,8 +65,9 @@ export const founder = () => `
       <img src="/${site.principalImage}" alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
            width="800" height="800" loading="lazy">
       <div class="founder__badge">
-        <div class="h4" style="color:var(--ink-inv)">${esc(site.principal)}</div>
-        <div class="body-sm" style="color:var(--ink-inv-2);margin-top:2px">${esc(site.principalRole)} · ${esc(site.principalBio)}</div>
+        <p class="founder__name">${esc(site.principal)}</p>
+        <p class="founder__role">${esc(site.principalRole)}</p>
+        <p class="founder__disc">${esc(site.principalBio)}</p>
       </div>
     </div>
     <div class="stack gap-24">
@@ -118,37 +118,7 @@ export const credibility = () => {
 </section>`;
 };
 
-/* ---------- 5. PROOF CARDS (real outcome + real commitments) ---------- */
-export const proof = () => {
-  /* TEMP-PLACEHOLDER: the first card is a real client-reported outcome.
-     The other two are commitments, not testimonials. Replace with real
-     attributed client quotes as they are cleared for publication. */
-  const cards = [
-    { q: flagship.result, n: flagship.name, r: `${flagship.sector} · ${flagship.market}`, av: 'VC', tag: 'Client-reported' },
-    { q: 'Fixed scope, fixed fee and a date we commit to. If we miss it and it is our fault, we absorb it.', n: 'How we engage', r: 'Written into every scope', av: '01', tag: 'Commitment' },
-    { q: 'Every build launches with analytics in place and two weeks of post-launch tuning, so the first reading is real.', n: 'How we measure', r: 'Included as standard', av: '02', tag: 'Commitment' },
-  ];
-  return `
-<section class="section dark section--flush-t" data-rv>
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'Proof', lines: ['Evidence, not {promises}'],
-      lead: 'One client-reported outcome and two commitments you can hold us to. When more results are cleared for publication they replace these.' })}
-    <div class="reviews">
-      ${cards.map(c => `
-        <article class="review">
-          <span class="tag" style="border-color:#7FD3C4;color:#7FD3C4">${esc(c.tag)}</span>
-          <p class="review__q">${esc(c.q)}</p>
-          <div class="review__by">
-            <span class="review__av">${esc(c.av)}</span>
-            <span><span class="review__n">${esc(c.n)}</span><br><span class="review__r">${esc(c.r)}</span></span>
-          </div>
-        </article>`).join('')}
-    </div>
-  </div>
-</section>`;
-};
-
-/* ---------- 5b. TESTIMONIALS (visibly marked sample content) ---------- */
+/* ---------- 5. TESTIMONIALS (visibly marked sample content) ---------- */
 const stars = (n) =>
   `<span class="stars" role="img" aria-label="${n} out of 5">` +
   Array.from({ length: 5 }, (_, i) =>

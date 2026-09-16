@@ -14,8 +14,8 @@ export const site = {
   booking: '/contact',        // TEMP-PLACEHOLDER: swap for a real scheduler link if one exists
   principal: 'Harsh Dubey',
   principalImage: 'assets/harsh-dubey.jpg',
-  principalRole: 'Founder & CEO',
-  principalBio: 'AI + Brand Strategist',
+  principalRole: 'Founder',
+  principalBio: 'Brand & AI Strategist',
   markets: ['United States', 'United Kingdom', 'Europe', 'India'],
   founded: '2024',
   promise: 'Ostendic builds better digital experiences for businesses ready to grow.',
