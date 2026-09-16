@@ -85,6 +85,40 @@
 /* on a light pill the ring has to darken instead */
 .btn--ghost .btn__ava { box-shadow: 0 0 0 1.5px var(--line-2), 0 2px 8px -3px rgba(17,19,20,.35); }
 
+/* ---------- 1c. hero atmosphere ----------
+   The hero ground stays light and the type stays near-black, so the clip sits
+   under a scrim that is almost solid behind the headline and thins towards the
+   edges. The vortex reads as movement around the type rather than behind it.
+   Everything is declarative: one <video> on the browser's own loop, no JS,
+   no scroll coupling, nothing repainting per frame. */
+.hero { position: relative; overflow: hidden; isolation: isolate; }
+.hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  overflow: hidden; contain: paint; }
+.hero__media {
+  position: absolute; inset: 0;
+  background: url("/assets/hero-vortex-poster.jpg") center 44% / cover no-repeat;
+  /* tuned on the rendered page: .27 was invisible, .50 started eating the lead
+     paragraph's contrast. .42 shows the swirl and still reads as backdrop. */
+  opacity: .42;
+  /* pulled back towards the house palette: the source is a vivid green */
+  filter: saturate(.72) contrast(1.04);
+}
+.hero__vid { width: 100%; height: 100%; object-fit: cover; object-position: center 44%;
+  display: block; pointer-events: none; }
+.hero__scrim {
+  position: absolute; inset: 0;
+  background:
+    /* an ellipse that hugs the headline block, falling away towards the edges
+       so the vortex is strongest in the periphery and weakest under the type */
+    radial-gradient(72% 52% at 50% 39%,
+      var(--bg) 0%, rgba(242,242,240,.95) 30%,
+      rgba(242,242,240,.5) 64%, rgba(242,242,240,0) 100%),
+    /* blends the clip into the header above and the logo deck below */
+    linear-gradient(to bottom,
+      rgba(242,242,240,.66) 0%, rgba(242,242,240,0) 20%,
+      rgba(242,242,240,0) 56%, var(--bg) 100%);
+}
+
 /* ---------- 2. client / logo deck ----------
    Two rows of substantial cards. The roster is larger than the grid, so the
    cards flip to cycle the rest through rather than growing more rows.
@@ -174,6 +208,20 @@
 .cap__i { width: clamp(36px,3.6vw,48px); height: clamp(36px,3.6vw,48px);
   color: var(--ink); margin-top: 4px; }
 .cap__i svg { width: 100%; height: 100%; stroke-width: 1.15; }
+/* the paint-server <defs> renders nothing of its own */
+.cap__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* Each icon takes a muted two-stop gradient on its stroke. Shape, weight and
+   box are untouched — only the paint changes. If a browser cannot resolve the
+   paint server it falls back to `color`, which is still var(--ink). */
+.cap:nth-child(1) .cap__i svg { stroke: url(#capA); }
+.cap:nth-child(2) .cap__i svg { stroke: url(#capB); }
+.cap:nth-child(3) .cap__i svg { stroke: url(#capC); }
+.cap:nth-child(4) .cap__i svg { stroke: url(#capD); }
+/* the eyebrow pill above each icon picks up the same hue at low saturation */
+.cap:nth-child(1) .cap__eye { background: #ECEAF7; color: #4E56A6; }
+.cap:nth-child(2) .cap__eye { background: #E5EFF4; color: #2B617F; }
+.cap:nth-child(3) .cap__eye { background: #F6EBE2; color: #96522B; }
+.cap:nth-child(4) .cap__eye { background: var(--accent-soft); color: var(--accent); }
 .cap__t { font-size: clamp(1.3rem,1.02rem + 1.05vw,1.9rem); letter-spacing: -.03em; line-height: 1.15; }
 .cap__d { font-size: var(--t-sm); color: var(--ink-2); line-height: 1.6; max-width: 34ch; }
 .cap__link { margin-top: 2px; }
@@ -241,14 +289,37 @@
   color: var(--ink-inv-2); border: 1px dashed var(--line-dark); border-radius: var(--r-pill);
   padding: 7px 14px; white-space: nowrap; }
 
-/* ---------- 6. gradient collaboration ---------- */
-.collab { position: relative; overflow: hidden; background: #0B0A14; color: var(--ink-inv); }
-.collab::before, .collab::after { content: ""; position: absolute; border-radius: 50%;
-  filter: blur(90px); pointer-events: none; }
-.collab::before { width: 54vw; height: 54vw; max-width: 780px; max-height: 780px; left: -13%; top: -20%;
-  background: radial-gradient(circle, rgba(124,58,237,.58), rgba(124,58,237,0) 68%); }
-.collab::after { width: 48vw; height: 48vw; max-width: 700px; max-height: 700px; right: -11%; bottom: -24%;
-  background: radial-gradient(circle, rgba(219,39,119,.44), rgba(37,99,235,.30) 46%, rgba(0,0,0,0) 72%); }
+/* ---------- 6. gradient collaboration ----------
+   Four wide, low-opacity washes bled into one another instead of two hard
+   blurred circles. Each one is an ellipse far larger than the area it lights,
+   so no edge ever resolves into a visible disc — the eye reads a single
+   atmospheric field. Muted plum, indigo, petrol and a warm ember, all at low
+   alpha over a near-black ground, with grain on top to kill the banding that
+   large dark gradients produce on wide screens and to keep the finish matte
+   rather than glossy. */
+.collab { position: relative; overflow: hidden; isolation: isolate;
+  color: var(--ink-inv);
+  background:
+    radial-gradient(92% 70% at 2% -12%,  rgba(140, 102, 214, .66) 0%, rgba(140, 102, 214, 0) 60%),
+    radial-gradient(80% 64% at 96% 4%,   rgba(62, 106, 190, .52) 0%, rgba(62, 106, 190, 0) 62%),
+    radial-gradient(84% 72% at 90% 108%, rgba(194, 104, 128, .46) 0%, rgba(194, 104, 128, 0) 60%),
+    radial-gradient(96% 76% at 12% 102%, rgba(18, 108, 98, .48) 0%, rgba(18, 108, 98, 0) 62%),
+    linear-gradient(165deg, #1A1530 0%, #0E0C1A 50%, #171223 100%);
+}
+/* grain: the same inline turbulence used on the intro-call card, so the
+   surface reads as matte paper rather than a polished gradient */
+.collab::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .5; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+}
+/* A whisper of a vignette. Tuned on the rendered page: at .55 it swallowed the
+   corner washes entirely and the section came out darker than it started, which
+   was the opposite of the brief. .22 just settles the outer edge. */
+.collab::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(140% 110% at 50% 48%, rgba(0,0,0,0) 58%, rgba(6,5,12,.22) 100%);
+}
 .collab .wrap { position: relative; z-index: 2; }
 .collab h2, .collab .h2, .collab .h3 { color: #fff; }
 .collab .lead, .collab .body-sm { color: rgba(255,255,255,.72); }
@@ -606,6 +677,8 @@
   .lw__slot { transition: none !important; }
   .lw__b { display: none !important; }
   .btn--ava:hover .btn__ava, .faq__mail:hover { transform: none !important; }
+  /* the hero keeps its atmosphere, but as the still poster rather than motion */
+  .hero__vid { display: none !important; }
   .review:hover, .post:hover .post__media img { transform: none !important; }
   .stage__pin { position: static !important; height: auto !important; display: block !important; overflow: visible !important; }
   .stage__inner { height: auto !important; }

@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# Raw video master. 35.8 MB, 1920x1080 at 35 Mbps — far too heavy to ship as a
+# background layer. assets/hero-vortex.mp4 is the 3 MB web encode made from it
+# (1280 wide, audio stripped, faststart) and is the file the site loads.
+assets/Vortex_rotating_over_static_land*.mp4

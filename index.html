@@ -58,6 +58,20 @@
 
 
 <section class="section hero hero--center guides" style="padding-top:clamp(56px,7vw,110px)">
+  <!-- Atmospheric background layer. Decorative only: aria-hidden, no controls,
+       pointer-events off, and muted + playsinline so it autoplays under every
+       current browser policy. The poster shows while it loads and stands in
+       under prefers-reduced-motion, so the hero is never blank or broken. -->
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__media">
+      <video class="hero__vid" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/hero-vortex-poster.jpg" tabindex="-1"
+             disablepictureinpicture>
+        <source src="/assets/hero-vortex.mp4" type="video/mp4">
+      </video>
+    </div>
+    <span class="hero__scrim"></span>
+  </div>
   <span class="gline" style="left:max(var(--pad-x),calc((100% - var(--max))/2 + var(--pad-x)))"></span><span class="gline" style="right:max(var(--pad-x),calc((100% - var(--max))/2 + var(--pad-x)))"></span>
   <div class="wrap stack gap-24" style="align-items:center;position:relative;z-index:1">
     <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>Digital studio · Brand, web &amp; automation</span>
@@ -150,6 +164,25 @@
 </section>
 
 <section class="section section--white" data-rv>
+  <!-- Paint servers for the four capability icons. A stroked SVG cannot take a
+       CSS gradient through its colour, so each stroke points at one of
+       these instead. Zero-size and hidden: it renders nothing itself. -->
+  <svg class="cap__defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <linearGradient id="capA" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5D66BC"/><stop offset="1" stop-color="#8E72C6"/>
+      </linearGradient>
+      <linearGradient id="capB" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#2E6FA6"/><stop offset="1" stop-color="#3FA0B2"/>
+      </linearGradient>
+      <linearGradient id="capC" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#B36436"/><stop offset="1" stop-color="#D2974C"/>
+      </linearGradient>
+      <linearGradient id="capD" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0E4F47"/><stop offset="1" stop-color="#4C9E7A"/>
+      </linearGradient>
+    </defs>
+  </svg>
   <div class="wrap">
     <div class="xpt">
       <div class="stack gap-24">
