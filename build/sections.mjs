@@ -7,7 +7,7 @@ import {
   site, services, projects, process, engagements, testimonials, posts,
   clients, placeholderLogos, homeCapabilities, rating,
 } from './data.mjs';
-import { esc, ico, eyebrow, btn, head, secHead, logoCard } from './ui.mjs';
+import { esc, ico, eyebrow, btn, head, secHead, logoLockup } from './ui.mjs';
 
 
 /* faint structural guides at the container edges */
@@ -23,7 +23,7 @@ export const hero = () => `
     ${head(['Ostendic builds better digital', 'experiences for businesses', '{ready to grow}'], 'display', 'h1')}
     <p class="lead" style="text-align:center;max-width:52ch">${esc(site.sub)}</p>
     <div class="btn-row center" style="margin-top:8px">
-      ${btn('Book a 30-minute call', '/contact', 'primary')}
+      ${btn('Book a 30-minute call', '/contact', 'primary', { avatar: true })}
       <a class="btn btn--ghost" href="${site.whatsapp}" target="_blank" rel="noopener">
         <span class="btn__lead">${ico.whatsapp}</span>
         <span class="btn-label">Chat on WhatsApp</span>
@@ -34,26 +34,47 @@ export const hero = () => `
   </div>
 </section>`;
 
-/* ---------- 2. CLIENT / LOGO WALL ----------
-   Scale and composition follow the reference logo wall: a large, quiet grid
-   of evenly weighted cards sitting directly under the hero.
+/* ---------- 2. CLIENT / LOGO DECK ----------
+   Two rows of cards, not a directory. Ten slots hold the wall at a compact
+   height; the rest of the roster cycles through them on the flip mechanism
+   rather than being laid out as another five rows of static grid.
+
+   The two real clients are pinned to the first two slots and never flip, so
+   they are always on screen. Everything after them is a placeholder mark and
+   rotates through the remaining slots.
 
    HONESTY: only the entries in `clients` are real. The rest are fictitious
-   placeholder marks completing the layout, and the copy above the grid says
+   placeholder marks completing the layout, and the copy around the deck says
    so in as many words — nothing here claims work we have not done. */
+const SLOTS = 10;
+
 export const logoWall = () => {
-  const cards = [
-    ...clients.map((c, i) => logoCard(c.name, { mark: c.mark, src: c.src, client: true, i })),
-    ...placeholderLogos.map((n, i) => logoCard(n, { i })),
-  ];
+  /* the first slots-worth of placeholders start face-up; the remainder wait
+     in a <template> and are dealt into the back faces by motion.js */
+  const onDeck = placeholderLogos.slice(0, SLOTS - clients.length);
+  const queued = placeholderLogos.slice(SLOTS - clients.length);
+
+  const slot = (lockup, isClient) => `
+    <div class="lw__card${isClient ? ' is-client' : ''}"${isClient ? '' : ' data-cycle'}>
+      <div class="lw__slot">
+        <div class="lw__f">${lockup}</div>
+        <div class="lw__b" aria-hidden="true"></div>
+      </div>
+    </div>`;
+
+  const cards =
+    clients.map((c, i) => slot(logoLockup(c.name, { mark: c.mark, src: c.src, client: true, i }), true)).join('') +
+    onDeck.map((n, i) => slot(logoLockup(n, { i }), false)).join('');
+
   return `
-<section class="section logowall" data-wall>
+<section class="section section--sm logowall" data-deck>
   <div class="wrap stack gap-32">
     <div class="lw__head">
       <p class="lw__lede">Live client brands, and the shape of the teams <em class="em">Ostendic is built for</em></p>
       <span class="lw__flag">${clients.length} live client${clients.length === 1 ? '' : 's'} · ${placeholderLogos.length} placeholder marks</span>
     </div>
-    <div class="lw">${cards.join('')}</div>
+    <div class="lw">${cards}</div>
+    <template data-pool>${queued.map((n, i) => logoLockup(n, { i: i + onDeck.length })).join('')}</template>
     <p class="lw__note">The unmarked logos are placeholder companies used to complete this layout. They are not Ostendic clients and are replaced as real, cleared logos become available.</p>
   </div>
 </section>`;

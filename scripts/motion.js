@@ -147,44 +147,119 @@
   };
 
   /* =======================================================================
-     LOGO WALL — depth on entry, nothing on scroll
+     LOGO DECK — depth on entry, then one card flips at a time, forever
 
-     The cards lift out of the page as each row arrives, staggered across the
-     row. It is driven entirely by one IntersectionObserver plus a CSS
-     transition: no scroll listener, no rAF work, no per-frame style writes.
-     Once a card has arrived the observer forgets it, so a wall of 35 cards
-     costs the wheel exactly nothing.
+     Two things happen here and NEITHER of them listens to scroll:
+
+       1. Entry depth. One IntersectionObserver plus a CSS transition lifts
+          each card into place, staggered across its row, once. The observer
+          then forgets the card.
+       2. Cycling. A setTimeout turns one card at a time so the roster can be
+          larger than the grid. It idles whenever the deck is off-screen.
+
+     So the wheel is never listened to, nothing is ever preventDefault-ed and
+     no work happens per scroll frame. The page scrolls natively; the cards
+     move on their own clock.
      ======================================================================= */
-  var Wall = {
+  var Deck = {
     init: function () {
-      var wall = document.querySelector('[data-wall] .lw');
-      if (!wall) return;
-      var cards = [].slice.call(wall.querySelectorAll('.lw__card'));
+      var deck = document.querySelector('[data-deck]');
+      if (!deck) return;
+      var grid = deck.querySelector('.lw');
+      if (!grid) return;
+      var cards = [].slice.call(grid.querySelectorAll('.lw__card'));
       if (!cards.length) return;
-      if (reduce.matches || !('IntersectionObserver' in window)) return;
 
+      if (!reduce.matches && 'IntersectionObserver' in window) this.reveal(grid, cards);
+      this.cycle(deck, cards);
+    },
+
+    /* one-shot entry depth, staggered along each row */
+    reveal: function (grid, cards) {
       document.documentElement.classList.add('js-wall');
-
-      /* columns are read from the computed grid, so the stagger follows
-         whatever breakpoint is actually in force */
-      var cols = (getComputedStyle(wall).gridTemplateColumns || '').split(' ').length || 5;
-
+      /* columns come from the computed grid, so the stagger follows whatever
+         breakpoint is actually in force */
+      var cols = (getComputedStyle(grid).gridTemplateColumns || '').split(' ').length || 5;
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
-          var i = cards.indexOf(en.target);
-          en.target.style.transitionDelay = ((i % cols) * 55) + 'ms';
+          en.target.style.transitionDelay = ((cards.indexOf(en.target) % cols) * 55) + 'ms';
           en.target.classList.add('in');
           io.unobserve(en.target);
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
-
       cards.forEach(function (c) {
         // already on screen when the deferred script runs: show it straight
         // away rather than fading something the user is looking at
         if (c.getBoundingClientRect().top < window.innerHeight * 0.95) { c.classList.add('in'); return; }
         io.observe(c);
       });
+    },
+
+    /* deal the queued lockups through the cycling cards */
+    cycle: function (deck, cards) {
+      if (reduce.matches) return;
+      var tpl = deck.querySelector('template[data-pool]');
+      if (!tpl) return;
+      var queue = [].slice.call(tpl.content.children).map(function (n) {
+        return { name: n.getAttribute('data-n'), html: n.outerHTML };
+      });
+      if (!queue.length) return;
+
+      // real clients are pinned to their slots; only the rest ever turn
+      var slots = cards.filter(function (c) { return c.hasAttribute('data-cycle'); });
+      if (!slots.length) return;
+
+      var q = 0, i = 0, visible = true, timer = null;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) { visible = e[0].isIntersecting; },
+          { threshold: 0.1 }).observe(deck);
+      }
+
+      /* whichever face is currently turned towards the reader */
+      var faceUp = function (card) {
+        return card.querySelector(card.classList.contains('is-flipped') ? '.lw__b' : '.lw__f');
+      };
+      /* never deal a name that is already face-up somewhere else in the grid */
+      var nextItem = function () {
+        var shown = cards.map(function (c) {
+          var l = faceUp(c).firstElementChild;
+          return l ? l.getAttribute('data-n') : null;
+        });
+        for (var n = 0; n < queue.length; n++) {
+          var item = queue[q];
+          q = (q + 1) % queue.length;
+          if (shown.indexOf(item.name) === -1) return item;
+        }
+        return null;                      // everything queued is already up
+      };
+
+      var turn = function () {
+        var wait = 900;
+        if (visible) {
+          // a card hidden by a breakpoint would flip where nobody can see it
+          var live = slots.filter(function (c) { return c.offsetParent !== null; });
+          if (live.length) {
+            var card = live[i % live.length];
+            var item = nextItem();
+            if (item) {
+              var showingBack = card.classList.contains('is-flipped');
+              // write into the face that is turned away, then turn the card
+              card.querySelector(showingBack ? '.lw__f' : '.lw__b').innerHTML = item.html;
+              card.classList.toggle('is-flipped');
+            }
+            i++;
+            // breathe at the end of each pass round the row
+            if (i % live.length === 0) wait = 2600;
+          }
+        } else {
+          wait = 700;                     // off-screen: idle, do not animate
+        }
+        timer = setTimeout(turn, wait);
+      };
+
+      timer = setTimeout(turn, 1600);
+      window.addEventListener('pagehide', function () { clearTimeout(timer); });
     }
   };
 
@@ -233,7 +308,7 @@
   function boot() {
     Stack.init();
     Road.init();
-    Wall.init();
+    Deck.init();
     Reveal.init();
     // passive: the browser is never blocked waiting on us
     window.addEventListener('scroll', wake, { passive: true });

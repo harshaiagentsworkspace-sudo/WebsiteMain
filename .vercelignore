@@ -2,6 +2,7 @@
 # orbix-reference alone is ~208 MB of research screenshots and would slow
 # every deployment while serving no production purpose.
 orbix-reference/
+Refernces/
 legacy/
 build/
 uploads/

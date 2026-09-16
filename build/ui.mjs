@@ -26,6 +26,7 @@ export const ico = {
   bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.4 2.6 4.6 13.4h6L10 21.4l9.4-11.2h-6.6l.6-7.6Z"/></svg>',
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.4l3.4 2"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg>',
 };
 
 /* ---------- logo marks ----------
@@ -64,26 +65,33 @@ const markAt = (i) => genericMarks[(i * 7) % genericMarks.length];
    real set of identities rather than one repeated lockup. */
 const wordStyles = ['', ' lw__word--caps', ' lw__word--serif', ' lw__word--caps', '', ' lw__word--tight'];
 
-export const logoCard = (name, { mark, src = '', client = false, i = 0 } = {}) => {
+/* Just the lockup. The card shell around it is built by the deck in
+   sections.mjs, because one card face can hold any lockup as it cycles. */
+export const logoLockup = (name, { mark, src = '', client = false, i = 0 } = {}) => {
   const glyph = src
     ? `<img class="lw__img" src="/${src}" alt="" width="120" height="40" loading="lazy">`
     : `<span class="lw__mark">${marks[mark] || marks[markAt(i)]}</span>`;
-  return `<div class="lw__card${client ? ' is-client' : ''}">
-    <span class="lw__logo">
-      ${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>
-    </span>
-  </div>`;
+  return `<span class="lw__logo" data-n="${esc(name)}">`
+    + `${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>`
+    + `</span>`;
 };
 
 /* ---------- atoms ---------- */
 export const eyebrow = (text, icon = 'dot') =>
   `<span class="eyebrow">${ico[icon] || ico.dot}${esc(text)}</span>`;
 
+/* `opts.avatar` swaps the arrow badge for the founder portrait, so the call
+   CTA carries a face rather than a glyph. It is the same pill, same depth and
+   the same 36px badge slot — only the contents of the badge change, which is
+   why it stays one component instead of a second button. */
 export const btn = (label, href, kind = 'primary', opts = {}) => {
   const tag = href ? 'a' : 'button';
   const attrs = href ? `href="${href}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ''}` : 'type="button"';
-  return `<${tag} class="btn btn--${kind}" ${attrs}${opts.id ? ` id="${opts.id}"` : ''}>
-    <span class="btn-label">${esc(label)}</span><span class="btn__ico">${ico.arrow}</span>
+  const badge = opts.avatar
+    ? `<span class="btn__ava face"><img src="/${site.principalImage}" alt="" width="96" height="96" loading="lazy" decoding="async"></span>`
+    : `<span class="btn__ico">${ico.arrow}</span>`;
+  return `<${tag} class="btn btn--${kind}${opts.avatar ? ' btn--ava' : ''}" ${attrs}${opts.id ? ` id="${opts.id}"` : ''}>
+    <span class="btn-label">${esc(label)}</span>${badge}
   </${tag}>`;
 };
 
@@ -148,10 +156,21 @@ export const faqBlock = (faqs, { eye = 'FAQ', lines = ['Got questions?', 'We’v
         <div class="stack gap-24">
           ${secHead({ eye, lines, lead: 'If you are not sure where to start, or want to see whether we can help, get in touch and we will walk you through it.' })}
           <div class="faq__aside">
+            <span class="faq__face face">
+              <img src="/${site.principalImage}"
+                   alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
+                   width="200" height="200" loading="lazy" decoding="async">
+            </span>
             <h3 class="h4">Book an intro call</h3>
             <p class="body-sm">A 30-minute conversation about your goals, your timeline and whether Ostendic is the right fit. No deck, no pitch.</p>
             <div class="btn-row">${btn('Book a call', '/contact', 'primary')}</div>
-            <p class="body-sm" style="margin-top:4px">Prefer email? <a class="alink" href="mailto:${site.email}">${site.email}${ico.arrow}</a></p>
+            <a class="faq__mail" href="mailto:${site.email}">
+              <span class="faq__mail-i">${ico.mail}</span>
+              <span>
+                <span class="faq__mail-k">Prefer email instead?</span>
+                <span class="faq__mail-v">${site.email}</span>
+              </span>
+            </a>
           </div>
         </div>
         <div class="faq__list">
