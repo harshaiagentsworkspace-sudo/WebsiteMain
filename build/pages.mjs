@@ -18,15 +18,21 @@ const flagship = projects[0];
 
 /* ========================= HOME =========================
    Narrative rhythm:
-   LIGHT hero → LIGHT trust deck → DARK founder → DARK metrics
-   → DARK testimonials → 3D STACK → LIGHT roadmap → GRADIENT collab
-   → LIGHT work → LIGHT engagement → LIGHT FAQ → DARK footer
+   LIGHT hero → LIGHT logo wall → WHITE expertise + capabilities
+   → DARK founder signature → DARK proof → DARK testimonials
+   → 3D STACK → LIGHT roadmap → GRADIENT collab → LIGHT work
+   → LIGHT insights → LIGHT engagement → LIGHT FAQ → DARK footer
+
+   The three dark sections run flush into one another so the founder,
+   the proof and the reviews read as one continuous passage rather than
+   three stacked blocks.
    ======================================================== */
 export const home = () => `
 ${S.hero()}
-${S.trustDeck()}
-${S.founder()}
-${S.credibility()}
+${S.logoWall()}
+${S.expertise()}
+${S.founderSignature()}
+${S.proof()}
 ${S.testimonialWall()}
 ${S.stack()}
 ${S.roadmap()}

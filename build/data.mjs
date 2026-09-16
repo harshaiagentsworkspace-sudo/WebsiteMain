@@ -184,6 +184,34 @@ export const services = [
   },
 ];
 
+/* ---------- CLIENT / LOGO WALL ----------
+   `clients` are real Ostendic client brands. The marks below are typographic
+   wordmarks drawn in-house; set `src` to an official logo file (e.g.
+   'assets/logos/vms-careline.svg') to render that artwork instead.
+
+   `placeholderLogos` are TEMP-PLACEHOLDER. Every name is fictitious and
+   invented purely to complete the layout at full scale. They are NOT
+   Ostendic clients, no copy on the page describes them as clients, and the
+   section carries a visible marker saying so. Delete them as real, cleared
+   logos replace them — the grid reflows on its own. */
+export const clients = [
+  { name: 'VMS Careline', mark: 'careline', src: '' },
+  { name: 'VMS',          mark: 'vms',      src: '' },
+];
+
+export const placeholderLogos = [
+  'Northlane', 'Velora', 'Aveniq', 'Formly', 'Nexora', 'Kivo', 'Luma Labs',
+  'Arcwell', 'Morrow', 'Fluxen', 'Brightfold', 'Cavora', 'Delune', 'Harborly',
+  'Junctio', 'Keelway', 'Latticera', 'Meridan', 'Norvex', 'Opalfield',
+  'Pentwood', 'Quillon', 'Rowanex', 'Sablebridge', 'Tidemere', 'Ulvara',
+  'Vanthos', 'Westfen', 'Ovrik', 'Yarrowfield', 'Zephric', 'Calderra', 'Emberly',
+];
+
+/* ---------- HOMEPAGE CAPABILITY BLOCKS ----------
+   Slugs only. Every word rendered in the section comes from `services`
+   above, so the homepage can never drift from the service pages. */
+export const homeCapabilities = ['ui-ux-design', 'web-development', 'mvp-development', 'ai-automation'];
+
 /* ---------- WORK ---------- */
 export const projects = [
   {
@@ -279,17 +307,32 @@ export const faqs = [
 
 /* ---------- TESTIMONIALS ----------
    TEMP-PLACEHOLDER. These are sample entries used to complete the layout.
-   They are NOT real clients and the section renders a visible "Sample layout"
+   They are NOT real clients and the section renders a visible placeholder
    marker so they cannot be mistaken for endorsements. Replace wholesale with
-   attributed quotes once real ones are cleared for publication. */
+   attributed quotes once real ones are cleared for publication.
+   `avatar` points at a generated illustrative portrait (build/make-art.mjs) —
+   swap the path for a real, cleared photograph at the same time. */
 export const testimonials = [
   { stars: 5, quote: 'The brief was a site that converts, not a site that wins awards. That is what we got — and the reporting to prove which changes did it.',
-    name: 'Alex Morgan', role: 'Placeholder role, placeholder company', initials: 'AM' },
+    name: 'Aarav Mehta', role: 'Placeholder role, placeholder company', initials: 'AM', avatar: 'assets/avatars/p1.svg' },
   { stars: 5, quote: 'Scope, price and date were agreed up front and none of them moved. The handover documentation meant our own team could take it from there.',
-    name: 'Daniel Carter', role: 'Placeholder role, placeholder company', initials: 'DC' },
+    name: 'Daniel Carter', role: 'Placeholder role, placeholder company', initials: 'DC', avatar: 'assets/avatars/p2.svg' },
   { stars: 5, quote: 'Design and build happened in the same conversation, so decisions that normally take a week took an afternoon.',
-    name: 'Sarah Williams', role: 'Placeholder role, placeholder company', initials: 'SW' },
+    name: 'Maya Sharma', role: 'Placeholder role, placeholder company', initials: 'MS', avatar: 'assets/avatars/p3.svg' },
 ];
+
+/* ---------- AGGREGATE RATING ----------
+   TEMP-PLACEHOLDER. Nothing in this project verifies an average rating or a
+   review count, so `verified` is false and the section renders the figures
+   inside a visible placeholder marker with a footnote saying so. Set
+   `verified: true` ONLY once the figures are backed by a real, citable
+   review source — that switch removes the marker and the footnote. */
+export const rating = {
+  verified: false,
+  score: '4.9+',
+  reviews: '100+',
+  source: '',   // e.g. 'Google Business Profile' once real
+};
 
 /* ---------- RESOURCES ---------- */
 export const resources = [

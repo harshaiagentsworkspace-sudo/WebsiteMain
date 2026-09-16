@@ -3,8 +3,11 @@
    Scroll-driven and depth components used by the homepage narrative.
    Everything renders readable without JS; motion.js enhances it.
    =========================================================================== */
-import { site, services, projects, process, engagements, testimonials, posts } from './data.mjs';
-import { esc, ico, eyebrow, btn, head, secHead } from './ui.mjs';
+import {
+  site, services, projects, process, engagements, testimonials, posts,
+  clients, placeholderLogos, homeCapabilities, rating,
+} from './data.mjs';
+import { esc, ico, eyebrow, btn, head, secHead, logoCard } from './ui.mjs';
 
 
 /* faint structural guides at the container edges */
@@ -31,89 +34,129 @@ export const hero = () => `
   </div>
 </section>`;
 
-/* ---------- 2. TRUST DECK (infinite staggered flip) ---------- */
-export const trustDeck = () => {
-  /* Every face below is true. Fronts are disciplines we deliver; backs say
-     where that discipline has actually shipped. No invented client logos. */
+/* ---------- 2. CLIENT / LOGO WALL ----------
+   Scale and composition follow the reference logo wall: a large, quiet grid
+   of evenly weighted cards sitting directly under the hero.
+
+   HONESTY: only the entries in `clients` are real. The rest are fictitious
+   placeholder marks completing the layout, and the copy above the grid says
+   so in as many words — nothing here claims work we have not done. */
+export const logoWall = () => {
   const cards = [
-    ['Brand &amp; identity', 'Structure + system', 'Shipped', 'VMS Careline'],
-    ['UI/UX design', 'Journeys + interfaces', 'Shipped', 'VMS Careline'],
-    ['Web development', 'Fast, measured builds', 'Shipped', 'VMS Careline'],
-    ['E-commerce', 'Discovery → checkout', 'Shipped', 'VMS Cart'],
-    ['AI &amp; automation', 'Enquiry → follow-up', 'Live', 'Lead handling'],
+    ...clients.map((c, i) => logoCard(c.name, { mark: c.mark, src: c.src, client: true, i })),
+    ...placeholderLogos.map((n, i) => logoCard(n, { i })),
   ];
   return `
-<section class="section section--sm section--white" data-deck>
+<section class="section logowall" data-wall>
   <div class="wrap stack gap-32">
-    <p class="body-sm center" style="text-align:center;margin-inline:auto">What we do, and where it has shipped</p>
-    <div class="deck">
-      ${cards.map(([k, s, bk, bs]) => `
-        <div class="flip">
-          <div class="flip__f"><span class="flip__k">${k}</span><span class="flip__s">${s}</span></div>
-          <div class="flip__b"><span class="flip__k">${bk}</span><span class="flip__s">${bs}</span></div>
-        </div>`).join('')}
+    <div class="lw__head">
+      <p class="lw__lede">Live client brands, and the shape of the teams <em class="em">Ostendic is built for</em></p>
+      <span class="lw__flag">${clients.length} live client${clients.length === 1 ? '' : 's'} · ${placeholderLogos.length} placeholder marks</span>
+    </div>
+    <div class="lw">${cards.join('')}</div>
+    <p class="lw__note">The unmarked logos are placeholder companies used to complete this layout. They are not Ostendic clients and are replaced as real, cleared logos become available.</p>
+  </div>
+</section>`;
+};
+
+/* ---------- 3. EXPERTISE + FOUR CAPABILITY BLOCKS ----------
+   The major transition after the logo wall: what the studio actually does.
+   Every word in the four blocks is pulled from `services` in data.mjs, so
+   the homepage cannot drift from the service pages it links to. */
+const capIcons = { 'ui-ux-design': 'layers', 'web-development': 'code', 'mvp-development': 'rocket', 'ai-automation': 'bolt' };
+
+export const expertise = () => {
+  const caps = homeCapabilities.map(slug => services.find(s => s.slug === slug)).filter(Boolean);
+  const spans = [
+    'Brand structure and visual identity',
+    'UI/UX design and product interfaces',
+    'Websites, e-commerce and web apps',
+    'MVP and product builds to a date',
+    'AI and workflow automation',
+  ];
+  return `
+<section class="section section--white" data-rv>
+  <div class="wrap">
+    <div class="xpt">
+      <div class="stack gap-24">
+        ${eyebrow('What we do', 'grid')}
+        ${head(['We do not just build websites.', 'We build the {system around them}'], 'h2', 'h2')}
+        <p class="lead">${esc(site.sub)}</p>
+        <div class="btn-row">${btn('Explore every capability', '/services', 'primary')}</div>
+      </div>
+      <ul class="xpt__list">
+        ${spans.map(t => `<li>${ico.right}<span>${esc(t)}</span></li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="caps">
+      ${caps.map((c, i) => `
+        <article class="cap">
+          <span class="cap__n tnum">${String(i + 1).padStart(2, '0')}</span>
+          <span class="cap__eye">${esc(c.kicker)}</span>
+          <span class="cap__i">${ico[capIcons[c.slug]] || ico.spark}</span>
+          <h3 class="cap__t">${esc(c.title)}</h3>
+          <p class="cap__d">${esc(c.outcome)}</p>
+          <a class="alink cap__link" href="/services/${c.slug}" aria-label="Explore ${esc(c.title)}">Explore${ico.arrow}</a>
+        </article>`).join('')}
     </div>
   </div>
 </section>`;
 };
 
-/* ---------- 3. FOUNDER / POSITIONING ---------- */
-export const founder = () => `
+/* ---------- 3b. FOUNDER SIGNATURE ----------
+   Deliberately small. The founder is a human signature on the studio's
+   position, not the hero image of the page. The full founder presentation
+   lives on /about. */
+export const founderSignature = () => `
 <section class="section dark" data-rv>
-  <div class="wrap founder">
-    <div class="founder__media">
-      <img src="/${site.principalImage}" alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
-           width="800" height="800" loading="lazy">
-      <div class="founder__badge">
-        <p class="founder__name">${esc(site.principal)}</p>
-        <p class="founder__role">${esc(site.principalRole)}</p>
-        <p class="founder__disc">${esc(site.principalBio)}</p>
+  <div class="wrap fsig">
+    <div class="fsig__by">
+      <img class="fsig__img" src="/${site.principalImage}"
+           alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
+           width="240" height="240" loading="lazy">
+      <div class="fsig__id">
+        <span class="fsig__lbl">By the founder</span>
+        <p class="fsig__name">${esc(site.principal)}</p>
+        <p class="fsig__role">${esc(site.principalRole)}</p>
+        <p class="fsig__disc">${esc(site.principalBio)}</p>
       </div>
     </div>
-    <div class="stack gap-24">
-      ${eyebrow('Who you are working with', 'mark')}
-      <p class="founder__q">${esc(site.differentiator.split('. ')[0])}. <em class="em">We make the system around it work better.</em></p>
-      <p class="lead">A website that looks better but still loses enquiries has not solved anything. Ostendic works across the whole path — positioning, interface, build, and the automation that runs after someone fills in the form.</p>
-      <p class="body-sm">Every engagement is led directly by ${esc(site.principal)}. You talk to the person making the decisions, not an account manager relaying them.</p>
+    <div class="fsig__say">
+      <p class="fsig__q">${esc(site.differentiator.split('. ')[0])}. <em class="em">We make the system around it work better.</em></p>
+      <p class="body-sm">A website that looks better but still loses enquiries has not solved anything. Every engagement is led directly by ${esc(site.principal)} — you talk to the person making the decisions, not an account manager relaying them.</p>
       <div class="btn-row">${btn('About the studio', '/about', 'ghost')}</div>
     </div>
   </div>
 </section>`;
 
-/* ---------- 4. CREDIBILITY (qualitative — no invented numbers) ---------- */
-export const credibility = () => {
+/* ---------- 4. PROOF POINTS ----------
+   Four figures, each traceable to something already in this project:
+   the principal's stated track record, services.length, site.markets.length,
+   and the two weeks of post-launch tuning included in every engagement.
+   Nothing here is manufactured. If a figure cannot be sourced, it does not
+   appear — which is why there is no client count and no revenue claim. */
+export const proof = () => {
   const items = [
-    [ico.mark, '50+', 'Client engagements across Harsh’s career in brand, UI/UX and automation'],
-    [ico.flow, 'End to end', 'Brand, interface, build and automation delivered by one team'],
-    [ico.check, 'Fixed date', 'Scope, fee and delivery date agreed before work starts'],
-    [ico.spark, '4 markets', site.markets.join(', ')],
+    [ico.mark,  '50+',     'Client engagements across ' + site.principal + '’s career'],
+    [ico.grid,  String(services.length), 'Capabilities delivered by one team'],
+    [ico.globe, String(site.markets.length), 'Markets served: ' + site.markets.join(', ')],
+    [ico.clock, '2 weeks', 'Post-launch tuning included in every project'],
   ];
   return `
 <section class="section dark section--flush-t" data-rv>
   <div class="wrap stack gap-40">
-    ${secHead({ eye: 'Credibility', lines: ['What we can', 'actually {stand behind}'],
-      lead: 'No borrowed logos and no invented metrics. These are the things we will put in writing.' })}
-    <div class="metrics">
-      ${items.map(([i, n, l], k) => {
-        /* same component family, four deliberate emphases:
-           0 metric-led · 1 phrase-led · 2 commitment-led · 3 coverage-led */
-        const mod = ['metric--figure', 'metric--phrase', 'metric--rule', 'metric--list'][k];
-        if (k === 3) return `
-        <div class="metric ${mod}">
-          <span class="metric__i">${i}</span>
-          <span class="metric__k">Working across</span>
-          <ul class="metric__markets">${site.markets.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
-        </div>`;
-        return `
-        <div class="metric ${mod}">
-          <span class="metric__i">${i}</span>
-          ${k === 1 ? `<span class="metric__k">How we deliver</span>` : ''}
-          <span class="metric__n">${n}</span>
-          <span class="metric__l">${esc(l)}</span>
-        </div>`;
-      }).join('')}
+    ${secHead({ eye: 'Proof', center: true, lines: ['What we can', 'actually {stand behind}'],
+      lead: 'No borrowed logos and no invented metrics. Scope, fee and delivery date are agreed before work starts — these are the things we will put in writing.' })}
+    <div class="proof">
+      ${items.map(([i, n, l]) => `
+        <div class="pf">
+          <span class="pf__i">${i}</span>
+          <span class="pf__n">${esc(n)}</span>
+          <span class="pf__l">${esc(l)}</span>
+        </div>`).join('')}
     </div>
-    <p class="body-sm" style="color:var(--ink-inv-2)">The 50+ figure is ${esc(site.principal)}’s personal track record, not a studio claim — stated that way deliberately.</p>
+    <p class="body-sm center" style="color:var(--ink-inv-2);max-width:66ch;margin-inline:auto">The 50+ figure is ${esc(site.principal)}’s personal track record, not a studio claim — stated that way deliberately.</p>
   </div>
 </section>`;
 };
@@ -125,12 +168,22 @@ const stars = (n) =>
     `<svg viewBox="0 0 24 24" aria-hidden="true" class="${i < n ? 'on' : ''}"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg>`
   ).join('') + '</span>';
 
+/* The rating headline renders the figures from data.mjs. While
+   `rating.verified` is false they are placeholders, and the section says so
+   on the page as well as in the source. Flipping that flag removes both the
+   marker and the footnote — it is the only switch to change. */
 export const testimonialWall = () => `
 <section class="section dark section--flush-t" data-rv>
   <div class="wrap stack gap-40">
     <div class="tm__head">
-      ${secHead({ eye: 'What clients say', lines: ['Working with a studio', 'that {shows its work}'] })}
-      <span class="tm__flag">Sample layout · awaiting real quotes</span>
+      ${eyebrow('What clients say', 'spark')}
+      <p class="tm__rate">
+        <span class="tm__score tnum">${esc(rating.score)}</span>
+        <span class="tm__star" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg></span>
+        <span class="tm__rate-a">Average rating from</span>
+        <em class="em tm__rate-b">${esc(rating.reviews)} client reviews</em>
+      </p>
+      ${rating.verified ? '' : '<span class="tm__flag">Placeholder figures · not yet verified</span>'}
     </div>
     <div class="reviews">
       ${testimonials.map(t => `
@@ -138,12 +191,14 @@ export const testimonialWall = () => `
           ${stars(t.stars)}
           <p class="review__q">${esc(t.quote)}</p>
           <div class="review__by">
-            <span class="review__av">${esc(t.initials)}</span>
+            ${t.avatar
+              ? `<img class="review__av" src="/${t.avatar}" alt="" width="44" height="44" loading="lazy">`
+              : `<span class="review__av review__av--txt">${esc(t.initials)}</span>`}
             <span><span class="review__n">${esc(t.name)}</span><br><span class="review__r">${esc(t.role)}</span></span>
           </div>
         </article>`).join('')}
     </div>
-    <p class="body-sm" style="color:var(--ink-inv-2)">These are placeholder entries used to complete the layout — not client endorsements. They are replaced as real, attributed quotes are cleared for publication.</p>
+    ${rating.verified ? '' : `<p class="body-sm center" style="color:var(--ink-inv-2);max-width:72ch;margin-inline:auto">Placeholder content. The rating, the review count and the three quotes above are sample entries used to complete the layout — not client endorsements. They are replaced as real, attributed reviews are cleared for publication.</p>`}
   </div>
 </section>`;
 

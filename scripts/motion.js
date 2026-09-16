@@ -147,24 +147,44 @@
   };
 
   /* =======================================================================
-     TRUST DECK — one card flips at a time, forever, paused when off-screen
+     LOGO WALL — depth on entry, nothing on scroll
+
+     The cards lift out of the page as each row arrives, staggered across the
+     row. It is driven entirely by one IntersectionObserver plus a CSS
+     transition: no scroll listener, no rAF work, no per-frame style writes.
+     Once a card has arrived the observer forgets it, so a wall of 35 cards
+     costs the wheel exactly nothing.
      ======================================================================= */
-  var Deck = {
+  var Wall = {
     init: function () {
-      var deck = document.querySelector('[data-deck]');
-      if (!deck || reduce.matches) return;
-      var cards = [].slice.call(deck.querySelectorAll('.flip'));
+      var wall = document.querySelector('[data-wall] .lw');
+      if (!wall) return;
+      var cards = [].slice.call(wall.querySelectorAll('.lw__card'));
       if (!cards.length) return;
-      var i = 0, visible = true, timer = null;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }, { threshold: 0.12 }).observe(deck);
-      }
-      var tick = function () {
-        if (visible) { cards[i].classList.toggle('is-flipped'); i = (i + 1) % cards.length; }
-        timer = setTimeout(tick, i === 0 ? 1400 : 620);
-      };
-      timer = setTimeout(tick, 900);
-      window.addEventListener('pagehide', function () { clearTimeout(timer); });
+      if (reduce.matches || !('IntersectionObserver' in window)) return;
+
+      document.documentElement.classList.add('js-wall');
+
+      /* columns are read from the computed grid, so the stagger follows
+         whatever breakpoint is actually in force */
+      var cols = (getComputedStyle(wall).gridTemplateColumns || '').split(' ').length || 5;
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var i = cards.indexOf(en.target);
+          en.target.style.transitionDelay = ((i % cols) * 55) + 'ms';
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
+
+      cards.forEach(function (c) {
+        // already on screen when the deferred script runs: show it straight
+        // away rather than fading something the user is looking at
+        if (c.getBoundingClientRect().top < window.innerHeight * 0.95) { c.classList.add('in'); return; }
+        io.observe(c);
+      });
     }
   };
 
@@ -213,7 +233,7 @@
   function boot() {
     Stack.init();
     Road.init();
-    Deck.init();
+    Wall.init();
     Reveal.init();
     // passive: the browser is never blocked waiting on us
     window.addEventListener('scroll', wake, { passive: true });

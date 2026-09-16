@@ -19,6 +19,60 @@ export const ico = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg>',
   mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 7v6c0 4.5 3.3 7.6 8 8.7 4.7-1.1 8-4.2 8-8.7V7l-8-4Z"/></svg>',
+  /* capability + proof icons: same 24px grid, same 1.6 stroke, drawn larger */
+  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.6 9 5.2-9 5.2-9-5.2 9-5.2Z"/><path d="m3.6 12.4 8.4 4.8 8.4-4.8M3.6 16.6 12 21.4l8.4-4.8"/></svg>',
+  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.6 4l-3.2 16"/></svg>',
+  rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.6 3.2c3.6 1 6.2 3.6 7.2 7.2l-8.6 8.6-5.8-1.4-1.4-5.8 8.6-8.6Z"/><circle cx="14.6" cy="9.4" r="1.9"/><path d="M6.4 17.6 3 21"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.4 2.6 4.6 13.4h6L10 21.4l9.4-11.2h-6.6l.6-7.6Z"/></svg>',
+  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.4l3.4 2"/></svg>',
+};
+
+/* ---------- logo marks ----------
+   Abstract geometric marks used by the client / logo wall. The two client
+   marks are drawn in-house; everything else is a generic placeholder shape
+   cycled across the fictitious names in data.mjs. Nothing here reproduces a
+   real third-party logo. */
+const mk = (body, w = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+
+export const marks = {
+  /* client marks */
+  careline: mk('<path d="M12 2.8 4.4 6v6.4c0 4.6 3.1 7.9 7.6 8.8 4.5-.9 7.6-4.2 7.6-8.8V6L12 2.8Z"/><path d="M12 8.4v6M9 11.4h6"/>'),
+  vms: mk('<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7.6 8.6 12 16l4.4-7.4"/>'),
+  /* generic placeholder marks */
+  arc: mk('<path d="M3.4 17.2a8.6 8.6 0 0 1 17.2 0"/><circle cx="12" cy="17.2" r="1.7" fill="currentColor" stroke="none"/>'),
+  prism: mk('<path d="M12 3.2 21 20.2H3L12 3.2Z"/><path d="M12 3.2v17"/>'),
+  orbit: mk('<circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="9.4" ry="4.4" transform="rotate(-28 12 12)"/>'),
+  stack: mk('<rect x="4" y="4" width="13" height="5" rx="2"/><rect x="7" y="10.6" width="13" height="5" rx="2"/><rect x="4" y="17" width="13" height="3" rx="1.5"/>'),
+  hexa: mk('<path d="m12 2.8 8 4.6v9.2l-8 4.6-8-4.6V7.4l8-4.6Z"/><circle cx="12" cy="12" r="2.4"/>'),
+  nodes: mk('<circle cx="5" cy="6.6" r="2.4"/><circle cx="19" cy="12" r="2.4"/><circle cx="7.4" cy="18.4" r="2.4"/><path d="m7.2 7.8 9.4 3M17 13.7l-7.5 3.6"/>'),
+  wave: mk('<path d="M2.6 14.4c2.6-6 6.2-6 9.4 0s6.8 6 9.4 0"/><path d="M2.6 9c2.6-4.4 6.2-4.4 9.4 0"/>'),
+  rhomb: mk('<path d="m12 2.6 9.4 9.4L12 21.4 2.6 12 12 2.6Z"/><path d="m12 8 4 4-4 4-4-4 4-4Z"/>'),
+  pulse: mk('<path d="M2.6 12.4h4.2l2.4-6 3.6 12 2.6-7.2 1.8 3.4h4.2"/>'),
+  bloom: mk('<path d="M12 2.8c3.4 3 3.4 6.2 0 9.2-3.4-3-3.4-6.2 0-9.2Zm0 18.4c-3.4-3-3.4-6.2 0-9.2 3.4 3 3.4 6.2 0 9.2Z"/><path d="M2.8 12c3-3.4 6.2-3.4 9.2 0-3 3.4-6.2 3.4-9.2 0Zm18.4 0c-3 3.4-6.2 3.4-9.2 0 3-3.4 6.2-3.4 9.2 0Z"/>'),
+  chev: mk('<path d="m5.4 6.4 6 5.6-6 5.6M13 6.4l6 5.6-6 5.6"/>'),
+  ringdot: mk('<circle cx="12" cy="12" r="8.6"/><circle cx="16.4" cy="8" r="2.4" fill="currentColor" stroke="none"/>'),
+};
+
+/* Placeholder marks. Stepping 7 at a time through 12 shapes (7 and 12 are
+   coprime) walks all twelve before repeating and keeps neighbouring cards —
+   across the row and down the column — on visibly different silhouettes. */
+const genericMarks = ['arc', 'prism', 'orbit', 'stack', 'hexa', 'nodes', 'wave', 'rhomb', 'pulse', 'bloom', 'chev', 'ringdot'];
+const markAt = (i) => genericMarks[(i * 7) % genericMarks.length];
+
+/* Wordmark treatment, varied deterministically so the wall reads like a
+   real set of identities rather than one repeated lockup. */
+const wordStyles = ['', ' lw__word--caps', ' lw__word--serif', ' lw__word--caps', '', ' lw__word--tight'];
+
+export const logoCard = (name, { mark, src = '', client = false, i = 0 } = {}) => {
+  const glyph = src
+    ? `<img class="lw__img" src="/${src}" alt="" width="120" height="40" loading="lazy">`
+    : `<span class="lw__mark">${marks[mark] || marks[markAt(i)]}</span>`;
+  return `<div class="lw__card${client ? ' is-client' : ''}">
+    <span class="lw__logo">
+      ${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>
+    </span>
+  </div>`;
 };
 
 /* ---------- atoms ---------- */

@@ -215,15 +215,51 @@ art['insight-automation'] = insight(`
   <path d="M556 600l28 28 52-56" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 `, C.sunk);
 
+/* ---------- placeholder portraits ----------
+   Illustrated, deliberately generic profile marks for the testimonial cards.
+   Nothing stock, nothing licensed, and no recognisable person. They exist so
+   the cards never render an empty avatar circle; replace the `avatar` path in
+   data.mjs with a real cleared photograph when one is available. */
+const person = ({ ground, skin, hair, shirt, crop }) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img">
+<rect width="200" height="200" fill="${ground}"/>
+<path d="M100 118c30 0 54 24 58 54v28H42v-28c4-30 28-54 58-54Z" fill="${shirt}"/>
+<circle cx="100" cy="82" r="34" fill="${skin}"/>
+${crop}
+</svg>`;
+
+const people = {
+  p1: person({
+    ground: '#E4EAE8', skin: '#C9A184', hair: '#2B2320', shirt: '#1D2A2C',
+    crop: `<path d="M66 80c0-22 15-36 34-36s34 14 34 36c0-6-4-11-10-13-8-3-14-8-24-8-13 0-20 7-25 11-6 4-9 6-9 10Z" fill="#2B2320"/>`,
+  }),
+  p2: person({
+    ground: '#E7E5DF', skin: '#E0B694', hair: '#3A2D26', shirt: '#33403F',
+    crop: `<path d="M67 78c2-20 16-34 33-34s31 14 33 34c1 8-3 12-5 5-3-11-11-19-28-19s-25 8-28 19c-2 7-6 3-5-5Z" fill="#3A2D26"/>
+<path d="M78 46c8-6 36-6 44 0-10-4-34-4-44 0Z" fill="#3A2D26"/>`,
+  }),
+  p3: person({
+    ground: '#E3E6EA', skin: '#B9835F', hair: '#191413', shirt: '#243133',
+    crop: `<path d="M63 92c-2-30 14-48 37-48s39 18 37 48c-1 10-6 10-7 1-2-16-5-22-10-24-8-3-12 3-24 1-9-2-14-6-18 0-3 5-6 11-8 23-1 9-6 9-7-1Z" fill="#191413"/>
+<path d="M63 92c-4 22 4 44 12 52-16-10-22-34-12-52Z" fill="#191413"/>
+<path d="M137 92c4 22-4 44-12 52 16-10 22-34 12-52Z" fill="#191413"/>`,
+  }),
+};
+
 /* ---------- write ---------- */
 mkdirSync(join(ROOT, 'assets/categories'), { recursive: true });
 mkdirSync(join(ROOT, 'assets/insights'), { recursive: true });
+mkdirSync(join(ROOT, 'assets/avatars'), { recursive: true });
 let n = 0;
 for (const [k, svg] of Object.entries(art)) {
   const dir = k.startsWith('insight-') ? 'assets/insights' : 'assets/categories';
   const file = join(ROOT, dir, `${k.replace('insight-', '')}.svg`);
   writeFileSync(file, svg, 'utf8');
   console.log(`  ${dir}/${k.replace('insight-', '')}.svg  ${(svg.length / 1024).toFixed(1)} KB`);
+  n++;
+}
+for (const [k, svg] of Object.entries(people)) {
+  writeFileSync(join(ROOT, 'assets/avatars', `${k}.svg`), svg, 'utf8');
+  console.log(`  assets/avatars/${k}.svg  ${(svg.length / 1024).toFixed(1)} KB`);
   n++;
 }
 console.log(`\n${n} visuals written.`);
