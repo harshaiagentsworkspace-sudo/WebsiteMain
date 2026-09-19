@@ -4,5 +4,12 @@
   "installCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/services", "destination": "/#what-we-do", "permanent": false },
+    { "source": "/services/:slug", "destination": "/#what-we-do", "permanent": false },
+    { "source": "/work", "destination": "/about", "permanent": false },
+    { "source": "/work/:slug", "destination": "/about", "permanent": false },
+    { "source": "/pricing", "destination": "/contact", "permanent": false }
+  ]
 }

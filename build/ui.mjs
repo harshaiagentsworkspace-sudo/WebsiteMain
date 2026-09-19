@@ -2,7 +2,7 @@
    OSTENDIC — UI PRIMITIVES
    Every component returns an HTML string. One visual language, all pages.
    =========================================================================== */
-import { site, nav, services, footerQuick } from './data.mjs';
+import { site, nav, services, footerQuick, cta, finalCta } from './data.mjs';
 
 export const esc = (s = '') => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -26,21 +26,21 @@ export const ico = {
   bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.4 2.6 4.6 13.4h6L10 21.4l9.4-11.2h-6.6l.6-7.6Z"/></svg>',
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.4l3.4 2"/></svg>',
+  compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5 5-2.2Z"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg>',
 };
 
 /* ---------- logo marks ----------
-   Abstract geometric marks used by the client / logo wall. The two client
-   marks are drawn in-house; everything else is a generic placeholder shape
-   cycled across the fictitious names in data.mjs. Nothing here reproduces a
-   real third-party logo. */
+   Abstract geometric marks used by the client / logo wall. The client marks
+   are drawn in-house; the generic shapes are the fallback for a client added
+   without its own mark. Nothing here reproduces a real third-party logo. */
 const mk = (body, w = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
 
 export const marks = {
   /* client marks */
   careline: mk('<path d="M12 2.8 4.4 6v6.4c0 4.6 3.1 7.9 7.6 8.8 4.5-.9 7.6-4.2 7.6-8.8V6L12 2.8Z"/><path d="M12 8.4v6M9 11.4h6"/>'),
   vms: mk('<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7.6 8.6 12 16l4.4-7.4"/>'),
-  /* generic placeholder marks */
+  /* generic fallback marks */
   arc: mk('<path d="M3.4 17.2a8.6 8.6 0 0 1 17.2 0"/><circle cx="12" cy="17.2" r="1.7" fill="currentColor" stroke="none"/>'),
   prism: mk('<path d="M12 3.2 21 20.2H3L12 3.2Z"/><path d="M12 3.2v17"/>'),
   orbit: mk('<circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="9.4" ry="4.4" transform="rotate(-28 12 12)"/>'),
@@ -55,7 +55,7 @@ export const marks = {
   ringdot: mk('<circle cx="12" cy="12" r="8.6"/><circle cx="16.4" cy="8" r="2.4" fill="currentColor" stroke="none"/>'),
 };
 
-/* Placeholder marks. Stepping 7 at a time through 12 shapes (7 and 12 are
+/* Fallback marks. Stepping 7 at a time through 12 shapes (7 and 12 are
    coprime) walks all twelve before repeating and keeps neighbouring cards —
    across the row and down the column — on visibly different silhouettes. */
 const genericMarks = ['arc', 'prism', 'orbit', 'stack', 'hexa', 'nodes', 'wave', 'rhomb', 'pulse', 'bloom', 'chev', 'ringdot'];
@@ -75,6 +75,16 @@ export const logoLockup = (name, { mark, src = '', client = false, i = 0 } = {})
     + `${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>`
     + `</span>`;
 };
+
+/* A team-type card for the deck: a UI icon and a plain descriptor. It keeps
+   the lockup's shape (and its data-n, which the cycle uses to avoid
+   duplicates) but none of the wordmark styling, so it never reads as a
+   company logo. */
+const teamIcons = ['spark', 'grid', 'flow', 'layers', 'compass', 'bolt', 'rocket', 'globe', 'mark', 'clock'];
+export const teamLockup = (name, i = 0) =>
+  `<span class="lw__logo lw__logo--team" data-n="${esc(name)}">`
+  + `<span class="lw__mark">${ico[teamIcons[i % teamIcons.length]]}</span>`
+  + `<span class="lw__word">${esc(name)}</span></span>`;
 
 /* ---------- atoms ---------- */
 export const eyebrow = (text, icon = 'dot') =>
@@ -132,74 +142,6 @@ export const rowList = (items) => `
 export const cellGrid = (items, cols = 5) => `
   <div class="cellgrid c${cols}">${items.map(i => `<div>${esc(i)}</div>`).join('')}</div>`;
 
-export const projCard = (p) => {
-  const media = p.image
-    ? `<img src="/${p.image}" alt="${esc(p.name)} — ${esc(p.summary)}" loading="lazy" width="1200" height="750">`
-    : `<div style="display:grid;place-items:center;height:100%;color:var(--ink-3);font-size:var(--t-sm)">${esc(p.name)}</div>`;
-  return `<a class="proj card--link" href="/work/${p.slug}" style="background:none;border:0;padding:0">
-    <div class="proj__media">${media}</div>
-    <div class="stack gap-8">
-      <div class="proj__meta">
-        <span class="tag ${p.kind === 'client' ? 'tag--live' : 'tag--demo'}">${p.kind === 'client' ? 'Client project' : 'Demo build'}</span>
-        <span>${esc(p.category)}</span><span class="dot"></span><span>${esc(p.year)}</span>
-      </div>
-      <h3 class="h3">${esc(p.name)}</h3>
-      <p class="body-sm">${esc(p.summary)}</p>
-    </div>
-  </a>`;
-};
-
-export const faqBlock = (faqs, { eye = 'FAQ', lines = ['Got questions?', 'We’ve {got answers}'] } = {}) => `
-  <section class="section" id="faq">
-    <div class="wrap faq">
-      <div class="faq__grid">
-        <div class="stack gap-24">
-          ${secHead({ eye, lines, lead: 'If you are not sure where to start, or want to see whether we can help, get in touch and we will walk you through it.' })}
-          <div class="faq__aside">
-            <span class="faq__face face">
-              <img src="/${site.principalImage}"
-                   alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
-                   width="200" height="200" loading="lazy" decoding="async">
-            </span>
-            <h3 class="h4">Book an intro call</h3>
-            <p class="body-sm">A 30-minute conversation about your goals, your timeline and whether Ostendic is the right fit. No deck, no pitch.</p>
-            <div class="btn-row">${btn('Book a call', '/contact', 'primary')}</div>
-            <a class="faq__mail" href="mailto:${site.email}">
-              <span class="faq__mail-i">${ico.mail}</span>
-              <span>
-                <span class="faq__mail-k">Prefer email instead?</span>
-                <span class="faq__mail-v">${site.email}</span>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="faq__list">
-          ${faqs.map(([q, a], i) => `
-            <details${i === 0 ? ' open' : ''}>
-              <summary><span>${esc(q)}</span><span class="pm">${ico.plus}</span></summary>
-              <div class="faq__a"><p>${esc(a)}</p></div>
-            </details>`).join('')}
-        </div>
-      </div>
-    </div>
-  </section>`;
-
-export const journeyStrip = () => `
-  <section class="section section--sm section--white">
-    <div class="wrap stack gap-24">
-      <div class="stack gap-16" style="max-width:62ch">
-        ${head([site.differentiator.replace('the system around it', '{the system around it}')], 'h3', 'h2')}
-      </div>
-      <div class="rowlist" style="border-top:1px solid var(--line)">
-        <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:flex-start">
-          ${site.journey.map((s, i) => `
-            <span class="body-sm" style="color:var(--ink);font-weight:500">${esc(s)}</span>
-            ${i < site.journey.length - 1 ? '<span class="body-sm" style="opacity:.4">→</span>' : ''}`).join('')}
-        </div>
-      </div>
-    </div>
-  </section>`;
-
 /* ---------- header / footer ---------- */
 export const header = (current = '') => `
 <header class="hdr">
@@ -209,7 +151,7 @@ export const header = (current = '') => `
       ${nav.map(([l, h]) => `<a href="${h}"${current === h ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
     </nav>
     <div class="hdr__cta">
-      ${btn('Contact us', '/contact', 'primary').replace('<a class', '<a aria-label="Contact us" class')}
+      ${btn(cta.header, '/contact', 'primary').replace('<a class', `<a aria-label="${esc(cta.header)}" class`)}
       <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
   </div>
@@ -217,12 +159,12 @@ export const header = (current = '') => `
 <div class="mnav" id="mnav" aria-hidden="true">
   <div class="mnav__in">
     ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}">${esc(l)}${ico.arrow}</a>`).join('')}
-    <p class="mnav__lbl">Services</p>
+    <p class="mnav__lbl">What we do</p>
     <div class="mnav__svc">
-      ${services.slice(0, 8).map(s => `<a href="/services/${s.slug}">${esc(s.nav)}</a>`).join('')}
+      ${services.map(s => `<a href="/#what-we-do">${esc(s.title)}</a>`).join('')}
     </div>
     <div class="mnav__foot">
-      ${btn('Contact us', '/contact', 'primary')}
+      ${btn(cta.header, '/contact', 'primary')}
       <a class="alink" href="mailto:${site.email}">${site.email}${ico.arrow}</a>
     </div>
   </div>
@@ -231,26 +173,41 @@ export const header = (current = '') => `
 export const footer = () => `
 <footer class="ftr">
   <div class="wrap">
+    <!-- Final CTA. The founder card is the matte intro-call surface from the
+         Orbix reference: portrait, pill and email on one soft cyan wash. -->
     <div class="ftr__cta">
       <div class="stack gap-20">
-        ${head(['Ready to build something', 'worth {showing}?'], 'h2', 'h2')}
-        <p class="lead">Tell us what is not working. We will tell you honestly whether we are the right people to fix it.</p>
+        ${head(finalCta.lines, 'h2', 'h2')}
+        <p class="lead">${esc(finalCta.body[0])}</p>
       </div>
-      <div class="btn-row" style="justify-content:flex-start">
-        ${btn('Start a project', '/contact', 'primary')}
-        ${btn('See the work', '/work', 'ghost')}
+      <div class="callcard">
+        <span class="callcard__face face">
+          <img src="/${site.principalImage}"
+               alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
+               width="200" height="200" loading="lazy" decoding="async">
+        </span>
+        <h3 class="h4">Talk to the founder</h3>
+        <p class="body-sm">${esc(finalCta.body[1])}</p>
+        <div class="btn-row">${btn(cta.primary, '/contact', 'primary')}</div>
+        <a class="callcard__mail" href="mailto:${site.email}">
+          <span class="callcard__mail-i">${ico.mail}</span>
+          <span>
+            <span class="callcard__mail-k">${esc(cta.email)}</span>
+            <span class="callcard__mail-v">${site.email}</span>
+          </span>
+        </a>
       </div>
     </div>
 
     <div class="ftr__cols">
       <div class="ftr__brand">
         <a class="brand" href="/" style="color:var(--ink-inv)">Ostendic</a>
-        <p>${esc(site.sub)}</p>
+        <p>${esc(site.footer)}</p>
         <p style="margin-top:18px"><a class="alink" href="mailto:${site.email}" style="color:var(--ink-inv)">${site.email}${ico.arrow}</a></p>
       </div>
       <div>
-        <h4>Services</h4>
-        <ul>${services.slice(0, 7).map(s => `<li><a href="/services/${s.slug}">${esc(s.nav)}</a></li>`).join('')}</ul>
+        <h4>What we do</h4>
+        <ul>${services.map(s => `<li><a href="/#what-we-do">${esc(s.title)}</a></li>`).join('')}</ul>
       </div>
       <div>
         <h4>Company</h4>

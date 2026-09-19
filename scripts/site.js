@@ -31,7 +31,7 @@
       }
     });
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 960 && document.body.classList.contains('menu-open')) setMenu(false);
+      if (window.innerWidth > 1180 && document.body.classList.contains('menu-open')) setMenu(false);
     });
   }
 

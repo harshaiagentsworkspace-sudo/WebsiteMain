@@ -275,6 +275,7 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
 .g2 { grid-template-columns: repeat(2, 1fr); }
 .g3 { grid-template-columns: repeat(3, 1fr); }
 .g4 { grid-template-columns: repeat(4, 1fr); }
+.g5 { grid-template-columns: repeat(5, 1fr); }
 
 .card {
   background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--r-card);
@@ -332,7 +333,6 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
   border: 1px solid var(--line-2); font-size: var(--t-xs); color: var(--ink-2);
 }
 .tag--live { border-color: var(--accent); color: var(--accent); }
-.tag--demo { border-color: var(--line-2); color: var(--ink-3); }
 
 /* ---------- 8. FAQ ---------- */
 .faq__grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
@@ -413,18 +413,22 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
 .chip:hover { border-color: var(--ink); color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--ink-inv); border-color: var(--ink); }
 
-/* placeholder marker (dev only, visible in code + subtly on page) */
-.is-placeholder { position: relative; }
 
 /* ---------- 12. RESPONSIVE ---------- */
 @media (max-width: 1100px) {
   .g4 { grid-template-columns: repeat(2,1fr); }
+  .g5 { grid-template-columns: repeat(3,1fr); }
   .ftr__cols { grid-template-columns: 1.4fr 1fr 1fr; }
   .cellgrid.c5 { grid-template-columns: repeat(4,1fr); }
 }
-@media (max-width: 960px) {
+/* six nav items plus the CTA need ~1180px on one line; below that the
+   burger takes over rather than letting the links wrap */
+.nav a { white-space: nowrap; }
+@media (max-width: 1180px) {
   .nav { display: none; }
   .burger { display: grid; }
+}
+@media (max-width: 960px) {
   .hdr__cta .btn span.btn-label { display: none; }
   .hdr__cta .btn { padding-inline: 6px; }
   .hero__grid { grid-template-columns: 1fr; }
@@ -433,7 +437,7 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
   .g3 { grid-template-columns: repeat(2,1fr); }
 }
 @media (max-width: 720px) {
-  .g2, .g3, .g4 { grid-template-columns: 1fr; }
+  .g2, .g3, .g4, .g5 { grid-template-columns: 1fr; }
   .cellgrid.c5, .cellgrid.c4 { grid-template-columns: repeat(2,1fr); }
   .cellgrid.c3 { grid-template-columns: repeat(2,1fr); }
   .form__row { grid-template-columns: 1fr; }

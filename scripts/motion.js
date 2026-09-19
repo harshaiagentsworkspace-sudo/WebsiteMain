@@ -174,26 +174,42 @@
       this.cycle(deck, cards);
     },
 
-    /* one-shot entry depth, staggered along each row */
+    /* One-shot entry depth, run as a single sequence in DOM order: row one
+       card one first, through every card in row one, then every card in row
+       two, ending on the last card of row two. Cards that arrive together —
+       including ones already on screen when the deferred script runs — are
+       sorted into that order and staggered one after another, so neither row
+       is ever skipped or animated on its own. */
     reveal: function (grid, cards) {
       document.documentElement.classList.add('js-wall');
-      /* columns come from the computed grid, so the stagger follows whatever
-         breakpoint is actually in force */
-      var cols = (getComputedStyle(grid).gridTemplateColumns || '').split(' ').length || 5;
+      var STEP = 70;
+      var play = function (batch) {
+        batch.sort(function (x, y) { return cards.indexOf(x) - cards.indexOf(y); });
+        batch.forEach(function (c, k) {
+          c.style.transitionDelay = (k * STEP) + 'ms';
+          c.classList.add('in');
+          // the delay is for the entry only; hover must respond immediately
+          setTimeout(function () { c.style.transitionDelay = ''; }, k * STEP + 900);
+        });
+      };
       var io = new IntersectionObserver(function (entries) {
+        var batch = [];
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
-          en.target.style.transitionDelay = ((cards.indexOf(en.target) % cols) * 55) + 'ms';
-          en.target.classList.add('in');
+          batch.push(en.target);
           io.unobserve(en.target);
         });
+        if (batch.length) play(batch);
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
+      var now = [];
       cards.forEach(function (c) {
-        // already on screen when the deferred script runs: show it straight
-        // away rather than fading something the user is looking at
-        if (c.getBoundingClientRect().top < window.innerHeight * 0.95) { c.classList.add('in'); return; }
-        io.observe(c);
+        // a card hidden at this breakpoint takes no slot in the sequence
+        if (c.offsetParent === null) { c.classList.add('in'); return; }
+        if (c.getBoundingClientRect().top < window.innerHeight * 0.92) now.push(c);
+        else io.observe(c);
       });
+      // one frame so the hidden start state paints before the sequence runs
+      if (now.length) requestAnimationFrame(function () { requestAnimationFrame(function () { play(now); }); });
     },
 
     /* deal the queued lockups through the cycling cards */

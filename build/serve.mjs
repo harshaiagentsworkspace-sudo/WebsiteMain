@@ -15,7 +15,7 @@ const TYPES = {
   '.json': 'application/json', '.svg': 'image/svg+xml', '.xml': 'application/xml',
   '.txt': 'text/plain; charset=utf-8', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
   '.png': 'image/png', '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2', '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 };
 
 const exists = async (p) => { try { return (await stat(p)).isFile(); } catch { return false; } };
@@ -71,9 +71,7 @@ const server = createServer(async (req, res) => {
 
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\n  Ostendic dev server\n  http://localhost:${PORT}\n`);
-  console.log('  Routes: /  /about  /services  /work  /pricing  /contact');
-  console.log('          /blog  /careers  /resources  /privacy  /terms');
-  console.log('          /services/<slug>   /work/<slug>\n');
+  console.log('  Routes: /  /about  /contact  /blog  /careers  /resources  /privacy  /terms\n');
   console.log('  Rebuild after editing build/*.mjs:  node build/build.mjs');
   console.log('  Stop: Ctrl+C\n');
 });
