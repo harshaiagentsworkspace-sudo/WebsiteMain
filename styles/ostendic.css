@@ -202,10 +202,40 @@ em.em, .em {
   border-bottom: 1px solid var(--line);
 }
 .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; }
-.brand { display: inline-flex; align-items: baseline; gap: 2px;
-  font-size: clamp(1.32rem, 1.2rem + .4vw, 1.56rem);
-  letter-spacing: -0.035em; font-weight: 700; text-transform: none; }
-.brand .em { font-size: 1.16rem; }
+/* Brand mark. The supplied logo is a black wordmark sitting on a wide white
+   canvas, so the visible box is cropped to the wordmark's own ink bounds and
+   the image is scaled and offset inside it. The crop keeps the file's exact
+   aspect ratio — nothing is stretched, squashed or recoloured — and it hides
+   every pixel of the surrounding margin. --lg-* (intrinsic size) and --ink-*
+   (wordmark bounds) come from build/data.mjs on the element itself, so the
+   numbers stay with the asset rather than being duplicated here.
+   --brand-h is the height of the wordmark itself, not of the source file. */
+.brand { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.brand__crop {
+  --brand-h: 28px;
+  display: block; position: relative; overflow: hidden;
+  width: calc(var(--brand-h) * var(--ink-w) / var(--ink-h));
+  height: var(--brand-h);
+}
+.brand__crop img {
+  position: absolute; display: block; max-width: none;
+  width:  calc(var(--brand-h) * var(--lg-w) / var(--ink-h));
+  height: calc(var(--brand-h) * var(--lg-h) / var(--ink-h));
+  left:   calc(var(--brand-h) * var(--ink-x) / var(--ink-h) * -1);
+  top:    calc(var(--brand-h) * var(--ink-y) / var(--ink-h) * -1);
+}
+/* On the light header the remaining white inside the crop is dropped by
+   multiply: white takes the ground colour, the black wordmark stays black.
+   If a browser skips the blend the logo still reads — it just sits on a
+   faint white tile rather than vanishing into the ground. */
+.hdr .brand__crop img { mix-blend-mode: multiply; }
+/* On the dark footer the white cannot blend away, so it is made deliberate
+   instead: a tight white chip with even padding, no border and no shadow. */
+.brand--plaque {
+  background: #FFFFFF; border-radius: 10px; padding: 11px 14px;
+  align-self: flex-start;
+}
+.brand--plaque .brand__crop { --brand-h: 26px; }
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav a {
   padding: 9px 14px; border-radius: var(--r-pill); font-size: var(--t-sm);
@@ -427,10 +457,12 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
 @media (max-width: 1180px) {
   .nav { display: none; }
   .burger { display: grid; }
+  .hdr .brand__crop { --brand-h: 26px; }
 }
 @media (max-width: 960px) {
   .hdr__cta .btn span.btn-label { display: none; }
   .hdr__cta .btn { padding-inline: 6px; }
+  .hdr .brand__crop { --brand-h: 24px; }
   .hero__grid { grid-template-columns: 1fr; }
   .faq__grid { grid-template-columns: 1fr; }
   .ftr__cta { grid-template-columns: 1fr; align-items: start; }
@@ -449,6 +481,8 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
   .proj__media { aspect-ratio: 4/3; }
 }
 @media (max-width: 640px) {
+  /* the mark shrinks with the bar so it never crowds the CTA or the burger */
+  .hdr .brand__crop { --brand-h: 21px; }
   /* let long eyebrows wrap instead of forcing overflow */
   .eyebrow { white-space: normal; text-align: left; }
   .center .eyebrow, .hero--center .eyebrow { text-align: center; }

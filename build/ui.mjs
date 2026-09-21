@@ -142,11 +142,32 @@ export const rowList = (items) => `
 export const cellGrid = (items, cols = 5) => `
   <div class="cellgrid c${cols}">${items.map(i => `<div>${esc(i)}</div>`).join('')}</div>`;
 
+/* ---------- brand mark ----------
+   The wordmark image is the site's visual logo; it replaces the plain-text
+   "Ostendic" lockup that used to sit in the header and the footer. Ordinary
+   written mentions of the name stay text everywhere else.
+
+   `site.logo.ink` is the wordmark's bounding box inside the supplied file,
+   which carries a wide white margin. Those numbers ride in as custom
+   properties and CSS crops the visible box down to them, so the margin never
+   paints, the artwork keeps its exact proportions, and the file itself is
+   left untouched. The <img> keeps its intrinsic width/height and the crop box
+   is sized in CSS, so the slot is reserved before the image loads. */
+const brandMark = ({ eager = false } = {}) => {
+  const L = site.logo;
+  return `<span class="brand__crop" style="--lg-w:${L.w};--lg-h:${L.h};`
+    + `--ink-x:${L.ink.x};--ink-y:${L.ink.y};--ink-w:${L.ink.w};--ink-h:${L.ink.h}">`
+    + `<img src="${encodeURI('/' + L.src)}" alt="${esc(site.name)}"`
+    + ` width="${L.w}" height="${L.h}" decoding="async"`
+    + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + '>'
+    + `</span>`;
+};
+
 /* ---------- header / footer ---------- */
 export const header = (current = '') => `
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a class="brand" href="/" aria-label="Ostendic home">Ostendic</a>
+    <a class="brand" href="/" aria-label="${esc(site.name)} home">${brandMark({ eager: true })}</a>
     <nav class="nav" aria-label="Primary">
       ${nav.map(([l, h]) => `<a href="${h}"${current === h ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
     </nav>
@@ -201,7 +222,7 @@ export const footer = () => `
 
     <div class="ftr__cols">
       <div class="ftr__brand">
-        <a class="brand" href="/" style="color:var(--ink-inv)">Ostendic</a>
+        <a class="brand brand--plaque" href="/">${brandMark()}</a>
         <p>${esc(site.footer)}</p>
         <p style="margin-top:18px"><a class="alink" href="mailto:${site.email}" style="color:var(--ink-inv)">${site.email}${ico.arrow}</a></p>
       </div>

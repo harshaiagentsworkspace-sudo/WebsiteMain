@@ -17,6 +17,16 @@ export const site = {
   principalImage: 'assets/harsh-dubey.jpg',
   principalRole: 'Founder',
   principalBio: 'Brand & AI Strategist',
+  /* Brand mark. The supplied artwork is a black wordmark on a wide white
+     canvas, so `ink` records the wordmark's own bounding box inside it. The
+     header and footer lockups pass these numbers to CSS as custom properties
+     and crop to `ink`, which keeps the artwork's exact aspect ratio and means
+     the source file is never edited, recoloured or re-exported. */
+  logo: {
+    src: 'assets/ostendic-logo.jpg',
+    w: 1746, h: 901,                          // intrinsic pixel size
+    ink: { x: 296, y: 330, w: 1159, h: 223 }, // wordmark bounds within it
+  },
   markets: ['United States', 'United Kingdom', 'Europe', 'India'],
   founded: '2024',
   /* Positioning — used for meta descriptions and structured data */

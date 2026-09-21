@@ -66,8 +66,12 @@ add('terms.html', page({
   ].join('')),
 }));
 
-/* favicon */
-add('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111314"/><text x="16" y="23" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#F4F4F2" text-anchor="middle">O</text></svg>`);
+/* favicon — NOT generated. /favicon.svg is the supplied brand mark (the open
+   "O" ring, squared up with its own white ground) and is checked in as a
+   static asset. The placeholder letterform this build used to emit was
+   removed when the real artwork arrived; do not re-add it, or a build will
+   overwrite the real icon. The <link rel="icon"> in ui.mjs still points at
+   /favicon.svg, so the path is unchanged. */
 
 console.log(`Built ${written.length} files:`);
 for (const w of written) console.log('  ' + w);

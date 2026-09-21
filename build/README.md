@@ -10,7 +10,10 @@ on the host — HTML is generated into the project root and served directly.
 | `data.mjs`  | all content. Single source of truth. Placeholders marked `TEMP-PLACEHOLDER`. |
 | `ui.mjs`    | primitives: buttons, eyebrows, headings, cards, FAQ, header, footer, page shell |
 | `pages.mjs` | page compositions — each page varies its own section rhythm |
-| `build.mjs` | writes `.html`, `sitemap.xml`, `robots.txt`, `favicon.svg` |
+| `build.mjs` | writes `.html`, `sitemap.xml`, `robots.txt` |
+
+`favicon.svg` in the project root is a supplied asset, not build output — the
+generator used to emit a placeholder letterform and no longer does.
 
 Runtime: `styles/ostendic.css` + `scripts/site.js` (progressive enhancement only —
 every page is fully readable and navigable with JS disabled).
