@@ -98,21 +98,111 @@ export const logoWall = () => `
   </div>
 </section>`;
 
-/* ---------- 3. INTRO ----------
-   The editorial pause after the deck: one statement, one answer. */
+/* ---------- 3. INTRO — FRONT END / BACK END SHOWCASE ----------
+   One statement, then the same idea drawn: the website a customer uses
+   (A) and the agentic workflow the team runs behind it (B), joined by one
+   line from the mockup's "Send enquiry" button into the workflow's first
+   node. Both visuals are live HTML in the site's own design language —
+   no screenshots, no stock imagery — and purely illustrative, so they are
+   aria-hidden; the copy above carries the meaning. motion.js draws the
+   connector and pauses the loops off-screen; without JS the panels still
+   read, joined by a static CSS rule. */
+const flowNode = (icon, t, d, cls = '', extra = '') => `
+          <li class="wf__node ${cls}"${extra}>
+            <span class="wf__i">${ico[icon]}</span>
+            <span class="wf__txt"><span class="wf__t">${esc(t)}</span><span class="wf__d">${esc(d)}</span></span>
+          </li>`;
+
 export const introBlock = () => `
-<section class="section section--white" data-rv>
+<section class="section duo" data-rv>
   <div class="wrap">
-    <div class="xpt xpt--intro">
-      <div class="stack gap-24">
-        ${head(intro.lines, 'h2', 'h2')}
+    <div class="duo__copy">
+      <div class="duo__lead">
+        ${head(intro.lines, 'h2 duo__h', 'h2')}
         <p class="lead">${esc(intro.lead)}</p>
       </div>
-      <div class="xpt__copy">
-        ${intro.body.map((p, i) => `<p class="${i === 0 ? 'xpt__say' : 'body-sm'}">${esc(p)}</p>`).join('')}
+      <div class="duo__side">
+        <p class="duo__say">${esc(intro.body[0])}</p>
+        <p class="body-sm">${esc(intro.body[1])}</p>
         <div class="btn-row">${btn(cta.primary, '/contact', 'primary', { avatar: true })}</div>
       </div>
     </div>
+
+    <div class="duo__stage" data-duo aria-hidden="true">
+      <svg class="duo__link" focusable="false">
+        <path class="duo__path" id="duoPath" pathLength="1"/><path class="duo__flow"/><circle class="duo__port" r="3.5"/>
+        <circle class="duo__dot" r="4">
+          <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;.28;1"><mpath href="#duoPath"/></animateMotion>
+          <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.04;.26;.3;1"/>
+        </circle>
+      </svg>
+
+      <!-- A — the customer-facing experience -->
+      <div class="duo__area duo__area--a">
+        <p class="duo__tag"><span class="tnum">01</span> What customers see <em>Web development &amp; UI/UX</em></p>
+        <div class="mk">
+          <div class="mk__win">
+            <div class="mk__bar"><i></i><i></i><i></i><span class="mk__url">yourbusiness.com</span></div>
+            <div class="mk__page">
+              <div class="mk__nav">
+                <span class="mk__logo"><b></b>Your brand</span>
+                <span class="mk__links"><span>Services</span><span>Work</span><span>About</span></span>
+                <span class="mk__pill">Book a call</span>
+              </div>
+              <div class="mk__hero">
+                <span class="mk__eye">Trusted local experts</span>
+                <p class="mk__h">Services your customers <em>understand.</em></p>
+                <span class="mk__ln"></span><span class="mk__ln mk__ln--s"></span>
+                <span class="mk__ctas"><span class="mk__pill">Get started</span><span class="mk__pill mk__pill--g">Our services</span></span>
+              </div>
+              <div class="mk__cards">
+                <span class="mk__card"><i>${ico.layers}</i><b>Consulting</b><s></s></span>
+                <span class="mk__card"><i>${ico.globe}</i><b>Online booking</b><s></s></span>
+                <span class="mk__card"><i>${ico.check}</i><b>Support</b><s></s></span>
+              </div>
+            </div>
+          </div>
+          <div class="mk__phone">
+            <span class="mk__notch"></span>
+            <span class="mk__logo"><b></b></span>
+            <p class="mk__h">Services your customers <em>understand.</em></p>
+            <span class="mk__ln"></span><span class="mk__ln mk__ln--s"></span>
+            <span class="mk__pill">Book a call</span>
+          </div>
+          <div class="mk__form">
+            <p class="mk__ft">Book a consultation</p>
+            <span class="mk__fld"><small>Name</small>Alex Morgan</span>
+            <span class="mk__fld"><small>Interested in</small>Website redesign</span>
+            <span class="mk__send" data-duo-from>Send enquiry<i>${ico.arrow}</i></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- B — the business operations behind it -->
+      <div class="duo__area duo__area--b">
+        <p class="duo__tag"><span class="tnum">02</span> What your team runs <em>Agentic AI workflows</em></p>
+        <div class="wf">
+          <div class="wf__head"><span>Enquiry workflow</span><span class="wf__live"><i></i>Running</span></div>
+          <ol class="wf__list">
+            ${flowNode('mail', 'New enquiry received', 'From the website form', 'wf__node--in', ' data-duo-to style="--n:0"')}
+            ${flowNode('spark', 'AI agent reviews it', 'Qualifies the request, writes a summary', 'wf__node--agent', ' style="--n:1"')}
+            <li class="wf__tools" style="--n:2">
+              <span class="wf__tool"><i>${ico.grid}</i>CRM updated</span>
+              <span class="wf__tool"><i>${ico.clock}</i>Call slots held</span>
+              <span class="wf__tool"><i>${ico.flow}</i>Task assigned</span>
+            </li>
+            ${flowNode('mail', 'Follow-up drafted', 'Waiting for your approval', '', ' style="--n:3"')}
+            ${flowNode('check', 'Team notified', 'Lead ready for a call', 'wf__node--done', ' style="--n:4"')}
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <ol class="duo__steps" aria-label="How the two work together">
+      <li><span class="tnum">01</span>Customer experience</li>
+      <li><span class="tnum">02</span>Business workflow</li>
+      <li><span class="tnum">03</span>Better coordinated operations</li>
+    </ol>
   </div>
 </section>`;
 

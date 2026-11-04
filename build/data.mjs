@@ -66,7 +66,7 @@ export const intro = {
   lead: 'Most businesses need both to work well: a digital experience that explains what they do and earns trust, and systems that handle the repetitive work between an enquiry and a delivered result.',
   body: [
     'Ostendic works across both.',
-    'We design and build websites, web applications and digital products — and the agentic AI workflows that connect your tools, coordinate tasks and reduce manual effort. Some businesses need one. Some need both.',
+    'We design and build websites, web applications and digital products, and the agentic AI workflows that connect your tools, coordinate tasks and reduce manual effort. Some businesses need one. Some need both.',
   ],
 };
 
