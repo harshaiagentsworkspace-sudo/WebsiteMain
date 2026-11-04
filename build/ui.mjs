@@ -31,62 +31,6 @@ export const ico = {
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg>',
 };
 
-/* ---------- logo marks ----------
-   Abstract geometric marks used by the client / logo wall. The client marks
-   are drawn in-house; the generic shapes are the fallback for a client added
-   without its own mark. Nothing here reproduces a real third-party logo. */
-const mk = (body, w = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
-
-export const marks = {
-  /* client marks */
-  careline: mk('<path d="M12 2.8 4.4 6v6.4c0 4.6 3.1 7.9 7.6 8.8 4.5-.9 7.6-4.2 7.6-8.8V6L12 2.8Z"/><path d="M12 8.4v6M9 11.4h6"/>'),
-  vms: mk('<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7.6 8.6 12 16l4.4-7.4"/>'),
-  /* generic fallback marks */
-  arc: mk('<path d="M3.4 17.2a8.6 8.6 0 0 1 17.2 0"/><circle cx="12" cy="17.2" r="1.7" fill="currentColor" stroke="none"/>'),
-  prism: mk('<path d="M12 3.2 21 20.2H3L12 3.2Z"/><path d="M12 3.2v17"/>'),
-  orbit: mk('<circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="9.4" ry="4.4" transform="rotate(-28 12 12)"/>'),
-  stack: mk('<rect x="4" y="4" width="13" height="5" rx="2"/><rect x="7" y="10.6" width="13" height="5" rx="2"/><rect x="4" y="17" width="13" height="3" rx="1.5"/>'),
-  hexa: mk('<path d="m12 2.8 8 4.6v9.2l-8 4.6-8-4.6V7.4l8-4.6Z"/><circle cx="12" cy="12" r="2.4"/>'),
-  nodes: mk('<circle cx="5" cy="6.6" r="2.4"/><circle cx="19" cy="12" r="2.4"/><circle cx="7.4" cy="18.4" r="2.4"/><path d="m7.2 7.8 9.4 3M17 13.7l-7.5 3.6"/>'),
-  wave: mk('<path d="M2.6 14.4c2.6-6 6.2-6 9.4 0s6.8 6 9.4 0"/><path d="M2.6 9c2.6-4.4 6.2-4.4 9.4 0"/>'),
-  rhomb: mk('<path d="m12 2.6 9.4 9.4L12 21.4 2.6 12 12 2.6Z"/><path d="m12 8 4 4-4 4-4-4 4-4Z"/>'),
-  pulse: mk('<path d="M2.6 12.4h4.2l2.4-6 3.6 12 2.6-7.2 1.8 3.4h4.2"/>'),
-  bloom: mk('<path d="M12 2.8c3.4 3 3.4 6.2 0 9.2-3.4-3-3.4-6.2 0-9.2Zm0 18.4c-3.4-3-3.4-6.2 0-9.2 3.4 3 3.4 6.2 0 9.2Z"/><path d="M2.8 12c3-3.4 6.2-3.4 9.2 0-3 3.4-6.2 3.4-9.2 0Zm18.4 0c-3 3.4-6.2 3.4-9.2 0 3-3.4 6.2-3.4 9.2 0Z"/>'),
-  chev: mk('<path d="m5.4 6.4 6 5.6-6 5.6M13 6.4l6 5.6-6 5.6"/>'),
-  ringdot: mk('<circle cx="12" cy="12" r="8.6"/><circle cx="16.4" cy="8" r="2.4" fill="currentColor" stroke="none"/>'),
-};
-
-/* Fallback marks. Stepping 7 at a time through 12 shapes (7 and 12 are
-   coprime) walks all twelve before repeating and keeps neighbouring cards —
-   across the row and down the column — on visibly different silhouettes. */
-const genericMarks = ['arc', 'prism', 'orbit', 'stack', 'hexa', 'nodes', 'wave', 'rhomb', 'pulse', 'bloom', 'chev', 'ringdot'];
-const markAt = (i) => genericMarks[(i * 7) % genericMarks.length];
-
-/* Wordmark treatment, varied deterministically so the wall reads like a
-   real set of identities rather than one repeated lockup. */
-const wordStyles = ['', ' lw__word--caps', ' lw__word--serif', ' lw__word--caps', '', ' lw__word--tight'];
-
-/* Just the lockup. The card shell around it is built by the deck in
-   sections.mjs, because one card face can hold any lockup as it cycles. */
-export const logoLockup = (name, { mark, src = '', client = false, i = 0 } = {}) => {
-  const glyph = src
-    ? `<img class="lw__img" src="/${src}" alt="" width="120" height="40" loading="lazy">`
-    : `<span class="lw__mark">${marks[mark] || marks[markAt(i)]}</span>`;
-  return `<span class="lw__logo${client ? ' is-client' : ''}" data-n="${esc(name)}">`
-    + `${glyph}<span class="lw__word${client ? '' : wordStyles[i % wordStyles.length]}">${esc(name)}</span>`
-    + `</span>`;
-};
-
-/* A team-type card for the deck: a UI icon and a plain descriptor. It keeps
-   the lockup's shape (and its data-n, which the cycle uses to avoid
-   duplicates) but none of the wordmark styling, so it never reads as a
-   company logo. */
-const teamIcons = ['spark', 'grid', 'flow', 'layers', 'compass', 'bolt', 'rocket', 'globe', 'mark', 'clock'];
-export const teamLockup = (name, i = 0) =>
-  `<span class="lw__logo lw__logo--team" data-n="${esc(name)}">`
-  + `<span class="lw__mark">${ico[teamIcons[i % teamIcons.length]]}</span>`
-  + `<span class="lw__word">${esc(name)}</span></span>`;
-
 /* ---------- atoms ---------- */
 export const eyebrow = (text, icon = 'dot') =>
   `<span class="eyebrow">${ico[icon] || ico.dot}${esc(text)}</span>`;

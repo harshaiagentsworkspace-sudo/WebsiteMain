@@ -6,9 +6,9 @@
    =========================================================================== */
 import {
   site, cta, heroCopy, intro, pillars, servicesHead, audiences, audiencesHead,
-  signature, process, processHead, pov, aboutCopy, posts, clients, teamTypes,
+  signature, process, processHead, pov, aboutCopy, posts, brands,
 } from './data.mjs';
-import { esc, ico, eyebrow, btn, head, secHead, logoLockup, teamLockup } from './ui.mjs';
+import { esc, ico, eyebrow, btn, head, secHead } from './ui.mjs';
 
 
 /* faint structural guides at the container edges */
@@ -47,53 +47,36 @@ export const hero = () => `
   </div>
 </section>`;
 
-/* ---------- 2. CLIENT / LOGO DECK ----------
-   Two rows of cards, not a directory. Ten slots hold the wall at a compact
-   height; the rest of the roster cycles through them on the flip mechanism
-   rather than being laid out as another five rows of static grid.
+/* ---------- 2. CLIENT SHOWCASE — LOGO MARQUEE ----------
+   Exactly four brands (`brands`), one continuous row, no cards.
 
-   One sequence, no special cases: every slot flips, starting at the first
-   card of the first row and running through both rows in order.
+   The row is rendered twice inside one track and the track slides by
+   exactly half its width, so the loop point is invisible. The second copy
+   is the same four brands — aria-hidden, empty alts — purely so the row
+   never runs out; it adds no new names. Each copy is at least one viewport
+   wide (CSS), which is what keeps the seam off-screen with only four logos.
 
-   Company names on the deck come only from `clients`. The other cards are
-   team types (`teamTypes`), drawn as plain descriptors rather than logos.
-   Clients are dealt back in from the pool, so they keep reappearing as the
-   deck cycles instead of disappearing after the first pass. */
-const SLOTS = 10;
+   Pure CSS animation: no scroll listener, no JS, nothing touches page
+   scrolling. Hover pauses it on pointer devices; prefers-reduced-motion
+   stops it and shows the single row, centred. */
+const brandMark = (b, hidden) => b.src
+  ? `<img class="mq__img" src="/${encodeURI(b.src)}" alt="${hidden ? '' : esc(b.name)}"
+          width="${b.w}" height="${b.h}" loading="lazy" decoding="async">`
+  : `<span class="mq__word mq__word--${b.style}">${b.parts
+      ? b.parts.map((p, i) => `<span${i ? ' class="mq__word-b"' : ''}>${esc(p)}</span>`).join('')
+      : esc(b.name)}</span>`;
 
-export const logoWall = () => {
-  const client = (c, i) => logoLockup(c.name, { mark: c.mark, src: c.src, client: true, i });
-  /* the first slots-worth of team types start face-up. The <template> pool
-     holds the whole roster — the unseen team types first, then the clients
-     interleaved with the rest — and motion.js skips whatever is already
-     face-up. A pool smaller than the grid would run dry and stall the deck. */
-  const onDeck = teamTypes.slice(0, SLOTS - clients.length);
-  const rest = teamTypes.slice(SLOTS - clients.length);
-  const pool = rest.map((n, i) => teamLockup(n, i + onDeck.length));
-  onDeck.forEach((n, i) => {
-    if (clients[i]) pool.push(client(clients[i], i));
-    pool.push(teamLockup(n, i));
-  });
+const brandRow = (hidden = false) => `
+      <ul class="mq__group"${hidden ? ' aria-hidden="true"' : ' aria-label="Brands"'}>
+        ${brands.map(b => `<li class="mq__item">${brandMark(b, hidden)}</li>`).join('')}
+      </ul>`;
 
-  const slot = (lockup) => `
-    <div class="lw__card">
-      <div class="lw__slot">
-        <div class="lw__f">${lockup}</div>
-        <div class="lw__b" aria-hidden="true"></div>
-      </div>
-    </div>`;
-
-  const cards =
-    clients.map((c, i) => slot(logoLockup(c.name, { mark: c.mark, src: c.src, client: true, i }))).join('') +
-    onDeck.map((n, i) => slot(teamLockup(n, i))).join('');
-
-  return `
-<section class="section section--sm logowall" data-deck>
+export const logoWall = () => `
+<section class="section section--sm logowall">
   <!-- clients-vortex.mp4 is the web encode of the
        Animate_swirling_sky_vortex_1080p master (see .gitignore).
-       Environmental layer only. It sits under every card, takes no pointer
-       events and is aria-hidden, so the flip deck above it is untouched:
-       same DOM, same z-order, same observers, same timer. -->
+       Environmental layer only. It sits under the marquee, takes no pointer
+       events and is aria-hidden. -->
   <div class="lw__bg" aria-hidden="true">
     <div class="lw__media">
       <video class="lw__vid" autoplay muted loop playsinline preload="metadata"
@@ -104,15 +87,16 @@ export const logoWall = () => {
     </div>
     <span class="lw__veil"></span>
   </div>
-  <div class="wrap stack gap-32">
+  <div class="wrap">
     <div class="lw__head">
-      <p class="lw__lede">Our clients, and the teams <em class="em">Ostendic is built for</em></p>
+      <p class="lw__lede">Brands we have <em class="em">worked with</em></p>
     </div>
-    <div class="lw">${cards}</div>
-    <template data-pool>${pool.join('')}</template>
+  </div>
+  <div class="mq">
+    <div class="mq__track">${brandRow()}${brandRow(true)}
+    </div>
   </div>
 </section>`;
-};
 
 /* ---------- 3. INTRO ----------
    The editorial pause after the deck: one statement, one answer. */

@@ -204,24 +204,22 @@ export const finalCta = {
   ],
 };
 
-/* ---------- CLIENT / LOGO WALL ----------
-   `clients` are real Ostendic client brands and the only company names on
-   the deck. The marks are typographic wordmarks drawn in-house; set `src`
-   to an official logo file (e.g. 'assets/logos/vms-careline.svg') to render
-   that artwork instead. Add real, cleared clients here as they come.
+/* ---------- CLIENT SHOWCASE (logo marquee) ----------
+   Exactly these four brands, in this order, and no others.
 
-   `teamTypes` fill the remaining cards. They are audience descriptors,
-   rendered as plain text with a UI icon — deliberately not styled as logos,
-   so no card implies a client relationship. */
-export const clients = [
-  { name: 'VMS Careline', mark: 'careline', src: '' },
-  { name: 'VMS',          mark: 'vms',      src: '' },
-];
+   `src` is official logo artwork. VMS Careline uses the supplied
+   "Careline Logo_2.png", cropped to its own bounds (transparent margin
+   removed, nothing redrawn) as assets/logos/vms-careline.png; w/h are that
+   file's pixel size so the slot keeps the logo's exact aspect ratio.
 
-export const teamTypes = [
-  'Founders', 'Startups', 'Growing businesses', 'E-commerce brands',
-  'SaaS teams', 'Service businesses', 'Agencies', 'Marketing teams',
-  'Sales teams', 'Operations teams', 'Customer support', 'Leadership teams',
+   Brands without a supplied logo file render as a typographic wordmark of
+   their exact name. `style` picks one of a few restrained treatments.
+   Swap in `src` (+ w/h) when official artwork arrives. */
+export const brands = [
+  { name: 'VMS Careline',  src: 'assets/logos/vms-careline.png', w: 900, h: 290 },
+  { name: 'TrueReview',    style: 'split', parts: ['True', 'Review'] },
+  { name: 'Viral Check',   style: 'caps' },
+  { name: 'Launch Mirror', style: 'serif' },
 ];
 
 /* ---------- WORK ----------

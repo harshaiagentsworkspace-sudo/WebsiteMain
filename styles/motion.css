@@ -119,18 +119,10 @@
       rgba(242,242,240,0) 56%, var(--bg) 100%);
 }
 
-/* ---------- 2. client / logo deck ----------
-   Two rows of substantial cards. The roster is larger than the grid, so the
-   cards flip to cycle the rest through rather than growing more rows.
-
-   The flip is driven by a timer in motion.js, not by scroll position: the
-   wheel is never listened to and the page is never held. Depth on entry is
-   an IntersectionObserver plus a CSS transition that runs once per card. */
-/* The deck sits on its own atmospheric ground. The clip is a bright painterly
-   sky, so it is pushed under a deep veil rather than laid over the light page
-   ground: white cards on a dark, moving field separate far better than white
-   cards on a pale one. The cards themselves are untouched — still opaque,
-   still bordered, still the brightest thing in the section. */
+/* ---------- 2. client showcase ----------
+   The marquee sits on its own atmospheric ground: the bright painterly sky
+   clip is pushed under a deep veil, so the white logos read clearly over a
+   dark, slowly moving field. */
 .logowall { position: relative; overflow: hidden; isolation: isolate;
   background: var(--bg-dark); }
 .logowall > .wrap { position: relative; z-index: 1; }
@@ -161,58 +153,45 @@
 .lw__lede { font-size: clamp(1.08rem,.92rem + .78vw,1.55rem); line-height: 1.34;
   letter-spacing: -.022em; color: var(--ink); max-width: 38ch; text-wrap: balance; }
 
-.lw { display: grid; grid-template-columns: repeat(5,1fr); gap: clamp(10px,1.1vw,16px);
-  perspective: 1500px; }
-
-/* the card is the box the grid measures; the slot inside it is what turns */
-.lw__card { position: relative; min-height: clamp(112px,10vw,152px);
-  perspective: 1100px; transition: transform .45s var(--ease); }
-.lw__card:hover { transform: translateY(-3px); }
-.lw__slot { position: absolute; inset: 0; transform-style: preserve-3d;
-  transition: transform .92s var(--ease); }
-.lw__card.is-flipped .lw__slot { transform: rotateX(180deg); }
-
-.lw__f, .lw__b {
-  position: absolute; inset: 0; display: grid; place-items: center;
-  padding: 18px 14px; border-radius: var(--r-card);
-  background: var(--bg-alt); border: 1px solid var(--line);
-  backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  box-shadow: 0 1px 2px rgba(17,19,20,.035), 0 14px 28px -22px rgba(17,19,20,.3);
-  transition: box-shadow .4s var(--ease), border-color .3s var(--ease);
+/* ---------- client marquee ----------
+   One continuous row of four brands. The track holds the row twice and
+   slides by exactly -50%, so the end of copy one lands where copy two began:
+   no jump, no reset. Each copy is at least the full viewport wide and spaces
+   its four logos across that width, so even on a very wide screen the seam
+   never comes into view. Transform-only animation on its own layer: the
+   compositor runs it and page scrolling is never touched. */
+.mq { position: relative; z-index: 1; overflow: hidden; margin-top: clamp(28px,3.4vw,48px);
+  /* soft edges so logos fade in and out rather than being cut by the frame */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
+.mq__track { display: flex; width: max-content;
+  animation: mq-slide var(--mq-dur, 46s) linear infinite; will-change: transform; }
+.mq__group { flex: none; display: flex; align-items: center; justify-content: space-around;
+  min-width: 100vw; gap: var(--mq-gap); padding-inline: calc(var(--mq-gap) / 2);
+  --mq-gap: clamp(56px, 7vw, 132px); margin: 0; list-style: none; }
+.mq__item { flex: none; display: flex; align-items: center; justify-content: center;
+  height: var(--mq-h, 52px); }
+@keyframes mq-slide { to { transform: translate3d(-50%, 0, 0); } }
+/* pause on hover only where a real pointer can hover */
+@media (hover: hover) and (pointer: fine) {
+  .mq:hover .mq__track { animation-play-state: paused; }
 }
-.lw__b { transform: rotateX(180deg); }
-.lw__card:hover .lw__f, .lw__card:hover .lw__b {
-  box-shadow: var(--shadow-lift); border-color: var(--line-2); }
-/* Client brands carry a quiet accent that sets them apart from the team-type
-   cards beside them. It keys off the lockup, not the slot,
-   because a client can be dealt into any card as the deck cycles. */
-.lw__f:has(.is-client), .lw__b:has(.is-client) {
-  box-shadow: inset 0 0 0 2px var(--accent-soft),
-    0 1px 2px rgba(17,19,20,.035), 0 14px 28px -22px rgba(17,19,20,.3); }
-.lw__logo.is-client .lw__mark { color: var(--accent); }
 
-.lw__logo { display: flex; flex-direction: column; align-items: center; gap: 10px;
-  color: var(--ink); text-align: center; }
-.lw__mark { width: clamp(24px,2.3vw,32px); height: clamp(24px,2.3vw,32px); }
-.lw__mark svg { width: 100%; height: 100%; }
-.lw__img { width: auto; max-height: 36px; object-fit: contain; }
-/* one wall, several wordmark treatments — a real logo wall is never uniform */
-.lw__word { font-size: clamp(.9rem,.82rem + .3vw,1.06rem); font-weight: 600;
-  letter-spacing: -.024em; line-height: 1.15; }
-.lw__word--caps { text-transform: uppercase; font-weight: 500;
-  font-size: clamp(.72rem,.66rem + .2vw,.84rem); letter-spacing: .17em; }
-.lw__word--serif { font-family: var(--serif); font-style: italic; font-weight: 400;
-  font-size: clamp(1.02rem,.9rem + .42vw,1.24rem); letter-spacing: -.008em; }
-.lw__word--tight { font-weight: 700; letter-spacing: -.052em; }
-/* team-type cards: a plain descriptor, never a wordmark */
-.lw__logo--team .lw__mark { color: var(--ink-2); }
-.lw__logo--team .lw__word { font-weight: 500; letter-spacing: -.02em; }
-
-/* depth on entry — staggered per card by motion.js, then the page is left
-   alone. No scroll listener drives this, so the wheel is never taxed. */
-.js-wall .lw__card { opacity: 0; transform: translateY(30px) scale(.96) rotateX(11deg); }
-.js-wall .lw__card.in { opacity: 1; transform: none;
-  transition: opacity .6s var(--ease), transform .72s var(--ease); }
+/* Logos render monochrome white on the dark ground for one consistent,
+   legible row. The supplied artwork is untouched: the filter recolours it
+   on screen only, and height-only sizing keeps its exact aspect ratio. */
+.mq__img { display: block; height: 100%; width: auto; max-width: none;
+  filter: brightness(0) invert(1); opacity: .9; }
+/* Typographic wordmarks for brands without supplied artwork — the exact
+   name, restrained type, sized to sit at the same optical height. */
+.mq__word { display: block; white-space: nowrap; color: rgba(255,255,255,.9);
+  line-height: 1; font-size: calc(var(--mq-h, 52px) * .56); }
+.mq__word--split { font-weight: 600; letter-spacing: -.035em; }
+.mq__word--split .mq__word-b { font-weight: 400; color: rgba(255,255,255,.7); }
+.mq__word--caps { font-weight: 500; text-transform: uppercase; letter-spacing: .2em;
+  font-size: calc(var(--mq-h, 52px) * .4); }
+.mq__word--serif { font-family: var(--serif); font-style: italic; font-weight: 400;
+  letter-spacing: -.01em; font-size: calc(var(--mq-h, 52px) * .66); }
 
 /* ---------- 3. expertise + capability blocks ---------- */
 .xpt { display: grid; grid-template-columns: 1.05fr .74fr; gap: clamp(28px,5vw,88px);
@@ -728,8 +707,6 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
   .posts { grid-template-columns: repeat(2,1fr); }
   /* two rows at every width: the column count sets how many slots are live,
      and motion.js only cycles the ones actually on screen */
-  .lw { grid-template-columns: repeat(4,1fr); }
-  .lw__card:nth-child(n+9) { display: none; }
 }
 @media (max-width: 960px) {
   .xpt { grid-template-columns: 1fr; }
@@ -750,8 +727,9 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
   .panel__media { min-height: 150px; border-radius: 16px; }
 }
 @media (max-width: 860px) {
-  .lw { grid-template-columns: repeat(3,1fr); }
-  .lw__card:nth-child(n+7) { display: none; }
+  .mq { --mq-h: 44px; }
+  .mq__group { --mq-gap: clamp(48px, 8vw, 80px); }
+  .mq__track { --mq-dur: 38s; }
 }
 @media (max-width: 720px) {
   .proof, .reviews, .posts { grid-template-columns: 1fr; }
@@ -782,10 +760,11 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
   .chatwin { transform: none; }
 }
 @media (max-width: 600px) {
-  .lw { grid-template-columns: repeat(2,1fr); gap: 10px; }
-  .lw__card { min-height: 104px; }
-  .lw__f, .lw__b { padding: 14px 10px; }
-  .lw__card:nth-child(n+5) { display: none; }
+  .mq { --mq-h: 36px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); }
+  .mq__group { --mq-gap: 52px; justify-content: flex-start; }
+  .mq__track { --mq-dur: 30s; }
   /* the pill must never outgrow a narrow screen */
   .btn--ava { padding-left: 18px; }
   .btn__ava { width: 36px; height: 36px; }
@@ -794,11 +773,13 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
 /* ---------- 14. reduced motion (mandatory) ---------- */
 @media (prefers-reduced-motion: reduce) {
   .btn:hover, .btn:active, .btn:hover .btn__ico { transform: none !important; }
-  .js-wall .lw__card { opacity: 1 !important; transform: none !important; }
-  .lw__card:hover { transform: none !important; }
-  .lw__card.is-flipped .lw__slot { transform: none !important; }
-  .lw__slot { transition: none !important; }
-  .lw__b { display: none !important; }
+  /* the marquee stops: one still row of the four brands, centred, wrapping
+     if it must, with the loop copy removed */
+  .mq { -webkit-mask-image: none; mask-image: none; }
+  .mq__track { animation: none !important; width: 100%; }
+  .mq__group { flex: 1 1 auto; min-width: 0; max-width: 100%; flex-wrap: wrap;
+    justify-content: center; row-gap: 28px; }
+  .mq__group[aria-hidden="true"] { display: none; }
   .btn--ava:hover .btn__ava, .callcard__mail:hover { transform: none !important; }
   .caps--3 .cap:hover { transform: none !important; }
   /* the hero keeps its atmosphere, but as the still poster rather than motion */
