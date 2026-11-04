@@ -6,10 +6,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/services", "destination": "/#what-we-do", "permanent": false },
-    { "source": "/services/:slug", "destination": "/#what-we-do", "permanent": false },
-    { "source": "/work", "destination": "/about", "permanent": false },
-    { "source": "/work/:slug", "destination": "/about", "permanent": false },
-    { "source": "/pricing", "destination": "/contact", "permanent": false }
+    { "source": "/services/ai-automation", "destination": "/services/agentic-ai-workflows", "permanent": false },
+    { "source": "/services/:slug(ui-ux-design|brand-design|ecommerce|saas-product-design|mvp-development|motion-design|creative-marketing|dashboard-design)", "destination": "/services/web-development", "permanent": false },
+    { "source": "/work/:slug", "destination": "/work", "permanent": false }
   ]
 }

@@ -4,7 +4,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { page } from './ui.mjs';
-import { site } from './data.mjs';
+import { site, pillars } from './data.mjs';
 import * as P from './pages.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -21,19 +21,46 @@ const add = (rel, html) => written.push(out(rel, html));
 
 /* core pages */
 add('index.html', page({
-  title: `${site.name} — AI strategy, coaching and team training`,
+  title: `${site.name} — Web Development, UI/UX Design & Agentic AI Workflows`,
   desc: site.sub, current: '/', body: P.home(),
 }));
+add('services.html', page({
+  title: T('Services: Web Development, UI/UX Design & AI Workflows'),
+  desc: 'Two service pillars: website design and development with UI/UX design, and agentic AI workflows that connect your tools, coordinate tasks and reduce manual work.',
+  current: '/services', body: P.servicesIndex(),
+}));
+const pillarMeta = {
+  'web-development': {
+    title: 'Web Development Agency & UI/UX Design',
+    desc: 'Website design and development, UI/UX design, custom web development, web applications, e-commerce, WordPress and Shopify, and SaaS and MVP development from Ostendic.',
+  },
+  'agentic-ai-workflows': {
+    title: 'Agentic AI Workflows & AI Agents for Business',
+    desc: 'Ostendic designs agentic AI workflows, AI agents for business operations and AI workflow automation for lead follow-up, customer support, data processing and reporting.',
+  },
+};
+for (const s of pillars) add(`services/${s.slug}.html`, page({
+  title: T(pillarMeta[s.slug].title), desc: pillarMeta[s.slug].desc,
+  current: s.path, body: P.pillarPage(s),
+}));
+add('work.html', page({
+  title: T('Work'), desc: 'Selected Ostendic work across website development, e-commerce, UI/UX design and automation, including the VMS Careline project.',
+  current: '/work', body: P.work(),
+}));
+add('pricing.html', page({
+  title: T('Pricing'), desc: 'How Ostendic scopes and prices websites, UI/UX design and agentic AI workflow projects: a diagnostic, a scoped project, or ongoing monthly capacity.',
+  current: '/pricing', body: P.pricing(),
+}));
 add('about.html', page({
-  title: T('About'), desc: `Ostendic was founded by ${site.principal} to help people and businesses turn AI into practical capability through strategy, coaching, training and workflow design.`,
+  title: T('About'), desc: `Ostendic was founded by ${site.principal}. A digital studio bringing together brand, UI/UX design, web development and agentic AI workflows.`,
   current: '/about', body: P.about(),
 }));
 add('contact.html', page({
-  title: T('Contact'), desc: 'Book an AI strategy call. Start with one process, one team, or one clear opportunity.',
+  title: T('Contact'), desc: 'Book a 30-minute call with Ostendic about a website, UI/UX design, an agentic AI workflow, or a combination.',
   current: '/contact', body: P.contact(), needsForm: true,
 }));
 add('blog.html', page({
-  title: T('Insights'), desc: 'Working notes on AI strategy, team training and workflow design from Ostendic.',
+  title: T('Insights'), desc: 'Working notes on web development, UI/UX design and agentic AI workflows from Ostendic.',
   current: '/blog', body: P.blog(),
 }));
 add('careers.html', page({
@@ -77,7 +104,8 @@ console.log(`Built ${written.length} files:`);
 for (const w of written) console.log('  ' + w);
 
 /* sitemap + robots */
-const routes = ['/', '/about', '/contact', '/blog', '/careers', '/resources', '/privacy', '/terms'];
+const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/pricing',
+  '/about', '/contact', '/blog', '/careers', '/resources', '/privacy', '/terms'];
 add('sitemap.xml',
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

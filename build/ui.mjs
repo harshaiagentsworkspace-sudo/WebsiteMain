@@ -2,7 +2,7 @@
    OSTENDIC — UI PRIMITIVES
    Every component returns an HTML string. One visual language, all pages.
    =========================================================================== */
-import { site, nav, services, footerQuick, cta, finalCta } from './data.mjs';
+import { site, nav, pillars, footerQuick, cta, finalCta } from './data.mjs';
 
 export const esc = (s = '') => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -27,6 +27,7 @@ export const ico = {
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.4l3.4 2"/></svg>',
   compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5 5-2.2Z"/></svg>',
+  caret: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg>',
 };
 
@@ -163,13 +164,27 @@ const brandMark = ({ eager = false } = {}) => {
     + `</span>`;
 };
 
-/* ---------- header / footer ---------- */
+/* ---------- header / footer ----------
+   A nav entry with children (Services) renders as its own link plus a
+   small menu that opens on hover and on keyboard focus — CSS only, so it
+   works without JS. The parent stays a real link to the overview page. */
+const isCurrent = (current, h) => current === h || (h !== '/' && current.startsWith(h + '/'));
+const navItem = (current) => ([l, h, kids]) => {
+  const link = `<a href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}${kids ? `<span class="nav__caret">${ico.caret}</span>` : ''}</a>`;
+  if (!kids) return link;
+  return `<div class="nav__dd">${link}
+        <div class="nav__menu">
+          ${kids.map(([kl, kh], i) => `<a href="${kh}"${current === kh ? ' aria-current="page"' : ''}><span class="nav__menu-n tnum">${String(i + 1).padStart(2, '0')}</span>${esc(kl)}</a>`).join('')}
+        </div>
+      </div>`;
+};
+
 export const header = (current = '') => `
 <header class="hdr">
   <div class="wrap hdr__in">
     <a class="brand" href="/" aria-label="${esc(site.name)} home">${brandMark({ eager: true })}</a>
     <nav class="nav" aria-label="Primary">
-      ${nav.map(([l, h]) => `<a href="${h}"${current === h ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
+      ${nav.map(navItem(current)).join('')}
     </nav>
     <div class="hdr__cta">
       ${btn(cta.header, '/contact', 'primary').replace('<a class', `<a aria-label="${esc(cta.header)}" class`)}
@@ -180,9 +195,9 @@ export const header = (current = '') => `
 <div class="mnav" id="mnav" aria-hidden="true">
   <div class="mnav__in">
     ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}">${esc(l)}${ico.arrow}</a>`).join('')}
-    <p class="mnav__lbl">What we do</p>
+    <p class="mnav__lbl">Services</p>
     <div class="mnav__svc">
-      ${services.map(s => `<a href="/#what-we-do">${esc(s.title)}</a>`).join('')}
+      ${pillars.map(s => `<a href="${s.path}">${esc(s.title)}</a>`).join('')}
     </div>
     <div class="mnav__foot">
       ${btn(cta.header, '/contact', 'primary')}
@@ -227,8 +242,9 @@ export const footer = () => `
         <p style="margin-top:18px"><a class="alink" href="mailto:${site.email}" style="color:var(--ink-inv)">${site.email}${ico.arrow}</a></p>
       </div>
       <div>
-        <h4>What we do</h4>
-        <ul>${services.map(s => `<li><a href="/#what-we-do">${esc(s.title)}</a></li>`).join('')}</ul>
+        <h4>Services</h4>
+        <ul>${pillars.map(s => `<li><a href="${s.path}">${esc(s.title)}</a></li>`).join('')}
+          <li><a href="/services">All services</a></li></ul>
       </div>
       <div>
         <h4>Company</h4>
@@ -282,6 +298,7 @@ export const page = ({ title, desc, current = '', body, cls = '', needsForm = fa
   description: site.sub,
   founder: { '@type': 'Person', name: site.principal, jobTitle: site.principalRole },
   areaServed: site.markets,
+  knowsAbout: ['Website design and development', 'UI/UX design', 'Custom web development', 'Agentic AI workflows', 'AI workflow automation', 'AI agents for business'],
 })}</script>
 </head>
 <body class="${cls}">

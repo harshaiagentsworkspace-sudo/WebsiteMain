@@ -243,6 +243,30 @@ em.em, .em {
 }
 .nav a:hover { color: var(--ink); background: rgba(17,19,20,.05); }
 .nav a[aria-current="page"] { color: var(--ink); font-weight: 500; }
+/* services menu: opens on hover and on keyboard focus, no JS required */
+.nav__dd { position: relative; }
+.nav__dd > a { display: inline-flex; align-items: center; gap: 4px; }
+.nav__caret { display: inline-flex; width: 14px; height: 14px; opacity: .6;
+  transition: transform .2s var(--ease); }
+.nav__caret svg { width: 100%; height: 100%; }
+.nav__menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 60;
+  min-width: 300px; padding: 8px; display: flex; flex-direction: column; gap: 2px;
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(17,19,20,.05), 0 24px 48px -24px rgba(17,19,20,.32);
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s linear .18s;
+}
+/* a hover bridge so the pointer can cross the gap without closing the menu */
+.nav__menu::before { content: ""; position: absolute; left: 0; right: 0; top: -8px; height: 8px; }
+.nav__dd:hover .nav__menu, .nav__dd:focus-within .nav__menu {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s;
+}
+.nav__dd:hover .nav__caret, .nav__dd:focus-within .nav__caret { transform: rotate(180deg); }
+.nav .nav__menu a { display: flex; align-items: baseline; gap: 12px; border-radius: 12px;
+  padding: 12px 14px; color: var(--ink); }
+.nav__menu-n { font-size: var(--t-xs); color: var(--ink-3); }
 .hdr__cta { display: flex; align-items: center; gap: 10px; }
 .hdr .btn { min-height: 44px; padding: 5px 7px 5px 20px; }
 .hdr .btn__ico { width: 32px; height: 32px; }
@@ -358,6 +382,17 @@ body.menu-open .mnav { transform: translateY(0); visibility: visible; }
 .proj:hover .proj__media img { transform: scale(1.03); }
 .proj__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--t-xs); color: var(--ink-3); }
 .proj__meta .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+.proj__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+/* service pillar card: the same card surface, one tint per pillar */
+.pillar { gap: 14px; padding: clamp(24px,3vw,40px); }
+.pillar--web-development { background: linear-gradient(160deg, #F1F2FA 0%, var(--bg-alt) 70%); }
+.pillar--agentic-ai-workflows { background: linear-gradient(160deg, #ECF4F1 0%, var(--bg-alt) 70%); }
+.pillar__n { font-size: var(--t-sm); color: var(--ink-3); letter-spacing: .1em; }
+.pillar__list { display: flex; flex-direction: column; margin-top: 6px; }
+.pillar__list li { font-size: var(--t-sm); color: var(--ink); padding: 10px 0; border-top: 1px solid var(--line); }
+.pillar__ico { display: block; width: 28px; height: 28px; color: var(--ink-2); }
+.pillar__ico svg { width: 100%; height: 100%; }
 .tag {
   display: inline-flex; align-items: center; padding: 4px 10px; border-radius: var(--r-pill);
   border: 1px solid var(--line-2); font-size: var(--t-xs); color: var(--ink-2);

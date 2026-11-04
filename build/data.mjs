@@ -1,14 +1,19 @@
 /* ===========================================================================
    OSTENDIC — CONTENT DATA
    Single source of truth for every page. Real Ostendic facts only.
-   Visible copy follows OSTENDIC_UPDATED_WEBSITE_CONTENT.md — change it there
-   first, then here. Anything not yet verifiable is marked TEMP-PLACEHOLDER
-   and must be replaced during the content pass.
+   Positioning: a digital studio with two service pillars —
+     01  Web Development & UI/UX Design
+     02  Agentic AI Workflows
+   Both carry equal weight; no section should read as AI-only or as
+   web-only. (OSTENDIC_UPDATED_WEBSITE_CONTENT.md describes the earlier
+   AI-strategy positioning and is superseded by this file.)
+   Anything not yet verifiable is marked TEMP-PLACEHOLDER and must be
+   replaced during the content pass — never presented as a client claim.
    =========================================================================== */
 
 export const site = {
   name: 'Ostendic',
-  tagline: 'AI strategy & enablement',
+  tagline: 'Web development, UI/UX design & agentic AI workflows',
   url: 'https://www.ostendic.com',
   email: 'harsh@ostendic.com',
   whatsapp: 'https://wa.me/', // TEMP-PLACEHOLDER: add the real WhatsApp number
@@ -30,9 +35,9 @@ export const site = {
   markets: ['United States', 'United Kingdom', 'Europe', 'India'],
   founded: '2024',
   /* Positioning — used for meta descriptions and structured data */
-  sub: 'Ostendic helps founders, agency owners, and teams turn AI into a practical business capability through strategy, coaching, training, workflow design, and ongoing advisory.',
-  mechanism: 'AI is the mechanism. The outcomes are better decisions, less repetitive work, stronger systems, and more capable teams.',
-  footer: 'Ostendic helps businesses turn AI into practical capability through strategy, coaching, training, and intelligent systems.',
+  sub: 'Ostendic is a digital studio for website design and development, UI/UX design and agentic AI workflows. We help businesses build better digital experiences and smarter business systems.',
+  approach: 'Every engagement starts with the business problem, not the technology. Sometimes the answer is a better website or digital product. Sometimes it is an intelligent workflow. Often it is both.',
+  footer: 'Ostendic is a digital studio that designs and builds websites, digital products and agentic AI workflows for businesses ready to grow.',
   social: [
     ['LinkedIn', 'https://www.linkedin.com/'],   // TEMP-PLACEHOLDER: real profile URLs
     ['Instagram', 'https://www.instagram.com/'],
@@ -41,122 +46,160 @@ export const site = {
 
 /* ---------- PRIMARY CTAs ---------- */
 export const cta = {
-  primary: 'Book an AI Strategy Call',
-  header: 'Start an AI Conversation',
+  primary: 'Book a 30-minute call',
+  header: 'Book a 30-minute call',
+  secondary: 'Explore our services',
   email: 'Send an Email',
 };
 
 /* ---------- HERO ---------- */
 export const heroCopy = {
-  eyebrow: 'AI strategy, enablement & practical implementation',
-  lines: ['Turn AI into a capability', 'your business can {rely on.}'],
-  lead: 'Ostendic helps founders, agency owners, and teams understand where AI can create real leverage—and turn that understanding into practical workflows, trained people, and systems that improve how the business operates.',
-  secondary: 'See How We Help',
-  support: ['Strategy', 'Coaching', 'Team Training', 'AI Systems'],
+  eyebrow: 'A digital studio for web experiences and intelligent systems',
+  lines: ['Build better {digital experiences.}', 'Create smarter {business systems.}'],
+  lead: 'From UI/UX design and web development to agentic AI workflows, Ostendic helps businesses build the digital experiences and intelligent systems they need to move forward.',
+  support: ['UI/UX Design', 'Web Development', 'Agentic AI Workflows'],
 };
 
 /* ---------- INTRO ---------- */
 export const intro = {
-  lines: ['Most businesses do not need', '{more AI tools.}'],
-  lead: 'They need a clearer way to decide what is useful, what is noise, and how AI should fit into the way they already work.',
+  lines: ['Your customers see the website.', '{Your team runs what sits behind it.}'],
+  lead: 'Most businesses need both to work well: a digital experience that explains what they do and earns trust, and systems that handle the repetitive work between an enquiry and a delivered result.',
   body: [
-    'Ostendic helps you move from experimenting with AI to using it with purpose.',
-    'We work across strategy, education, workflows, and implementation so your people can make better use of AI every day.',
+    'Ostendic works across both.',
+    'We design and build websites, web applications and digital products — and the agentic AI workflows that connect your tools, coordinate tasks and reduce manual effort. Some businesses need one. Some need both.',
   ],
 };
 
-/* ---------- SERVICES ----------
-   `focus` lists the areas each description already names, so the card
-   visual never introduces a claim the copy does not make. */
-export const services = [
+/* ---------- SERVICE PILLARS ----------
+   The two pillars are the whole service offer. `focus` is the short,
+   grouped list shown in the homepage stack (kept to six so the card never
+   reads as a directory); `services` is the full list on the pillar page. */
+export const pillars = [
   {
-    slug: 'ai-strategy', title: 'AI Strategy', icon: 'layers',
-    desc: 'Identify where AI can create the greatest advantage across sales, research, operations, finance, and customer experience.',
-    focus: ['Sales', 'Research', 'Operations', 'Finance', 'Customer experience'],
+    slug: 'web-development', n: '01', icon: 'code',
+    title: 'Web Development & UI/UX Design',
+    short: 'Web Development & UI/UX',
+    path: '/services/web-development',
+    kicker: 'Digital experiences that communicate clearly',
+    desc: 'We design and develop websites, applications and digital products that combine thoughtful user experiences with reliable technology.',
+    long: [
+      'We do not simply create attractive websites. We design and build digital experiences that are intuitive, functional, responsive and aligned with what the business needs them to do.',
+      'That means understanding your customers and your offer first, structuring the experience around how people actually decide, and building it on technology your team can rely on and maintain.',
+    ],
+    focus: ['Website design & development', 'UI/UX design', 'Web applications', 'E-commerce', 'SaaS & MVP development', 'Redesigns & improvements'],
+    services: [
+      ['Website Design and Development', 'Business websites planned around what visitors need to understand, designed with care and built to load quickly on every device.'],
+      ['UI/UX Design', 'User flows, wireframes, prototypes and interface design that make websites and products easier to understand and easier to use.'],
+      ['Custom Website Development', 'Hand-built sites for requirements a template cannot meet — custom layouts, interactions, integrations and content structures.'],
+      ['Web Application Development', 'Browser-based tools, portals and dashboards that your customers or your team use to get real work done.'],
+      ['Landing Page Design and Development', 'Focused pages for a campaign, product or offer, with one clear message and one clear next step.'],
+      ['E-commerce Development', 'Online stores designed around how customers browse, compare and buy, from product discovery through to checkout.'],
+      ['WordPress and Shopify Development', 'Sites and stores on platforms your team can update without a developer, configured and extended to fit the business.'],
+      ['SaaS and MVP Development', 'Product design and development for software ideas, scoped to the smallest version that is genuinely useful.'],
+      ['Website Redesign and Digital Experience Improvements', 'A structured review of an existing site or product, followed by the changes that make it clearer, faster and easier to use.'],
+      ['Responsive and Mobile-First Development', 'Layouts designed for the phone first and refined for larger screens, so every visitor gets a complete experience.'],
+    ],
+    principles: [
+      ['Clarity before decoration', 'Visitors should understand what you do, who it is for and what to do next within a few seconds.'],
+      ['Designed for real use', 'Interfaces are shaped around the tasks people come to complete, on the devices they actually use.'],
+      ['Built to be maintained', 'Clean structure and sensible platforms, so the site or product stays easy to update as the business grows.'],
+    ],
   },
   {
-    slug: 'ai-coaching', title: 'AI Coaching', icon: 'spark',
-    desc: 'Work directly with founders, freelancers, and agency owners to build better systems for research, lead generation, proposals, content, and delivery.',
-    focus: ['Research', 'Lead generation', 'Proposals', 'Content', 'Delivery'],
-  },
-  {
-    slug: 'team-training', title: 'Team Training', icon: 'grid',
-    desc: 'Teach employees how to use generative and agentic AI confidently, responsibly, and effectively in their existing roles.',
-    focus: ['Generative AI', 'Agentic AI', 'Confidently', 'Responsibly', 'Effectively'],
-  },
-  {
-    slug: 'ai-workflow-design', title: 'AI Workflow Design', icon: 'flow',
-    desc: 'Turn repetitive processes into practical AI-assisted workflows, including research systems, sales assistants, internal knowledge systems, and AI employees.',
-    focus: ['Research systems', 'Sales assistants', 'Internal knowledge systems', 'AI employees'],
-  },
-  {
-    slug: 'ongoing-advisory', title: 'Ongoing Advisory', icon: 'compass',
-    desc: 'Get an experienced strategic partner who helps your business keep improving as the technology and opportunities change.',
-    focus: ['Strategic partner', 'Keep improving', 'As technology changes', 'As opportunities change'],
+    slug: 'agentic-ai-workflows', n: '02', icon: 'flow',
+    title: 'Agentic AI Workflows',
+    short: 'Agentic AI Workflows',
+    path: '/services/agentic-ai-workflows',
+    kicker: 'Intelligent systems that perform coordinated work',
+    desc: 'We build intelligent AI-powered workflows that connect tools, coordinate tasks and help businesses operate more efficiently.',
+    long: [
+      'An agentic workflow is a system in which AI agents take on defined steps of a business process — reading incoming information, making routine decisions, updating your tools and handing work on to the next step or to a person.',
+      'We design these systems around practical business work: handling enquiries, following up with leads, supporting customers, processing information and producing reports. Not experimental research, and not a generic chatbot.',
+    ],
+    focus: ['AI agents for operations', 'Multi-agent systems', 'Process automation', 'Lead management & follow-up', 'Customer support workflows', 'API & tool integrations'],
+    services: [
+      ['Agentic AI Workflow Development', 'Workflows where AI agents take on defined steps — reading inputs, making routine decisions and passing work to the next tool or person.'],
+      ['AI Agents for Business Operations', 'Agents that handle recurring operational tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters.'],
+      ['Multi-Agent Systems', 'Several specialised agents working together on a larger process, each responsible for one part, with clear handovers between them.'],
+      ['AI-Powered Business Process Automation', 'Repetitive processes mapped, simplified and automated, so work moves between your tools without being re-typed.'],
+      ['Lead Management and Follow-up Automation', 'New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold.'],
+      ['AI-Powered Customer Support Workflows', 'Incoming questions sorted, answered from your own information where appropriate, and escalated to your team when a person is needed.'],
+      ['Content and Marketing Automation', 'Workflows that help research, draft, adapt and schedule content, with your team approving what gets published.'],
+      ['Intelligent Data Processing and Reporting', 'Information extracted from documents, forms and spreadsheets, organised consistently and turned into regular reports.'],
+      ['API and Third-Party Integrations', 'Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it is needed.'],
+      ['Custom AI Business Systems', 'Purpose-built systems for a process specific to your business, designed around the way your team already works.'],
+    ],
+    principles: [
+      ['Practical, not experimental', 'Every workflow is tied to a real task the business performs today, and to the time or effort it should save.'],
+      ['People stay in control', 'Agents handle the routine steps. Decisions that need judgment are routed to the right person for review.'],
+      ['Connected to your tools', 'Workflows are built around the CRM, inbox, forms and spreadsheets you already use rather than replacing them.'],
+    ],
   },
 ];
-export const servicesHead = ['From AI curiosity to', '{practical capability.}'];
+export const servicesHead = ['Two disciplines.', '{One studio.}'];
 
-/* ---------- WHO WE HELP ---------- */
+/* ---------- WHAT YOU CAN COME TO US FOR ---------- */
 export const audiences = [
-  { title: 'Freelancers & New Agency Owners', icon: 'rocket',
-    desc: 'Find better prospects, understand them faster, improve your outreach, and build delivery systems that give you more capacity.' },
-  { title: 'Growing Businesses', icon: 'bolt',
-    desc: 'Find the parts of your business where AI can reduce friction, improve decision-making, and help your team work with more leverage.' },
-  { title: 'Leadership & Operations Teams', icon: 'mark',
-    desc: 'Create a practical AI roadmap and help your people adopt AI in a way that is useful, safe, and connected to business priorities.' },
+  { title: 'A website or digital product', icon: 'globe',
+    desc: 'A new website, landing page, online store, web application or MVP — designed and built around your customers and your goals.' },
+  { title: 'UI/UX design', icon: 'layers',
+    desc: 'User research, flows, wireframes and interface design for a new product, or a clearer experience for an existing one.' },
+  { title: 'An intelligent workflow or AI agent', icon: 'flow',
+    desc: 'An agentic workflow that takes repetitive work off your team — from lead follow-up to support, data processing and reporting.' },
+  { title: 'Web and AI, together', icon: 'bolt',
+    desc: 'A website or product with intelligent workflows behind it, so the experience customers see and the system your team runs work as one.' },
 ];
-export const audiencesHead = ['Built for people who want to use AI well—', '{not simply use more of it.}'];
+export const audiencesHead = ['Come to us with a website, a workflow,', '{or both.}'];
 
 /* ---------- SIGNATURE OUTCOME ---------- */
 export const signature = {
-  lines: ['Build the AI advantage', '{inside your business.}'],
+  lines: ['One studio for the experience', '{and the system behind it.}'],
   examples: [
-    'That might mean helping a freelancer identify and qualify 100 relevant prospects in an afternoon.',
-    'It might mean creating an AI research assistant, sales assistant, finance assistant, or internal knowledge system.',
-    'Or it might mean giving an entire team the confidence to use AI properly in their daily work.',
+    'That might mean a redesigned website that explains what you do in seconds and works properly on every screen.',
+    'It might mean an agentic workflow that captures new enquiries, qualifies them, updates your CRM and drafts the follow-up for your team to review.',
+    'Or it might mean a web application with intelligent automation behind it, handling the repetitive steps so your people can focus on the work that needs them.',
   ],
   close: [
-    'The technology is only one part of the work.',
-    'The real value comes from knowing what to build, how to use it, and where human judgment still matters.',
+    'Design, development and automation are only valuable when they serve the business.',
+    'The real work is understanding what needs to change — then building the right thing, and building it well.',
   ],
 };
 
-/* ---------- PROCESS ---------- */
-export const processHead = ['A practical approach', 'to {AI adoption.}'];
+/* ---------- PROCESS ----------
+   Written so it fits a website project, an AI workflow, or both. */
+export const processHead = ['Understand the business first.', '{Then choose the right solution.}'];
 export const process = [
-  ['01', 'Understand', 'We learn how your business works, where time is being lost, and where decisions are getting stuck.'],
-  ['02', 'Prioritise', 'We identify the opportunities that are most useful, realistic, and valuable—not simply the most impressive.'],
-  ['03', 'Design', 'We create the strategy, workflows, prompts, training, or AI systems needed to support the opportunity.'],
-  ['04', 'Enable', 'We train the people who will use the system and make sure it fits naturally into the way they work.'],
-  ['05', 'Improve', 'We review what is working, what is not, and how the system should evolve over time.'],
+  ['01', 'Discover', 'We understand the business, its objectives, its users and the challenges it is facing today.'],
+  ['02', 'Strategize', 'We define the experience, architecture, workflow and implementation approach that fits the requirement.'],
+  ['03', 'Design & Build', 'We create the website, interface, application or intelligent workflow, with regular reviews along the way.'],
+  ['04', 'Launch & Optimize', 'We test, deploy, measure and improve the solution once real people are using it.'],
 ];
 
 /* ---------- POINT OF VIEW ---------- */
 export const pov = {
-  lines: ['No AI theatre.', '{Just useful progress.}'],
+  lines: ['Not just attractive.', '{Genuinely useful.}'],
   body: [
-    'You do not need another presentation filled with predictions about the future of AI.',
-    'You need someone who can understand your business, explain the opportunities clearly, and help you turn them into something your people can actually use.',
-    'Ostendic combines strategic thinking, practical experimentation, and hands-on coaching to make AI useful in the real world.',
+    'A website can look impressive and still fail to explain what a business does. An AI tool can be clever and still add work instead of removing it.',
+    'We design digital experiences that are intuitive, functional and aligned with business objectives — and intelligent systems that perform real, coordinated tasks.',
+    'Whether the answer is a better website, a smarter workflow or both, the test is the same: does it help the business work better?',
   ],
 };
 
 /* ---------- ABOUT ---------- */
 export const aboutCopy = {
-  lines: ['AI strategy with a', '{human point of view.}'],
+  lines: ['Where brand, technology', 'and {intelligent systems meet.}'],
   body: [
-    'Ostendic was founded by Harsh Dubey to help people and businesses make sense of a rapidly changing technological landscape.',
-    'The goal is not to replace human thinking with automation.',
-    'It is to remove unnecessary effort, improve the quality of decisions, and give people more capacity to do meaningful work.',
+    'Ostendic was founded by Harsh Dubey to help businesses build digital experiences and business systems that genuinely work.',
+    'How a business presents itself and how it operates are closely connected. Brand, design and technology should not be separate conversations.',
+    'Ostendic brings them together — thoughtful UI/UX design, reliable web development and practical agentic AI workflows — so businesses can communicate clearly, serve customers better and spend less time on repetitive work.',
   ],
 };
 
 /* ---------- FINAL CTA ---------- */
 export const finalCta = {
-  lines: ['You do not need to transform', 'your entire business {overnight.}'],
+  lines: ['Start with one page, one product,', 'or {one process.}'],
   body: [
-    'Start with one process, one team, or one clear opportunity.',
+    'Whether you need a better website, a new digital product or an intelligent workflow, a short conversation is the best place to start.',
     'We will help you understand what is possible and decide what is worth doing next.',
   ],
 };
@@ -167,18 +210,86 @@ export const finalCta = {
    to an official logo file (e.g. 'assets/logos/vms-careline.svg') to render
    that artwork instead. Add real, cleared clients here as they come.
 
-   `teamTypes` fill the remaining cards. They are the audiences named in the
-   content spec, rendered as plain descriptors with a UI icon — deliberately
-   not styled as logos, so no card implies a client relationship. */
+   `teamTypes` fill the remaining cards. They are audience descriptors,
+   rendered as plain text with a UI icon — deliberately not styled as logos,
+   so no card implies a client relationship. */
 export const clients = [
   { name: 'VMS Careline', mark: 'careline', src: '' },
   { name: 'VMS',          mark: 'vms',      src: '' },
 ];
 
 export const teamTypes = [
-  'Founders', 'Freelancers', 'Agency owners', 'Growing businesses',
-  'Leadership teams', 'Operations teams', 'Sales teams', 'Research teams',
-  'Finance teams', 'Customer experience', 'New agencies', 'Delivery teams',
+  'Founders', 'Startups', 'Growing businesses', 'E-commerce brands',
+  'SaaS teams', 'Service businesses', 'Agencies', 'Marketing teams',
+  'Sales teams', 'Operations teams', 'Customer support', 'Leadership teams',
+];
+
+/* ---------- WORK ----------
+   Restored from the project records. Only what was actually delivered is
+   described. `kind: 'demo'` marks Ostendic-built demonstration projects —
+   they are never presented as client work. The VMS Careline result claim
+   that used to sit here (client-reported, no figure) is deliberately not
+   rendered until it is confirmed and measurable. */
+export const projects = [
+  {
+    slug: 'vms-careline', name: 'VMS Careline', kind: 'client',
+    category: 'E-commerce', sector: 'Healthcare e-commerce',
+    market: 'India', year: '2026',
+    url: 'https://vmscareline.com/',
+    image: 'assets/work/vms-careline.jpg',
+    summary: 'Brand structure, e-commerce experience and enquiry handling rebuilt across two business verticals.',
+    disciplines: ['Brand', 'UI/UX Design', 'Website Development', 'E-commerce', 'Enquiry Automation'],
+    pillars: ['web-development', 'agentic-ai-workflows'],
+    before: 'One undifferentiated digital presence carried two quite different offerings. Customers arriving for either had to work out which part of the business they were in. Enquiries were handled manually, and time to first response depended on who was available.',
+    decision: 'Separate the business into distinct digital verticals — VMS Careline and VMS Cart — each with its own audience, structure and buying path. Rebuild the commerce experience around how these products are actually chosen, and automate the enquiry path so response time stops depending on availability.',
+    after: 'A healthcare e-commerce experience with clearer product discovery and stronger presentation, a separate cart vertical, and an automated path from enquiry through first response to follow-up.',
+  },
+  {
+    slug: 'trureview', name: 'TruReview', kind: 'demo',
+    category: 'UI/UX Design', sector: 'Review platform concept',
+    market: '—', year: '2026',
+    url: 'https://tru-review-lilac.vercel.app/',
+    image: 'assets/work/trureview.jpg',
+    summary: 'A review-collection interface, built as a working demonstration of our product design and web development approach.',
+    disciplines: ['UI/UX Design', 'Web Application'],
+    pillars: ['web-development'],
+  },
+  {
+    slug: 'viralcheck', name: 'ViralCheck Content', kind: 'demo',
+    category: 'Web Application', sector: 'Content analysis concept',
+    market: '—', year: '2026',
+    url: 'https://viralcheckcontent.vercel.app/',
+    image: 'assets/work/viralcheck.jpg',
+    summary: 'A content-scoring tool, built as a working demonstration of an AI-assisted product interface.',
+    disciplines: ['UI/UX Design', 'Web Application', 'AI-assisted'],
+    pillars: ['web-development', 'agentic-ai-workflows'],
+  },
+];
+export const workCategories = ['All', 'E-commerce', 'UI/UX Design', 'Web Application'];
+
+/* ---------- ENGAGEMENT / PRICING ----------
+   Restored from the earlier engagement models. No figures, durations or
+   guarantees are published: each engagement is scoped and priced first. */
+export const engagements = [
+  {
+    name: 'Diagnostic', price: 'Fixed fee', unit: 'scoped up front',
+    desc: 'A short, paid review that produces a written diagnosis of your website, product or process — what is getting in the way, where time or enquiries are being lost, and a scoped, priced plan.',
+    includes: ['Website, UX or workflow review', 'Written findings and priorities', 'Recommended approach — web, AI or both', 'Scoped plan with fixed pricing'],
+    cta: 'Start with a diagnostic',
+  },
+  {
+    name: 'Project', price: 'Scoped', unit: 'fixed fee, agreed scope',
+    desc: 'A website, digital product or agentic AI workflow delivered against an agreed scope. Design, development and automation are handled by one team rather than handed between vendors.',
+    includes: ['Fixed scope agreed up front', 'Websites, products or AI workflows', 'Design and build in one team', 'Testing before launch', 'Handover documentation'],
+    featured: true,
+    cta: 'Scope a project',
+  },
+  {
+    name: 'Ongoing', price: 'Monthly', unit: 'retained capacity',
+    desc: 'Retained time each month across design, development and AI workflows — for websites, products and systems that keep improving after launch.',
+    includes: ['Agreed monthly capacity', 'Priorities set with you each cycle', 'Design, development and automation', 'Direct access to the founder', 'Adjust or pause with notice'],
+    cta: 'Talk about retained work',
+  },
 ];
 
 /* ---------- RESOURCES ---------- */
@@ -194,32 +305,34 @@ export const resourceCategories = ['All', 'Guide', 'Template', 'Checklist'];
 
 /* ---------- INSIGHTS ---------- */
 export const posts = [
-  { slug: 'ai-where-it-pays', cat: 'Strategy', read: '10 min',
+  { slug: 'premium-website-feel', cat: 'Web & UX', read: '8 min',
+    art: 'assets/insights/web.svg',
+    title: 'What makes a website feel expensive',
+    desc: 'Restraint, typography and evidence — why the sites that look costly are usually the ones doing the least on screen.' },
+  { slug: 'ai-where-it-pays', cat: 'AI Workflows', read: '10 min',
     art: 'assets/insights/ai.svg',
     title: 'Where AI actually pays for itself in a small business',
-    desc: 'A working note on the difference between AI that removes effort and AI that just adds another tool to check.' },
-  { slug: 'after-the-workshop', cat: 'Training', read: '8 min',
-    art: 'assets/insights/web.svg',
-    title: 'Why AI adoption stalls after the first workshop',
-    desc: 'Most teams do not lack access to AI. They lack a shared sense of when to use it, and where human judgment still matters.' },
-  { slug: 'one-process-first', cat: 'Workflows', read: '12 min',
+    desc: 'A working note on the difference between a workflow that removes effort and one that just adds another tool to check.' },
+  { slug: 'enquiry-to-reply', cat: 'Business', read: '12 min',
     art: 'assets/insights/automation.svg',
-    title: 'Start with one process, not a transformation',
-    desc: 'How to choose the first AI-assisted workflow worth building — and how to tell whether it is actually working.' },
+    title: 'The gap between an enquiry and a reply',
+    desc: 'Most businesses lose more at the follow-up stage than on the page itself. How we map that path before touching a design or a workflow.' },
 ];
-export const postCategories = ['All', 'Strategy', 'Training', 'Workflows', 'Leadership'];
+export const postCategories = ['All', 'Web & UX', 'AI Workflows', 'Business'];
 
-/* ---------- NAV ---------- */
+/* ---------- NAV ----------
+   [label, href, children?] — Services opens a two-item menu, one per pillar. */
 export const nav = [
-  ['What We Do', '/#what-we-do'],
-  ['Who We Help', '/#who-we-help'],
-  ['How It Works', '/#how-it-works'],
-  ['Insights', '/blog'],
+  ['Services', '/services', pillars.map(p => [p.title, p.path])],
+  ['Work', '/work'],
+  ['Pricing', '/pricing'],
   ['About', '/about'],
-  ['Book a Conversation', '/contact'],
+  ['Insights', '/blog'],
+  ['Resources', '/resources'],
+  ['Contact Us', '/contact'],
 ];
 
 export const footerQuick = [
-  ['About', '/about'], ['Insights', '/blog'], ['Resources', '/resources'],
-  ['Careers', '/careers'], ['Contact', '/contact'],
+  ['Work', '/work'], ['Pricing', '/pricing'], ['About', '/about'],
+  ['Insights', '/blog'], ['Resources', '/resources'], ['Careers', '/careers'], ['Contact', '/contact'],
 ];

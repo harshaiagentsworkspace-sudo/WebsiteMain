@@ -2,11 +2,10 @@
    OSTENDIC — MOTION-LED SECTION LIBRARY
    Scroll-driven and depth components used by the homepage narrative.
    Everything renders readable without JS; motion.js enhances it.
-   Visible copy comes from data.mjs, which mirrors
-   OSTENDIC_UPDATED_WEBSITE_CONTENT.md.
+   Visible copy comes from data.mjs.
    =========================================================================== */
 import {
-  site, cta, heroCopy, intro, services, servicesHead, audiences, audiencesHead,
+  site, cta, heroCopy, intro, pillars, servicesHead, audiences, audiencesHead,
   signature, process, processHead, pov, aboutCopy, posts, clients, teamTypes,
 } from './data.mjs';
 import { esc, ico, eyebrow, btn, head, secHead, logoLockup, teamLockup } from './ui.mjs';
@@ -42,7 +41,7 @@ export const hero = () => `
     <p class="lead" style="text-align:center;max-width:60ch">${esc(heroCopy.lead)}</p>
     <div class="btn-row center" style="margin-top:8px">
       ${btn(cta.primary, '/contact', 'primary', { avatar: true })}
-      ${btn(heroCopy.secondary, '#what-we-do', 'ghost')}
+      ${btn(cta.secondary, '#services', 'ghost')}
     </div>
     <p class="hero__support">${heroCopy.support.map(esc).join('<span aria-hidden="true"> · </span>')}</p>
   </div>
@@ -133,24 +132,27 @@ export const introBlock = () => `
   </div>
 </section>`;
 
-/* ---------- 4. SERVICES — 3D CATEGORY STACK ----------
-   The same pinned stack as before (desktop) and the same sticky matte card
-   stack (mobile). The media side is typographic: it lists only the areas the
-   service description already names, so the visual never over-claims. */
+/* ---------- 4. SERVICES — 3D PILLAR STACK ----------
+   The same pinned stack (desktop) and sticky matte card stack (mobile),
+   now holding the two service pillars. The media side is typographic: it
+   lists the pillar's grouped services, and the full list lives on the
+   pillar page, so the card stays focused rather than becoming a directory. */
 export const servicesStack = () => `
-<section class="section section--flush-b" id="what-we-do">
+<section class="section section--flush-b" id="services">
   <div class="wrap stack gap-24">
-    ${secHead({ eye: 'What we do', lines: servicesHead })}
+    ${secHead({ eye: 'Services', lines: servicesHead,
+      lead: 'Two service pillars with equal weight: the digital experiences your customers use, and the intelligent workflows that keep your business running.' })}
   </div>
 </section>
 <div class="stage" data-stack>
   <div class="stage__pin">
     <div class="stage__inner">
-      ${services.map((s, i) => `
-        <article class="panel" style="--i:${i}">
+      ${pillars.map((s, i) => `
+        <article class="panel panel--${s.slug}" style="--i:${i}">
           <div class="panel__head">
-            <span class="panel__n">${String(i + 1).padStart(2, '0')} <span class="panel__n-of">/ ${String(services.length).padStart(2, '0')}</span></span>
+            <span class="panel__n">Pillar ${s.n} <span class="panel__n-of">/ ${String(pillars.length).padStart(2, '0')}</span></span>
             <h3 class="panel__t">${esc(s.title)}</h3>
+            <p class="panel__kick">${esc(s.kicker)}</p>
           </div>
           <div class="panel__media panel__media--focus" aria-hidden="true">
             <span class="focus__i">${ico[s.icon] || ico.spark}</span>
@@ -163,17 +165,19 @@ export const servicesStack = () => `
             <div class="panel__caps">
               ${s.focus.map(f => `<span class="tag">${esc(f)}</span>`).join('')}
             </div>
+            <div class="btn-row">${btn(`Explore ${s.short}`, s.path, 'ghost')}</div>
           </div>
         </article>`).join('')}
     </div>
   </div>
 </div>`;
 
-/* ---------- 5. WHO WE HELP ----------
-   The capability-block grid, now three audience cards. Paint servers give
-   each icon its own gradient stroke; mobile turns each card matte. */
+/* ---------- 5. WHAT YOU CAN COME TO US FOR ----------
+   The capability-block grid: four cards covering web, UI/UX, AI workflows
+   and the combination. Paint servers give each icon its own gradient
+   stroke; mobile turns each card matte. */
 export const whoWeHelp = () => `
-<section class="section section--white" id="who-we-help" data-rv>
+<section class="section section--white" id="what-we-build" data-rv>
   <svg class="cap__defs" aria-hidden="true" focusable="false" width="0" height="0">
     <defs>
       <linearGradient id="capA" x1="0" y1="0" x2="1" y2="1">
@@ -185,11 +189,14 @@ export const whoWeHelp = () => `
       <linearGradient id="capC" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#0E4F47"/><stop offset="1" stop-color="#4C9E7A"/>
       </linearGradient>
+      <linearGradient id="capD" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#16233D"/><stop offset="1" stop-color="#4E6FA8"/>
+      </linearGradient>
     </defs>
   </svg>
   <div class="wrap stack gap-40">
-    ${secHead({ eye: 'Who we help', lines: audiencesHead })}
-    <div class="caps caps--3">
+    ${secHead({ eye: 'What we build', lines: audiencesHead })}
+    <div class="caps caps--3 caps--4">
       ${audiences.map((a, i) => `
         <article class="cap">
           <span class="cap__n tnum">${String(i + 1).padStart(2, '0')}</span>
@@ -209,7 +216,7 @@ export const signatureOutcome = () => `
   <div class="wrap">
     <div class="grid g2" style="gap:clamp(32px,5vw,72px);align-items:center">
       <div class="stack gap-24">
-        ${eyebrow('Signature outcome', 'flow')}
+        ${eyebrow('What it looks like', 'flow')}
         ${head(signature.lines, 'h2', 'h2')}
         <p class="lead">${esc(signature.close[0])}</p>
         <p class="body-sm">${esc(signature.close[1])}</p>
@@ -299,8 +306,8 @@ export const insights = () => `
 <section class="section section--white" data-rv>
   <div class="wrap stack gap-40">
     ${secHead({ eye: 'Insights', center: true,
-      lines: ['Deeper notes, practical tips', 'and {real talk about AI}'],
-      lead: 'Working notes on AI strategy, team training and workflow design — written from live engagements rather than to a content calendar.' })}
+      lines: ['Notes on design, development', 'and {intelligent systems}'],
+      lead: 'Working notes on websites, UI/UX and agentic AI workflows — written from real projects rather than to a content calendar.' })}
     <div class="posts">
       ${posts.map(p => `
         <a class="post" href="/blog">

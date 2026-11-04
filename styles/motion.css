@@ -687,6 +687,15 @@
 .caps--3 .cap:hover { transform: translateY(-4px);
   box-shadow: 0 2px 4px rgba(17,19,20,.05), 0 30px 54px -28px rgba(17,19,20,.36); }
 .caps--3 .cap__t { font-size: clamp(1.2rem,1rem + .7vw,1.6rem); }
+.caps--3.caps--4 { grid-template-columns: repeat(4,1fr); }
+.caps--4 .cap__t { font-size: clamp(1.15rem,1rem + .5vw,1.4rem); }
+@media (max-width: 1100px) { .caps--3.caps--4 { grid-template-columns: repeat(2,1fr); } }
+
+/* each service pillar carries its own tint on the typographic media side:
+   indigo for web & UI/UX, teal for agentic AI (desktop only — the mobile
+   stack keeps its own matte colour per card) */
+.panel.panel--web-development .panel__media--focus { --focus-a: rgba(93,102,188,.24); --focus-b: rgba(142,114,198,.18); }
+.panel.panel--agentic-ai-workflows .panel__media--focus { --focus-a: rgba(14,79,71,.22); --focus-b: rgba(63,160,178,.20); }
 
 /* signature outcome: the three examples sit in the glass window */
 p.msg { max-width: 92%; }
@@ -727,7 +736,7 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
   .xpt--intro { align-items: start; }
   .pov { grid-template-columns: 1fr; max-width: 60ch; }
   .pov__q { text-align: left; }
-  .caps--3 { grid-template-columns: 1fr; }
+  .caps--3, .caps--3.caps--4 { grid-template-columns: 1fr; }
   .fsig { grid-template-columns: 1fr; gap: 28px; }
   .road { grid-template-columns: 1fr; }
   .road__visuals { display: none; }
@@ -757,6 +766,7 @@ h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; 
   .caps--3 .cap:nth-child(1) { background: linear-gradient(160deg, #2B3346 0%, #1E2433 100%); }  /* slate navy */
   .caps--3 .cap:nth-child(2) { background: linear-gradient(160deg, #3C2C43 0%, #2A1F31 100%); }  /* aubergine  */
   .caps--3 .cap:nth-child(3) { background: linear-gradient(160deg, #1D4A45 0%, #133632 100%); }  /* deep pine  */
+  .caps--3 .cap:nth-child(4) { background: linear-gradient(160deg, #1B2A44 0%, #121C30 100%); }  /* deep navy  */
   .caps--3 .cap__t { color: #FFFFFF; }
   .caps--3 .cap__d { color: rgba(255,255,255,.74); }
   .caps--3 .cap__n { color: rgba(255,255,255,.55); }
