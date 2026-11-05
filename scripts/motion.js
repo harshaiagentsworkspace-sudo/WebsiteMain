@@ -169,68 +169,6 @@
   };
 
   /* =======================================================================
-     FRONT END / BACK END CONNECTOR
-     Draws one curve from the mockup's "Send enquiry" button to the first
-     workflow node. Measured from layout, so it lands correctly at every
-     breakpoint: across the gap when the panels sit side by side, down the
-     gap when they stack. Re-measured only on resize, font/image load and
-     after the entrance transition — never per scroll frame. The section's
-     CSS loops are paused while it is off-screen.
-     ======================================================================= */
-  var Duo = {
-    st: null,
-    init: function () {
-      var st = this.st = document.querySelector('[data-duo]');
-      if (!st) return;
-      var svg = st.querySelector('.duo__link');
-      if (reduce.matches) {                       // static line, no travelling dot
-        var dot = svg && svg.querySelector('.duo__dot');
-        if (dot) dot.parentNode.removeChild(dot);
-      }
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (e) {
-          var on = e[0].isIntersecting;
-          st.classList.toggle('is-idle', !on);
-          if (svg && svg.pauseAnimations) { if (on) svg.unpauseAnimations(); else svg.pauseAnimations(); }
-        }).observe(st);
-      }
-      // the panels rise into place on entry; measure again once they settle
-      st.addEventListener('transitionend', function (e) {
-        if (e.target.classList && e.target.classList.contains('duo__area')) Duo.draw();
-      });
-      this.draw();
-    },
-    draw: function () {
-      var st = this.st;
-      if (!st) return;
-      var from = st.querySelector('[data-duo-from]'), to = st.querySelector('[data-duo-to]');
-      var svg = st.querySelector('.duo__link');
-      if (!from || !to || !svg) return;
-      var s = st.getBoundingClientRect(), a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
-      if (!s.width) return;
-      var d, x1, y1, x2, y2;
-      if (b.left >= a.right - 4) {                // side by side: leave right, enter left
-        x1 = a.right - s.left; y1 = a.top + a.height / 2 - s.top;
-        x2 = b.left - s.left;  y2 = b.top + b.height / 2 - s.top;
-        var mx = (x1 + x2) / 2;
-        d = 'M' + x1 + ' ' + y1 + ' C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2;
-      } else {                                    // stacked: leave below, land on the panel's top edge
-        // the port sits right of centre so the line clears the panel's label
-        var panel = to.closest('.wf') || to, w = panel.getBoundingClientRect();
-        x1 = a.left + a.width / 2 - s.left; y1 = a.bottom - s.top;
-        x2 = w.right - Math.min(130, w.width * .34) - s.left; y2 = w.top - s.top;
-        var my = (y1 + y2) / 2;
-        d = 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + my + ' ' + x2 + ' ' + my + ' ' + x2 + ' ' + y2;
-      }
-      svg.setAttribute('viewBox', '0 0 ' + s.width + ' ' + s.height);
-      [].forEach.call(svg.querySelectorAll('path'), function (p) { p.setAttribute('d', d); });
-      var port = svg.querySelector('.duo__port');
-      if (port) { port.setAttribute('cx', x2); port.setAttribute('cy', y2); }
-      st.classList.add('is-linked');
-    }
-  };
-
-  /* =======================================================================
      LOOP — runs only while something is actually moving
      ======================================================================= */
   var running = false, idle = 0;
@@ -254,12 +192,11 @@
     Stack.init();
     Road.init();
     Reveal.init();
-    Duo.init();
     // passive: the browser is never blocked waiting on us
     window.addEventListener('scroll', wake, { passive: true });
     var relayout = function () {
       Stack.stages.length = 0; Road.roads.length = 0;
-      Stack.init(); Road.init(); Duo.draw(); wake();
+      Stack.init(); Road.init(); wake();
     };
     window.addEventListener('resize', relayout);
     // fonts and images change layout after first paint
