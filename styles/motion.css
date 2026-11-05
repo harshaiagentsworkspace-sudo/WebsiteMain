@@ -699,88 +699,116 @@ p.msg { max-width: 92%; }
 h2.fsig__q { font-size: var(--t-h2); line-height: 1.08; letter-spacing: -.03em; }
 
 /* ---------- 12c. customer experience / business operations ----------
-   An editorial spread. A warm off-white ground with one faint petrol tone
-   and the site's grain; it settles into the page ground at both edges so
-   the neighbouring sections meet it without a seam. Typography and fine
-   rules carry the structure. No illustrations, no loops. */
+   An editorial spread on a warm matte ground: one faint petrol tone, the
+   site's grain, both edges settling into the page ground. Depth comes from
+   contrast (the deep project plate against warm paper), not shadows.
+   Structure is carried by type and hairlines; nothing loops. */
 .ed { position: relative; isolation: isolate;
   background:
-    linear-gradient(to bottom, var(--bg) 0%, rgba(242,242,240,0) 14%, rgba(242,242,240,0) 86%, var(--bg) 100%),
-    radial-gradient(80% 60% at 100% 40%, rgba(14,79,71,.055) 0%, rgba(14,79,71,0) 70%),
-    linear-gradient(180deg, #F3F2EE 0%, #EFF1EE 55%, #F2F2F0 100%); }
+    linear-gradient(to bottom, var(--bg) 0%, rgba(242,242,240,0) 10%, rgba(242,242,240,0) 90%, var(--bg) 100%),
+    radial-gradient(70% 55% at 88% 70%, rgba(14,79,71,.06) 0%, rgba(14,79,71,0) 70%),
+    radial-gradient(50% 40% at 6% 18%, rgba(14,79,71,.035) 0%, rgba(14,79,71,0) 70%),
+    linear-gradient(180deg, #F4F3EF 0%, #F0F1EE 60%, #F2F2F0 100%); }
 .ed::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   opacity: .5; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E"); }
 
-/* statement left, answer offset right */
-.ed__top { display: grid; grid-template-columns: minmax(0,7fr) minmax(0,4fr); gap: clamp(32px,6vw,112px); align-items: start; }
-.ed__h { font-size: var(--t-display); line-height: 1.02; max-width: 15ch; text-wrap: balance; }
-.ed__h em { display: block; color: var(--accent); text-wrap: balance; }
-.ed__aside { display: flex; flex-direction: column; gap: 16px; align-items: flex-start;
-  padding-top: clamp(8px, 9vw, 150px); }
-.ed__aside .lead { max-width: 44ch; }
-.ed__aside .body-sm { max-width: 44ch; }
-.ed__aside .btn-row { margin-top: 10px; }
-.ed__say { font-family: var(--serif); font-style: italic; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.8rem);
-  line-height: 1.2; letter-spacing: -.01em; color: var(--ink); padding-top: 18px; border-top: 1px solid var(--line-2); align-self: stretch; }
+/* intro: the statement and its answer share a baseline, so nothing floats */
+.ed__top { display: grid; grid-template-columns: minmax(0,1.55fr) minmax(0,1fr);
+  gap: clamp(32px,5vw,96px); align-items: end; }
+.ed__h { font-size: clamp(2.6rem, 1.15rem + 4.5vw, 5.75rem); line-height: .98; letter-spacing: -.045em; text-wrap: balance; }
+.ed__h em { display: block; margin-top: .06em; color: var(--accent); letter-spacing: -.02em; text-wrap: balance; }
+.ed__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: .4em; }
+.ed__say { font-family: var(--serif); font-style: italic; font-size: clamp(1.45rem, 1.15rem + .9vw, 2rem);
+  line-height: 1.15; letter-spacing: -.01em; color: var(--ink); }
+.ed__p { font-size: var(--t-lead); line-height: 1.6; color: var(--ink-2); max-width: 44ch; }
+.ed__aside .btn-row { margin-top: 12px; }
 
-/* two editorial columns under one hairline */
-.ed__cols { display: grid; grid-template-columns: minmax(0,7fr) minmax(0,5fr);
-  margin-top: clamp(64px,8vw,128px); border-top: 1px solid var(--line-2); }
-.ed__col { display: flex; flex-direction: column; align-items: flex-start; min-width: 0;
-  padding-top: clamp(28px,3vw,44px); }
-.ed__col--a { padding-right: clamp(28px,4vw,72px); }
-.ed__col--b { padding-left: clamp(28px,4vw,72px); border-left: 1px solid var(--line-2); }
+/* the spread: two capabilities on one ruled sheet. Subgrid aligns label,
+   title, description, body and link across both columns row for row. */
+.ed__spread { position: relative; display: grid; grid-template-columns: minmax(0,1.08fr) minmax(0,1fr);
+  grid-template-rows: auto auto auto 1fr auto;
+  margin-top: clamp(56px,6vw,96px); border-top: 1px solid var(--ink); }
+.ed__spread::before { content: ""; position: absolute; top: 0; bottom: 0; left: 51.92%; width: 1px; background: var(--line-2); }
+.ed__spread::after { content: ""; position: absolute; top: -4px; left: 51.92%; width: 7px; height: 7px; margin-left: -3px;
+  border-radius: 50%; background: var(--bg); border: 1px solid var(--ink); }
+.ed__svc { display: grid; grid-row: span 5; grid-template-rows: subgrid; align-items: start; min-width: 0;
+  padding-top: clamp(26px,2.6vw,38px); }
+.ed__svc--web { padding-right: clamp(28px,3.6vw,64px); }
+.ed__svc--ai  { padding-left: clamp(28px,3.6vw,64px); }
+
 .ed__label { display: flex; align-items: baseline; gap: 10px; font-size: var(--t-xs);
   letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .ed__label .tnum { color: var(--accent); letter-spacing: .08em; }
 .ed__sl { color: var(--line-2); }
-.ed__t { margin-top: clamp(18px,2vw,28px); }
-.ed__d { margin-top: 12px; max-width: 42ch; font-size: var(--t-body); line-height: 1.6; color: var(--ink-2); }
+.ed__t { margin-top: clamp(20px,2vw,30px); font-size: clamp(1.9rem, 1.2rem + 2vw, 3.1rem);
+  line-height: 1.02; letter-spacing: -.035em; font-weight: 500; color: var(--ink); }
+.ed__t em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+.ed__d { margin-top: 16px; max-width: 46ch; font-size: var(--t-body); line-height: 1.65; color: var(--ink-2); }
 
-/* real work: the screenshot is framed by a hairline, nothing else */
-.ed__fig { align-self: stretch; margin: clamp(28px,3vw,40px) 0 0; }
-.ed__shot { display: block; overflow: hidden; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-sunk); }
-.ed__shot img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 736; object-fit: cover; object-position: top;
-  transition: transform .9s var(--ease); }
-@media (hover: hover) and (pointer: fine) { .ed__shot:hover img { transform: scale(1.012); } }
-.ed__fig figcaption { display: flex; justify-content: space-between; gap: 6px 18px; flex-wrap: wrap;
-  margin-top: 12px; font-size: var(--t-xs); color: var(--ink-3); }
-.ed__fig figcaption span:first-child { color: var(--ink); font-weight: 500; }
+/* 01 — genuine work on a deep plate. The screenshot is cropped and set to
+   bleed off the plate's edge, the way a studio presents a project, so it
+   never reads as a live page embedded in this one. */
+.ed__work { margin: clamp(30px,3vw,44px) 0 0; align-self: stretch; }
+.ed__plate { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 11; border-radius: 6px;
+  background: linear-gradient(160deg, #0F5A54 0%, #0B4440 100%); }
+.ed__plate img { position: absolute; left: 8%; top: 10%; width: 100%; max-width: none; height: auto;
+  aspect-ratio: 1200 / 742; object-fit: cover; object-position: top left;
+  border-radius: 4px 0 0 0; outline: 1px solid rgba(255,255,255,.14);
+  transition: transform 1s var(--ease); }
+@media (hover: hover) and (pointer: fine) { .ed__plate:hover img { transform: translate(-1%, -1%); } }
+.ed__work figcaption { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 18px;
+  margin-top: 14px; font-size: var(--t-xs); color: var(--ink-3); }
+.ed__wn { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: var(--ink); letter-spacing: -.005em; }
 
-/* the operations column is typographic: a ruled index of what we connect */
-.ed__list { align-self: stretch; margin-top: clamp(28px,3vw,40px); counter-reset: ed; border-top: 1px solid var(--line); }
-.ed__list li { counter-increment: ed; display: flex; align-items: baseline; gap: 18px;
-  padding: 15px 0; border-bottom: 1px solid var(--line);
-  font-size: clamp(1.02rem,.95rem + .3vw,1.2rem); letter-spacing: -.012em; color: var(--ink); }
-.ed__list li::before { content: counter(ed, decimal-leading-zero); flex: none; width: 2.2em;
-  font-size: var(--t-xs); letter-spacing: .08em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+/* 02 — a typographic index, sized to carry the same weight as the plate */
+.ed__rows { margin-top: clamp(30px,3vw,44px); align-self: stretch; border-top: 1px solid var(--line-2); }
+.ed__rows li { position: relative; display: flex; align-items: baseline; gap: clamp(16px,2vw,28px);
+  padding: clamp(15px,1.45vw,21px) 0; border-bottom: 1px solid var(--line-2); }
+.ed__rows li::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform .6s var(--ease); }
+.ed__rn { flex: none; width: 2.4em; font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--ink-3);
+  transition: color .3s var(--ease); }
+.ed__rt { font-size: clamp(1.1rem, .95rem + .6vw, 1.55rem); letter-spacing: -.022em; line-height: 1.2; color: var(--ink);
+  transition: transform .45s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .ed__rows li:hover::after { transform: scaleX(1); }
+  .ed__rows li:hover .ed__rn { color: var(--accent); }
+  .ed__rows li:hover .ed__rt { transform: translateX(6px); }
+}
 
-.ed__more { display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(24px,2.6vw,36px);
-  font-size: var(--t-sm); color: var(--ink); padding-bottom: 3px; border-bottom: 1px solid var(--line-2);
-  transition: border-color .3s var(--ease); }
-.ed__more i { display: inline-flex; width: 14px; height: 14px; transition: transform .3s var(--ease); }
+.ed__more { justify-self: start; display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(26px,2.6vw,36px);
+  font-size: var(--t-sm); font-weight: 500; color: var(--ink); padding-bottom: 4px; border-bottom: 1px solid var(--ink);
+  transition: gap .3s var(--ease); }
+.ed__more i { display: inline-flex; width: 14px; height: 14px; }
 .ed__more i svg { width: 100%; height: 100%; }
-.ed__more:hover { border-color: var(--ink); }
-.ed__more:hover i { transform: translateX(3px); }
-.ed__more:focus-visible, .ed__shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.ed__more:hover { gap: 14px; }
+.ed__more:focus-visible, .ed__plate:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
+@media (max-width: 1100px) {
+  .ed__top { grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); }
+}
 @media (max-width: 999px) {
-  .ed__top { grid-template-columns: 1fr; gap: 32px; }
-  .ed__aside { padding-top: 0; }
-  .ed__cols { grid-template-columns: 1fr; border-top: 0; margin-top: 64px; }
-  .ed__col { border-top: 1px solid var(--line-2); }
-  .ed__col--a { padding-right: 0; }
-  .ed__col--b { padding-left: 0; border-left: 0; margin-top: 56px; }
+  .ed__top { grid-template-columns: 1fr; align-items: start; gap: 28px; }
+  .ed__aside { padding-bottom: 0; }
+  .ed__p { max-width: 58ch; }
+  .ed__spread { display: block; margin-top: 56px; border-top: 0; }
+  .ed__spread::before, .ed__spread::after { display: none; }
+  .ed__svc { display: flex; flex-direction: column; align-items: flex-start; border-top: 1px solid var(--ink); }
+  .ed__svc--web { padding-right: 0; }
+  .ed__svc--ai { padding-left: 0; margin-top: 56px; }
+  .ed__work, .ed__rows { align-self: stretch; }
 }
 @media (max-width: 600px) {
-  .ed__cols { margin-top: 48px; }
-  .ed__col--b { margin-top: 44px; }
-  .ed__fig figcaption { flex-direction: column; }
+  .ed__spread { margin-top: 44px; }
+  .ed__svc--ai { margin-top: 44px; }
+  .ed__plate { aspect-ratio: 4 / 3; }
+  .ed__plate img { left: 7%; top: 9%; width: 108%; }
+  .ed__work figcaption { flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ed__shot img, .ed__more, .ed__more i { transition: none; }
-  .ed__shot:hover img, .ed__more:hover i { transform: none; }
+  .ed__plate img, .ed__rows li::after, .ed__rn, .ed__rt, .ed__more { transition: none; }
+  .ed__plate:hover img, .ed__rows li:hover .ed__rt { transform: none; }
 }
 
 /* ---------- 13. responsive ---------- */

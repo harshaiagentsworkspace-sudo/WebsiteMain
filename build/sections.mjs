@@ -6,7 +6,7 @@
    =========================================================================== */
 import {
   site, cta, heroCopy, intro, pillars, servicesHead, audiences, audiencesHead,
-  signature, process, processHead, pov, aboutCopy, posts, brands,
+  signature, process, processHead, pov, aboutCopy, posts, brands, projects,
 } from './data.mjs';
 import { esc, ico, eyebrow, btn, head, secHead } from './ui.mjs';
 
@@ -99,47 +99,55 @@ export const logoWall = () => `
 </section>`;
 
 /* ---------- 3. INTRO — CUSTOMER EXPERIENCE / BUSINESS OPERATIONS ----------
-   An editorial spread, not an illustration. The statement and the answer
-   sit above two columns: the left carries a real screenshot of delivered
-   client work (VMS Careline), the right is purely typographic, using the
-   pillar's own focus list. Nothing here is a mock interface. */
+   An editorial spread. The statement and a short answer open the section;
+   below, the two capabilities share one ruled spread, their labels, titles
+   and descriptions aligned row for row (CSS subgrid). Service 01 carries
+   genuine delivered work — the VMS Careline homepage, presented as a
+   cropped project plate rather than a page preview. Service 02 is purely
+   typographic. Nothing here is a mock interface. */
+const AI_ROWS = ['AI Agents for Operations', 'Multi-Agent Systems', 'Process Automation',
+  'Lead Management & Follow-ups', 'Customer Support Workflows', 'API & Tool Integrations'];
+
 export const introBlock = () => {
   const [web, ai] = pillars;
+  const vms = projects.find(p => p.slug === 'vms-careline');
   return `
 <section class="section ed" data-rv>
   <div class="wrap">
     <div class="ed__top">
       ${head(intro.lines, 'h2 ed__h', 'h2')}
       <div class="ed__aside">
-        <p class="lead">${esc(intro.lead)}</p>
         <p class="ed__say">${esc(intro.body[0])}</p>
-        <p class="body-sm">${esc(intro.body[1])}</p>
+        <p class="ed__p">${esc(intro.body[1])}</p>
         <div class="btn-row">${btn(cta.primary, '/contact', 'primary', { avatar: true })}</div>
       </div>
     </div>
 
-    <div class="ed__cols">
-      <article class="ed__col ed__col--a">
+    <div class="ed__spread">
+      <article class="ed__svc ed__svc--web">
         <p class="ed__label"><span class="tnum">01</span><span class="ed__sl">/</span>Customer experience</p>
-        <h3 class="h3 ed__t">Web Development &amp; UI/UX</h3>
-        <p class="ed__d">Digital experiences that help people understand your business, explore your services and take the next step.</p>
-        <figure class="ed__fig">
-          <a class="ed__shot" href="/work#vms-careline">
-            <img src="/assets/work/vms-careline.jpg" width="1200" height="800" loading="lazy" decoding="async"
-                 alt="The VMS Careline homepage, designed and built by Ostendic">
+        <h3 class="ed__t">Web Development <em>&amp; UI/UX</em></h3>
+        <p class="ed__d">We design and build digital experiences that help businesses communicate clearly, establish trust and make it easier for customers to take action.</p>
+        <figure class="ed__work">
+          <a class="ed__plate" href="/work#${vms.slug}" aria-label="${esc(vms.name)} case study">
+            <img src="/${vms.image}" width="1200" height="800" loading="lazy" decoding="async"
+                 alt="The ${esc(vms.name)} homepage, designed and built by Ostendic">
           </a>
-          <figcaption><span>VMS Careline</span><span>Healthcare e-commerce · Client project</span></figcaption>
+          <figcaption>
+            <span class="ed__wn">${esc(vms.name)}</span>
+            <span>${esc(vms.sector)} · ${esc(vms.market)} · ${esc(vms.year)} · Client project</span>
+          </figcaption>
         </figure>
         <a class="ed__more" href="${web.path}">Explore web development <i>${ico.arrow}</i></a>
       </article>
 
-      <article class="ed__col ed__col--b">
+      <article class="ed__svc ed__svc--ai">
         <p class="ed__label"><span class="tnum">02</span><span class="ed__sl">/</span>Business operations</p>
-        <h3 class="h3 ed__t">Agentic AI Workflows</h3>
-        <p class="ed__d">Connected systems that coordinate tasks, move information between tools and reduce repetitive work across your business.</p>
-        <ul class="ed__list">
-          ${ai.focus.map(f => `<li>${esc(f)}</li>`).join('\n          ')}
-        </ul>
+        <h3 class="ed__t">Agentic AI <em>Workflows</em></h3>
+        <p class="ed__d">We build connected AI-powered systems that coordinate tasks, move information between tools and reduce repetitive work across business operations.</p>
+        <ol class="ed__rows">
+          ${AI_ROWS.map((r, i) => `<li><span class="ed__rn">${String(i + 1).padStart(2, '0')}</span><span class="ed__rt">${esc(r)}</span></li>`).join('\n          ')}
+        </ol>
         <a class="ed__more" href="${ai.path}">Explore agentic AI workflows <i>${ico.arrow}</i></a>
       </article>
     </div>
