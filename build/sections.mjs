@@ -6,7 +6,7 @@
    =========================================================================== */
 import {
   site, cta, heroCopy, intro, pillars, servicesHead, audiences, audiencesHead,
-  signature, process, processHead, pov, aboutCopy, posts, brands, projects,
+  signature, process, processHead, pov, aboutCopy, posts, brands,
 } from './data.mjs';
 import { esc, ico, eyebrow, btn, head, secHead } from './ui.mjs';
 
@@ -101,16 +101,15 @@ export const logoWall = () => `
 /* ---------- 3. INTRO — CUSTOMER EXPERIENCE / BUSINESS OPERATIONS ----------
    An editorial spread. The statement and a short answer open the section;
    below, the two capabilities share one ruled spread, their labels, titles
-   and descriptions aligned row for row (CSS subgrid). Service 01 carries
-   genuine delivered work — the VMS Careline homepage, presented as a
-   cropped project plate rather than a page preview. Service 02 is purely
-   typographic. Nothing here is a mock interface. */
+   and descriptions aligned row for row (CSS subgrid). Service 01 is an
+   abstract plate (a type specimen over golden-section construction
+   lines); service 02 is a typographic index. No client work, screenshots
+   or mock interfaces appear in this section. */
 const AI_ROWS = ['AI Agents for Operations', 'Multi-Agent Systems', 'Process Automation',
   'Lead Management & Follow-ups', 'Customer Support Workflows', 'API & Tool Integrations'];
 
 export const introBlock = () => {
   const [web, ai] = pillars;
-  const vms = projects.find(p => p.slug === 'vms-careline');
   return `
 <section class="section ed" data-rv>
   <div class="wrap">
@@ -128,16 +127,23 @@ export const introBlock = () => {
         <p class="ed__label"><span class="tnum">01</span><span class="ed__sl">/</span>Customer experience</p>
         <h3 class="ed__t">Web Development <em>&amp; UI/UX</em></h3>
         <p class="ed__d">We design and build digital experiences that help businesses communicate clearly, establish trust and make it easier for customers to take action.</p>
-        <figure class="ed__work">
-          <a class="ed__plate" href="/work#${vms.slug}" aria-label="${esc(vms.name)} case study">
-            <img src="/${vms.image}" width="1200" height="800" loading="lazy" decoding="async"
-                 alt="The ${esc(vms.name)} homepage, designed and built by Ostendic">
-          </a>
-          <figcaption>
-            <span class="ed__wn">${esc(vms.name)}</span>
-            <span>${esc(vms.sector)} · ${esc(vms.market)} · ${esc(vms.year)} · Client project</span>
-          </figcaption>
-        </figure>
+        <div class="ed__work">
+          <div class="ed__art" aria-hidden="true">
+            <svg viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <circle class="ed__disc" cx="915" cy="575" r="275"/>
+              <g class="ed__cons">
+                <rect x="640" y="300" width="890" height="550"/>
+                <path d="M1190 300V850M1190 640H1530M1320 640V850M1190 720H1320"/>
+                <path class="ed__arc" d="M640 850A550 550 0 0 1 1190 300A340 340 0 0 1 1530 640A210 210 0 0 1 1320 850A130 130 0 0 1 1190 720"/>
+                <path d="M0 850H1600M640 0V1100"/>
+              </g>
+              <circle class="ed__pin" cx="1190" cy="640" r="7"/>
+            </svg>
+            <span class="ed__aa">Aa</span>
+            <span class="ed__cap">Type <i>/</i> Layout <i>/</i> Interaction</span>
+          </div>
+          <p class="ed__focus">${web.focus.slice(0, 4).map(esc).join(' <i>·</i> ')}</p>
+        </div>
         <a class="ed__more" href="${web.path}">Explore web development <i>${ico.arrow}</i></a>
       </article>
 
