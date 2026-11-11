@@ -13,7 +13,7 @@ export const home = () => `
 ${S.hero()}
 ${S.selectedWork()}
 ${S.studioNumbers({ preview: globalThis.process.env.PREVIEW_STATS === '1' })}
-${S.serviceChapters({ icons: true })}
+${S.serviceChapters({ icons: true, ring: true })}
 ${S.processSection()}
 ${S.aboutTeaser()}
 `;

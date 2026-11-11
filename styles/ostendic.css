@@ -701,3 +701,76 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
   .hero__vid { display: none; }
 }
 .demo > .alink { justify-self: start; }
+
+/* ---------- 17. WORKFLOW RING (homepage example) ----------
+   Default styles are the COMPLETED state, so no-JS and reduced-motion
+   visitors see the closed loop. site.js adds .loop--live and drives the
+   timeline: --draw (0..100 dash offset) and --a (dot angle) are written
+   per frame; .is-on / .is-closed are toggled at step boundaries. Only
+   transform, opacity and stroke-dashoffset animate. Colours are existing
+   tokens; the card itself keeps the .eg styles above. */
+.loop { --tilt: 20deg; --node: 64px; --ring-w: 2.05; --settle: cubic-bezier(.22, 1, .36, 1);
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px clamp(40px, 6vw, 80px); align-items: center; }
+.loop__stage { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.loop__box { position: relative; width: 100%; aspect-ratio: 1; perspective: 1100px; }
+.loop__tilt { position: absolute; inset: 9%; transform-style: preserve-3d;
+  transform: rotateX(calc(var(--tilt) + var(--py, 0) * 1deg)) rotateY(calc(var(--px, 0) * 1deg));
+  transition: transform .6s var(--settle); }
+.loop__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.loop__svg { transform: translateZ(0) rotate(-90deg); }
+.loop__svg circle { fill: none; stroke-width: var(--ring-w); stroke-linecap: round; }
+.loop__track { stroke: var(--line-dark); opacity: .7; }
+.loop__draw { stroke: var(--ink-inv-2); stroke-opacity: .45; stroke-dasharray: 100; stroke-dashoffset: var(--draw, 0); }
+.loop__draw--done { stroke: var(--accent-inv); stroke-opacity: 1; opacity: 1; transition: opacity .8s var(--settle); }
+/* the work item: a dot on an arm that rotates in the ring's plane */
+.loop__arm { position: absolute; inset: 0; transform: rotate(calc(var(--a, 0) * 1deg)); }
+.loop__dot { position: absolute; left: 50%; top: 10%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
+  background: var(--ink-inv); opacity: 0; transition: opacity .4s var(--settle); }
+/* nodes at 12, 3, 6 and 9 o'clock on the r=80 ring (40% from centre) */
+.loop__at--0 { left: 50%; top: 10%; } .loop__at--1 { left: 90%; top: 50%; }
+.loop__at--2 { left: 50%; top: 90%; } .loop__at--3 { left: 10%; top: 50%; }
+.loop__node, .loop__shadow { position: absolute; width: var(--node); height: var(--node);
+  margin: calc(var(--node) / -2) 0 0 calc(var(--node) / -2); border-radius: 50%; }
+.loop__shadow { background: rgba(0,0,0,.55); box-shadow: 0 0 10px 3px rgba(0,0,0,.4); opacity: 0;
+  transform: translateZ(1px) translateY(6px) scale(.92); transition: opacity .6s var(--settle); }
+.loop__node { display: grid; place-items: center; background: var(--bg-dark-2); border: 1px solid #34373A; color: var(--ink-inv);
+  transform: translateZ(var(--z, 2px)) rotateX(calc(-1 * var(--tilt))); transition: transform .7s var(--settle); }
+.loop__node::after { content: ""; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid var(--accent-inv);
+  opacity: 0; transition: opacity .5s var(--settle); }
+.loop__node svg { opacity: 1; transition: opacity .5s var(--settle); }
+.loop__steps { display: flex; flex-direction: column; gap: 22px; }
+.loop__step { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 12px; align-items: baseline;
+  padding-top: 18px; border-top: 1px solid var(--line-dark); transition: opacity .6s var(--settle); }
+.loop__step p { font-size: var(--t-sm); color: var(--ink-inv-2); }
+.loop__n { font-size: var(--t-xs); font-weight: 500; color: var(--accent-inv); }
+.loop__replay { font: inherit; font-size: var(--t-xs); font-weight: 500; color: var(--ink-inv-2); background: none; border: 0;
+  border-bottom: 1px solid #3A3D40; padding: 6px 0 3px; cursor: pointer; transition: color .2s var(--ease), border-color .2s var(--ease); }
+.loop__replay:hover { color: var(--ink-inv); border-bottom-color: var(--ink-inv-2); }
+.loop__replay[hidden] { display: none; }
+
+/* live (animating) states */
+.loop--live .loop__draw--done { opacity: 0; }
+.loop--live .loop__dot { opacity: 1; }
+.loop--live .loop__node svg { opacity: .6; }
+.loop--live .loop__step { opacity: .55; }
+.loop--live .loop__step.is-on { opacity: 1; }
+.loop--live .loop__node.is-on { --z: 10px; will-change: transform; }
+.loop--live .loop__node.is-on svg, .loop--live .loop__node.is-on::after { opacity: 1; }
+.loop--live .loop__shadow.is-on { opacity: .9; }
+/* the close: ring turns teal, nodes settle, every step reads at full strength */
+.loop--live.is-closed .loop__draw--done { opacity: 1; }
+.loop--live.is-closed .loop__dot { opacity: 0; }
+.loop--live.is-closed .loop__node svg, .loop--live.is-closed .loop__step { opacity: 1; }
+
+@media (max-width: 767px) {
+  .loop { --tilt: 0deg; --node: 48px; --ring-w: 2.8; grid-template-columns: 1fr; gap: 28px; }
+  .loop__stage { align-items: flex-start; }
+  .loop__box { width: min(100%, 260px); perspective: none; }
+  .loop__tilt { transform: none; }
+  .loop__node svg { width: 22px; height: 22px; }
+  .loop--live .loop__node.is-on { --z: 2px; }
+  .loop__shadow { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loop__replay { display: none !important; }
+}

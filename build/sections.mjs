@@ -191,8 +191,53 @@ export const example = (s, dark = true) => `
         <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
       </aside>`;
 
+/* ---------- WORKFLOW RING (homepage example) ----------
+   The four steps as nodes on a ring. site.js draws the ring from node to
+   node and closes it; without JS, or with reduced motion, the completed
+   state is what renders. The ring and icons are decorative (aria-hidden);
+   the step texts are real text in an ordered list. Icons are drawn in the
+   style of the service icons: 64 viewBox, stroke 3, round caps and joins,
+   circles, lines and rounded rects only. */
+const nodeIcon = (inner) =>
+  `<svg viewBox="0 0 64 64" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
+const NODE_ICONS = [
+  /* 01 incoming enquiry: a message card with an arrow entering */
+  nodeIcon('<rect x="24" y="16" width="32" height="30" rx="6"/><line x1="34" y1="26" x2="46" y2="26"/><line x1="34" y1="35" x2="42" y2="35"/><line x1="6" y1="31" x2="28" y2="31"/><line x1="21" y1="24" x2="28" y2="31"/><line x1="21" y1="38" x2="28" y2="31"/>'),
+  /* 02 agent reads and logs: three lines with one highlighted dot */
+  nodeIcon('<line x1="26" y1="20" x2="52" y2="20"/><line x1="26" y1="32" x2="52" y2="32"/><line x1="26" y1="44" x2="44" y2="44"/><circle cx="14" cy="32" r="4.5" fill="currentColor" stroke="none"/>'),
+  /* 03 drafted reply awaiting approval: a speech bubble with a small check */
+  nodeIcon('<rect x="10" y="12" width="44" height="32" rx="8"/><line x1="20" y1="44" x2="16" y2="53"/><line x1="16" y1="53" x2="29" y2="44"/><line x1="24" y1="28" x2="30" y2="34"/><line x1="30" y1="34" x2="41" y2="22"/>'),
+  /* 04 follow-up reminder: a circle with a clock hand and a small dot */
+  nodeIcon('<circle cx="30" cy="34" r="20"/><line x1="30" y1="34" x2="30" y2="23"/><line x1="30" y1="34" x2="38" y2="39"/><circle cx="51" cy="13" r="4.5" fill="currentColor" stroke="none"/>'),
+];
+
+export const exampleRing = (s) => `
+      <aside class="eg eg--ring" aria-labelledby="eg-${s.slug}">
+        <p class="eg__t" id="eg-${s.slug}">${esc(s.example.title)}</p>
+        <div class="loop" data-loop>
+          <div class="loop__stage">
+            <div class="loop__box" aria-hidden="true">
+              <div class="loop__tilt">
+                <svg class="loop__svg" viewBox="0 0 200 200" focusable="false">
+                  <circle class="loop__track" cx="100" cy="100" r="80"/>
+                  <circle class="loop__draw" cx="100" cy="100" r="80" pathLength="100"/>
+                  <circle class="loop__draw loop__draw--done" cx="100" cy="100" r="80" pathLength="100"/>
+                </svg>
+                <span class="loop__arm"><span class="loop__dot"></span></span>
+                ${NODE_ICONS.map((icon, i) => `<span class="loop__shadow loop__at--${i}"></span><span class="loop__node loop__at--${i}">${icon}</span>`).join('')}
+              </div>
+            </div>
+            <button class="loop__replay" type="button" hidden>Replay</button>
+          </div>
+          <ol class="loop__steps">
+            ${s.example.steps.map((t, i) => `<li class="loop__step"><span class="loop__n tnum">${String(i + 1).padStart(2, '0')}</span><p>${esc(t)}</p></li>`).join('')}
+          </ol>
+        </div>
+        <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
+      </aside>`;
+
 /* `icons` is on for the homepage only; /services reuses this without them. */
-export const serviceChapters = ({ withHead = true, icons = false } = {}) => {
+export const serviceChapters = ({ withHead = true, icons = false, ring = false } = {}) => {
   const [web, ai] = pillars;
   return `
 <section class="section" id="services">
@@ -212,7 +257,7 @@ export const serviceChapters = ({ withHead = true, icons = false } = {}) => {
 <section class="section section--dark" id="${ai.slug}">
   <div class="wrap">
     <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows', icons ? AgenticWorkflowsIcon({ className: 'chap__icon' }) : '')}
-${example(ai)}
+${ring ? exampleRing(ai) : example(ai)}
     </article>
   </div>
 </section>`;

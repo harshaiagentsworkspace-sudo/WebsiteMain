@@ -109,6 +109,104 @@
     }
   }
 
+  /* ---------- workflow ring (homepage example) ----------
+     One timeline, driven by elapsed time that advances only while the
+     section is on screen. State is a pure function of that time: the ring
+     offset, the dot angle and the active step. Plays once when 40% is in
+     view, ends closed, and Replay restarts it. Reduced motion: nothing runs,
+     the completed state (the CSS default) stays, and Replay stays hidden. */
+  var loop = document.querySelector('[data-loop]');
+  if (loop && !reduce.matches) (function () {
+    var HOLD = 750, DRAW = 900, STEPS = 4;              // ~1.65 s per step
+    var CLOSE_AT = HOLD + (STEPS - 1) * (HOLD + DRAW) + DRAW;   // 6.6 s, then a 0.8 s CSS settle
+    var tilt = loop.querySelector('.loop__tilt');
+    var nodes = loop.querySelectorAll('.loop__node');
+    var shadows = loop.querySelectorAll('.loop__shadow');
+    var steps = loop.querySelectorAll('.loop__step');
+    var replay = loop.querySelector('.loop__replay');
+    var t = 0, last = 0, raf = 0, visible = false, started = false, active = -2;
+    var easeInOut = function (x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
+
+    var setActive = function (i) {
+      if (i === active) return;
+      active = i;
+      for (var k = 0; k < STEPS; k++) {
+        var on = k === i;
+        nodes[k].classList.toggle('is-on', on);
+        shadows[k].classList.toggle('is-on', on);
+        steps[k].classList.toggle('is-on', on);
+      }
+    };
+    var render = function () {
+      var drawn = 0, arrived = 0;
+      for (var k = 0; k < STEPS; k++) {
+        var s = HOLD + k * (HOLD + DRAW);
+        if (t >= s + DRAW) { drawn += 1; arrived++; }
+        else { if (t > s) drawn += easeInOut((t - s) / DRAW); break; }
+      }
+      var frac = drawn / STEPS;
+      loop.style.setProperty('--draw', (100 * (1 - frac)).toFixed(3));
+      loop.style.setProperty('--a', (frac * 360).toFixed(2));
+      var closed = arrived === STEPS;
+      loop.classList.toggle('is-closed', closed);
+      setActive(closed ? -1 : arrived);
+      return closed;
+    };
+    var frame = function (now) {
+      raf = 0;
+      if (!visible) return;                              // paused off screen
+      t += Math.min(now - last, 100); last = now;        // no jump after a tab switch
+      if (render()) return;                              // closed: stop for good
+      raf = requestAnimationFrame(frame);
+    };
+    var play = function () {
+      if (raf || !visible) return;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    var reset = function () {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      t = 0; render();
+    };
+
+    loop.classList.add('loop--live');
+    reset();                                             // start state, before it scrolls into view
+    replay.hidden = false;
+    replay.addEventListener('click', function () { reset(); started = true; play(); });
+
+    new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      visible = e.isIntersecting;
+      if (!visible) { if (raf) { cancelAnimationFrame(raf); raf = 0; } return; }
+      if (!started && e.intersectionRatio >= 0.4) started = true;
+      if (started && t < CLOSE_AT) play();
+    }, { threshold: [0, 0.4] }).observe(loop);
+
+    /* pointer parallax: desktop pointers only, at most 4 degrees */
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 768px)');
+    var box = loop.querySelector('.loop__box');
+    var pending = null;
+    box.addEventListener('pointermove', function (e) {
+      if (!fine.matches || e.pointerType !== 'mouse') return;
+      var r = box.getBoundingClientRect();
+      pending = [((e.clientX - r.left) / r.width - .5) * 8, ((e.clientY - r.top) / r.height - .5) * -8];
+      requestAnimationFrame(function () {
+        if (!pending) return;
+        tilt.style.setProperty('--px', Math.max(-4, Math.min(4, pending[0])).toFixed(2));
+        tilt.style.setProperty('--py', Math.max(-4, Math.min(4, pending[1])).toFixed(2));
+        pending = null;
+      });
+    });
+    box.addEventListener('pointerleave', function () { tilt.style.setProperty('--px', '0'); tilt.style.setProperty('--py', '0'); });
+    reduce.addEventListener('change', function (m) {
+      if (!m.matches) return;
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0; visible = false;
+      loop.classList.remove('loop--live', 'is-closed');
+      replay.hidden = true;
+    });
+  })();
+
   /* ---------- smooth in-page anchors (respecting reduced motion) ---------- */
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#"]');
