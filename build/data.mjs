@@ -73,7 +73,7 @@ export const links = {
   /* The main "start" CTA: the /book page (real scheduler) if one is
      configured, otherwise the enquiry form. The label follows the destination. */
   start: site.booking ? '/book' : '/contact',
-  startLabel: site.booking ? 'Book a 30-minute call' : 'Start a conversation',
+  startLabel: site.booking ? 'Book a quick call' : 'Start a conversation',
 };
 
 /* ---------- HERO ---------- */

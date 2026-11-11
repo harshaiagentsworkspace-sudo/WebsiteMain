@@ -84,7 +84,6 @@ export const selectedWork = () => {
     <article class="feat">
       ${brandPlate(p)}
       <div class="feat__text">
-        <p class="wk__meta"><span class="tag tag--client">${kindLabel.client}</span><span>${esc(p.area)}</span></p>
         <h3 class="h2">${esc(p.name)}</h3>
         <p class="body">${esc(p.what)}</p>
         <p class="body-sm">${esc(p.built)}</p>
@@ -108,7 +107,6 @@ export const selectedWork = () => {
           <a class="demo__img" href="/work#${p.slug}" tabindex="-1" aria-hidden="true">
             <img src="/${p.images.desktop}" alt="" width="1600" height="1000" loading="lazy" decoding="async">
           </a>
-          <p class="wk__meta"><span class="tag tag--demo">${kindLabel.demo}</span><span>${esc(p.area)}</span></p>
           <h4 class="h4"><a href="/work#${p.slug}">${esc(p.name)}</a></h4>
           <p class="body-sm">${esc(p.what)}</p>
           ${alink('Open the live demo', p.url)}

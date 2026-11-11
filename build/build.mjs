@@ -57,7 +57,7 @@ add('contact.html', page({
 /* booking: only with a real scheduler configured */
 if (site.booking) {
   add('book.html', page({
-    title: T('Book a 30-minute call'), desc: `Book a 30-minute call with ${site.principal} of Ostendic about a website, UI/UX design or an AI workflow. Pick a date and time that suits you.`,
+    title: T('Book a quick call'), desc: `Book a quick call with ${site.principal} of Ostendic about a website, UI/UX design or an AI workflow. Pick a date and time that suits you.`,
     current: '/book', body: P.book(), needsBooking: true,
   }));
 } else if (existsSync(join(ROOT, 'book.html'))) rmSync(join(ROOT, 'book.html'));

@@ -260,7 +260,7 @@ export const contact = () => {
   const direct = [
     links.whatsapp && `<li><a href="${links.whatsapp}" target="_blank" rel="noopener">${ico.whatsapp}<span><strong>WhatsApp</strong><span>Send a message, any time</span></span></a></li>`,
     links.tel && `<li><a href="${links.tel}">${ico.phone}<span><strong>Call</strong><span>${esc(site.phone.display)}</span></span></a></li>`,
-    site.booking && `<li><a href="/book">${ico.calendar}<span><strong>Book a 30-minute call</strong><span>Pick a date and time that suits you</span></span></a></li>`,
+    site.booking && `<li><a href="/book">${ico.calendar}<span><strong>Book a quick call</strong><span>Pick a date and time that suits you</span></span></a></li>`,
     `<li><a href="mailto:${site.email}">${ico.mail}<span><strong>Email</strong><span>${site.email}</span></span></a></li>`,
   ].filter(Boolean).join('');
   return `
@@ -349,13 +349,13 @@ export const book = () => `
   <div class="wrap booking">
     <div class="booking__intro">
       <p class="label">Book a call</p>
-      <h1 class="h1">Book a 30-minute call</h1>
+      <h1 class="h1">Book a quick call</h1>
       <p class="lead">A short call about what you want to build or fix, and the sensible next step. ${esc(site.principal.split(' ')[0])} replies to emails within one business day.</p>
       <div class="sig">
         <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" decoding="async"></span>
         <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
       </div>
-      <p class="body-sm">Prefer to write? <a class="alink" href="/contact">Send an enquiry instead${ico.arrow}</a></p>
+      <div class="btn-row"><p class="body-sm">Prefer to write?</p>${btn('Send an enquiry instead', '/contact', 'primary')}</div>
     </div>
 
     <div class="booking__panel" id="booking" data-provider="${bookingProvider}" data-url="${esc(site.booking || '')}">
