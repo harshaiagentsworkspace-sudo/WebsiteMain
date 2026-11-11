@@ -2,6 +2,7 @@
    OSTENDIC — UI PRIMITIVES
    Every component returns an HTML string. One visual language, all pages.
    =========================================================================== */
+import { readFileSync } from 'node:fs';
 import { site, links, nav, pillars } from './data.mjs';
 
 export const esc = (s = '') => String(s)
@@ -19,6 +20,27 @@ export const ico = {
   phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h3.2l1.6 4.2-2.1 1.4a11.6 11.6 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a1.9 1.9 0 0 1-2 1.9A16.6 16.6 0 0 1 3.1 5.5 1.9 1.9 0 0 1 5 3.5Z"/></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg>',
 };
+
+/* ---------- service icons ----------
+   Source of truth: assets/Service icons/*.svg. The files are read at build
+   time and their contents are inlined unchanged (same viewBox, paths,
+   strokes and currentColor fills), so the icon takes its parent's text
+   colour. Only the outer tag changes: width/height come from `size`, the
+   file's role/aria-label are dropped and aria-hidden is set, because the
+   service name sits right beside the icon. */
+const ICON_DIR = new URL('../assets/Service icons/', import.meta.url);
+const svgIcon = (file) => {
+  const src = readFileSync(new URL(file, ICON_DIR), 'utf8').trim();
+  const m = src.match(/^<svg\b([^>]*)>([\s\S]*)<\/svg>$/);
+  if (!m) throw new Error(`Not a single <svg> element: ${file}`);
+  const attrs = m[1]
+    .replace(/\s(width|height|role|aria-label|aria-hidden|class)="[^"]*"/g, '')
+    .replace(/\sxmlns="[^"]*"/, '');
+  return ({ size = 44, className = '' } = {}) =>
+    `<svg${attrs} width="${size}" height="${size}"${className ? ` class="${esc(className)}"` : ''} aria-hidden="true" focusable="false">${m[2]}</svg>`;
+};
+export const WebDevelopmentIcon = svgIcon('web-development.svg');
+export const AgenticWorkflowsIcon = svgIcon('agentic-ai-workflows.svg');
 
 const ext = (href) => /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '';
 

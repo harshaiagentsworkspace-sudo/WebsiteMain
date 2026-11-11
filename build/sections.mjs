@@ -7,7 +7,7 @@
    which never loads on small screens, data-saver or reduced motion.
    =========================================================================== */
 import { site, heroCopy, pillars, process, aboutCopy, published, kindLabel, stats } from './data.mjs';
-import { esc, ico, btn, alink, head, startBtn } from './ui.mjs';
+import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon } from './ui.mjs';
 
 /* ---------- HERO ----------
    The vortex clip is atmosphere, not content: a poster paints immediately
@@ -173,10 +173,10 @@ const facts = (s) => `
     <div><dt>A project can include</dt><dd><ul class="ticks">${s.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul></dd></div>
   </dl>`;
 
-const chapter = (s, link) => `
+const chapter = (s, link, icon = '') => `
       <div class="chap__main">
         <header class="chap__head">
-          <span class="chap__n tnum">${s.n}</span>
+          ${icon}<span class="chap__n tnum">${s.n}</span>
           <h3 class="chap__t">${esc(s.title)}</h3>
           <p class="body">${esc(s.summary)}</p>
           ${alink(link, s.path)}
@@ -191,7 +191,8 @@ export const example = (s, dark = true) => `
         <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
       </aside>`;
 
-export const serviceChapters = ({ withHead = true } = {}) => {
+/* `icons` is on for the homepage only; /services reuses this without them. */
+export const serviceChapters = ({ withHead = true, icons = false } = {}) => {
   const [web, ai] = pillars;
   return `
 <section class="section" id="services">
@@ -204,13 +205,13 @@ export const serviceChapters = ({ withHead = true } = {}) => {
         <p class="body">Some businesses need one of them. Many need both: a website that brings enquiries in, and a workflow that makes sure each one is answered.</p>
       </div>
     </div>` : ''}
-    <article class="chap" id="${web.slug}">${chapter(web, 'More on web development and UI/UX')}
+    <article class="chap" id="${web.slug}">${chapter(web, 'More on web development and UI/UX', icons ? WebDevelopmentIcon({ className: 'chap__icon' }) : '')}
     </article>
   </div>
 </section>
 <section class="section section--dark" id="${ai.slug}">
   <div class="wrap">
-    <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows')}
+    <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows', icons ? AgenticWorkflowsIcon({ className: 'chap__icon' }) : '')}
 ${example(ai)}
     </article>
   </div>
