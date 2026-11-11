@@ -1,21 +1,32 @@
 # Ostendic site build
 
-Static generator. No framework, no runtime JS framework, no build step required
-on the host — HTML is generated into the project root and served directly.
+Static generator. No framework and no build step on the host: HTML is generated
+into the project root and served directly.
 
-    node build/build.mjs
+    node build/build.mjs        # writes the pages, sitemap.xml, robots.txt
+    node build/serve.mjs 3000   # local server mirroring vercel.json (clean URLs, redirects)
 
 | file | role |
 |---|---|
-| `data.mjs`  | all content. Single source of truth. Placeholders marked `TEMP-PLACEHOLDER`. |
-| `ui.mjs`    | primitives: buttons, eyebrows, headings, cards, FAQ, header, footer, page shell |
-| `pages.mjs` | page compositions — each page varies its own section rhythm |
-| `build.mjs` | writes `.html`, `sitemap.xml`, `robots.txt` |
+| `data.mjs`     | all content and business facts. Single source of truth. |
+| `ui.mjs`       | primitives: buttons, header, footer, page shell |
+| `sections.mjs` | homepage sections |
+| `pages.mjs`    | page compositions |
+| `build.mjs`    | writes the files and prints the PENDING list |
 
-`favicon.svg` in the project root is a supplied asset, not build output — the
-generator used to emit a placeholder letterform and no longer does.
+Runtime: `styles/ostendic.css` + `scripts/site.js` (progressive enhancement only).
 
-Runtime: `styles/ostendic.css` + `scripts/site.js` (progressive enhancement only —
-every page is fully readable and navigable with JS disabled).
-The contact form posts through the existing `db.js` Supabase client; a failed
-submission is reported as a failure, never as success.
+## Switching things on
+
+Missing business details are `null` in `data.mjs`, and the matching UI stays
+hidden until they're filled in. Every build prints what is still pending.
+
+- `site.whatsapp` (digits, e.g. `9198xxxxxxxx`): WhatsApp buttons in the header, hero menu, footer, contact page
+- `site.phone` (`{ display, tel }`): click-to-call
+- `site.booking` (Calendly / Cal.com URL): primary CTA becomes "Book a call" and links there
+- `site.social` (`[['LinkedIn', url], ...]`): footer links and structured data
+- `projects[].publish`: shows a project on the homepage, the Work page and the service pages
+- `packages[].publish`, `price`, `timeline`, `payment`: pricing page values
+
+The contact form posts through `db.js` (Supabase). A failed submission is
+reported as a failure, never as success.

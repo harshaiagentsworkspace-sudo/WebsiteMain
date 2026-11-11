@@ -24,6 +24,10 @@ const server = createServer(async (req, res) => {
   const started = Date.now();
   let url = decodeURIComponent((req.url || '/').split('?')[0]);
 
+  // mirror vercel.json redirects for retired pages
+  const moved = { '/blog': '/', '/careers': '/contact', '/resources': '/' };
+  if (moved[url]) { res.writeHead(307, { Location: moved[url] }); res.end(); console.log(`  307  ${url}`); return; }
+
   // block traversal
   const safe = normalize(url).replace(/^(\.\.[/\\])+/, '');
   let file = join(ROOT, safe);

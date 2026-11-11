@@ -1,8 +1,8 @@
 /* Ostendic — progressive enhancement only.
-   Everything on the page is readable and usable without this file. */
+   Every page is readable and navigable with this file disabled. */
 (function () {
   'use strict';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---------- mobile navigation ---------- */
   var burger = document.getElementById('burger');
@@ -11,14 +11,16 @@
     var setMenu = function (open) {
       document.body.classList.toggle('menu-open', open);
       burger.setAttribute('aria-expanded', String(open));
-      mnav.setAttribute('aria-hidden', String(!open));
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      document.body.style.overflow = open ? 'hidden' : '';
+      mnav.setAttribute('aria-hidden', String(!open));
+      if ('inert' in mnav) mnav.inert = !open;
+      document.documentElement.style.overflow = open ? 'hidden' : '';
       if (open) {
         var first = mnav.querySelector('a');
         if (first) first.focus({ preventScroll: true });
       }
     };
+    if ('inert' in mnav) mnav.inert = true;
     burger.addEventListener('click', function () {
       setMenu(!document.body.classList.contains('menu-open'));
     });
@@ -30,129 +32,190 @@
         setMenu(false); burger.focus();
       }
     });
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 1180 && document.body.classList.contains('menu-open')) setMenu(false);
+    window.matchMedia('(min-width: 1025px)').addEventListener('change', function (m) {
+      if (m.matches && document.body.classList.contains('menu-open')) setMenu(false);
     });
   }
 
-  /* ---------- scroll reveal ---------- */
-  if (!reduce && 'IntersectionObserver' in window) {
-    var targets = document.querySelectorAll('.section > .wrap > *, .section .sec-head, .section .grid > *');
-    if (targets.length) {
-      document.documentElement.classList.add('js-reveal');
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-      Array.prototype.forEach.call(targets, function (t, i) {
-        // never hide the first screen — it must be readable at rest
-        if (t.getBoundingClientRect().top < window.innerHeight * 1.1) return;
-        t.classList.add('reveal');
-        t.style.transitionDelay = (Math.min(i % 4, 3) * 60) + 'ms';
-        io.observe(t);
-      });
+  /* ---------- hero background video ----------
+     The poster is painted by CSS. The 3 MB clip is attached only on wider
+     screens, with motion allowed and no data-saver, so phones never pay
+     for it. It pauses when scrolled out of view. */
+  var vid = document.querySelector('.hero__vid[data-src]');
+  if (vid) {
+    var conn = navigator.connection || {};
+    var wideEnough = window.matchMedia('(min-width: 768px)').matches;
+    if (wideEnough && !reduce.matches && !conn.saveData) {
+      vid.src = vid.getAttribute('data-src');
+      vid.addEventListener('playing', function () { vid.classList.add('is-on'); }, { once: true });
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () { /* autoplay refused: poster stays */ });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting) { var q = vid.play(); if (q && q.catch) q.catch(function () {}); }
+          else vid.pause();
+        }).observe(vid);
+      }
+      reduce.addEventListener('change', function (m) { if (m.matches) vid.pause(); });
     }
   }
 
-  /* ---------- category filters (work, resources) ---------- */
-  function wireFilter(groupId, gridId, emptyId) {
-    var group = document.getElementById(groupId);
-    var grid = document.getElementById(gridId);
-    if (!group || !grid) return;
-    var empty = document.getElementById(emptyId);
-    group.addEventListener('click', function (e) {
-      var btn = e.target.closest('.chip');
-      if (!btn || btn.disabled) return;
-      var want = btn.getAttribute('data-filter');
-      Array.prototype.forEach.call(group.querySelectorAll('.chip'), function (c) {
-        c.setAttribute('aria-pressed', String(c === btn));
+  /* ---------- sequence rails (process roadmap, workflow example) ----------
+     The rail fills as the list moves up through the viewport, and each step
+     is marked reached when the fill passes its node. Only the rail, nodes and
+     numbers change; step text is always fully visible. One passive scroll
+     listener, reads batched in a single rAF, writes are a CSS variable and a
+     class. Reduced motion (or no JS) shows the rail complete. */
+  var seqs = [].slice.call(document.querySelectorAll('[data-progress]'));
+  if (seqs.length) {
+    var finish = function () {
+      seqs.forEach(function (s) {
+        s.style.setProperty('--p', '1');
+        [].forEach.call(s.querySelectorAll('.seq__item'), function (it) { it.classList.add('is-reached'); });
       });
-      var shown = 0;
-      Array.prototype.forEach.call(grid.children, function (item) {
-        var cat = item.getAttribute('data-cat');
-        if (cat === null) return;                 // static filler cards stay put
-        var show = want === 'All' || cat === want;
-        item.hidden = !show;
-        if (show) shown++;
-      });
-      if (empty) empty.style.display = shown ? 'none' : 'block';
-    });
+    };
+    if (reduce.matches) finish();
+    else {
+      document.documentElement.classList.add('js-seq');
+      var queued = false;
+      var update = function () {
+        queued = false;
+        var vh = window.innerHeight;
+        seqs.forEach(function (s) {
+          var rail = s.querySelector('.seq__rail');
+          var r = rail.getBoundingClientRect();
+          var vertical = r.height > r.width;
+          var len = vertical ? r.height : r.width;
+          var box = s.getBoundingClientRect();
+          /* 0 when the list's top reaches 85% of the viewport, 1 when its
+             bottom reaches 55%: the fill completes while it is still in view */
+          var start = vh * 0.85, end = vh * 0.55;
+          var p = (start - box.top) / Math.max(1, (start - end) + box.height);
+          p = p < 0 ? 0 : p > 1 ? 1 : p;
+          s.style.setProperty('--p', p.toFixed(4));
+          var fill = p * len;
+          [].forEach.call(s.querySelectorAll('.seq__item'), function (it) {
+            var n = it.querySelector('.seq__node').getBoundingClientRect();
+            var at = vertical ? (n.top + n.height / 2 - r.top) : (n.left + n.width / 2 - r.left);
+            it.classList.toggle('is-reached', fill >= at - 1);
+          });
+        });
+      };
+      var request = function () { if (!queued) { queued = true; requestAnimationFrame(update); } };
+      window.addEventListener('scroll', request, { passive: true });
+      window.addEventListener('resize', request);
+      reduce.addEventListener('change', function (m) { if (m.matches) { window.removeEventListener('scroll', request); finish(); } });
+      update();
+    }
   }
-  wireFilter('workFilter', 'workGrid', 'workEmpty');
-  wireFilter('resFilter', 'resGrid', 'resEmpty');
+
+  /* ---------- smooth in-page anchors (respecting reduced motion) ---------- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    if (!id || id === '#') return;
+    var t = document.querySelector(id);
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(null, '', id);
+  });
 
   /* ---------- enquiry form ---------- */
   var form = document.getElementById('leadForm');
-  if (form) {
-    var status = document.getElementById('formStatus');
-    var submit = document.getElementById('formSubmit');
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!form) return;
+  var status = document.getElementById('formStatus');
+  var submit = document.getElementById('formSubmit');
+  var label = submit.querySelector('.btn-label');
+  var original = label.textContent;
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var openedAt = Date.now();
+  var mail = window.OSTENDIC_EMAIL || 'harsh@ostendic.com';
 
-    var validate = function () {
-      var ok = true;
-      Array.prototype.forEach.call(form.querySelectorAll('[data-req]'), function (f) {
-        var input = f.querySelector('input, textarea, select');
-        var v = (input.value || '').trim();
-        var bad = input.type === 'email' ? !emailRe.test(v)
-                : input.id === 'f-project' ? v.length < 10
-                : v.length < 2;
-        f.classList.toggle('invalid', bad);
-        input.setAttribute('aria-invalid', String(bad));
-        if (bad) ok = false;
-      });
-      return ok;
+  var check = function (f) {
+    var input = f.querySelector('input, textarea, select');
+    var v = (input.value || '').trim();
+    var bad = input.type === 'email' ? !emailRe.test(v)
+            : input.tagName === 'TEXTAREA' ? v.length < 10
+            : v.length < 2;
+    f.classList.toggle('invalid', bad);
+    input.setAttribute('aria-invalid', String(bad));
+    return !bad;
+  };
+  var validate = function () {
+    var ok = true;
+    Array.prototype.forEach.call(form.querySelectorAll('[data-req]'), function (f) { if (!check(f)) ok = false; });
+    return ok;
+  };
+  var setStatus = function (kind, html) {
+    status.className = 'form__status' + (kind ? ' ' + kind : '');
+    status.innerHTML = html || '';
+  };
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    setStatus('', '');
+    if (!validate()) {
+      var firstBad = form.querySelector('.invalid input, .invalid textarea');
+      if (firstBad) firstBad.focus();
+      setStatus('bad', 'Please check the highlighted fields.');
+      return;
+    }
+
+    /* Spam trap: a filled hidden field, or a submit within two seconds of
+       the page opening, is treated as a bot and dropped without a request. */
+    if (form.website.value || Date.now() - openedAt < 2000) {
+      form.reset();
+      setStatus('ok', 'Thanks, your message has been sent.');
+      return;
+    }
+
+    var extra = [];
+    if (form.phone.value.trim()) extra.push('Phone/WhatsApp: ' + form.phone.value.trim());
+    extra.push('Interested in: ' + form.help.value);
+    var payload = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      company: form.company.value.trim() || null,
+      budget: form.budget.value,
+      project_description: form.project.value.trim() + '\n\n' + extra.join('\n'),
     };
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      status.className = 'form__status';
-      status.textContent = '';
-      if (!validate()) {
-        var firstBad = form.querySelector('.invalid input, .invalid textarea');
-        if (firstBad) firstBad.focus();
-        return;
-      }
-      var payload = {
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        company: form.company.value.trim() || null,
-        budget: form.budget.value,
-        project_description: form.project.value.trim() + '\n\nInterest: ' + form.help.value,
-      };
-      submit.disabled = true;
-      var label = submit.querySelector('.btn-label');
-      var original = label.textContent;
-      label.textContent = 'Sending…';
+    submit.disabled = true;
+    submit.setAttribute('aria-busy', 'true');
+    form.classList.add('is-sending');
+    label.textContent = 'Sending…';
 
-      var done = function (okState) {
-        submit.disabled = false;
-        label.textContent = okState ? 'Sent' : original;
-        if (okState) {
-          status.className = 'form__status ok';
-          status.textContent = 'Thanks — that reached us. We reply within one business day.';
-          form.reset();
-        } else {
-          status.className = 'form__status bad';
-          status.innerHTML = 'That did not send. Please email us directly at ' +
-            '<a href="mailto:' + (window.OSTENDIC_EMAIL || 'harsh@ostendic.com') + '">' +
-            (window.OSTENDIC_EMAIL || 'harsh@ostendic.com') + '</a> and we will pick it up.';
-        }
-      };
-
-      // Real submission. A failure is reported as a failure — never as success.
-      if (typeof window.submitLead === 'function') {
-        Promise.resolve(window.submitLead(payload)).then(function () { done(true); })
-          .catch(function (err) { console.error('submitLead failed:', err); done(false); });
+    var finish = function (ok) {
+      submit.disabled = false;
+      submit.removeAttribute('aria-busy');
+      form.classList.remove('is-sending');
+      label.textContent = original;
+      if (ok) {
+        form.reset();
+        setStatus('ok', '<strong>Thanks, your enquiry has been sent.</strong> A reply will come to the email address you gave.');
       } else {
-        console.error('No lead backend available on this page.');
-        done(false);
+        setStatus('bad', 'Your enquiry couldn’t be sent. Please try again, or email <a href="mailto:' + mail + '">' + mail + '</a> directly.');
       }
-    });
+      status.focus && status.setAttribute('tabindex', '-1');
+      status.focus();
+    };
 
-    form.addEventListener('input', function (e) {
-      var f = e.target.closest('[data-req]');
-      if (f && f.classList.contains('invalid')) validate();
-    });
-  }
+    /* Real submission only. A failure is reported as a failure. */
+    if (typeof window.submitLead !== 'function') { finish(false); return; }
+    var timeout = new Promise(function (_, rej) { setTimeout(function () { rej(new Error('timeout')); }, 15000); });
+    Promise.race([Promise.resolve(window.submitLead(payload)), timeout])
+      .then(function () { finish(true); })
+      .catch(function (err) { console.error('Enquiry failed:', err); finish(false); });
+  });
+
+  form.addEventListener('input', function (e) {
+    var f = e.target.closest('[data-req]');
+    if (f && f.classList.contains('invalid')) check(f);
+  });
+  form.addEventListener('focusout', function (e) {
+    var f = e.target.closest('[data-req]');
+    if (f && e.target.value.trim()) check(f);
+  });
 })();

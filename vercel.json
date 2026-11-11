@@ -8,6 +8,19 @@
   "redirects": [
     { "source": "/services/ai-automation", "destination": "/services/agentic-ai-workflows", "permanent": false },
     { "source": "/services/:slug(ui-ux-design|brand-design|ecommerce|saas-product-design|mvp-development|motion-design|creative-marketing|dashboard-design)", "destination": "/services/web-development", "permanent": false },
-    { "source": "/work/:slug", "destination": "/work", "permanent": false }
+    { "source": "/work/:slug", "destination": "/work", "permanent": false },
+    { "source": "/blog", "destination": "/", "permanent": false },
+    { "source": "/careers", "destination": "/contact", "permanent": false },
+    { "source": "/resources", "destination": "/", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+    },
+    {
+      "source": "/(styles|scripts)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }]
+    }
   ]
 }

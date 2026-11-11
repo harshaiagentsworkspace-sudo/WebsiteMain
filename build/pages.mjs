@@ -1,544 +1,390 @@
 /* ===========================================================================
    OSTENDIC — PAGE COMPOSITIONS
-   Section rhythm modelled on the Orbix reference; each page varies its
-   composition rather than repeating hero → cards → cards → CTA.
    =========================================================================== */
 import {
-  site, cta, pillars, process, processHead, pov, aboutCopy, finalCta, signature,
-  audiences, projects, workCategories, engagements,
-  resources, resourceCategories, posts, postCategories,
+  site, links, pillars, aboutCopy, published, kindLabel, bookingProvider,
+  packages, thirdPartyCosts, budgets, interests,
 } from './data.mjs';
-import { esc, ico, eyebrow, btn, head, secHead, rowList } from './ui.mjs';
+import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn } from './ui.mjs';
 import * as S from './sections.mjs';
 
-/* ========================= HOME =========================
-   Narrative rhythm:
-   LIGHT hero → DARK client deck → WHITE intro → 3D PILLAR STACK
-   → WHITE what we build → GRADIENT signature outcome → WHITE process
-   → DARK point of view → DARK founder / about → WHITE insights
-   → DARK footer with the final CTA and founder card
-
-   Point of view and the founder run flush into one another so the
-   position and the person behind it read as one passage.
-   ======================================================== */
+/* ========================= HOME ========================= */
 export const home = () => `
 ${S.hero()}
-${S.logoWall()}
-${S.introBlock()}
-${S.servicesStack()}
-${S.whoWeHelp()}
-${S.signatureOutcome()}
-${S.roadmap()}
-${S.pointOfView()}
-${S.founderSignature()}
-${S.insights()}
+${S.selectedWork()}
+${S.studioNumbers({ preview: globalThis.process.env.PREVIEW_STATS === '1' })}
+${S.serviceChapters()}
+${S.processSection()}
+${S.aboutTeaser()}
 `;
 
-/* ========================= ABOUT ========================= */
-export const about = () => `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('About Ostendic', 'mark')}
-    ${head(aboutCopy.lines, 'h1', 'h1')}
-    <p class="lead">${esc(aboutCopy.body[0])}</p>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap">
-    <div class="grid g2" style="gap:clamp(28px,5vw,64px)">
-      <div class="stack gap-16">
-        ${head(['The goal'], 'h3', 'h2')}
-        <p class="body-sm">${esc(aboutCopy.body[1])}</p>
-        <p class="body-sm">${esc(aboutCopy.body[2])}</p>
-      </div>
-      <div class="stack gap-16">
-        ${head(['The approach'], 'h3', 'h2')}
-        <p class="body-sm">${esc(site.sub)}</p>
-        <p class="body-sm">${esc(site.approach)}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section dark">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'Point of view', lines: pov.lines })}
-    <div class="grid g3" style="gap:24px 48px">
-      ${pov.body.map(p => `<p class="body-sm">${esc(p)}</p>`).join('')}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="grid g2" style="gap:clamp(28px,5vw,64px);align-items:start">
-      <div class="stack gap-20">
-        ${eyebrow('The founder', 'mark')}
-        ${head([site.principal], 'h2', 'h2')}
-        <p class="body-sm" style="color:var(--ink-3)">${esc(site.principalRole)}<br>${esc(site.principalBio)}</p>
-        <p class="lead">${esc(aboutCopy.body[0])}</p>
-        <p class="body-sm">Ostendic works with businesses in ${esc(site.markets.join(', '))}. Delivery is remote, with overlap hours agreed at the start of each engagement.</p>
-        <div class="btn-row">${btn(cta.primary, '/contact', 'primary', { avatar: true })}</div>
-      </div>
-      <div class="stack gap-20">
-        ${rowList([...pillars.map(s => ({ title: s.title, href: s.path })), { title: 'Selected work', href: '/work' }])}
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'How we work', lines: processHead, center: true })}
-    <div class="grid g4">
-      ${process.map(([n, t, d]) => `
-        <div class="stack gap-12">
-          <span class="body-sm tnum" style="color:var(--ink-3)">${n}</span>
-          <h3 class="h4">${esc(t)}</h3>
-          <p class="body-sm">${esc(d)}</p>
-        </div>`).join('')}
-    </div>
-  </div>
-</section>
-`;
-
-/* ========================= CONTACT ========================= */
-export const contact = () => `
-<section class="section hero">
-  <div class="wrap">
-    <div class="grid g2" style="gap:clamp(32px,5vw,72px);align-items:start">
-      <div class="stack gap-24">
-        ${eyebrow('Contact us', 'flow')}
-        ${head(['Tell us what you', 'want to {build.}'], 'h1', 'h1')}
-        <p class="lead">${esc(finalCta.body[0])} ${esc(finalCta.body[1])}</p>
-        <hr class="divider">
-        <div class="stack gap-16">
-          <div class="stack gap-8">
-            <span class="body-sm" style="color:var(--ink-3)">Email</span>
-            <a class="alink" style="align-self:flex-start" href="mailto:${site.email}">${site.email}${ico.arrow}</a>
-          </div>
-          <div class="stack gap-8">
-            <span class="body-sm" style="color:var(--ink-3)">Working with</span>
-            <span class="body-sm" style="color:var(--ink)">${esc(site.markets.join(' · '))}</span>
-          </div>
-          <div class="stack gap-8">
-            <span class="body-sm" style="color:var(--ink-3)">Response time</span>
-            <span class="body-sm" style="color:var(--ink)">One business day</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="padding:clamp(22px,3vw,34px)">
-        <h2 class="h3">${esc(cta.primary)}</h2>
-        <p class="body-sm">A website, a product, an AI workflow or a mix — no sales pitch. We reply within one business day.</p>
-        <form class="form mt-16" id="leadForm" novalidate>
-          <div class="form__row">
-            <div class="field" data-req>
-              <label for="f-name">Full name *</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
-              <span class="err">Please enter your name.</span>
-            </div>
-            <div class="field" data-req>
-              <label for="f-email">Email *</label>
-              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
-              <span class="err">Please enter a valid email address.</span>
-            </div>
-          </div>
-          <div class="form__row">
-            <div class="field">
-              <label for="f-company">Company</label>
-              <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Company or role">
-            </div>
-            <div class="field">
-              <label for="f-budget">Budget range</label>
-              <select id="f-budget" name="budget">
-                <option>Not sure yet</option><option>Under $5k</option><option>$5k – $15k</option>
-                <option>$15k – $40k</option><option>$40k+</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-help">What would you like help with?</label>
-            <select id="f-help" name="help">
-              <option>Not sure yet — start with a conversation</option>
-              ${pillars.map(s => `<option>${esc(s.title)}</option>`).join('')}
-              <option>Both — a website or product with AI workflows</option>
-            </select>
-          </div>
-          <div class="field" data-req>
-            <label for="f-project">What would you like to talk about? *</label>
-            <textarea id="f-project" name="project" placeholder="What would you like to build or improve, and what would a good outcome look like?" required minlength="10"></textarea>
-            <span class="err">A sentence or two helps a lot.</span>
-          </div>
-          <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
-          <div class="btn-row">
-            <button class="btn btn--primary" type="submit" id="formSubmit">
-              <span class="btn-label">Send enquiry</span><span class="btn__ico">${ico.arrow}</span>
-            </button>
-          </div>
-          <p class="form__note">We use your details only to reply to this enquiry.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-`;
-
-/* ========================= BLOG ========================= */
-export const blog = () => `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('Insights', 'spark')}
-    ${head(['Notes on better websites', 'and {smarter systems}'], 'h1', 'h1')}
-    <p class="lead">Working notes on web development, UI/UX design and agentic AI workflows — published as we go rather than written to a content calendar.</p>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap stack gap-32">
-    <div class="chips" role="group" aria-label="Filter articles">
-      ${postCategories.map((c, i) => `<button class="chip" data-filter="${esc(c)}" aria-pressed="${i === 0}" disabled>${esc(c)}</button>`).join('')}
-    </div>
-    ${posts.length ? `<div class="grid g3">${posts.map(p => `<article class="card"><span class="tag" style="align-self:flex-start">${esc(p.cat)}</span><h3 class="h3">${esc(p.title)}</h3><p class="body-sm">${esc(p.desc)}</p></article>`).join('')}</div>` : `
-    <div class="card" style="align-items:flex-start;padding:clamp(28px,4vw,48px)">
-      <span class="tag">Nothing published yet</span>
-      <h2 class="h3 mt-8">The first articles are being written</h2>
-      <p class="body-sm" style="max-width:56ch">We would rather publish nothing than publish filler. When the first pieces are ready they will appear here.</p>
-    </div>`}
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="wrap stack gap-32">
-    ${secHead({ eye: 'Meanwhile', lines: ['Take something {useful}'], lead: 'The resource library has practical material you can use today.' , cta: btn('Browse resources', '/resources', 'ghost')})}
-  </div>
-</section>
-`;
-
-/* ========================= CAREERS ========================= */
-export const careers = () => `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('Careers', 'mark')}
-    ${head(['Small team.', 'High {standards}.'], 'h1', 'h1')}
-    <p class="lead">Ostendic is founder-led and deliberately small. We are not running an open hiring process right now — but we do work with a short list of trusted collaborators.</p>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap">
-    <div class="card" style="align-items:flex-start;padding:clamp(28px,4vw,48px)">
-      <span class="tag">Not actively hiring</span>
-      <h2 class="h3 mt-8">No open positions at the moment</h2>
-      <p class="body-sm" style="max-width:60ch">We would rather say that plainly than list roles that do not exist. If you work in UI/UX design, web development or AI workflow engineering and your work would stand up next to ours, send it anyway — collaborator briefs come up regularly and we keep a real list.</p>
-      <div class="btn-row mt-16">${btn('Send your work', '/contact', 'primary')}</div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'How we work', lines: ['What it is like', 'to {work with us}'] })}
-    <div class="grid g3">
-      ${[
-        ['Direct, not layered', 'You work with the person making decisions. No account managers, no relayed feedback.'],
-        ['Scoped, not open-ended', 'Every brief has a defined outcome. Nobody is asked to guess what "done" means.'],
-        ['Evidence over opinion', 'Work is judged against what it was supposed to change, not against taste.'],
-        ['Remote, with overlap', 'Distributed across our markets, with agreed overlap hours rather than a fixed timezone.'],
-        ['Credited properly', 'Collaborators are credited for their work. We do not pass off other people’s work as ours.'],
-        ['Paid on time', 'Agreed rate, agreed date, no chasing.'],
-      ].map(([t, d]) => `<div class="card"><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></div>`).join('')}
-    </div>
-  </div>
-</section>
-`;
-
-/* ========================= RESOURCES ========================= */
-export const resourcesPage = () => `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('Resources', 'grid')}
-    ${head(['Practical material,', 'free to {take}'], 'h1', 'h1')}
-    <p class="lead">Frameworks and templates we actually use. No email wall on the free material.</p>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap stack gap-32">
-    <div class="chips" role="group" aria-label="Filter resources" id="resFilter">
-      ${resourceCategories.map((c, i) => `<button class="chip" data-filter="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`).join('')}
-    </div>
-    <div class="grid g3" id="resGrid">
-      ${resources.map(r => `
-        <div data-cat="${esc(r.cat)}">
-          <a class="card card--link" href="/${encodeURI(r.href)}" download style="height:100%">
-            <div class="proj__meta">
-              <span class="tag tag--live">${esc(r.price)}</span>
-              <span>${esc(r.cat)}</span><span class="dot"></span><span>${esc(r.format)}</span>
-            </div>
-            <h3 class="h3">${esc(r.title)}</h3>
-            <p class="body-sm">${esc(r.desc)}</p>
-            <span class="alink mt-8" style="align-self:flex-start">Download${ico.arrow}</span>
-          </a>
-        </div>`).join('')}
-      <div class="card" style="border-style:dashed;justify-content:center;align-items:flex-start">
-        <span class="tag">In progress</span>
-        <h3 class="h4 mt-8">More resources coming</h3>
-        <p class="body-sm">Templates and checklists from live engagements are added as they are cleared for publication.</p>
-      </div>
-    </div>
-    <p class="body-sm" id="resEmpty" style="display:none">Nothing in that category yet.</p>
-  </div>
-</section>
-`;
-
-/* ========================= WORK CARD =========================
-   Client projects link to their case section on /work; Ostendic-built
-   demonstrations link to the live demo and are labelled as demo builds. */
-const projCard = (p) => {
-  const client = p.kind === 'client';
-  const href = client ? `/work#${p.slug}` : p.url;
-  return `
-  <a class="proj card--link" href="${href}"${client ? '' : ' target="_blank" rel="noopener"'} style="background:none;border:0;padding:0">
-    <div class="proj__media"><img src="/${p.image}" alt="${esc(p.name)} — ${esc(p.summary)}" loading="lazy" width="1200" height="750"></div>
-    <div class="stack gap-8">
-      <div class="proj__meta">
-        <span class="tag${client ? ' tag--live' : ''}">${client ? 'Client project' : 'Demo build'}</span>
-        <span>${esc(p.category)}</span><span class="dot"></span><span>${esc(p.year)}</span>
-      </div>
-      <h3 class="h3">${esc(p.name)}</h3>
-      <p class="body-sm">${esc(p.summary)}</p>
-      <div class="proj__tags">${p.disciplines.map(d => `<span class="tag">${esc(d)}</span>`).join('')}</div>
-    </div>
-  </a>`;
-};
-
-/* ========================= SERVICES =========================
-   Overview of both pillars, then one page per pillar. */
-const pillarCard = (s) => `
-  <a class="card card--link pillar pillar--${s.slug}" href="${s.path}">
-    <span class="pillar__n tnum">Pillar ${s.n}</span>
-    <h3 class="h3">${esc(s.title)}</h3>
-    <p class="body-sm">${esc(s.desc)}</p>
-    <ul class="pillar__list">${s.focus.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
-    <span class="alink mt-8" style="align-self:flex-start">Explore ${esc(s.short)}${ico.arrow}</span>
-  </a>`;
-
-const processGrid = () => `
-<section class="section section--white">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'How we work', lines: processHead, center: true })}
-    <div class="grid g4">
-      ${process.map(([n, t, d]) => `
-        <div class="stack gap-12">
-          <span class="body-sm tnum" style="color:var(--ink-3)">${n}</span>
-          <h3 class="h4">${esc(t)}</h3>
-          <p class="body-sm">${esc(d)}</p>
-        </div>`).join('')}
-    </div>
-  </div>
-</section>`;
-
+/* ========================= SERVICES ========================= */
 export const servicesIndex = () => `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('Services', 'grid')}
-    ${head(['Web development, UI/UX design', 'and {agentic AI workflows.}'], 'h1', 'h1')}
-    <p class="lead">${esc(site.sub)}</p>
-    <div class="btn-row">${btn(cta.primary, '/contact', 'primary', { avatar: true })}${btn('See our work', '/work', 'ghost')}</div>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap grid g2" style="gap:clamp(16px,2vw,28px)">
-    ${pillars.map(pillarCard).join('')}
-  </div>
-</section>
-
-<section class="section collab">
-  <div class="wrap">
-    <div class="grid g2" style="gap:clamp(32px,5vw,72px);align-items:center">
-      <div class="stack gap-24">
-        ${eyebrow('Better together', 'flow')}
-        ${head(signature.lines, 'h2', 'h2')}
-        <p class="lead">${esc(site.approach)}</p>
-      </div>
-      <div class="chatwin">
-        <div class="chatwin__bar"><i></i><i></i><i></i><span>What you can come to us for</span></div>
-        ${audiences.map((a, i) => `<p class="msg ${i % 2 ? 'msg--us' : 'msg--them'}"><strong>${esc(a.title)}.</strong> ${esc(a.desc)}</p>`).join('')}
-      </div>
-    </div>
-  </div>
-</section>
-
-${processGrid()}
+${pageHead({
+  label: 'Services',
+  lines: ['Websites and web applications, and the AI workflows behind them'],
+  lead: 'Ostendic works in two areas. They are often used together, but each stands on its own.',
+})}
+${S.serviceChapters({ withHead: false })}
+${S.processSection()}
 `;
 
 export const pillarPage = (s) => {
   const other = pillars.find(p => p.slug !== s.slug);
-  const work = projects.filter(p => p.pillars.includes(s.slug));
+  const work = published.filter(p => p.pillars.includes(s.slug));
   return `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow(`Pillar ${s.n} · Services`, s.icon)}
-    ${head([s.title], 'h1', 'h1')}
-    <p class="lead">${esc(s.desc)}</p>
-    <div class="btn-row">${btn(cta.primary, '/contact', 'primary', { avatar: true })}${btn('All services', '/services', 'ghost')}</div>
-  </div>
-</section>
-
-<section class="section section--flush-t">
-  <div class="wrap">
-    <div class="grid g2" style="gap:clamp(28px,5vw,64px)">
-      <p class="xpt__say">${esc(s.kicker)}.</p>
-      <div class="stack gap-16">${s.long.map(p => `<p class="body-sm">${esc(p)}</p>`).join('')}</div>
-    </div>
-  </div>
-</section>
+${pageHead({
+  label: `Service ${s.n}`,
+  lines: [s.title],
+  lead: s.summary,
+  actions: startBtn('primary') + waBtn('ghost'),
+})}
 
 <section class="section section--white">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'What we do', lines: ['What this pillar {covers}'] })}
-    <div class="grid g2">
-      ${s.services.map(([t, d], i) => `
-        <article class="card">
-          <span class="body-sm tnum" style="color:var(--ink-3)">${String(i + 1).padStart(2, '0')}</span>
-          <h3 class="h4">${esc(t)}</h3>
-          <p class="body-sm">${esc(d)}</p>
-        </article>`).join('')}
+  <div class="wrap">
+    <div class="split">
+      <div class="split__a">
+        <p class="label">Who it helps</p>
+        <p class="body">${esc(s.who)}</p>
+        <p class="label mt-24">The problem</p>
+        <p class="body">${esc(s.problem)}</p>
+      </div>
+      <div class="split__b">
+        <h2 class="h3">What we build</h2>
+        <dl class="rows">
+          ${s.services.map(([t, d]) => `<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
+        </dl>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section dark">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'How we approach it', lines: pov.lines })}
-    <div class="grid g3" style="gap:24px 48px">
-      ${s.principles.map(([t, d]) => `<div class="stack gap-12"><h3 class="h4" style="color:var(--ink-inv)">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></div>`).join('')}
+${s.example ? `
+<section class="section">
+  <div class="wrap">
+    ${S.example(s, false)}
+  </div>
+</section>` : ''}
+
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">How we approach it</p>
+      <div class="shead__main"><h2 class="h2">What an engagement includes</h2></div>
+    </div>
+    <div class="split">
+      <ul class="ticks ticks--lg split__a">${s.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul>
+      <div class="split__b principles">
+        ${s.principles.map(([t, d]) => `<div><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></div>`).join('')}
+      </div>
     </div>
   </div>
 </section>
 
 ${work.length ? `
-<section class="section">
-  <div class="wrap stack gap-32">
-    ${secHead({ eye: 'Related work', lines: ['Where we have {applied this}'], cta: btn('All work', '/work', 'ghost') })}
-    <div class="grid g3">${work.map(projCard).join('')}</div>
+<section class="section section--white">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">Related work</p>
+      <div class="shead__main"><h2 class="h2">Where we have applied this</h2></div>
+    </div>
+    <ul class="mini-work">
+      ${work.map(p => `
+      <li>
+        <a href="/work#${p.slug}">
+          ${p.brand
+            ? `<span class="mini-work__logo"><img src="/${p.brand.logo}" alt="" width="${p.brand.w}" height="${p.brand.h}" loading="lazy" decoding="async"></span>`
+            : `<img src="/${p.images.desktop}" alt="" width="1600" height="1000" loading="lazy" decoding="async">`}
+          <span class="mini-work__t"><span class="tag tag--${p.kind}">${kindLabel[p.kind]}</span><strong>${esc(p.name)}</strong><span class="body-sm">${esc(p.what)}</span></span>
+        </a>
+      </li>`).join('')}
+    </ul>
   </div>
 </section>` : ''}
 
-${processGrid()}
-
 <section class="section section--sm">
-  <div class="wrap stack gap-24">
-    ${eyebrow('The other pillar', 'flow')}
-    ${pillarCard(other)}
+  <div class="wrap other">
+    <p class="label">The other service</p>
+    <a class="other__link" href="${other.path}"><span class="tnum">${other.n}</span><span>${esc(other.title)}</span>${ico.right}</a>
+    <p class="body-sm">${esc(other.summary)}</p>
   </div>
 </section>
 `;
 };
 
-/* ========================= WORK =========================
-   Client projects are marked as client projects; Ostendic-built
-   demonstrations are marked as demo builds. Nothing is padded. */
-export const work = () => {
-  const f = projects.find(p => p.kind === 'client');
-  return `
-<section class="section hero">
-  <div class="wrap stack gap-24" style="max-width:var(--max-narrow)">
-    ${eyebrow('Selected work', 'grid')}
-    ${head(['What we built, and', 'what it {does}'], 'h1', 'h1')}
-    <p class="lead">A small, honest portfolio across website development, e-commerce, UI/UX design and automation. Client projects are marked as client projects; demo builds are marked as demos.</p>
-  </div>
-</section>
+/* ========================= WORK ========================= */
+export const work = () => `
+${pageHead({
+  label: 'Work',
+  lines: ['What we have built'],
+  lead: 'Every entry says what it is. A client project was built for a paying client. A demo build is a working product Ostendic designed and built in-house to test an idea end to end.',
+})}
 
 <section class="section section--flush-t">
-  <div class="wrap stack gap-32">
-    <div class="chips" role="group" aria-label="Filter work by category" id="workFilter">
-      ${workCategories.map((c, i) => `<button class="chip" data-filter="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`).join('')}
-    </div>
-    <div class="grid g3" id="workGrid">
-      ${projects.map(p => `<div data-cat="${esc(p.category)}">${projCard(p)}</div>`).join('')}
-    </div>
-    <p class="body-sm" id="workEmpty" style="display:none">No projects in that category yet.</p>
-  </div>
-</section>
+  <div class="wrap">
+    ${published.map(p => `
+    <article class="case" id="${p.slug}">
+      ${p.brand ? S.brandPlate(p) : S.workFigure(p)}
+      <div class="case__body">
+        <p class="wk__meta"><span class="tag tag--${p.kind}">${kindLabel[p.kind]}</span><span>${esc(p.area)}</span></p>
+        <h2 class="h2">${esc(p.name)}</h2>
+        <dl class="facts facts--case">
+          <div><dt>What it is</dt><dd>${esc(p.what)}</dd></div>
+          <div><dt>The problem</dt><dd>${esc(p.problem)}</dd></div>
+          <div><dt>What was built</dt><dd>${esc(p.built)}</dd></div>
+          ${p.scope ? `<div><dt>Scope</dt><dd>${p.scope.map(esc).join(', ')}</dd></div>` : ''}
+          <div><dt>Who built it</dt><dd>${esc(p.contribution)}</dd></div>
+        </dl>
+        <div class="btn-row">${btn(p.kind === 'client' ? `Visit ${new URL(p.url).hostname.replace('www.', '')}` : 'Open the live demo', p.url, 'ghost')}</div>
+      </div>
+    </article>`).join('')}
 
-<section class="section dark" id="${f.slug}">
-  <div class="wrap stack gap-40">
-    ${secHead({ eye: 'Client project', lines: [f.name], lead: f.summary })}
-    <div class="grid g4">
-      ${[['Sector', f.sector], ['Market', f.market], ['Year', f.year], ['Scope', f.disciplines.join(', ')]]
-        .map(([k, v]) => `<div class="stack gap-8"><span class="body-sm" style="color:var(--ink-inv-2)">${esc(k)}</span><span class="h4">${esc(v)}</span></div>`).join('')}
+    <div class="note">
+      <h2 class="h4">About client work</h2>
+      <p class="body-sm">Client projects are shown here only with the client’s agreement, and with an exact description of what Ostendic did. We don’t publish client results or figures we can’t verify.</p>
     </div>
-    <hr class="divider">
-    <div class="grid g3" style="gap:clamp(28px,4vw,56px)">
-      <div class="stack gap-8"><span class="body-sm" style="color:var(--ink-inv-2);font-weight:500">01 — Before</span><p class="body-sm">${esc(f.before)}</p></div>
-      <div class="stack gap-8"><span class="body-sm" style="color:var(--ink-inv-2);font-weight:500">02 — Approach</span><p class="body-sm">${esc(f.decision)}</p></div>
-      <div class="stack gap-8"><span class="body-sm" style="color:var(--ink-inv-2);font-weight:500">03 — Delivered</span><p class="body-sm">${esc(f.after)}</p></div>
-    </div>
-    <div class="btn-row">${btn('Visit the live site', f.url, 'primary')}</div>
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="wrap stack gap-32">
-    ${secHead({ eye: 'Your project', lines: ['Have something', 'in mind to {build?}'], lead: finalCta.body[0], cta: btn(cta.primary, '/contact', 'primary', { avatar: true }) })}
   </div>
 </section>
 `;
-};
 
 /* ========================= PRICING =========================
-   Engagement models only. No figures, durations or guarantees are
-   published — every engagement is scoped and priced before it starts. */
-export const pricing = () => `
-<section class="section hero hero--center">
-  <div class="wrap stack gap-24" style="align-items:center">
-    ${eyebrow('Pricing', 'check')}
-    ${head(['Scoped to the work.', 'Priced {before you commit.}'], 'h1', 'h1')}
-    <p class="lead" style="text-align:center;max-width:62ch">Every project is different, so we scope and price each one rather than publishing a menu. Whether you need a website, UI/UX design, an agentic AI workflow or a combination, you get a clear scope and a fixed price before anything starts.</p>
-    <div class="btn-row center">${btn(cta.primary, '/contact', 'primary', { avatar: true })}</div>
-  </div>
-</section>
+   Prices, timelines and payment terms are rendered only when confirmed in
+   data.mjs. Until then the page states plainly how each is set. */
+const pkgRow = (k, v) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`;
+export const pricing = () => {
+  const list = packages.filter(p => p.publish);
+  return `
+${pageHead({
+  label: 'Pricing',
+  lines: ['A written price before', 'any work starts'],
+  lead: 'Before we start, you get the full price in writing, with what it covers, what it doesn’t, and when each payment is due. Prices are in Indian rupees.',
+})}
 
 <section class="section section--flush-t">
-  <div class="wrap grid g3">
-    ${engagements.map(e => `
-      <div class="card"${e.featured ? ' style="border-color:var(--ink);box-shadow:var(--shadow)"' : ''}>
-        <h3 class="h3">${esc(e.name)}</h3>
-        <span class="body-sm" style="color:var(--ink-3)">${esc(e.price)} · ${esc(e.unit)}</span>
-        <p class="body-sm">${esc(e.desc)}</p>
-        <hr class="divider mt-8">
-        <ul class="stack gap-8 mt-8">
-          ${e.includes.map(i => `<li class="body-sm" style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent);flex:none;width:15px;margin-top:3px">${ico.check}</span>${esc(i)}</li>`).join('')}
-        </ul>
-        <div class="btn-row mt-16">${btn(e.cta, '/contact', e.featured ? 'primary' : 'ghost')}</div>
-      </div>`).join('')}
+  <div class="wrap pkgs">
+    ${list.map((p, i) => `
+    <article class="pkg" id="${p.slug}">
+      <header class="pkg__head">
+        <span class="tnum pkg__n">${String(i + 1).padStart(2, '0')}</span>
+        <h2 class="h3">${esc(p.name)}</h2>
+        <p class="pkg__price">${p.price ? esc(p.price) : p.quoted ? 'Quoted per project' : 'Fee confirmed before booking'}</p>
+        <p class="body-sm">${esc(p.for)}</p>
+      </header>
+      <dl class="pkg__body">
+        ${pkgRow('Included', `<ul class="ticks">${p.includes.map(x => `<li>${ico.check}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
+        ${pkgRow('Not included', `<ul class="ticks ticks--no">${p.excludes.map(x => `<li>${ico.minus}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
+        ${pkgRow('Timeline', esc(p.timeline || 'Agreed in the written scope, before work starts'))}
+        ${pkgRow('Payment', esc(p.payment || 'Set out in the written scope'))}
+      </dl>
+      <div class="btn-row">${btn(p.quoted ? 'Discuss a project' : `Ask about a ${p.name.toLowerCase()}`, links.start, i === 0 ? 'primary' : 'ghost')}</div>
+    </article>`).join('')}
   </div>
 </section>
 
 <section class="section section--white">
-  <div class="wrap stack gap-32">
-    ${secHead({ eye: 'What you can come to us for', lines: ['A website, a workflow,', '{or both.}'], center: true })}
-    <div class="grid g4">
-      ${audiences.map(a => `<div class="card"><span class="pillar__ico">${ico[a.icon]}</span><h3 class="h4">${esc(a.title)}</h3><p class="body-sm">${esc(a.desc)}</p></div>`).join('')}
+  <div class="wrap split">
+    <div class="split__a">
+      <h2 class="h3">Costs outside our fee</h2>
+      <p class="body-sm">These are paid to the provider, not to Ostendic. Each one that applies to your project is listed in the scope so there are no surprises.</p>
     </div>
-    <p class="body-sm" style="margin-inline:auto;max-width:56ch;text-align:center">Third-party costs — hosting, domains, platform subscriptions and paid APIs — are listed separately in the scope.</p>
+    <ul class="ticks split__b">${thirdPartyCosts.map(c => `<li>${ico.minus}<span>${esc(c)}</span></li>`).join('')}</ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="split__a">
+      <h2 class="h3">How to start</h2>
+    </div>
+    <div class="split__b">
+      <ol class="numlist">
+        <li>Send a short description of what you need${links.whatsapp ? ', by WhatsApp or' : ' through'} the enquiry form${site.booking ? ', or book a call' : ''}.</li>
+        <li>We talk it through and agree what the work should achieve.</li>
+        <li>You receive a written scope and price. Nothing starts until you agree to it.</li>
+      </ol>
+      <div class="btn-row mt-24">${startBtn('primary')}${waBtn('ghost')}</div>
+    </div>
+  </div>
+</section>
+`;
+};
+
+/* ========================= ABOUT ========================= */
+export const about = () => `
+<section class="phead">
+  <div class="wrap about-hero">
+    <div class="about-hero__text">
+      <p class="label">About</p>
+      <h1 class="h1">Ostendic is run by ${esc(site.principal)}</h1>
+      <p class="lead">When you work with Ostendic, you work with ${esc(site.principal.split(' ')[0])} directly, from the first conversation through to launch.</p>
+      <p class="body">${esc(aboutCopy.teaser[1])}</p>
+      <p class="body">It is a deliberately small studio. There is no account manager between you and the person designing and building your project.</p>
+      <div class="btn-row">${startBtn('primary')}</div>
+    </div>
+    <figure class="about-hero__img">
+      <img src="/${site.principalImage}" alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
+           width="800" height="800" decoding="async" fetchpriority="high">
+    </figure>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">How we work</p>
+      <div class="shead__main"><h2 class="h2">Four things we hold to on every project</h2></div>
+    </div>
+    <dl class="rows rows--2">
+      ${aboutCopy.approach.map(([t, d]) => `<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">What Ostendic does</p>
+      <div class="shead__main"><h2 class="h2">Two services</h2></div>
+    </div>
+    <ul class="svc-links">
+      ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="svc-links__t">${esc(p.title)}</span><span class="body-sm">${esc(p.summary)}</span>${ico.right}</a></li>`).join('')}
+    </ul>
+  </div>
+</section>
+`;
+
+/* ========================= CONTACT =========================
+   Two routes, side by side: talk now (WhatsApp / call / booking, each shown
+   only if configured) and the enquiry form, which is always available. */
+export const contact = () => {
+  const direct = [
+    links.whatsapp && `<li><a href="${links.whatsapp}" target="_blank" rel="noopener">${ico.whatsapp}<span><strong>WhatsApp</strong><span>Send a message, any time</span></span></a></li>`,
+    links.tel && `<li><a href="${links.tel}">${ico.phone}<span><strong>Call</strong><span>${esc(site.phone.display)}</span></span></a></li>`,
+    site.booking && `<li><a href="/book">${ico.calendar}<span><strong>Book a 30-minute call</strong><span>Pick a date and time that suits you</span></span></a></li>`,
+    `<li><a href="mailto:${site.email}">${ico.mail}<span><strong>Email</strong><span>${site.email}</span></span></a></li>`,
+  ].filter(Boolean).join('');
+  return `
+<section class="phead phead--contact">
+  <div class="wrap contact">
+    <div class="contact__intro">
+      <p class="label">Contact</p>
+      <h1 class="h1">Tell us what you want to build or fix</h1>
+      <p class="lead">A few sentences is enough. Messages come straight to ${esc(site.principal.split(' ')[0])}, who replies personally.</p>
+      <ul class="direct">${direct}</ul>
+    </div>
+
+    <div class="contact__form">
+      <h2 class="h3">Send an enquiry</h2>
+      <form class="form" id="leadForm" novalidate>
+        <div class="form__row">
+          <div class="field" data-req>
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+            <span class="err" id="e-name">Please enter your name.</span>
+          </div>
+          <div class="field" data-req>
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+            <span class="err" id="e-email">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-phone">Phone or WhatsApp <span class="opt">optional</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+          </div>
+          <div class="field">
+            <label for="f-company">Business name <span class="opt">optional</span></label>
+            <input id="f-company" name="company" type="text" autocomplete="organization">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-help">What do you need?</label>
+          <select id="f-help" name="help">${interests.map(i => `<option>${esc(i)}</option>`).join('')}</select>
+        </div>
+        <div class="field">
+          <label for="f-budget">Budget <span class="opt">in Indian rupees</span></label>
+          <select id="f-budget" name="budget">${budgets.map(b => `<option>${esc(b)}</option>`).join('')}</select>
+        </div>
+        <div class="field" data-req>
+          <label for="f-project">About the project</label>
+          <textarea id="f-project" name="project" required minlength="10" aria-describedby="e-project"
+            placeholder="What would you like to build or improve, and what should it help you do?"></textarea>
+          <span class="err" id="e-project">Please add a sentence or two (at least 10 characters).</span>
+        </div>
+        <!-- Spam trap: hidden from people and assistive tech; bots fill it. -->
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Leave this field empty</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
+        <div class="form__foot">
+          <button class="btn btn--primary" type="submit" id="formSubmit">
+            <span class="btn-label">Send enquiry</span><span class="btn__ico">${ico.arrow}</span>
+          </button>
+          <p class="form__note">We use these details only to reply to you. <a href="/privacy">Privacy</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+`;
+};
+
+/* ========================= BOOK =========================
+   Generated only when site.booking is set. Availability, time slots, the
+   booking form and the confirmation all come from the scheduling provider
+   (Calendly or Cal.com) inside the embed. This page adds nothing it cannot
+   verify: the success panel appears only when the provider's own
+   "scheduled" event fires. */
+export const book = () => `
+<section class="phead phead--book">
+  <div class="wrap booking">
+    <div class="booking__intro">
+      <p class="label">Book a call</p>
+      <h1 class="h1">Book a 30-minute call</h1>
+      <p class="lead">Pick a date and a time that suits you. You’ll talk to ${esc(site.principal.split(' ')[0])} directly.</p>
+      <ul class="ticks booking__what">
+        <li>${ico.check}<span>What you want to build or fix, and why now</span></li>
+        <li>${ico.check}<span>Whether a website, a workflow or both makes sense</span></li>
+        <li>${ico.check}<span>What happens next, including how we’d scope and price it</span></li>
+      </ul>
+      <div class="sig">
+        <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" decoding="async"></span>
+        <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
+      </div>
+      <p class="body-sm">Prefer to write? <a class="alink" href="/contact">Send an enquiry instead${ico.arrow}</a></p>
+    </div>
+
+    <div class="booking__panel" id="booking" data-provider="${bookingProvider}" data-url="${esc(site.booking || '')}">
+      <div class="booking__state" data-state="loading" role="status">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Loading available times…</p>
+      </div>
+      <div class="booking__state" data-state="error" hidden role="alert">
+        <h2 class="h4">The calendar didn’t load</h2>
+        <p class="body-sm">This can happen with strict privacy settings or a blocked network. You can open the booking page directly, or send an enquiry.</p>
+        <div class="btn-row">
+          ${btn('Open the booking page', site.booking || '/contact', 'primary')}
+          ${btn('Send an enquiry', '/contact', 'ghost')}
+        </div>
+      </div>
+      <div class="booking__state booking__state--done" data-state="done" hidden tabindex="-1" role="status">
+        <span class="booking__ok" aria-hidden="true">${ico.check}</span>
+        <h2 class="h3">Your call is booked</h2>
+        <p class="body">The calendar confirmed your booking. A confirmation email with the time and joining details is on its way to you.</p>
+        <p class="body-sm">Need to change it? Use the reschedule link in that email.</p>
+      </div>
+      <div class="booking__embed" id="bookingEmbed"></div>
+      <noscript><p class="body-sm">The calendar needs JavaScript. <a class="alink" href="${esc(site.booking || '/contact')}">Open the booking page</a></p></noscript>
+    </div>
   </div>
 </section>
 `;
 
 /* ========================= LEGAL ========================= */
 export const legal = (title, body) => `
-<section class="section hero">
-  <div class="wrap stack gap-20" style="max-width:var(--max-narrow)">
-    ${eyebrow('Legal', 'mark')}
-    ${head([title], 'h1', 'h1')}
-    <p class="body-sm">Last updated 15 September 2026.</p>
-  </div>
-</section>
+${pageHead({ lines: [title], lead: 'Last updated 11 November 2026.' })}
 <section class="section section--flush-t">
-  <div class="wrap stack gap-20" style="max-width:var(--max-narrow)">${body}</div>
+  <div class="wrap prose">${body}</div>
 </section>`;

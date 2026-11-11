@@ -1,336 +1,365 @@
 /* ===========================================================================
    OSTENDIC — CONTENT DATA
-   Single source of truth for every page. Real Ostendic facts only.
-   Positioning: a digital studio with two service pillars —
-     01  Web Development & UI/UX Design
+   Single source of truth for every page.
+
+   Rules for this file:
+   - Real Ostendic facts only. Nothing here is invented: no client names,
+     results, numbers, testimonials or contact details that have not been
+     supplied by the business.
+   - A missing fact is `null`. Components that depend on it render nothing
+     (or a safe fallback) until it is filled in, and `build.mjs` prints a
+     PENDING list on every build so the gaps stay visible.
+   - Anything that needs confirmation before it can go public carries
+     `publish: false` and a `hold` note explaining why.
+
+   Positioning: a digital studio with two service areas —
+     01  Web Development and UI/UX Design
      02  Agentic AI Workflows
-   Both carry equal weight; no section should read as AI-only or as
-   web-only. (OSTENDIC_UPDATED_WEBSITE_CONTENT.md describes the earlier
-   AI-strategy positioning and is superseded by this file.)
-   Anything not yet verifiable is marked TEMP-PLACEHOLDER and must be
-   replaced during the content pass — never presented as a client claim.
+   Ostendic builds the digital experience customers use and the connected
+   systems a business runs behind it. It is not positioned as an AI agency.
+   (OSTENDIC_UPDATED_WEBSITE_CONTENT.md describes an older AI-strategy
+   positioning and is superseded.)
    =========================================================================== */
 
 export const site = {
   name: 'Ostendic',
-  tagline: 'Web development, UI/UX design & agentic AI workflows',
   url: 'https://www.ostendic.com',
   email: 'harsh@ostendic.com',
-  whatsapp: 'https://wa.me/', // TEMP-PLACEHOLDER: add the real WhatsApp number
-  booking: '/contact',        // TEMP-PLACEHOLDER: swap for a real scheduler link if one exists
+
+  /* ---- contact channels: fill these in to switch the matching UI on ----
+     phone:    display + dial string, e.g. { display: '+91 98xxx xxxxx', tel: '+9198xxxxxxxx' }
+     whatsapp: international number, digits only, e.g. '9198xxxxxxxx'
+     booking:  a 30-minute event on Calendly or Cal.com, e.g.
+               'https://calendly.com/ostendic/30min'  or  'https://cal.com/ostendic/30min'
+               The provider is detected from the URL. Availability, time slots and
+               confirmation all come from the provider; nothing is simulated here.
+               (BOOKING_URL in the environment overrides this, for local testing only.) */
+  phone: null,      // PENDING: business phone number
+  whatsapp: null,   // PENDING: business WhatsApp number
+  booking: globalThis.process.env.BOOKING_URL || null,   // PENDING: Calendly or Cal.com event link
+
+  /* [label, url] — only real profile URLs. Empty = no social links shown. */
+  social: [],       // PENDING: LinkedIn / Instagram profile URLs
+
   principal: 'Harsh Dubey',
-  principalImage: 'assets/harsh-dubey.jpg',
   principalRole: 'Founder',
-  principalBio: 'Brand & AI Strategist',
+  principalImage: 'assets/harsh-dubey.jpg',
+
   /* Brand mark. The supplied artwork is a black wordmark on a wide white
-     canvas, so `ink` records the wordmark's own bounding box inside it. The
-     header and footer lockups pass these numbers to CSS as custom properties
-     and crop to `ink`, which keeps the artwork's exact aspect ratio and means
-     the source file is never edited, recoloured or re-exported. */
+     canvas; `ink` is the wordmark's bounding box inside it. The header and
+     footer crop to `ink` in CSS so the file itself is never edited. */
   logo: {
     src: 'assets/ostendic-logo.jpg',
-    w: 1746, h: 901,                          // intrinsic pixel size
-    ink: { x: 296, y: 330, w: 1159, h: 223 }, // wordmark bounds within it
+    w: 1746, h: 901,
+    ink: { x: 296, y: 330, w: 1159, h: 223 },
   },
-  markets: ['United States', 'United Kingdom', 'Europe', 'India'],
-  founded: '2024',
-  /* Positioning — used for meta descriptions and structured data */
-  sub: 'Ostendic is a digital studio for website design and development, UI/UX design and agentic AI workflows. We help businesses build better digital experiences and smarter business systems.',
-  approach: 'Every engagement starts with the business problem, not the technology. Sometimes the answer is a better website or digital product. Sometimes it is an intelligent workflow. Often it is both.',
-  footer: 'Ostendic is a digital studio that designs and builds websites, digital products and agentic AI workflows for businesses ready to grow.',
-  social: [
-    ['LinkedIn', 'https://www.linkedin.com/'],   // TEMP-PLACEHOLDER: real profile URLs
-    ['Instagram', 'https://www.instagram.com/'],
-  ],
+
+  /* meta description + structured data */
+  sub: 'Ostendic is a digital studio that designs and builds websites and web applications, and the AI workflows businesses run behind them.',
+  footer: 'A digital studio for websites, web applications and the AI workflows behind them.',
 };
 
-/* ---------- PRIMARY CTAs ---------- */
-export const cta = {
-  primary: 'Book a 30-minute call',
-  header: 'Book a 30-minute call',
-  secondary: 'Explore our services',
-  email: 'Send an Email',
+/* Derived contact helpers — every CTA goes through these, so a CTA can never
+   point at an empty or invented destination. */
+const bookingHost = site.booking ? new URL(site.booking).hostname.replace(/^www\./, '') : '';
+export const bookingProvider = bookingHost === 'calendly.com' ? 'calendly'
+  : (bookingHost === 'cal.com' || bookingHost === 'app.cal.com') ? 'cal'
+  : null;
+if (site.booking && !bookingProvider) throw new Error(`site.booking must be a calendly.com or cal.com URL: ${site.booking}`);
+
+export const links = {
+  whatsapp: site.whatsapp ? `https://wa.me/${site.whatsapp}` : null,
+  tel: site.phone ? `tel:${site.phone.tel}` : null,
+  /* The main "start" CTA: the /book page (real scheduler) if one is
+     configured, otherwise the enquiry form. The label follows the destination. */
+  start: site.booking ? '/book' : '/contact',
+  startLabel: site.booking ? 'Book a 30-minute call' : 'Start a conversation',
 };
 
 /* ---------- HERO ---------- */
 export const heroCopy = {
-  eyebrow: 'A digital studio for web experiences and intelligent systems',
-  lines: ['Build better {digital experiences.}', 'Create smarter {business systems.}'],
-  lead: 'From UI/UX design and web development to agentic AI workflows, Ostendic helps businesses build the digital experiences and intelligent systems they need to move forward.',
-  support: ['UI/UX Design', 'Web Development', 'Agentic AI Workflows'],
+  lines: ['Websites your customers use,', '{and the systems behind them.}'],
+  lead: 'Ostendic is a small digital studio. We design and build websites and web applications, and set up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.',
 };
 
-/* ---------- INTRO ---------- */
-export const intro = {
-  lines: ['Your customers see the website.', '{Your team runs what sits behind it.}'],
-  lead: 'Most businesses need both to work well: a digital experience that explains what they do and earns trust, and systems that handle the repetitive work between an enquiry and a delivered result.',
-  body: [
-    'Ostendic works across both.',
-    'We design and build websites, web applications and digital products, and the agentic AI workflows that connect your tools, coordinate tasks and reduce manual effort. Some businesses need one. Some need both.',
-  ],
-};
-
-/* ---------- SERVICE PILLARS ----------
-   The two pillars are the whole service offer. `focus` is the short,
-   grouped list shown in the homepage stack (kept to six so the card never
-   reads as a directory); `services` is the full list on the pillar page. */
+/* ---------- SERVICES ----------
+   Exactly two service areas. Each carries the same information model so
+   visitors can compare them: who it helps, the problem, what we build,
+   what an engagement includes. `services` is the fuller list used on the
+   service's own page. */
 export const pillars = [
   {
-    slug: 'web-development', n: '01', icon: 'code',
-    title: 'Web Development & UI/UX Design',
-    short: 'Web Development & UI/UX',
+    slug: 'web-development', n: '01',
+    title: 'Web Development and UI/UX Design',
+    short: 'Web development & UI/UX',
     path: '/services/web-development',
-    kicker: 'Digital experiences that communicate clearly',
-    desc: 'We design and develop websites, applications and digital products that combine thoughtful user experiences with reliable technology.',
-    long: [
-      'We do not simply create attractive websites. We design and build digital experiences that are intuitive, functional, responsive and aligned with what the business needs them to do.',
-      'That means understanding your customers and your offer first, structuring the experience around how people actually decide, and building it on technology your team can rely on and maintain.',
+    summary: 'Websites, web applications and digital products that explain what a business does, work properly on a phone and make it easy for customers to get in touch or buy.',
+    who: 'Businesses that need a new website, a better one, or a web application their customers or team will use every day.',
+    problem: 'Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.',
+    build: ['Business websites', 'Landing pages', 'E-commerce stores', 'Shopify and WordPress sites', 'Custom web applications', 'Website redesigns'],
+    includes: [
+      'Planning the pages, content and the path a visitor takes',
+      'UI/UX design for phone, tablet and desktop',
+      'Development as a custom build, or on WordPress or Shopify if you want to manage it yourself',
+      'Testing across devices and browsers before launch',
+      'Launch, and a handover of everything you need to run it',
     ],
-    focus: ['Website design & development', 'UI/UX design', 'Web applications', 'E-commerce', 'SaaS & MVP development', 'Redesigns & improvements'],
     services: [
-      ['Website Design and Development', 'Business websites planned around what visitors need to understand, designed with care and built to load quickly on every device.'],
-      ['UI/UX Design', 'User flows, wireframes, prototypes and interface design that make websites and products easier to understand and easier to use.'],
-      ['Custom Website Development', 'Hand-built sites for requirements a template cannot meet — custom layouts, interactions, integrations and content structures.'],
-      ['Web Application Development', 'Browser-based tools, portals and dashboards that your customers or your team use to get real work done.'],
-      ['Landing Page Design and Development', 'Focused pages for a campaign, product or offer, with one clear message and one clear next step.'],
-      ['E-commerce Development', 'Online stores designed around how customers browse, compare and buy, from product discovery through to checkout.'],
-      ['WordPress and Shopify Development', 'Sites and stores on platforms your team can update without a developer, configured and extended to fit the business.'],
-      ['SaaS and MVP Development', 'Product design and development for software ideas, scoped to the smallest version that is genuinely useful.'],
-      ['Website Redesign and Digital Experience Improvements', 'A structured review of an existing site or product, followed by the changes that make it clearer, faster and easier to use.'],
-      ['Responsive and Mobile-First Development', 'Layouts designed for the phone first and refined for larger screens, so every visitor gets a complete experience.'],
+      ['Website design and development', 'Business websites planned around what visitors need to understand, then designed and built to load quickly on any device.'],
+      ['UI/UX design', 'User flows, wireframes and interface design that make a website or product easier to understand and easier to use.'],
+      ['Landing pages', 'Focused pages for a campaign, product or offer, with one clear message and one clear next step.'],
+      ['E-commerce development', 'Online stores designed around how customers browse, compare and buy, from product page to checkout.'],
+      ['Shopify and WordPress', 'Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work.'],
+      ['Custom web applications', 'Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done.'],
+      ['Responsive front-end development', 'Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience.'],
+      ['Redesigns and improvements', 'A review of an existing site, followed by the changes that make it clearer, faster and easier to use.'],
     ],
     principles: [
-      ['Clarity before decoration', 'Visitors should understand what you do, who it is for and what to do next within a few seconds.'],
-      ['Designed for real use', 'Interfaces are shaped around the tasks people come to complete, on the devices they actually use.'],
-      ['Built to be maintained', 'Clean structure and sensible platforms, so the site or product stays easy to update as the business grows.'],
+      ['Clarity first', 'A visitor should understand what you do, who it’s for and what to do next within a few seconds.'],
+      ['Designed for the phone', 'Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought.'],
+      ['Easy to maintain', 'Sensible platforms and clean structure, so the site stays easy to update after launch.'],
     ],
   },
   {
-    slug: 'agentic-ai-workflows', n: '02', icon: 'flow',
+    slug: 'agentic-ai-workflows', n: '02',
     title: 'Agentic AI Workflows',
-    short: 'Agentic AI Workflows',
+    short: 'Agentic AI workflows',
     path: '/services/agentic-ai-workflows',
-    kicker: 'Intelligent systems that perform coordinated work',
-    desc: 'We build intelligent AI-powered workflows that connect tools, coordinate tasks and help businesses operate more efficiently.',
-    long: [
-      'An agentic workflow is a system in which AI agents take on defined steps of a business process — reading incoming information, making routine decisions, updating your tools and handing work on to the next step or to a person.',
-      'We design these systems around practical business work: handling enquiries, following up with leads, supporting customers, processing information and producing reports. Not experimental research, and not a generic chatbot.',
+    summary: 'Connected, AI-powered workflows that coordinate tasks across your tools and take repetitive manual work off your team.',
+    who: 'Businesses where the same manual steps repeat every day: answering enquiries, chasing leads, copying information between tools, preparing updates.',
+    problem: 'Work gets stuck between tools and people. Leads wait for a reply, customer questions pile up, and someone spends hours moving information from one place to another.',
+    build: ['AI agents for business operations', 'Multi-agent systems', 'Lead management and follow-up', 'Sales and marketing workflows', 'Customer support workflows', 'Process automation', 'API and tool integrations', 'Internal business systems'],
+    includes: [
+      'Mapping the current process and where time is being lost',
+      'Designing the workflow, including where a person reviews or approves',
+      'Building it and connecting it to the tools you already use',
+      'Testing it on real cases before it goes live',
+      'Documentation, and adjustments once your team is using it',
     ],
-    focus: ['AI agents for operations', 'Multi-agent systems', 'Process automation', 'Lead management & follow-up', 'Customer support workflows', 'API & tool integrations'],
+    /* An explanatory example, labelled as such on the page. Not a client
+       case and not a product screen. */
+    example: {
+      title: 'An example: following up new enquiries',
+      steps: [
+        'A new enquiry arrives through your website form or email.',
+        'An agent reads it, pulls out the key details and adds them to your CRM or spreadsheet.',
+        'It drafts a reply using your own service and pricing information, and passes it to your team to approve.',
+        'If the customer hasn’t replied after a set time, it prepares a follow-up and reminds the right person.',
+      ],
+    },
     services: [
-      ['Agentic AI Workflow Development', 'Workflows where AI agents take on defined steps — reading inputs, making routine decisions and passing work to the next tool or person.'],
-      ['AI Agents for Business Operations', 'Agents that handle recurring operational tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters.'],
-      ['Multi-Agent Systems', 'Several specialised agents working together on a larger process, each responsible for one part, with clear handovers between them.'],
-      ['AI-Powered Business Process Automation', 'Repetitive processes mapped, simplified and automated, so work moves between your tools without being re-typed.'],
-      ['Lead Management and Follow-up Automation', 'New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold.'],
-      ['AI-Powered Customer Support Workflows', 'Incoming questions sorted, answered from your own information where appropriate, and escalated to your team when a person is needed.'],
-      ['Content and Marketing Automation', 'Workflows that help research, draft, adapt and schedule content, with your team approving what gets published.'],
-      ['Intelligent Data Processing and Reporting', 'Information extracted from documents, forms and spreadsheets, organised consistently and turned into regular reports.'],
-      ['API and Third-Party Integrations', 'Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it is needed.'],
-      ['Custom AI Business Systems', 'Purpose-built systems for a process specific to your business, designed around the way your team already works.'],
+      ['AI agents for business operations', 'Agents that take on recurring tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters.'],
+      ['Multi-agent systems', 'Several specialised agents working on a larger process, each responsible for one part, with clear handovers between them.'],
+      ['Lead management and follow-up', 'New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold.'],
+      ['Sales and marketing workflows', 'Research, outreach preparation, content drafts and reporting, with your team approving what goes out.'],
+      ['Customer support workflows', 'Incoming questions sorted, answered from your own information where appropriate, and passed to a person when one is needed.'],
+      ['Process automation', 'Repetitive processes mapped, simplified and automated, so information moves between tools without being re-typed.'],
+      ['API and tool integrations', 'Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it’s needed.'],
+      ['Internal business systems', 'Purpose-built tools for a process specific to your business, designed around the way your team already works.'],
     ],
     principles: [
-      ['Practical, not experimental', 'Every workflow is tied to a real task the business performs today, and to the time or effort it should save.'],
-      ['People stay in control', 'Agents handle the routine steps. Decisions that need judgment are routed to the right person for review.'],
-      ['Connected to your tools', 'Workflows are built around the CRM, inbox, forms and spreadsheets you already use rather than replacing them.'],
+      ['Tied to real work', 'Every workflow starts from a task your business does today and the time it currently takes.'],
+      ['People stay in control', 'Agents handle routine steps. Anything that needs judgement goes to the right person to review.'],
+      ['Built around your tools', 'We connect the CRM, inbox, forms and spreadsheets you already use instead of replacing them.'],
     ],
   },
 ];
-export const servicesHead = ['Two disciplines.', '{One studio.}'];
-
-/* ---------- WHAT YOU CAN COME TO US FOR ---------- */
-export const audiences = [
-  { title: 'A website or digital product', icon: 'globe',
-    desc: 'A new website, landing page, online store, web application or MVP — designed and built around your customers and your goals.' },
-  { title: 'UI/UX design', icon: 'layers',
-    desc: 'User research, flows, wireframes and interface design for a new product, or a clearer experience for an existing one.' },
-  { title: 'An intelligent workflow or AI agent', icon: 'flow',
-    desc: 'An agentic workflow that takes repetitive work off your team — from lead follow-up to support, data processing and reporting.' },
-  { title: 'Web and AI, together', icon: 'bolt',
-    desc: 'A website or product with intelligent workflows behind it, so the experience customers see and the system your team runs work as one.' },
-];
-export const audiencesHead = ['Come to us with a website, a workflow,', '{or both.}'];
-
-/* ---------- SIGNATURE OUTCOME ---------- */
-export const signature = {
-  lines: ['One studio for the experience', '{and the system behind it.}'],
-  examples: [
-    'That might mean a redesigned website that explains what you do in seconds and works properly on every screen.',
-    'It might mean an agentic workflow that captures new enquiries, qualifies them, updates your CRM and drafts the follow-up for your team to review.',
-    'Or it might mean a web application with intelligent automation behind it, handling the repetitive steps so your people can focus on the work that needs them.',
-  ],
-  close: [
-    'Design, development and automation are only valuable when they serve the business.',
-    'The real work is understanding what needs to change — then building the right thing, and building it well.',
-  ],
-};
 
 /* ---------- PROCESS ----------
-   Written so it fits a website project, an AI workflow, or both. */
-export const processHead = ['Understand the business first.', '{Then choose the right solution.}'];
+   One process, used once. No durations: timelines are agreed per scope. */
 export const process = [
-  ['01', 'Discover', 'We understand the business, its objectives, its users and the challenges it is facing today.'],
-  ['02', 'Strategize', 'We define the experience, architecture, workflow and implementation approach that fits the requirement.'],
-  ['03', 'Design & Build', 'We create the website, interface, application or intelligent workflow, with regular reviews along the way.'],
-  ['04', 'Launch & Optimize', 'We test, deploy, measure and improve the solution once real people are using it.'],
+  ['01', 'Conversation', 'You tell us what you need and what isn’t working today. If we’re not the right fit, we’ll say so.',
+    'An honest view of whether, and how, we can help'],
+  ['02', 'Written scope and price', 'What will be built, what isn’t included, the price and when payments are due, all in writing. Work starts once you’ve agreed to it.',
+    'A scope and price you can hold us to'],
+  ['03', 'Design and build', 'We share work in progress at agreed review points, so you can comment before anything is final.',
+    'Review points before anything is final'],
+  ['04', 'Launch and handover', 'We test, launch and hand over everything you need to run what we built.',
+    'Logins, access and notes for your team'],
 ];
 
-/* ---------- POINT OF VIEW ---------- */
-export const pov = {
-  lines: ['Not just attractive.', '{Genuinely useful.}'],
-  body: [
-    'A website can look impressive and still fail to explain what a business does. An AI tool can be clever and still add work instead of removing it.',
-    'We design digital experiences that are intuitive, functional and aligned with business objectives — and intelligent systems that perform real, coordinated tasks.',
-    'Whether the answer is a better website, a smarter workflow or both, the test is the same: does it help the business work better?',
+/* ---------- STUDIO NUMBERS ----------
+   Proposed figures, NOT verified. Nothing in this repository (no CRM export,
+   client list, invoices or review records) supports them, so they are not
+   published. To publish: record what each number counts and where it comes
+   from in `basis`, set `verified: true` on every item, then `publish: true`.
+   A rating needs a named public source (e.g. Google Business Profile) and
+   the number of reviews it is based on. */
+export const stats = {
+  publish: false,
+  items: [
+    { value: '30+', label: 'Projects completed', verified: false,
+      basis: null },  // PENDING: count from project records; define "completed"; don't count demo builds as client work
+    { value: '20+', label: 'Clients served', verified: false,
+      basis: null },  // PENDING: unique paying clients from invoices/CRM; one client with several projects counts once
+    { value: '4.6', label: 'Client rating', verified: false,
+      basis: null },  // PENDING: public source + number of reviews, e.g. "4.6 on Google, 18 reviews"
   ],
 };
 
 /* ---------- ABOUT ---------- */
 export const aboutCopy = {
-  lines: ['Where brand, technology', 'and {intelligent systems meet.}'],
-  body: [
-    'Ostendic was founded by Harsh Dubey to help businesses build digital experiences and business systems that genuinely work.',
-    'How a business presents itself and how it operates are closely connected. Brand, design and technology should not be separate conversations.',
-    'Ostendic brings them together — thoughtful UI/UX design, reliable web development and practical agentic AI workflows — so businesses can communicate clearly, serve customers better and spend less time on repetitive work.',
+  teaser: [
+    'Ostendic is run by Harsh Dubey. When you work with Ostendic, you work with him directly, from the first conversation through to launch.',
+    'The studio covers both sides of how a business shows up online: the website or product customers use, and the workflows that handle what happens after they get in touch.',
+  ],
+  approach: [
+    ['Start with the business problem', 'Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you.'],
+    ['Say what it costs before starting', 'Every piece of work is scoped and priced in writing before it begins, including what is not included.'],
+    ['Build what you can keep running', 'We choose platforms and tools your team can live with after launch, and hand over what you need to manage them.'],
+    ['Keep people in the loop', 'In AI workflows, routine steps can be automated. Decisions that need judgement stay with a person.'],
   ],
 };
-
-/* ---------- FINAL CTA ---------- */
-export const finalCta = {
-  lines: ['Start with one page, one product,', 'or {one process.}'],
-  body: [
-    'Whether you need a better website, a new digital product or an intelligent workflow, a short conversation is the best place to start.',
-    'We will help you understand what is possible and decide what is worth doing next.',
-  ],
-};
-
-/* ---------- CLIENT SHOWCASE (logo marquee) ----------
-   Exactly these four brands, in this order, and no others.
-
-   `src` is official logo artwork. VMS Careline uses the supplied
-   "Careline Logo_2.png", cropped to its own bounds (transparent margin
-   removed, nothing redrawn) as assets/logos/vms-careline.png; w/h are that
-   file's pixel size so the slot keeps the logo's exact aspect ratio.
-
-   Brands without a supplied logo file render as a typographic wordmark of
-   their exact name. `style` picks one of a few restrained treatments.
-   Swap in `src` (+ w/h) when official artwork arrives. */
-export const brands = [
-  { name: 'VMS Careline',  src: 'assets/logos/vms-careline.png', w: 900, h: 290 },
-  { name: 'TrueReview',    style: 'split', parts: ['True', 'Review'] },
-  { name: 'Viral Check',   style: 'caps' },
-  { name: 'Launch Mirror', style: 'serif' },
-];
 
 /* ---------- WORK ----------
-   Restored from the project records. Only what was actually delivered is
-   described. `kind: 'demo'` marks Ostendic-built demonstration projects —
-   they are never presented as client work. The VMS Careline result claim
-   that used to sit here (client-reported, no figure) is deliberately not
-   rendered until it is confirmed and measurable. */
+   kind: 'client' | 'demo' | 'sample'. Rendered labels: Client project /
+   Demo build / Sample. Only entries with `publish: true` appear, in this
+   order. Demo descriptions are limited to what the live product visibly
+   does; the client entry uses the project record, with no invented results.
+
+   VMS Careline is shown WITHOUT any website screenshot or live preview: its
+   visual is a brand plate built from the official logo file and the two
+   colours sampled from it. */
 export const projects = [
   {
-    slug: 'vms-careline', name: 'VMS Careline', kind: 'client',
-    category: 'E-commerce', sector: 'Healthcare e-commerce',
-    market: 'India', year: '2026',
+    slug: 'vms-careline', name: 'VMS Careline', kind: 'client', publish: true,
     url: 'https://vmscareline.com/',
-    image: 'assets/work/vms-careline.jpg',
-    summary: 'Brand structure, e-commerce experience and enquiry handling rebuilt across two business verticals.',
-    disciplines: ['Brand', 'UI/UX Design', 'Website Development', 'E-commerce', 'Enquiry Automation'],
+    brand: {
+      logo: 'assets/logos/vms-careline.png', w: 900, h: 290,
+      colours: [['Careline navy', '#0C6084'], ['Careline teal', '#189C84']],
+      verticals: [['VMS Careline', 'Healthcare products'], ['VMS Cart', 'Separate cart vertical']],
+    },
+    area: 'Healthcare e-commerce · India',
     pillars: ['web-development', 'agentic-ai-workflows'],
-    before: 'One undifferentiated digital presence carried two quite different offerings. Customers arriving for either had to work out which part of the business they were in. Enquiries were handled manually, and time to first response depended on who was available.',
-    decision: 'Separate the business into distinct digital verticals — VMS Careline and VMS Cart — each with its own audience, structure and buying path. Rebuild the commerce experience around how these products are actually chosen, and automate the enquiry path so response time stops depending on availability.',
-    after: 'A healthcare e-commerce experience with clearer product discovery and stronger presentation, a separate cart vertical, and an automated path from enquiry through first response to follow-up.',
+    scope: ['Brand structure', 'UI/UX design', 'Website development', 'E-commerce', 'Enquiry automation'],
+    what: 'A healthcare e-commerce business in India, restructured into two clear digital verticals: VMS Careline and VMS Cart.',
+    problem: 'One digital presence carried two quite different offerings, so customers had to work out which part of the business they were in. Enquiries were handled manually, and how quickly someone got a reply depended on who was available.',
+    built: 'Separate verticals, each with its own audience, structure and buying path. A commerce experience rebuilt around how these products are actually chosen, with clearer product discovery and presentation. An automated enquiry path from first contact through first response to follow-up.',
+    contribution: 'Client project. Ostendic, led by Harsh Dubey, handled the brand structure, UX, website development and enquiry automation.',
   },
   {
-    slug: 'trureview', name: 'TruReview', kind: 'demo',
-    category: 'UI/UX Design', sector: 'Review platform concept',
-    market: '—', year: '2026',
+    slug: 'truereview', name: 'TrueReview', kind: 'demo', publish: true,
+    caution: 'The live demo still shows unverified figures (“2M+ reviews analysed”, “94% accuracy”, “500+ products”, “4.9 stars”) and “[User Photo]” placeholders. The site uses a screenshot of the tool itself, but visitors who open the demo will see them. Remove them from the demo.',
     url: 'https://tru-review-lilac.vercel.app/',
-    image: 'assets/work/trureview.jpg',
-    summary: 'A review-collection interface, built as a working demonstration of our product design and web development approach.',
-    disciplines: ['UI/UX Design', 'Web Application'],
-    pillars: ['web-development'],
-  },
-  {
-    slug: 'viralcheck', name: 'ViralCheck Content', kind: 'demo',
-    category: 'Web Application', sector: 'Content analysis concept',
-    market: '—', year: '2026',
-    url: 'https://viralcheckcontent.vercel.app/',
-    image: 'assets/work/viralcheck.jpg',
-    summary: 'A content-scoring tool, built as a working demonstration of an AI-assisted product interface.',
-    disciplines: ['UI/UX Design', 'Web Application', 'AI-assisted'],
+    images: { desktop: 'assets/work/truereview-desktop.jpg', phone: 'assets/work/truereview-phone.jpg' },
+    area: 'Web application · AI analysis',
     pillars: ['web-development', 'agentic-ai-workflows'],
-  },
-];
-export const workCategories = ['All', 'E-commerce', 'UI/UX Design', 'Web Application'];
-
-/* ---------- ENGAGEMENT / PRICING ----------
-   Restored from the earlier engagement models. No figures, durations or
-   guarantees are published: each engagement is scoped and priced first. */
-export const engagements = [
-  {
-    name: 'Diagnostic', price: 'Fixed fee', unit: 'scoped up front',
-    desc: 'A short, paid review that produces a written diagnosis of your website, product or process — what is getting in the way, where time or enquiries are being lost, and a scoped, priced plan.',
-    includes: ['Website, UX or workflow review', 'Written findings and priorities', 'Recommended approach — web, AI or both', 'Scoped plan with fixed pricing'],
-    cta: 'Start with a diagnostic',
+    what: 'A free tool that checks the reviews on a product listing before you buy.',
+    problem: 'Shoppers can’t easily tell which product reviews to trust, or spot the complaints buried under hundreds of five-star ratings.',
+    built: 'Product concept, interface design and front end, plus an AI review flow. You paste a product link or name, and the tool scans its reviews for likely fakes, repeated patterns and buried complaints, then gives a trust score with a breakdown.',
+    contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
   {
-    name: 'Project', price: 'Scoped', unit: 'fixed fee, agreed scope',
-    desc: 'A website, digital product or agentic AI workflow delivered against an agreed scope. Design, development and automation are handled by one team rather than handed between vendors.',
-    includes: ['Fixed scope agreed up front', 'Websites, products or AI workflows', 'Design and build in one team', 'Testing before launch', 'Handover documentation'],
-    featured: true,
-    cta: 'Scope a project',
+    slug: 'viralcheck', name: 'ViralCheck', kind: 'demo', publish: true,
+    url: 'https://viralcheckcontent.vercel.app/',
+    images: { desktop: 'assets/work/viralcheck-desktop.jpg', phone: 'assets/work/viralcheck-phone.jpg' },
+    area: 'Web application · AI review',
+    pillars: ['web-development', 'agentic-ai-workflows'],
+    what: 'A free tool that reviews a piece of written content (a post, article or newsletter) before it is published.',
+    problem: 'Creators and small marketing teams usually find out whether a post works after publishing it, when it’s too late to change.',
+    built: 'Interface design and front end, plus an AI review flow. You paste the content, choose the platform, and get feedback on hook strength, readability, SEO gaps and call-to-action clarity, with suggested rewrites.',
+    contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
   {
-    name: 'Ongoing', price: 'Monthly', unit: 'retained capacity',
-    desc: 'Retained time each month across design, development and AI workflows — for websites, products and systems that keep improving after launch.',
-    includes: ['Agreed monthly capacity', 'Priorities set with you each cycle', 'Design, development and automation', 'Direct access to the founder', 'Adjust or pause with notice'],
-    cta: 'Talk about retained work',
+    slug: 'launchmirror', name: 'LaunchMirror', kind: 'demo', publish: true,
+    url: 'https://launchmirror.vercel.app/',
+    images: { desktop: 'assets/work/launchmirror-desktop.jpg', phone: 'assets/work/launchmirror-phone.jpg' },
+    area: 'Web application · AI analysis',
+    pillars: ['web-development', 'agentic-ai-workflows'],
+    what: 'A free web tool that gives Indian founders a structured first read on a business idea before they commit to building it.',
+    problem: 'First-time founders often start building before testing whether an idea holds up. Market timing, competition and cost get checked late, if at all.',
+    built: 'Product concept, interface design and front end, plus an AI analysis flow. The founder answers seven questions and receives a viability score out of 100, a market check, short statements on strengths, weaknesses and risk, and a 90-day action plan.',
+    contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
 ];
+export const published = projects.filter(p => p.publish);
+export const kindLabel = { client: 'Client project', demo: 'Demo build', sample: 'Sample' };
 
-/* ---------- RESOURCES ---------- */
-export const resources = [
+/* ---------- PRICING ----------
+   Each package has the same fields. A null value is not published: the
+   page shows a neutral fallback instead of an invented figure. Packages
+   with `publish: false` do not render at all. */
+export const packages = [
   {
-    title: 'AI Income Starter Framework',
-    cat: 'Guide', format: 'DOCX', price: 'Free',
-    desc: 'A practical framework for building a first AI-assisted income stream — tools, structure and execution order for founders and operators.',
-    href: 'AI Income Starter Framework Final.docx',
+    slug: 'diagnostic', name: 'Diagnostic', publish: true,
+    for: 'Businesses that know something isn’t working, such as a website that doesn’t bring in enquiries or a process that eats your team’s time, but aren’t sure what to change first.',
+    includes: [
+      'A review of your website, a product flow or one business process',
+      'A written summary of what is getting in the way, in plain language',
+      'Prioritised recommendations: what to fix first and what can wait',
+      'If you want it, a scoped and priced proposal for the work',
+    ],
+    excludes: ['Design or development work', 'Building or changing a workflow'],
+    price: null,      // PENDING: diagnostic fee (INR)
+    timeline: null,   // PENDING: delivery time for the written review
+    payment: null,    // PENDING: payment terms
+  },
+  {
+    slug: 'starter', name: 'Starter website', publish: false,
+    hold: 'Proposed at ₹12,000 with a five-working-day delivery target. Do not publish until the exact pages, content responsibilities, revision rounds, exclusions and payment terms are confirmed.',
+    for: 'Local businesses that need a clear, professional website quickly.',
+    includes: [],     // PENDING: exact deliverables (pages, sections, forms)
+    excludes: [],     // PENDING: exclusions
+    revisions: null,  // PENDING: revision rounds
+    price: null,      // proposed ₹12,000 — unconfirmed
+    timeline: null,   // proposed 5 working days — unconfirmed
+    payment: null,
+  },
+  {
+    slug: 'custom', name: 'Larger and custom projects', publish: true,
+    for: 'Larger websites, e-commerce stores, web applications and AI workflows that need a scope of their own.',
+    includes: [
+      'A written scope that lists what will be built and what won’t',
+      'Design, development and testing',
+      'Review points while the work is in progress',
+      'Launch and handover',
+    ],
+    excludes: ['Third-party costs (listed below)', 'Changes outside the agreed scope, which are quoted separately before they start'],
+    quoted: true,     // custom work is quoted per scope by nature
+    price: null,
+    timeline: null,
+    payment: null,    // PENDING: standard payment schedule (e.g. deposit / milestones)
   },
 ];
-export const resourceCategories = ['All', 'Guide', 'Template', 'Checklist'];
-
-/* ---------- INSIGHTS ---------- */
-export const posts = [
-  { slug: 'premium-website-feel', cat: 'Web & UX', read: '8 min',
-    art: 'assets/insights/web.svg',
-    title: 'What makes a website feel expensive',
-    desc: 'Restraint, typography and evidence — why the sites that look costly are usually the ones doing the least on screen.' },
-  { slug: 'ai-where-it-pays', cat: 'AI Workflows', read: '10 min',
-    art: 'assets/insights/ai.svg',
-    title: 'Where AI actually pays for itself in a small business',
-    desc: 'A working note on the difference between a workflow that removes effort and one that just adds another tool to check.' },
-  { slug: 'enquiry-to-reply', cat: 'Business', read: '12 min',
-    art: 'assets/insights/automation.svg',
-    title: 'The gap between an enquiry and a reply',
-    desc: 'Most businesses lose more at the follow-up stage than on the page itself. How we map that path before touching a design or a workflow.' },
+export const thirdPartyCosts = [
+  'Domain name registration and renewal',
+  'Hosting',
+  'Platform subscriptions, such as a Shopify plan',
+  'Paid themes, plugins or apps',
+  'Usage charges for AI models and other paid APIs',
 ];
-export const postCategories = ['All', 'Web & UX', 'AI Workflows', 'Business'];
 
-/* ---------- NAV ----------
-   [label, href, children?] — Services opens a two-item menu, one per pillar. */
+/* ---------- ENQUIRY FORM ---------- */
+export const budgets = ['Not sure yet', 'Under ₹15,000', '₹15,000 – ₹50,000', '₹50,000 – ₹1.5 lakh', 'Above ₹1.5 lakh'];
+export const interests = [
+  'A new website or a redesign',
+  'UI/UX design',
+  'A web application or online store',
+  'An AI workflow or automation',
+  'A website and an AI workflow',
+  'Not sure yet',
+];
+
+/* ---------- NAV ---------- */
 export const nav = [
   ['Services', '/services', pillars.map(p => [p.title, p.path])],
   ['Work', '/work'],
   ['Pricing', '/pricing'],
   ['About', '/about'],
-  ['Insights', '/blog'],
-  ['Resources', '/resources'],
-  ['Contact Us', '/contact'],
+  ['Contact', '/contact'],
 ];
 
-export const footerQuick = [
-  ['Work', '/work'], ['Pricing', '/pricing'], ['About', '/about'],
-  ['Insights', '/blog'], ['Resources', '/resources'], ['Careers', '/careers'], ['Contact', '/contact'],
-];
+/* ---------- PENDING: printed on every build ---------- */
+export const pending = [
+  !site.phone && 'Phone number (site.phone): click-to-call is hidden until set.',
+  !site.whatsapp && 'WhatsApp number (site.whatsapp): WhatsApp buttons are hidden until set.',
+  !site.booking && 'Booking link (site.booking): no /book page is generated, and CTAs go to /contact reading "Start a conversation", until a Calendly/Cal.com 30-minute event URL is set.',
+  !stats.publish && 'Studio numbers (stats): 30+ projects / 20+ clients / 4.6 rating are unverified and not shown. Add the basis for each and set verified + publish.',
+  !site.social.length && 'LinkedIn / Instagram URLs (site.social): no social links shown until set.',
+  ...projects.filter(p => !p.publish).map(p => `Work: ${p.name} is held back. ${p.hold}`),
+  ...projects.filter(p => p.publish && p.caution).map(p => `Work: ${p.name}. ${p.caution}`),
+  ...packages.filter(p => !p.publish).map(p => `Pricing: ${p.name} is held back. ${p.hold}`),
+  ...packages.filter(p => p.publish && !p.price && !p.quoted).map(p => `Pricing: ${p.name} has no published price yet.`),
+  ...packages.filter(p => p.publish && !p.payment).map(p => `Pricing: ${p.name} has no published payment terms yet.`),
+  'CONTACT FORM IS NOT DELIVERING: the Supabase project in db.js (jyikbiiyqixesapwkkfm.supabase.co) does not resolve in public DNS (checked 11 Nov 2026). The form shows an honest failure with the email address. Create a new Supabase project (table "leads": name, email, company, budget, project_description) or switch to a form service, update db.js, then set up and test email notification to harsh@ostendic.com.',
+].filter(Boolean);

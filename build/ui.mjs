@@ -2,7 +2,7 @@
    OSTENDIC — UI PRIMITIVES
    Every component returns an HTML string. One visual language, all pages.
    =========================================================================== */
-import { site, nav, pillars, footerQuick, cta, finalCta } from './data.mjs';
+import { site, links, nav, pillars } from './data.mjs';
 
 export const esc = (s = '') => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -11,93 +11,64 @@ export const esc = (s = '') => String(s)
 export const ico = {
   arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
-  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
-  dot: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>',
-  spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>',
-  grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
-  flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M5 8.5V14a4 4 0 0 0 4 4h7.5"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg>',
-  whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg>',
-  mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 7v6c0 4.5 3.3 7.6 8 8.7 4.7-1.1 8-4.2 8-8.7V7l-8-4Z"/></svg>',
-  /* capability + proof icons: same 24px grid, same 1.6 stroke, drawn larger */
-  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.6 9 5.2-9 5.2-9-5.2 9-5.2Z"/><path d="m3.6 12.4 8.4 4.8 8.4-4.8M3.6 16.6 12 21.4l8.4-4.8"/></svg>',
-  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.6 4l-3.2 16"/></svg>',
-  rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.6 3.2c3.6 1 6.2 3.6 7.2 7.2l-8.6 8.6-5.8-1.4-1.4-5.8 8.6-8.6Z"/><circle cx="14.6" cy="9.4" r="1.9"/><path d="M6.4 17.6 3 21"/></svg>',
-  bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.4 2.6 4.6 13.4h6L10 21.4l9.4-11.2h-6.6l.6-7.6Z"/></svg>',
-  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9S14.6 18.4 12 21c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z"/></svg>',
-  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.4l3.4 2"/></svg>',
-  compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5 5-2.2Z"/></svg>',
+  minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>',
   caret: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h3.2l1.6 4.2-2.1 1.4a11.6 11.6 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a1.9 1.9 0 0 1-2 1.9A16.6 16.6 0 0 1 3.1 5.5 1.9 1.9 0 0 1 5 3.5Z"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg>',
 };
 
-/* ---------- atoms ---------- */
-export const eyebrow = (text, icon = 'dot') =>
-  `<span class="eyebrow">${ico[icon] || ico.dot}${esc(text)}</span>`;
+const ext = (href) => /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '';
 
-/* `opts.avatar` swaps the arrow badge for the founder portrait, so the call
-   CTA carries a face rather than a glyph. It is the same pill, same depth and
-   the same 36px badge slot — only the contents of the badge change, which is
-   why it stays one component instead of a second button. */
+/* Button. `opts.avatar` puts the founder's portrait in the badge slot, so
+   the main "talk to us" CTA carries a face rather than a glyph. */
 export const btn = (label, href, kind = 'primary', opts = {}) => {
-  const tag = href ? 'a' : 'button';
-  const attrs = href ? `href="${href}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ''}` : 'type="button"';
   const badge = opts.avatar
-    ? `<span class="btn__ava face"><img src="/${site.principalImage}" alt="" width="96" height="96" loading="lazy" decoding="async"></span>`
-    : `<span class="btn__ico">${ico.arrow}</span>`;
-  return `<${tag} class="btn btn--${kind}${opts.avatar ? ' btn--ava' : ''}" ${attrs}${opts.id ? ` id="${opts.id}"` : ''}>
-    <span class="btn-label">${esc(label)}</span>${badge}
-  </${tag}>`;
+    ? `<span class="btn__ava face"><img src="/${site.principalImage}" alt="" width="96" height="96" decoding="async"${opts.eager ? '' : ' loading="lazy"'}></span>`
+    : opts.icon
+      ? `<span class="btn__ico">${ico[opts.icon]}</span>`
+      : `<span class="btn__ico">${ico.arrow}</span>`;
+  return `<a class="btn btn--${kind}${opts.avatar ? ' btn--ava' : ''}" href="${href}"${ext(href)}>`
+    + `<span class="btn-label">${esc(label)}</span>${badge}</a>`;
 };
+
+/* The single "start a project" CTA used across the site. */
+export const startBtn = (kind = 'primary', opts = {}) =>
+  btn(links.startLabel, links.start, kind, { avatar: true, ...opts });
+
+/* WhatsApp / call buttons render only when the number is configured. */
+export const waBtn = (kind = 'ghost', label = 'Message on WhatsApp') =>
+  links.whatsapp ? btn(label, links.whatsapp, kind, { icon: 'whatsapp' }) : '';
+export const telBtn = (kind = 'ghost') =>
+  links.tel ? btn(`Call ${site.phone.display}`, links.tel, kind, { icon: 'phone' }) : '';
 
 export const alink = (label, href) =>
-  `<a class="alink" href="${href}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ''}>${esc(label)}${ico.arrow}</a>`;
+  `<a class="alink" href="${href}"${ext(href)}>${esc(label)}${ico.arrow}</a>`;
 
-/* Editorial headline: plain text + <em> emphasis. Pass an array of lines;
-   wrap the emphasised part in {curly braces} to render it as italic serif. */
-export const head = (lines, level = 'h2', tag = 'h2') => {
+/* Headline: plain text, with {curly braces} marking an italic-serif phrase.
+   The serif is reserved for a few moments per page, not every heading. */
+export const head = (lines, cls = 'h2', tag = 'h2') => {
   const render = (l) => esc(l).replace(/\{(.+?)\}/g, '<em class="em">$1</em>');
-  // Spaces around <br> are deliberate: when the break is suppressed on small
-  // screens the words must still separate rather than run together.
-  return `<${tag} class="${level}">${lines.map(render).join(' <br> ')}</${tag}>`;
+  return `<${tag} class="${cls}">${lines.map(render).join(' <br> ')}</${tag}>`;
 };
 
-export const secHead = ({ eye, lines, lead, level = 'h2', tag = 'h2', center = false, cta = '' }) => `
-  <div class="sec-head${center ? ' center' : ''}">
-    ${eye ? eyebrow(eye) : ''}
-    ${head(lines, level, tag)}
+/* Page header for inner pages: one heading, one lead, no badges. */
+export const pageHead = ({ label, lines, lead, actions = '' }) => `
+<section class="phead">
+  <div class="wrap phead__in">
+    ${label ? `<p class="label">${esc(label)}</p>` : ''}
+    ${head(lines, 'h1', 'h1')}
     ${lead ? `<p class="lead">${esc(lead)}</p>` : ''}
-    ${cta ? `<div class="btn-row mt-8">${cta}</div>` : ''}
-  </div>`;
-
-/* ---------- blocks ---------- */
-export const statRow = (stats, dark = false) => `
-  <div class="grid g4">
-    ${stats.map(([n, l]) => `<div class="stat"><span class="stat__n tnum">${esc(n)}</span><span class="stat__l">${esc(l)}</span></div>`).join('')}
-  </div>`;
-
-export const rowList = (items) => `
-  <div class="rowlist">
-    ${items.map(i => i.href
-      ? `<a href="${i.href}"><span class="row__t">${esc(i.title)}</span>${ico.arrow}</a>`
-      : `<div class="row"><span class="row__t">${esc(i.title)}</span>${i.meta ? `<span class="body-sm">${esc(i.meta)}</span>` : ''}</div>`
-    ).join('')}
-  </div>`;
-
-export const cellGrid = (items, cols = 5) => `
-  <div class="cellgrid c${cols}">${items.map(i => `<div>${esc(i)}</div>`).join('')}</div>`;
+    ${actions ? `<div class="btn-row">${actions}</div>` : ''}
+  </div>
+</section>`;
 
 /* ---------- brand mark ----------
-   The wordmark image is the site's visual logo; it replaces the plain-text
-   "Ostendic" lockup that used to sit in the header and the footer. Ordinary
-   written mentions of the name stay text everywhere else.
-
-   `site.logo.ink` is the wordmark's bounding box inside the supplied file,
-   which carries a wide white margin. Those numbers ride in as custom
-   properties and CSS crops the visible box down to them, so the margin never
-   paints, the artwork keeps its exact proportions, and the file itself is
-   left untouched. The <img> keeps its intrinsic width/height and the crop box
-   is sized in CSS, so the slot is reserved before the image loads. */
+   `site.logo.ink` is the wordmark's bounding box inside the supplied file;
+   CSS crops to it so the white margin never paints and the file is never
+   edited. The <img> keeps intrinsic width/height so the slot is reserved. */
 const brandMark = ({ eager = false } = {}) => {
   const L = site.logo;
   return `<span class="brand__crop" style="--lg-w:${L.w};--lg-h:${L.h};`
@@ -108,10 +79,9 @@ const brandMark = ({ eager = false } = {}) => {
     + `</span>`;
 };
 
-/* ---------- header / footer ----------
-   A nav entry with children (Services) renders as its own link plus a
-   small menu that opens on hover and on keyboard focus — CSS only, so it
-   works without JS. The parent stays a real link to the overview page. */
+/* ---------- header ----------
+   Services opens a two-item menu on hover and keyboard focus (CSS only);
+   the parent stays a real link to /services. */
 const isCurrent = (current, h) => current === h || (h !== '/' && current.startsWith(h + '/'));
 const navItem = (current) => ([l, h, kids]) => {
   const link = `<a href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}${kids ? `<span class="nav__caret">${ico.caret}</span>` : ''}</a>`;
@@ -123,6 +93,15 @@ const navItem = (current) => ([l, h, kids]) => {
       </div>`;
 };
 
+/* quick contact in the header: WhatsApp first (preferred by local buyers),
+   then phone. Nothing renders if neither is configured. */
+const quickContact = () => {
+  const items = [];
+  if (links.whatsapp) items.push(`<a class="hdr__quick" href="${links.whatsapp}" target="_blank" rel="noopener" aria-label="Message Ostendic on WhatsApp">${ico.whatsapp}<span>WhatsApp</span></a>`);
+  if (links.tel) items.push(`<a class="hdr__quick" href="${links.tel}" aria-label="Call Ostendic on ${esc(site.phone.display)}">${ico.phone}<span>${esc(site.phone.display)}</span></a>`);
+  return items.join('');
+};
+
 export const header = (current = '') => `
 <header class="hdr">
   <div class="wrap hdr__in">
@@ -131,131 +110,130 @@ export const header = (current = '') => `
       ${nav.map(navItem(current)).join('')}
     </nav>
     <div class="hdr__cta">
-      ${btn(cta.header, '/contact', 'primary').replace('<a class', `<a aria-label="${esc(cta.header)}" class`)}
-      <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
+      ${quickContact()}
+      ${btn(links.startLabel, links.start, 'primary').replace('<span class="btn-label">', '<span class="btn-label btn-label--short">Contact</span><span class="btn-label btn-label--full">')}
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
   </div>
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
-  <div class="mnav__in">
-    ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}">${esc(l)}${ico.arrow}</a>`).join('')}
-    <p class="mnav__lbl">Services</p>
+  <nav class="mnav__in" aria-label="Mobile">
+    ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
     <div class="mnav__svc">
-      ${pillars.map(s => `<a href="${s.path}">${esc(s.title)}</a>`).join('')}
+      ${pillars.map(s => `<a href="${s.path}"><span class="tnum">${s.n}</span>${esc(s.title)}</a>`).join('')}
     </div>
     <div class="mnav__foot">
-      ${btn(cta.header, '/contact', 'primary')}
+      ${startBtn('primary')}
+      ${waBtn('ghost')}
+      ${telBtn('ghost')}
       <a class="alink" href="mailto:${site.email}">${site.email}${ico.arrow}</a>
     </div>
-  </div>
+  </nav>
 </div>`;
 
-export const footer = () => `
+/* ---------- footer ----------
+   The closing invitation lives here so every page ends the same way:
+   one heading, one sentence, the real contact routes. */
+export const footer = (current = '') => `
 <footer class="ftr">
   <div class="wrap">
-    <!-- Final CTA. The founder card is the matte intro-call surface from the
-         Orbix reference: portrait, pill and email on one soft cyan wash. -->
-    <div class="ftr__cta">
-      <div class="stack gap-20">
-        ${head(finalCta.lines, 'h2', 'h2')}
-        <p class="lead">${esc(finalCta.body[0])}</p>
+    ${current === '/contact' ? '' : `<div class="ftr__cta">
+      <div class="ftr__say">
+        <h2 class="h2">Tell us what you’re working on.</h2>
+        <p class="lead">A short message is enough to start. You’ll hear back from ${esc(site.principal.split(' ')[0])} directly.</p>
       </div>
-      <div class="callcard">
-        <span class="callcard__face face">
-          <img src="/${site.principalImage}"
-               alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
-               width="200" height="200" loading="lazy" decoding="async">
-        </span>
-        <h3 class="h4">Talk to the founder</h3>
-        <p class="body-sm">${esc(finalCta.body[1])}</p>
-        <div class="btn-row">${btn(cta.primary, '/contact', 'primary')}</div>
-        <a class="callcard__mail" href="mailto:${site.email}">
-          <span class="callcard__mail-i">${ico.mail}</span>
-          <span>
-            <span class="callcard__mail-k">${esc(cta.email)}</span>
-            <span class="callcard__mail-v">${site.email}</span>
-          </span>
-        </a>
+      <div class="ftr__act">
+        <div class="btn-row">
+          ${startBtn('primary')}
+          ${waBtn('ghost')}
+          ${telBtn('ghost')}
+        </div>
+        <a class="ftr__mail" href="mailto:${site.email}">${ico.mail}<span>${site.email}</span></a>
       </div>
-    </div>
+    </div>`}
 
     <div class="ftr__cols">
       <div class="ftr__brand">
-        <a class="brand brand--plaque" href="/">${brandMark()}</a>
+        <a class="brand brand--plaque" href="/" aria-label="${esc(site.name)} home">${brandMark()}</a>
         <p>${esc(site.footer)}</p>
-        <p style="margin-top:18px"><a class="alink" href="mailto:${site.email}" style="color:var(--ink-inv)">${site.email}${ico.arrow}</a></p>
       </div>
       <div>
-        <h4>Services</h4>
-        <ul>${pillars.map(s => `<li><a href="${s.path}">${esc(s.title)}</a></li>`).join('')}
-          <li><a href="/services">All services</a></li></ul>
+        <h3 class="ftr__h">Services</h3>
+        <ul>${pillars.map(s => `<li><a href="${s.path}">${esc(s.title)}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h4>Company</h4>
-        <ul>${footerQuick.map(([l, h]) => `<li><a href="${h}">${esc(l)}</a></li>`).join('')}</ul>
+        <h3 class="ftr__h">Studio</h3>
+        <ul>
+          <li><a href="/work">Work</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
       </div>
       <div>
-        <h4>Elsewhere</h4>
-        <ul>${site.social.map(([l, h]) => `<li><a href="${h}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}</ul>
-        <h4 style="margin-top:26px">Working with</h4>
-        <ul><li style="color:var(--ink-inv-2);font-size:var(--t-sm)">${site.markets.join(' · ')}</li></ul>
+        <h3 class="ftr__h">Contact</h3>
+        <ul>
+          <li><a href="mailto:${site.email}">${site.email}</a></li>
+          ${links.whatsapp ? `<li><a href="${links.whatsapp}" target="_blank" rel="noopener">WhatsApp</a></li>` : ''}
+          ${links.tel ? `<li><a href="${links.tel}">${esc(site.phone.display)}</a></li>` : ''}
+          ${site.social.map(([l, h]) => `<li><a href="${h}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}
+        </ul>
       </div>
     </div>
 
     <div class="ftr__bar">
-      <span>© ${site.founded}–2026 ${esc(site.name)}. All rights reserved.</span>
+      <span>© 2026 ${esc(site.name)}</span>
       <nav aria-label="Legal">
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
-        <a href="/contact">Contact</a>
       </nav>
     </div>
   </div>
 </footer>`;
 
 /* ---------- page shell ---------- */
-export const page = ({ title, desc, current = '', body, cls = '', needsForm = false }) => `<!doctype html>
-<html lang="en">
+export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '' }) => `<!doctype html>
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${site.url}${current || '/'}">
+<meta name="theme-color" content="#F2F2F0">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${site.url}${current || '/'}">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="/styles/ostendic.css">
-<link rel="stylesheet" href="/styles/motion.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
+${preload}<link rel="stylesheet" href="/styles/ostendic.css">
 <script type="application/ld+json">${JSON.stringify({
   '@context': 'https://schema.org', '@type': 'Organization',
   name: site.name, url: site.url, email: site.email,
   description: site.sub,
   founder: { '@type': 'Person', name: site.principal, jobTitle: site.principalRole },
-  areaServed: site.markets,
-  knowsAbout: ['Website design and development', 'UI/UX design', 'Custom web development', 'Agentic AI workflows', 'AI workflow automation', 'AI agents for business'],
+  ...(site.phone ? { telephone: site.phone.tel } : {}),
+  ...(site.social.length ? { sameAs: site.social.map(([, h]) => h) } : {}),
+  knowsAbout: ['Website design and development', 'UI/UX design', 'Web applications', 'E-commerce', 'Agentic AI workflows', 'Process automation'],
 })}</script>
 </head>
-<body class="${cls}">
+<body>
 <a class="skip" href="#main">Skip to content</a>
 ${header(current)}
 <main id="main">
 ${body}
 </main>
-${footer()}
+${footer(current)}
 ${needsForm ? `<script>window.OSTENDIC_EMAIL=${JSON.stringify(site.email)};</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 <script src="/db.js" defer></script>` : ''}
-<script src="/scripts/site.js" defer></script>
-<script src="/scripts/motion.js" defer></script>
+${needsBooking ? '<script src="/scripts/booking.js" defer></script>\n' : ''}<script src="/scripts/site.js" defer></script>
 </body>
 </html>`;

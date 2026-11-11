@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.ostendic.com/</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/services</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/services/web-development</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/services/agentic-ai-workflows</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/work</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/pricing</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/about</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/contact</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/blog</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/careers</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/resources</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/privacy</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.ostendic.com/terms</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.ostendic.com/</loc></url>
+  <url><loc>https://www.ostendic.com/services</loc></url>
+  <url><loc>https://www.ostendic.com/services/web-development</loc></url>
+  <url><loc>https://www.ostendic.com/services/agentic-ai-workflows</loc></url>
+  <url><loc>https://www.ostendic.com/work</loc></url>
+  <url><loc>https://www.ostendic.com/pricing</loc></url>
+  <url><loc>https://www.ostendic.com/about</loc></url>
+  <url><loc>https://www.ostendic.com/contact</loc></url>
+  <url><loc>https://www.ostendic.com/privacy</loc></url>
+  <url><loc>https://www.ostendic.com/terms</loc></url>
 </urlset>
