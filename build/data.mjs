@@ -29,14 +29,14 @@ export const site = {
   /* ---- contact channels: fill these in to switch the matching UI on ----
      phone:    display + dial string, e.g. { display: '+91 98xxx xxxxx', tel: '+9198xxxxxxxx' }
      whatsapp: international number, digits only, e.g. '9198xxxxxxxx'
-     booking:  a 30-minute event on Calendly or Cal.com, e.g.
-               'https://calendly.com/ostendic/30min'  or  'https://cal.com/ostendic/30min'
-               The provider is detected from the URL. Availability, time slots and
-               confirmation all come from the provider; nothing is simulated here.
-               (BOOKING_URL in the environment overrides this, for local testing only.) */
+     booking:  Calendly (or Cal.com) scheduling URL. Read at BUILD time from
+               NEXT_PUBLIC_CALENDLY_URL (see .env.example), falling back to the
+               Ostendic Calendly page. The provider is detected from the URL.
+               Availability, time slots and confirmation all come from the
+               provider; nothing is simulated here. */
   phone: null,      // PENDING: business phone number
   whatsapp: null,   // PENDING: business WhatsApp number
-  booking: globalThis.process.env.BOOKING_URL || null,   // PENDING: Calendly or Cal.com event link
+  booking: globalThis.process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/harshkdubeyhd',
 
   /* [label, url] — only real profile URLs. Empty = no social links shown. */
   social: [],       // PENDING: LinkedIn / Instagram profile URLs

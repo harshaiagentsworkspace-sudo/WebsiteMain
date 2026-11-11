@@ -41,21 +41,19 @@
   };
 
   if (provider === 'calendly') {
-    var u = new URL(url);
-    u.searchParams.set('hide_gdpr_banner', '1');
-    u.searchParams.set('hide_landing_page_details', '1');
-    u.searchParams.set('primary_color', '0e4f47');
-    u.searchParams.set('text_color', '111314');
-    u.searchParams.set('background_color', 'ffffff');
+    /* The markup is Calendly's documented inline widget
+       (div.calendly-inline-widget with data-url); widget.js initialises it
+       on load. The script is loaded after the page has finished loading,
+       like next/script's "lazyOnload". Calendly reports its own state to
+       the page via postMessage; only those messages change our states. */
     window.addEventListener('message', function (e) {
       if (e.origin !== 'https://calendly.com' || !e.data || typeof e.data.event !== 'string') return;
       if (e.data.event === 'calendly.event_type_viewed' || e.data.event === 'calendly.profile_page_viewed') { clear(); ready(); }
       if (e.data.event === 'calendly.event_scheduled') { clear(); booked(); }
     });
-    loadScript('https://assets.calendly.com/assets/external/widget.js', fail).onload = function () {
-      if (!window.Calendly) { fail(); return; }
-      window.Calendly.initInlineWidget({ url: u.toString(), parentElement: mount });
-    };
+    var lazy = function () { loadScript('https://assets.calendly.com/assets/external/widget.js', fail); };
+    if (document.readyState === 'complete') lazy();
+    else window.addEventListener('load', lazy, { once: true });
     return;
   }
 

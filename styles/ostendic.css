@@ -440,6 +440,9 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
   border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 .booking__embed { min-height: 700px; }
 .booking__embed iframe { display: block; width: 100% !important; border: 0; }
+/* Calendly inline widget: fills its box, 320px minimum width, fixed height */
+.booking__embed.calendly-inline-widget { min-width: 320px; height: 700px; min-height: 0; }
+.booking__embed.calendly-inline-widget iframe { height: 100%; }
 .booking__panel.is-done { min-height: 0; }
 .booking__state { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 14px; padding: 32px; text-align: center; background: var(--bg-alt); }
@@ -678,6 +681,8 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
   .about-hero__img { grid-column: 1 / -1; }
   .about-hero__img img { aspect-ratio: 1 / 1; object-position: 50% 22%; }
   .booking__panel, .booking__embed { min-height: 640px; }
+  /* on phones the date picker and the time list stack, so give the widget room instead of a scroll box inside the page */
+  .booking__embed.calendly-inline-widget { height: 1050px; }
   .rows > div { grid-template-columns: 1fr; gap: 6px; }
   .mini-work a { grid-template-columns: 1fr; }
   .form__row { grid-template-columns: 1fr; }

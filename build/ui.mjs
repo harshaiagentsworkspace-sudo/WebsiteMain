@@ -111,7 +111,7 @@ export const header = (current = '') => `
     </nav>
     <div class="hdr__cta">
       ${quickContact()}
-      ${btn(links.startLabel, links.start, 'primary').replace('<span class="btn-label">', '<span class="btn-label btn-label--short">Contact</span><span class="btn-label btn-label--full">')}
+      ${btn(links.startLabel, links.start, 'primary').replace('<span class="btn-label">', `<span class="btn-label btn-label--short">${site.booking ? 'Book a call' : 'Contact'}</span><span class="btn-label btn-label--full">`)}
       <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
   </div>

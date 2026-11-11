@@ -176,7 +176,7 @@ ${pageHead({
         ${pkgRow('Timeline', esc(p.timeline || 'Agreed in the written scope, before work starts'))}
         ${pkgRow('Payment', esc(p.payment || 'Set out in the written scope'))}
       </dl>
-      <div class="btn-row">${btn(p.quoted ? 'Discuss a project' : `Ask about a ${p.name.toLowerCase()}`, links.start, i === 0 ? 'primary' : 'ghost')}</div>
+      <div class="btn-row">${btn(p.quoted ? 'Discuss a project' : `Ask about a ${p.name.toLowerCase()}`, '/contact', i === 0 ? 'primary' : 'ghost')}</div>
     </article>`).join('')}
   </div>
 </section>
@@ -331,6 +331,13 @@ export const contact = () => {
 `;
 };
 
+/* Calendly inline URL: the configured URL plus hide_gdpr_banner=1 */
+const calendlyUrl = () => {
+  const u = new URL(site.booking);
+  u.searchParams.set('hide_gdpr_banner', '1');
+  return u.toString();
+};
+
 /* ========================= BOOK =========================
    Generated only when site.booking is set. Availability, time slots, the
    booking form and the confirmation all come from the scheduling provider
@@ -343,12 +350,7 @@ export const book = () => `
     <div class="booking__intro">
       <p class="label">Book a call</p>
       <h1 class="h1">Book a 30-minute call</h1>
-      <p class="lead">Pick a date and a time that suits you. You’ll talk to ${esc(site.principal.split(' ')[0])} directly.</p>
-      <ul class="ticks booking__what">
-        <li>${ico.check}<span>What you want to build or fix, and why now</span></li>
-        <li>${ico.check}<span>Whether a website, a workflow or both makes sense</span></li>
-        <li>${ico.check}<span>What happens next, including how we’d scope and price it</span></li>
-      </ul>
+      <p class="lead">A short call about what you want to build or fix, and the sensible next step. ${esc(site.principal.split(' ')[0])} replies to emails within one business day.</p>
       <div class="sig">
         <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" decoding="async"></span>
         <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
@@ -375,7 +377,9 @@ export const book = () => `
         <p class="body">The calendar confirmed your booking. A confirmation email with the time and joining details is on its way to you.</p>
         <p class="body-sm">Need to change it? Use the reschedule link in that email.</p>
       </div>
-      <div class="booking__embed" id="bookingEmbed"></div>
+      ${bookingProvider === 'calendly'
+        ? `<div class="booking__embed calendly-inline-widget" id="bookingEmbed" data-url="${esc(calendlyUrl())}"></div>`
+        : `<div class="booking__embed" id="bookingEmbed"></div>`}
       <noscript><p class="body-sm">The calendar needs JavaScript. <a class="alink" href="${esc(site.booking || '/contact')}">Open the booking page</a></p></noscript>
     </div>
   </div>
