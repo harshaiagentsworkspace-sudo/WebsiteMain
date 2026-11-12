@@ -185,7 +185,7 @@ ul, ol { list-style: none; }
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: var(--hdr-h); }
 .brand { display: inline-flex; align-items: center; flex: 0 0 auto; min-height: 44px; }
-.brand__crop { --brand-h: 26px; display: block; position: relative; overflow: hidden;
+.brand__crop { --brand-h: 28px; display: block; position: relative; overflow: hidden;
   width: calc(var(--brand-h) * var(--ink-w) / var(--ink-h)); height: var(--brand-h); }
 .brand__crop img { position: absolute; display: block; max-width: none;
   width: calc(var(--brand-h) * var(--lg-w) / var(--ink-h));
@@ -194,7 +194,7 @@ ul, ol { list-style: none; }
   top: calc(var(--brand-h) * var(--ink-y) / var(--ink-h) * -1); }
 .hdr .brand__crop img { mix-blend-mode: multiply; }
 .brand--plaque { background: #fff; border-radius: 10px; padding: 11px 14px; align-self: flex-start; }
-.brand--plaque .brand__crop { --brand-h: 24px; }
+.brand--plaque .brand__crop { --brand-h: 25.7px; }
 
 .nav { display: flex; align-items: center; gap: 2px; }
 .nav a { padding: 10px 14px; border-radius: var(--r-pill); font-size: var(--t-sm); color: var(--ink-2); white-space: nowrap;
@@ -781,7 +781,7 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
 }
 @media (max-width: 640px) {
   :root { --hdr-h: 64px; --t-body: 1rem; }
-  .hdr .brand__crop { --brand-h: 21px; }
+  .hdr .brand__crop { --brand-h: 22.5px; }
   .hdr .btn__ico { display: none; }
   .hdr .btn { padding: 0 18px; min-height: 42px; font-size: .875rem; }
   .hdr .btn-label--full { display: none; }

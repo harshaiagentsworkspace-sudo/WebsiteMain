@@ -58,7 +58,12 @@ export const site = {
     /* navbar: same artwork and ink box, transparent background */
     nav: 'assets/ostendic-logo.png',
     w: 1746, h: 901,
-    ink: { x: 296, y: 330, w: 1159, h: 223 },
+    /* the box carries a little air on every side (12px left/right, 8px
+       top/bottom): the wordmark's anti-aliased edges (the O's curve, the
+       C's right) sit just outside the solid ink and were being clipped at
+       small sizes. --brand-h values in CSS are scaled to match (x 239/223)
+       so the wordmark renders at the same size as before. */
+    ink: { x: 284, y: 322, w: 1183, h: 239 },
   },
 
   /* meta description + structured data */
