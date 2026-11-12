@@ -9,7 +9,6 @@
     { "source": "/services/ai-automation", "destination": "/services/agentic-ai-workflows", "permanent": false },
     { "source": "/services/:slug(ui-ux-design|brand-design|ecommerce|saas-product-design|mvp-development|motion-design|creative-marketing|dashboard-design)", "destination": "/services/web-development", "permanent": false },
     { "source": "/work/:slug", "destination": "/work", "permanent": false },
-    { "source": "/blog", "destination": "/", "permanent": false },
     { "source": "/careers", "destination": "/contact", "permanent": false },
     { "source": "/resources", "destination": "/", "permanent": false },
     { "source": "/pricing", "destination": "/", "permanent": true }

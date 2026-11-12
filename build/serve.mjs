@@ -25,7 +25,7 @@ const server = createServer(async (req, res) => {
   let url = decodeURIComponent((req.url || '/').split('?')[0]);
 
   // mirror vercel.json redirects for retired pages
-  const moved = { '/blog': '/', '/careers': '/contact', '/resources': '/' };
+  const moved = { '/careers': '/contact', '/resources': '/' };
   if (moved[url]) { res.writeHead(307, { Location: moved[url] }); res.end(); console.log(`  307  ${url}`); return; }
   // retired permanently: the Pricing page
   const gone = { '/pricing': '/' };
@@ -78,7 +78,7 @@ const server = createServer(async (req, res) => {
 
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\n  Ostendic dev server\n  http://localhost:${PORT}\n`);
-  console.log('  Routes: /  /about  /contact  /blog  /careers  /resources  /privacy  /terms\n');
+  console.log('  Routes: /  /services  /work  /about  /blog  /contact  /book  /privacy  /terms\n');
   console.log('  Rebuild after editing build/*.mjs:  node build/build.mjs');
   console.log('  Stop: Ctrl+C\n');
 });

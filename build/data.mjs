@@ -342,6 +342,7 @@ export const nav = [
   ['Services', '/services', pillars.map(p => [p.title, p.path])],
   ['Work', '/work'],
   ['About', '/about'],
+  ['Blog', '/blog'],
   ['Contact', '/contact'],
 ];
 

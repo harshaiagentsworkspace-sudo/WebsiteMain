@@ -7,6 +7,7 @@ import {
 } from './data.mjs';
 import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon } from './ui.mjs';
 import * as S from './sections.mjs';
+import { posts, readingTime } from './blog.mjs';
 
 /* ========================= HOME ========================= */
 export const home = () => `
@@ -343,6 +344,53 @@ export const book = () => `
     ${bookingPanel()}
   </div>
 </section>
+`;
+
+/* ========================= BLOG =========================
+   Posts come from build/blog.mjs. No dates, authors or counts. */
+export const blogIndex = () => `
+<section class="phead">
+  <div class="wrap">
+    <div class="shead shead--flush">
+      <p class="label">Blog</p>
+      <div class="shead__main"><h1 class="h2">Plain talk about websites and AI workflows.</h1></div>
+    </div>
+  </div>
+</section>
+<section class="section section--flush-t">
+  <div class="wrap">
+    <ul class="posts">
+      ${posts.map(p => `
+      <li class="post-card">
+        <p class="label">${esc(p.category)}</p>
+        <h2 class="h4 post-card__t"><a href="/blog/${p.slug}">${esc(p.title)}</a></h2>
+        <p class="body-sm">${esc(p.excerpt)}</p>
+        <a class="alink post-card__more" href="/blog/${p.slug}" aria-label="Read: ${esc(p.title)}">Read${ico.arrow}</a>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>
+`;
+
+export const blogPost = (p) => `
+<article class="post">
+  <div class="wrap post__in">
+    <a class="post__back" href="/blog"><span aria-hidden="true">←</span> Back to all posts</a>
+    <p class="label">${esc(p.category)}</p>
+    <h1 class="h1 post__t">${esc(p.title)}</h1>
+    <p class="post__meta">${readingTime(p)}</p>
+    <div class="post__body">
+      ${p.body.map(t => `<p>${esc(t)}</p>`).join('\n      ')}
+    </div>
+    <aside class="post__cta" aria-label="Get in touch">
+      <h2 class="h3">Got something to build or fix?</h2>
+      <div class="post__cta-row">
+        ${btn('Book a call', '/contact#book', 'primary')}
+        <a class="alink" href="/contact#message">Or send a message${ico.arrow}</a>
+      </div>
+    </aside>
+  </div>
+</article>
 `;
 
 /* ========================= LEGAL ========================= */

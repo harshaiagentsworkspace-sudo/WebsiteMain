@@ -198,6 +198,7 @@ export const footer = (current = '') => `
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/about">About</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
@@ -223,13 +224,14 @@ export const footer = (current = '') => `
 </footer>`;
 
 /* ---------- page shell ---------- */
-export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '' }) => `<!doctype html>
+export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '', noindex = false }) => `<!doctype html>
 <html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
+${noindex ? '<meta name="robots" content="noindex, nofollow">\n' : ''}
 <link rel="canonical" href="${site.url}${current || '/'}">
 <meta name="theme-color" content="#F2F2F0">
 <meta property="og:type" content="website">

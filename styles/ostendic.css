@@ -619,6 +619,26 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .facts--case > div { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
 .note { max-width: 640px; padding-top: 40px; border-top: 1px solid var(--line-2); display: flex; flex-direction: column; gap: 10px; }
 
+/* blog: index cards and the post page */
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.post-card { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; padding: clamp(22px, 2.6vw, 32px);
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--r); }
+.post-card__t a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.post-card .body-sm { color: var(--ink-2); }
+.post-card__more { margin-top: auto; padding-top: 8px; }
+.post { padding-block: clamp(40px, 6vw, 88px) var(--sec-y); }
+.post__in { max-width: calc(680px + 2 * var(--pad-x)); display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.post__back { font-size: var(--t-sm); color: var(--ink-2); margin-bottom: 16px; }
+.post__back:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.post__t { font-size: var(--t-h2); line-height: 1.08; }
+.post__meta { font-size: var(--t-sm); color: var(--ink-3); }
+.post__body { display: flex; flex-direction: column; gap: 1.1em; margin-top: 16px; font-size: 18px; line-height: 1.6; color: var(--ink); max-width: 680px; }
+.post__cta { width: 100%; margin-top: clamp(40px, 5vw, 64px); padding-top: 32px; border-top: 1px solid var(--line-2);
+  display: flex; flex-direction: column; gap: 20px; }
+.post__cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+@media (max-width: 1024px) { .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .posts { grid-template-columns: 1fr; } }
+
 /* about */
 .about-hero { --photo: 280px; display: grid; grid-template-columns: minmax(0, 1fr) var(--photo);
   grid-template-areas: "text photo" "cta photo"; gap: 28px clamp(40px, 6vw, 96px); align-items: start; }

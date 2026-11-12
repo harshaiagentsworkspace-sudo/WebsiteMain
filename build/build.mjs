@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { page } from './ui.mjs';
 import { site, pillars, pending } from './data.mjs';
 import * as P from './pages.mjs';
+import { posts, BLOG_IS_PLACEHOLDER } from './blog.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const written = [];
@@ -79,17 +80,31 @@ add('terms.html', page({
   ].join('')),
 }));
 
-/* Retired pages. Insights had no published articles, Resources held one
-   off-brand download and Careers described no real hiring process. Their
-   generated HTML is removed; vercel.json redirects the old URLs. The
-   underlying assets (e.g. the .docx) are kept in the repo. */
-for (const gone of ['blog.html', 'careers.html', 'resources.html']) {
+/* blog: index + one page per post (content in build/blog.mjs). While the
+   posts are placeholders, every blog page is noindex and none is in the
+   sitemap. */
+add('blog.html', page({
+  title: T('Blog'), desc: 'Plain talk about websites and AI workflows for small businesses.',
+  current: '/blog', body: P.blogIndex(), noindex: BLOG_IS_PLACEHOLDER,
+}));
+for (const p of posts) add(`blog/${p.slug}.html`, page({
+  title: T(p.title), desc: p.excerpt,
+  current: `/blog/${p.slug}`, body: P.blogPost(p), noindex: BLOG_IS_PLACEHOLDER,
+}));
+
+/* Retired pages. Resources held one off-brand download and Careers
+   described no real hiring process. Their generated HTML is removed;
+   vercel.json redirects the old URLs. The underlying assets (e.g. the
+   .docx) are kept in the repo. */
+for (const gone of ['careers.html', 'resources.html']) {
   const f = join(ROOT, gone);
   if (existsSync(f)) rmSync(f);
 }
 
 /* sitemap + robots */
-const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/about', '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'];
+const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/about',
+  ...(BLOG_IS_PLACEHOLDER ? [] : ['/blog', ...posts.map(p => `/blog/${p.slug}`)]),
+  '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'];
 add('sitemap.xml',
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
