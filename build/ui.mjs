@@ -262,8 +262,7 @@ ${header(current)}
 ${body}
 </main>
 ${footer(current)}
-${needsForm ? `<script>window.OSTENDIC_EMAIL=${JSON.stringify(site.email)};</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+${needsForm ? `<script>window.OSTENDIC_EMAIL=${JSON.stringify(site.email)};window.OSTENDIC_FORM_KEY=${JSON.stringify(site.formKey || '')};</script>
 <script src="/db.js" defer></script>` : ''}
 ${needsBooking ? '<script src="/scripts/booking.js" defer></script>\n' : ''}<script src="/scripts/site.js" defer></script>
 </body>

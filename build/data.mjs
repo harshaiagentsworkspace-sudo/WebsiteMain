@@ -33,7 +33,12 @@ export const site = {
                NEXT_PUBLIC_CALENDLY_URL (see .env.example), falling back to the
                Ostendic Calendly page. The provider is detected from the URL.
                Availability, time slots and confirmation all come from the
-               provider; nothing is simulated here. */
+               provider; nothing is simulated here.
+     formKey:  Web3Forms access key for the contact form (messages are emailed
+               to the address the key was created with). Read at BUILD time
+               from WEB3FORMS_ACCESS_KEY, else the value here. It is a public
+               key by design: it can only send to that inbox. */
+  formKey: globalThis.process.env.WEB3FORMS_ACCESS_KEY || 'c9c76618-084b-43ff-b3bb-be8aa2de655a',
   phone: null,      // PENDING: business phone number
   whatsapp: null,   // PENDING: business WhatsApp number
   booking: globalThis.process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/harshkdubeyhd',
@@ -343,5 +348,5 @@ export const pending = [
   !site.social.length && 'LinkedIn / Instagram URLs (site.social): no social links shown until set.',
   ...projects.filter(p => !p.publish).map(p => `Work: ${p.name} is held back. ${p.hold}`),
   ...projects.filter(p => p.publish && p.caution).map(p => `Work: ${p.name}. ${p.caution}`),
-  'CONTACT FORM IS NOT DELIVERING: the Supabase project in db.js (jyikbiiyqixesapwkkfm.supabase.co) does not resolve in public DNS (checked 11 Nov 2026). The form shows an honest failure with the email address. Create a new Supabase project (table "leads": name, email, company, budget, project_description) or switch to a form service, update db.js, then set up and test email notification to harsh@ostendic.com.',
+  !site.formKey && 'CONTACT FORM IS NOT DELIVERING: no Web3Forms access key (site.formKey in build/data.mjs, or WEB3FORMS_ACCESS_KEY). Messages fail with an honest error until it is set.',
 ].filter(Boolean);
