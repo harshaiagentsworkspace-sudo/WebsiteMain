@@ -317,11 +317,11 @@ export const published = projects.filter(p => p.publish);
 export const kindLabel = { client: 'Client project', demo: 'Demo build', sample: 'Sample' };
 
 /* ---------- ENQUIRY FORM ---------- */
-export const budgets = ['Not sure yet', 'Under ₹15,000', '₹15,000 – ₹50,000', '₹50,000 – ₹1.5 lakh', 'Above ₹1.5 lakh'];
+export const budgets = ['Not sure yet', 'Under ₹15,000', '₹15,000 to ₹50,000', '₹50,000 to ₹1.5 lakh', 'Above ₹1.5 lakh'];
 export const interests = [
   'A new website or a redesign',
   'UI/UX design',
-  'A web application or online store',
+  'A web app or online store',
   'An AI workflow or automation',
   'A website and an AI workflow',
   'Not sure yet',

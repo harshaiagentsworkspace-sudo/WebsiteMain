@@ -114,7 +114,7 @@ const navItem = (current) => ([l, h, kids]) => {
   if (!kids) return link;
   return `<div class="nav__dd">${link}
         <div class="nav__menu">
-          ${kids.map(([kl, kh], i) => `<a href="${kh}"${current === kh ? ' aria-current="page"' : ''}><span class="nav__menu-n tnum">${String(i + 1).padStart(2, '0')}</span>${esc(kl)}</a>`).join('')}
+          ${kids.map(([kl, kh]) => `<a href="${kh}"${current === kh ? ' aria-current="page"' : ''}>${esc(kl)}</a>`).join('')}
         </div>
       </div>`;
 };
@@ -146,7 +146,7 @@ export const header = (current = '') => `
   <nav class="mnav__in" aria-label="Mobile">
     ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
     <div class="mnav__svc">
-      ${pillars.map(s => `<a href="${s.path}"><span class="tnum">${s.n}</span>${esc(s.title)}</a>`).join('')}
+      ${pillars.map(s => `<a href="${s.path}">${esc(s.title)}</a>`).join('')}
     </div>
     <div class="mnav__foot">
       ${startBtn('primary')}

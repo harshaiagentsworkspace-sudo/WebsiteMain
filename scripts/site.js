@@ -292,6 +292,50 @@
     history.replaceState(null, '', id);
   });
 
+  /* ---------- contact tabs: Book a call / Send a message ----------
+     WAI-ARIA tabs with automatic activation. The URL hash picks the tab
+     (#message, #book; none means message), and the tab changes the hash
+     without scrolling. An inline script in the page sets data-ctab on
+     <html> before first paint, so the right panel shows immediately. */
+  var tabs = [].slice.call(document.querySelectorAll('.ctabs [role="tab"]'));
+  if (tabs.length) {
+    var root = document.documentElement;
+    var select = function (name, opts) {
+      opts = opts || {};
+      root.setAttribute('data-ctab', name);
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        if (on && opts.focus) t.focus();
+      });
+      if (opts.hash && location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+    };
+    var fromHash = function () { return location.hash === '#book' ? 'book' : 'message'; };
+    select(fromHash());
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(t.getAttribute('data-tab'), { hash: true }); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key, j = null;
+        if (k === 'ArrowRight') j = (i + 1) % tabs.length;
+        else if (k === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+        else if (k === 'Home') j = 0;
+        else if (k === 'End') j = tabs.length - 1;
+        if (j === null) return;
+        e.preventDefault();
+        select(tabs[j].getAttribute('data-tab'), { focus: true, hash: true });
+      });
+    });
+    [].forEach.call(document.querySelectorAll('[data-tab-link]'), function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        select(a.getAttribute('data-tab-link'), { focus: true, hash: true });
+      });
+    });
+    window.addEventListener('hashchange', function () { select(fromHash()); });
+  }
+
   /* ---------- enquiry form ---------- */
   var form = document.getElementById('leadForm');
   if (!form) return;
@@ -337,7 +381,7 @@
        the page opening, is treated as a bot and dropped without a request. */
     if (form.website.value || Date.now() - openedAt < 2000) {
       form.reset();
-      setStatus('ok', 'Thanks, your message has been sent.');
+      setStatus('ok', 'Thanks. We’ve got your message and we’ll reply by email.');
       return;
     }
 
@@ -364,9 +408,9 @@
       label.textContent = original;
       if (ok) {
         form.reset();
-        setStatus('ok', '<strong>Thanks, your enquiry has been sent.</strong> A reply will come to the email address you gave.');
+        setStatus('ok', 'Thanks. We’ve got your message and we’ll reply by email.');
       } else {
-        setStatus('bad', 'Your enquiry couldn’t be sent. Please try again, or email <a href="mailto:' + mail + '">' + mail + '</a> directly.');
+        setStatus('bad', 'Something went wrong. Please try again, or email us at <a href="mailto:' + mail + '">' + mail + '</a>.');
       }
       status.focus && status.setAttribute('tabindex', '-1');
       status.focus();

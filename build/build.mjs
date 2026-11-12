@@ -47,7 +47,7 @@ add('about.html', page({
 }));
 add('contact.html', page({
   title: T('Contact'), desc: 'Tell Ostendic about a website, UI/UX design or AI workflow project. Replies come from the founder directly.',
-  current: '/contact', body: P.contact(), needsForm: true,
+  current: '/contact', body: P.contact(), needsForm: true, needsBooking: !!site.booking,
 }));
 
 /* booking: only with a real scheduler configured */

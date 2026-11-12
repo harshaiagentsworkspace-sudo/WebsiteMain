@@ -1,4 +1,4 @@
-/* Ostendic — booking embed (/book only).
+/* Ostendic — booking embed (/book, and the Contact page's "Book a call" tab).
    Loads the scheduling provider configured in build/data.mjs (Calendly or
    Cal.com) inline. Dates, time slots, the details form and the booking
    itself all live in the provider's embed; this file only manages the
@@ -6,7 +6,9 @@
      loading  → until the provider reports the calendar is ready
      error    → script blocked / failed, or nothing ready after 15 s
      done     → ONLY when the provider fires its own "booked" event
-   Nothing here simulates availability or confirms a booking by itself. */
+   Nothing here simulates availability or confirms a booking by itself.
+   The embed only starts (and the 15 s timeout only runs) once the panel is
+   actually on screen: in a hidden tab the provider never reports ready. */
 (function () {
   'use strict';
   var panel = document.getElementById('booking');
@@ -29,7 +31,7 @@
   var ready = function () { if (current === 'loading') show('ready'); };
   var booked = function () { show('done'); };
   var fail = function () { if (current === 'loading') { show('error'); mount.hidden = true; } };
-  var timer = setTimeout(fail, 15000);
+  var timer = null;
   var clear = function () { clearTimeout(timer); };
 
   var loadScript = function (src, onerror) {
@@ -40,6 +42,8 @@
     return s;
   };
 
+  var start = function () {
+  timer = setTimeout(fail, 15000);
   if (provider === 'calendly') {
     /* The markup is Calendly's documented inline widget
        (div.calendly-inline-widget with data-url); widget.js initialises it
@@ -93,4 +97,12 @@
   }
 
   clear(); fail();
+  };
+
+  /* start when the panel is displayed and near the viewport */
+  if (!('IntersectionObserver' in window)) { start(); return; }
+  var io = new IntersectionObserver(function (entries) {
+    if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
+  }, { rootMargin: '200px 0px' });
+  io.observe(panel);
 })();

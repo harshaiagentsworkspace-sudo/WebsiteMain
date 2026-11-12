@@ -192,43 +192,31 @@ ${S.statsBar()}
    only if configured) and the enquiry form, which is always available. */
 export const contact = () => {
   const direct = [
-    links.whatsapp && `<li><a href="${links.whatsapp}" target="_blank" rel="noopener">${ico.whatsapp}<span><strong>WhatsApp</strong><span>Send a message, any time</span></span></a></li>`,
+    links.whatsapp && `<li><a href="${links.whatsapp}" target="_blank" rel="noopener">${ico.whatsapp}<span><strong>WhatsApp</strong><span>Send a message</span></span></a></li>`,
     links.tel && `<li><a href="${links.tel}">${ico.phone}<span><strong>Call</strong><span>${esc(site.phone.display)}</span></span></a></li>`,
-    site.booking && `<li><a href="/book">${ico.calendar}<span><strong>Book a quick call</strong><span>Pick a date and time that suits you</span></span></a></li>`,
     `<li><a href="mailto:${site.email}">${ico.mail}<span><strong>Email</strong><span>${site.email}</span></span></a></li>`,
   ].filter(Boolean).join('');
-  return `
-<section class="phead phead--contact">
-  <div class="wrap contact">
-    <div class="contact__intro">
-      <p class="label">Contact</p>
-      <h1 class="h1">Tell us what you want to build or fix</h1>
-      <p class="lead">A few sentences is enough. Messages come straight to ${esc(site.principal.split(' ')[0])}, who replies personally.</p>
-      <ul class="direct">${direct}</ul>
-    </div>
-
-    <div class="contact__form">
-      <h2 class="h3">Send an enquiry</h2>
+  const form = `
       <form class="form" id="leadForm" novalidate>
         <div class="form__row">
           <div class="field" data-req>
             <label for="f-name">Your name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
-            <span class="err" id="e-name">Please enter your name.</span>
+            <span class="err" id="e-name">Please tell us your name.</span>
           </div>
           <div class="field" data-req>
             <label for="f-email">Email</label>
             <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
-            <span class="err" id="e-email">Please enter a valid email address.</span>
+            <span class="err" id="e-email">That email doesn’t look right.</span>
           </div>
         </div>
         <div class="form__row">
           <div class="field">
-            <label for="f-phone">Phone or WhatsApp <span class="opt">optional</span></label>
+            <label for="f-phone">Phone or WhatsApp <span class="opt">(optional)</span></label>
             <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
           </div>
           <div class="field">
-            <label for="f-company">Business name <span class="opt">optional</span></label>
+            <label for="f-company">Business name <span class="opt">(optional)</span></label>
             <input id="f-company" name="company" type="text" autocomplete="organization">
           </div>
         </div>
@@ -237,14 +225,14 @@ export const contact = () => {
           <select id="f-help" name="help">${interests.map(i => `<option>${esc(i)}</option>`).join('')}</select>
         </div>
         <div class="field">
-          <label for="f-budget">Budget <span class="opt">in Indian rupees</span></label>
+          <label for="f-budget">Rough budget <span class="opt">(optional)</span></label>
           <select id="f-budget" name="budget">${budgets.map(b => `<option>${esc(b)}</option>`).join('')}</select>
         </div>
         <div class="field" data-req>
-          <label for="f-project">About the project</label>
+          <label for="f-project">Tell us a bit about it</label>
           <textarea id="f-project" name="project" required minlength="10" aria-describedby="e-project"
-            placeholder="What would you like to build or improve, and what should it help you do?"></textarea>
-          <span class="err" id="e-project">Please add a sentence or two (at least 10 characters).</span>
+            placeholder="A few sentences is plenty. What’s not working, or what do you want built?"></textarea>
+          <span class="err" id="e-project">Add a sentence or two so we know where to start.</span>
         </div>
         <!-- Spam trap: hidden from people and assistive tech; bots fill it. -->
         <div class="hp" aria-hidden="true">
@@ -254,12 +242,43 @@ export const contact = () => {
         <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
         <div class="form__foot">
           <button class="btn btn--primary" type="submit" id="formSubmit">
-            <span class="btn-label">Send enquiry</span><span class="btn__ico">${ico.arrow}</span>
+            <span class="btn-label">Send message</span><span class="btn__ico">${ico.arrow}</span>
           </button>
-          <p class="form__note">We use these details only to reply to you. <a href="/privacy">Privacy</a></p>
+          <p class="form__note">We only use these details to reply to you. <a href="/privacy">Privacy</a></p>
         </div>
-      </form>
+      </form>`;
+  /* Two options as tabs: Send a message (first, default) / Book a call,
+     synced with the URL hash (#message, #book). The inline script picks the tab
+     from the hash before first paint; site.js handles clicks, arrow keys
+     and hash changes. Without JS both panels show, one under the other. */
+  const tabs = site.booking ? `
+      <script>document.documentElement.setAttribute('data-ctab', location.hash === '#book' ? 'book' : 'message');</script>
+      <div class="ctabs" role="tablist" aria-label="How to get in touch">
+        <button class="ctabs__tab" type="button" role="tab" id="tab-message" aria-controls="panel-message" aria-selected="true" data-tab="message">Send a message</button>
+        <button class="ctabs__tab" type="button" role="tab" id="tab-book" aria-controls="panel-book" aria-selected="false" tabindex="-1" data-tab="book">Book a call</button>
+      </div>
+      <div class="ctabs__panel" role="tabpanel" id="panel-message" aria-labelledby="tab-message" tabindex="0">
+        <div class="contact__form">${form}
+        </div>
+      </div>
+      <div class="ctabs__panel" role="tabpanel" id="panel-book" aria-labelledby="tab-book" tabindex="0">
+        <p class="body">Pick a time that suits you.</p>
+        ${bookingPanel()}
+        <p class="body-sm ctabs__alt"><a class="alink" href="#message" data-tab-link="message">Prefer to write? Send a message${ico.arrow}</a></p>
+      </div>` : `
+      <div class="contact__form">${form}
+      </div>`;
+  return `
+<section class="phead phead--contact">
+  <div class="wrap contact">
+    <div class="contact__main">
+      <p class="label">Contact</p>
+      <h1 class="h2 contact__h">Got something to build or fix?</h1>
+      ${tabs}
     </div>
+    <aside class="contact__side" aria-label="Other ways to reach us">
+      <ul class="direct">${direct}</ul>
+    </aside>
   </div>
 </section>
 `;
@@ -271,6 +290,35 @@ const calendlyUrl = () => {
   u.searchParams.set('hide_gdpr_banner', '1');
   return u.toString();
 };
+
+/* The scheduler panel (Calendly or Cal.com inline embed plus its loading,
+   error and booked states). One component, used on /book and in the
+   Contact page's "Book a call" tab; scripts/booking.js drives it. */
+const bookingPanel = () => `
+    <div class="booking__panel" id="booking" data-provider="${bookingProvider}" data-url="${esc(site.booking || '')}">
+      <div class="booking__state" data-state="loading" role="status">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Loading available times…</p>
+      </div>
+      <div class="booking__state" data-state="error" hidden role="alert">
+        <h2 class="h4">The calendar didn’t load</h2>
+        <p class="body-sm">This can happen with strict privacy settings or a blocked network. You can open the booking page directly, or send a message.</p>
+        <div class="btn-row">
+          ${btn('Open the booking page', site.booking || '/contact', 'primary')}
+          ${btn('Send a message', '/contact#message', 'ghost')}
+        </div>
+      </div>
+      <div class="booking__state booking__state--done" data-state="done" hidden tabindex="-1" role="status">
+        <span class="booking__ok" aria-hidden="true">${ico.check}</span>
+        <h2 class="h3">Your call is booked</h2>
+        <p class="body">The calendar confirmed your booking. A confirmation email with the time and joining details is on its way to you.</p>
+        <p class="body-sm">Need to change it? Use the reschedule link in that email.</p>
+      </div>
+      ${bookingProvider === 'calendly'
+        ? `<div class="booking__embed calendly-inline-widget" id="bookingEmbed" data-url="${esc(calendlyUrl())}"></div>`
+        : `<div class="booking__embed" id="bookingEmbed"></div>`}
+      <noscript><p class="body-sm">The calendar needs JavaScript. <a class="alink" href="${esc(site.booking || '/contact')}">Open the booking page</a></p></noscript>
+    </div>`;
 
 /* ========================= BOOK =========================
    Generated only when site.booking is set. Availability, time slots, the
@@ -292,30 +340,7 @@ export const book = () => `
       <div class="btn-row"><p class="body-sm">Prefer to write?</p>${btn('Send an enquiry instead', '/contact', 'primary')}</div>
     </div>
 
-    <div class="booking__panel" id="booking" data-provider="${bookingProvider}" data-url="${esc(site.booking || '')}">
-      <div class="booking__state" data-state="loading" role="status">
-        <span class="spinner" aria-hidden="true"></span>
-        <p>Loading available times…</p>
-      </div>
-      <div class="booking__state" data-state="error" hidden role="alert">
-        <h2 class="h4">The calendar didn’t load</h2>
-        <p class="body-sm">This can happen with strict privacy settings or a blocked network. You can open the booking page directly, or send an enquiry.</p>
-        <div class="btn-row">
-          ${btn('Open the booking page', site.booking || '/contact', 'primary')}
-          ${btn('Send an enquiry', '/contact', 'ghost')}
-        </div>
-      </div>
-      <div class="booking__state booking__state--done" data-state="done" hidden tabindex="-1" role="status">
-        <span class="booking__ok" aria-hidden="true">${ico.check}</span>
-        <h2 class="h3">Your call is booked</h2>
-        <p class="body">The calendar confirmed your booking. A confirmation email with the time and joining details is on its way to you.</p>
-        <p class="body-sm">Need to change it? Use the reschedule link in that email.</p>
-      </div>
-      ${bookingProvider === 'calendly'
-        ? `<div class="booking__embed calendly-inline-widget" id="bookingEmbed" data-url="${esc(calendlyUrl())}"></div>`
-        : `<div class="booking__embed" id="bookingEmbed"></div>`}
-      <noscript><p class="body-sm">The calendar needs JavaScript. <a class="alink" href="${esc(site.booking || '/contact')}">Open the booking page</a></p></noscript>
-    </div>
+    ${bookingPanel()}
   </div>
 </section>
 `;

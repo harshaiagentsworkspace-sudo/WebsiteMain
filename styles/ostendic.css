@@ -215,7 +215,6 @@ ul, ol { list-style: none; }
   transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s; }
 .nav__dd:hover .nav__caret, .nav__dd:focus-within .nav__caret { transform: rotate(180deg); }
 .nav .nav__menu a { display: flex; align-items: baseline; gap: 12px; border-radius: 10px; padding: 12px 14px; color: var(--ink); }
-.nav__menu-n { font-size: var(--t-xs); color: var(--ink-3); }
 
 .hdr__cta { display: flex; align-items: center; gap: 8px; }
 .hdr .btn { min-height: 44px; padding: 4px 4px 4px 18px; gap: 10px; }
@@ -245,7 +244,6 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .mnav__link[aria-current="page"] { color: var(--accent); }
 .mnav__svc { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; }
 .mnav__svc a { display: flex; gap: 12px; padding: 10px 0; font-size: var(--t-sm); color: var(--ink-2); }
-.mnav__svc .tnum { color: var(--ink-3); }
 .mnav__foot { margin-top: auto; padding-top: 28px; display: flex; flex-direction: column; gap: 12px; }
 .mnav__foot .btn { width: 100%; }
 .mnav__foot .alink { align-self: flex-start; }
@@ -636,11 +634,28 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .svc-links svg { width: 22px; height: 22px; align-self: center; transition: transform .2s var(--ease); }
 .svc-links a:hover svg { transform: translateX(4px); }
 
-/* contact */
+/* contact: heading, then two tabs (Book a call / Send a message), with
+   the email block alongside */
 .contact { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px 24px; align-items: start; }
-.contact__intro { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 22px; }
-.contact__form { grid-column: 7 / span 6; background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--r);
+.contact__main { grid-column: 1 / span 8; display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.contact__h { margin-bottom: 6px; }
+.contact__side { grid-column: 10 / span 3; padding-top: clamp(32px, 6vw, 88px); }
+.contact__form { background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--r);
   padding: clamp(22px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px; }
+.ctabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 520px; }
+.ctabs__tab { min-height: 48px; padding: 0 18px; border-radius: 999px; font: inherit; font-size: var(--t-sm); font-weight: 500;
+  border: 1px solid var(--line-2); background: var(--bg-alt); color: var(--ink); cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease); }
+.ctabs__tab:hover { border-color: var(--ink); }
+.ctabs__tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--ink-inv); }
+.ctabs__tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ctabs__panel { display: flex; flex-direction: column; gap: 16px; outline: none; }
+.ctabs__panel[hidden] { display: none; }
+html[data-ctab="book"] #panel-message, html[data-ctab="message"] #panel-book { display: none; }
+html[data-ctab="message"] #tab-book { background: var(--bg-alt); border-color: var(--line-2); color: var(--ink); }
+html[data-ctab="message"] #tab-message { background: var(--ink); border-color: var(--ink); color: var(--ink-inv); }
+.ctabs__panel .booking__panel { min-height: 700px; }
+.ctabs__alt { margin-top: 4px; }
 .direct { display: flex; flex-direction: column; margin-top: 8px; border-bottom: 1px solid var(--line-2); }
 .direct a { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line-2); }
 .direct svg { width: 22px; height: 22px; flex: none; color: var(--accent); }
@@ -729,8 +744,8 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
   .case > .wk__fig, .case > .plate { position: static; }
   .case > .wk__fig, .case > .plate, .case__body { grid-column: 1 / -1; }
   .case__body { max-width: 680px; }
-  .contact__intro, .contact__form { grid-column: 1 / -1; }
-  .contact__intro { max-width: 680px; }
+  .contact__main, .contact__side { grid-column: 1 / -1; }
+  .contact__side { padding-top: 0; max-width: 680px; }
   .ftr__cols { grid-template-columns: 1fr 1fr; }
   .ftr__brand { grid-column: 1 / -1; }
 }

@@ -31,7 +31,7 @@
     <nav class="nav" aria-label="Primary">
       <div class="nav__dd"><a href="/services">Services<span class="nav__caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></a>
         <div class="nav__menu">
-          <a href="/services/web-development"><span class="nav__menu-n tnum">01</span>Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows"><span class="nav__menu-n tnum">02</span>Agentic AI Workflows</a>
+          <a href="/services/web-development">Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows">Agentic AI Workflows</a>
         </div>
       </div><a href="/work">Work</a><a href="/about">About</a><a href="/contact" aria-current="page">Contact</a>
     </nav>
@@ -46,7 +46,7 @@
   <nav class="mnav__in" aria-label="Mobile">
     <a class="mnav__link" href="/services">Services</a><a class="mnav__link" href="/work">Work</a><a class="mnav__link" href="/about">About</a><a class="mnav__link" href="/contact" aria-current="page">Contact</a>
     <div class="mnav__svc">
-      <a href="/services/web-development"><span class="tnum">01</span>Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows"><span class="tnum">02</span>Agentic AI Workflows</a>
+      <a href="/services/web-development">Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows">Agentic AI Workflows</a>
     </div>
     <div class="mnav__foot">
       <a class="btn btn--primary btn--ava" href="/book"><span class="btn-label">Book a quick call</span><span class="btn__ava face"><img src="/assets/harsh-dubey.jpg" alt="" width="96" height="96" decoding="async" loading="lazy"></span></a>
@@ -60,51 +60,53 @@
 
 <section class="phead phead--contact">
   <div class="wrap contact">
-    <div class="contact__intro">
+    <div class="contact__main">
       <p class="label">Contact</p>
-      <h1 class="h1">Tell us what you want to build or fix</h1>
-      <p class="lead">A few sentences is enough. Messages come straight to Harsh, who replies personally.</p>
-      <ul class="direct"><li><a href="/book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg><span><strong>Book a quick call</strong><span>Pick a date and time that suits you</span></span></a></li><li><a href="mailto:harsh@ostendic.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg><span><strong>Email</strong><span>harsh@ostendic.com</span></span></a></li></ul>
-    </div>
-
-    <div class="contact__form">
-      <h2 class="h3">Send an enquiry</h2>
+      <h1 class="h2 contact__h">Got something to build or fix?</h1>
+      
+      <script>document.documentElement.setAttribute('data-ctab', location.hash === '#book' ? 'book' : 'message');</script>
+      <div class="ctabs" role="tablist" aria-label="How to get in touch">
+        <button class="ctabs__tab" type="button" role="tab" id="tab-message" aria-controls="panel-message" aria-selected="true" data-tab="message">Send a message</button>
+        <button class="ctabs__tab" type="button" role="tab" id="tab-book" aria-controls="panel-book" aria-selected="false" tabindex="-1" data-tab="book">Book a call</button>
+      </div>
+      <div class="ctabs__panel" role="tabpanel" id="panel-message" aria-labelledby="tab-message" tabindex="0">
+        <div class="contact__form">
       <form class="form" id="leadForm" novalidate>
         <div class="form__row">
           <div class="field" data-req>
             <label for="f-name">Your name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
-            <span class="err" id="e-name">Please enter your name.</span>
+            <span class="err" id="e-name">Please tell us your name.</span>
           </div>
           <div class="field" data-req>
             <label for="f-email">Email</label>
             <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
-            <span class="err" id="e-email">Please enter a valid email address.</span>
+            <span class="err" id="e-email">That email doesn’t look right.</span>
           </div>
         </div>
         <div class="form__row">
           <div class="field">
-            <label for="f-phone">Phone or WhatsApp <span class="opt">optional</span></label>
+            <label for="f-phone">Phone or WhatsApp <span class="opt">(optional)</span></label>
             <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
           </div>
           <div class="field">
-            <label for="f-company">Business name <span class="opt">optional</span></label>
+            <label for="f-company">Business name <span class="opt">(optional)</span></label>
             <input id="f-company" name="company" type="text" autocomplete="organization">
           </div>
         </div>
         <div class="field">
           <label for="f-help">What do you need?</label>
-          <select id="f-help" name="help"><option>A new website or a redesign</option><option>UI/UX design</option><option>A web application or online store</option><option>An AI workflow or automation</option><option>A website and an AI workflow</option><option>Not sure yet</option></select>
+          <select id="f-help" name="help"><option>A new website or a redesign</option><option>UI/UX design</option><option>A web app or online store</option><option>An AI workflow or automation</option><option>A website and an AI workflow</option><option>Not sure yet</option></select>
         </div>
         <div class="field">
-          <label for="f-budget">Budget <span class="opt">in Indian rupees</span></label>
-          <select id="f-budget" name="budget"><option>Not sure yet</option><option>Under ₹15,000</option><option>₹15,000 – ₹50,000</option><option>₹50,000 – ₹1.5 lakh</option><option>Above ₹1.5 lakh</option></select>
+          <label for="f-budget">Rough budget <span class="opt">(optional)</span></label>
+          <select id="f-budget" name="budget"><option>Not sure yet</option><option>Under ₹15,000</option><option>₹15,000 to ₹50,000</option><option>₹50,000 to ₹1.5 lakh</option><option>Above ₹1.5 lakh</option></select>
         </div>
         <div class="field" data-req>
-          <label for="f-project">About the project</label>
+          <label for="f-project">Tell us a bit about it</label>
           <textarea id="f-project" name="project" required minlength="10" aria-describedby="e-project"
-            placeholder="What would you like to build or improve, and what should it help you do?"></textarea>
-          <span class="err" id="e-project">Please add a sentence or two (at least 10 characters).</span>
+            placeholder="A few sentences is plenty. What’s not working, or what do you want built?"></textarea>
+          <span class="err" id="e-project">Add a sentence or two so we know where to start.</span>
         </div>
         <!-- Spam trap: hidden from people and assistive tech; bots fill it. -->
         <div class="hp" aria-hidden="true">
@@ -114,12 +116,44 @@
         <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
         <div class="form__foot">
           <button class="btn btn--primary" type="submit" id="formSubmit">
-            <span class="btn-label">Send enquiry</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            <span class="btn-label">Send message</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </button>
-          <p class="form__note">We use these details only to reply to you. <a href="/privacy">Privacy</a></p>
+          <p class="form__note">We only use these details to reply to you. <a href="/privacy">Privacy</a></p>
         </div>
       </form>
+        </div>
+      </div>
+      <div class="ctabs__panel" role="tabpanel" id="panel-book" aria-labelledby="tab-book" tabindex="0">
+        <p class="body">Pick a time that suits you.</p>
+        
+    <div class="booking__panel" id="booking" data-provider="calendly" data-url="https://calendly.com/harshkdubeyhd">
+      <div class="booking__state" data-state="loading" role="status">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Loading available times…</p>
+      </div>
+      <div class="booking__state" data-state="error" hidden role="alert">
+        <h2 class="h4">The calendar didn’t load</h2>
+        <p class="body-sm">This can happen with strict privacy settings or a blocked network. You can open the booking page directly, or send a message.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="https://calendly.com/harshkdubeyhd" target="_blank" rel="noopener"><span class="btn-label">Open the booking page</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+          <a class="btn btn--ghost" href="/contact#message"><span class="btn-label">Send a message</span><span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        </div>
+      </div>
+      <div class="booking__state booking__state--done" data-state="done" hidden tabindex="-1" role="status">
+        <span class="booking__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg></span>
+        <h2 class="h3">Your call is booked</h2>
+        <p class="body">The calendar confirmed your booking. A confirmation email with the time and joining details is on its way to you.</p>
+        <p class="body-sm">Need to change it? Use the reschedule link in that email.</p>
+      </div>
+      <div class="booking__embed calendly-inline-widget" id="bookingEmbed" data-url="https://calendly.com/harshkdubeyhd?hide_gdpr_banner=1"></div>
+      <noscript><p class="body-sm">The calendar needs JavaScript. <a class="alink" href="https://calendly.com/harshkdubeyhd">Open the booking page</a></p></noscript>
     </div>
+        <p class="body-sm ctabs__alt"><a class="alink" href="#message" data-tab-link="message">Prefer to write? Send a message<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
+      </div>
+    </div>
+    <aside class="contact__side" aria-label="Other ways to reach us">
+      <ul class="direct"><li><a href="mailto:harsh@ostendic.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="3"/><path d="m3.4 7.4 7.5 5.3a2 2 0 0 0 2.2 0l7.5-5.3"/></svg><span><strong>Email</strong><span>harsh@ostendic.com</span></span></a></li></ul>
+    </aside>
   </div>
 </section>
 
@@ -175,6 +209,7 @@
 <script>window.OSTENDIC_EMAIL="harsh@ostendic.com";</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 <script src="/db.js" defer></script>
+<script src="/scripts/booking.js" defer></script>
 <script src="/scripts/site.js" defer></script>
 </body>
 </html>
