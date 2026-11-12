@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Projects">
+  <rect x="7" y="7" width="26" height="26" rx="8"></rect>
+  <rect x="31" y="31" width="26" height="26" rx="8" fill="currentColor" stroke="none"></rect>
+</svg>

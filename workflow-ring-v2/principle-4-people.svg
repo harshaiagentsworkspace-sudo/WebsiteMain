@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Keep people in the loop">
+  <circle cx="32" cy="8" r="3.4" fill="currentColor" stroke="none"></circle>
+  <path d="M37.40 8.62A24 24 0 1 1 26.60 8.62"></path>
+  <circle cx="32" cy="27" r="6"></circle>
+  <path d="M21 47A11 11 0 0 1 43 47"></path>
+</svg>

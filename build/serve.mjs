@@ -27,6 +27,9 @@ const server = createServer(async (req, res) => {
   // mirror vercel.json redirects for retired pages
   const moved = { '/blog': '/', '/careers': '/contact', '/resources': '/' };
   if (moved[url]) { res.writeHead(307, { Location: moved[url] }); res.end(); console.log(`  307  ${url}`); return; }
+  // retired permanently: the Pricing page
+  const gone = { '/pricing': '/' };
+  if (gone[url]) { res.writeHead(308, { Location: gone[url] }); res.end(); console.log(`  308  ${url}`); return; }
 
   // block traversal
   const safe = normalize(url).replace(/^(\.\.[/\\])+/, '');

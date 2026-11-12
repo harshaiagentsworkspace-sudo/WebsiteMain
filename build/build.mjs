@@ -41,12 +41,8 @@ add('work.html', page({
   title: T('Work'), desc: 'Products Ostendic has designed and built, each labelled as a client project, demo build or sample.',
   current: '/work', body: P.work(),
 }));
-add('pricing.html', page({
-  title: T('Pricing'), desc: 'How Ostendic prices websites, UI/UX design and AI workflow projects: a written price, scope and payment schedule before any work starts.',
-  current: '/pricing', body: P.pricing(),
-}));
 add('about.html', page({
-  title: T('About'), desc: `Ostendic is a small digital studio run by ${site.principal}, designing and building websites, web applications and AI workflows.`,
+  title: T('About'), desc: `Ostendic is run by ${site.principal}, designing and building websites, web applications and AI workflows.`,
   current: '/about', body: P.about(),
 }));
 add('contact.html', page({
@@ -93,7 +89,7 @@ for (const gone of ['blog.html', 'careers.html', 'resources.html']) {
 }
 
 /* sitemap + robots */
-const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/pricing', '/about', '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'];
+const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/about', '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'];
 add('sitemap.xml',
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

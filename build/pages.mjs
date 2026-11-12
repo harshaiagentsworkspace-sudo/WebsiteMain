@@ -3,18 +3,18 @@
    =========================================================================== */
 import {
   site, links, pillars, aboutCopy, published, kindLabel, bookingProvider,
-  packages, thirdPartyCosts, budgets, interests,
+  budgets, interests,
 } from './data.mjs';
-import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn } from './ui.mjs';
+import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon } from './ui.mjs';
 import * as S from './sections.mjs';
 
 /* ========================= HOME ========================= */
 export const home = () => `
 ${S.hero()}
+${S.statsBar()}
 ${S.selectedWork()}
-${S.studioNumbers({ preview: globalThis.process.env.PREVIEW_STATS === '1' })}
-${S.serviceChapters({ icons: true, ring: true })}
-${S.processSection()}
+${S.serviceChapters({ icons: true, ring: true, video: true })}
+${S.processSection({ home: true })}
 ${S.aboutTeaser()}
 `;
 
@@ -116,26 +116,22 @@ ${work.length ? `
 export const work = () => `
 ${pageHead({
   label: 'Work',
-  lines: ['What we have built'],
-  lead: 'Every entry says what it is. A client project was built for a paying client. A demo build is a working product Ostendic designed and built in-house to test an idea end to end.',
+  lines: ['What we’ve built, and what it does'],
 })}
 
 <section class="section section--flush-t">
   <div class="wrap">
     ${published.map(p => `
     <article class="case" id="${p.slug}">
-      ${p.brand ? S.brandPlate(p) : S.workFigure(p)}
+      ${S.cardVisual(p)}
       <div class="case__body">
-        <p class="wk__meta"><span class="tag tag--${p.kind}">${kindLabel[p.kind]}</span><span>${esc(p.area)}</span></p>
         <h2 class="h2">${esc(p.name)}</h2>
-        <dl class="facts facts--case">
+        <dl class="facts facts--case facts--panel">
           <div><dt>What it is</dt><dd>${esc(p.what)}</dd></div>
           <div><dt>The problem</dt><dd>${esc(p.problem)}</dd></div>
           <div><dt>What was built</dt><dd>${esc(p.built)}</dd></div>
-          ${p.scope ? `<div><dt>Scope</dt><dd>${p.scope.map(esc).join(', ')}</dd></div>` : ''}
-          <div><dt>Who built it</dt><dd>${esc(p.contribution)}</dd></div>
         </dl>
-        <div class="btn-row">${btn(p.kind === 'client' ? `Visit ${new URL(p.url).hostname.replace('www.', '')}` : 'Open the live demo', p.url, 'ghost')}</div>
+        <div class="btn-row">${btn(p.linkLabel, p.url, 'ghost')}</div>
       </div>
     </article>`).join('')}
 
@@ -147,86 +143,24 @@ ${pageHead({
 </section>
 `;
 
-/* ========================= PRICING =========================
-   Prices, timelines and payment terms are rendered only when confirmed in
-   data.mjs. Until then the page states plainly how each is set. */
-const pkgRow = (k, v) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`;
-export const pricing = () => {
-  const list = packages.filter(p => p.publish);
-  return `
-${pageHead({
-  label: 'Pricing',
-  lines: ['A written price before', 'any work starts'],
-  lead: 'Before we start, you get the full price in writing, with what it covers, what it doesn’t, and when each payment is due. Prices are in Indian rupees.',
-})}
-
-<section class="section section--flush-t">
-  <div class="wrap pkgs">
-    ${list.map((p, i) => `
-    <article class="pkg" id="${p.slug}">
-      <header class="pkg__head">
-        <span class="tnum pkg__n">${String(i + 1).padStart(2, '0')}</span>
-        <h2 class="h3">${esc(p.name)}</h2>
-        <p class="pkg__price">${p.price ? esc(p.price) : p.quoted ? 'Quoted per project' : 'Fee confirmed before booking'}</p>
-        <p class="body-sm">${esc(p.for)}</p>
-      </header>
-      <dl class="pkg__body">
-        ${pkgRow('Included', `<ul class="ticks">${p.includes.map(x => `<li>${ico.check}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
-        ${pkgRow('Not included', `<ul class="ticks ticks--no">${p.excludes.map(x => `<li>${ico.minus}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
-        ${pkgRow('Timeline', esc(p.timeline || 'Agreed in the written scope, before work starts'))}
-        ${pkgRow('Payment', esc(p.payment || 'Set out in the written scope'))}
-      </dl>
-      <div class="btn-row">${btn(p.quoted ? 'Discuss a project' : `Ask about a ${p.name.toLowerCase()}`, '/contact', i === 0 ? 'primary' : 'ghost')}</div>
-    </article>`).join('')}
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="wrap split">
-    <div class="split__a">
-      <h2 class="h3">Costs outside our fee</h2>
-      <p class="body-sm">These are paid to the provider, not to Ostendic. Each one that applies to your project is listed in the scope so there are no surprises.</p>
-    </div>
-    <ul class="ticks split__b">${thirdPartyCosts.map(c => `<li>${ico.minus}<span>${esc(c)}</span></li>`).join('')}</ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap split">
-    <div class="split__a">
-      <h2 class="h3">How to start</h2>
-    </div>
-    <div class="split__b">
-      <ol class="numlist">
-        <li>Send a short description of what you need${links.whatsapp ? ', by WhatsApp or' : ' through'} the enquiry form${site.booking ? ', or book a call' : ''}.</li>
-        <li>We talk it through and agree what the work should achieve.</li>
-        <li>You receive a written scope and price. Nothing starts until you agree to it.</li>
-      </ol>
-      <div class="btn-row mt-24">${startBtn('primary')}${waBtn('ghost')}</div>
-    </div>
-  </div>
-</section>
-`;
-};
-
 /* ========================= ABOUT ========================= */
 export const about = () => `
 <section class="phead">
   <div class="wrap about-hero">
     <div class="about-hero__text">
       <p class="label">About</p>
-      <h1 class="h1">Ostendic is run by ${esc(site.principal)}</h1>
-      <p class="lead">When you work with Ostendic, you work with ${esc(site.principal.split(' ')[0])} directly, from the first conversation through to launch.</p>
-      <p class="body">${esc(aboutCopy.teaser[1])}</p>
-      <p class="body">It is a deliberately small studio. There is no account manager between you and the person designing and building your project.</p>
-      <div class="btn-row">${startBtn('primary')}</div>
+      <h1 class="h1 about-hero__h">Small businesses deserve to show up like the big ones.</h1>
+      <p class="lead">${esc(aboutCopy.hero.lead)}</p>
+      ${aboutCopy.hero.body.map(p => `<p class="body">${esc(p)}</p>`).join('\n      ')}
     </div>
     <figure class="about-hero__img">
       <img src="/${site.principalImage}" alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
            width="800" height="800" decoding="async" fetchpriority="high">
     </figure>
+    <div class="btn-row about-hero__cta">${startBtn('primary')}</div>
   </div>
 </section>
+${S.statsBar()}
 
 <section class="section section--white">
   <div class="wrap">
@@ -234,8 +168,8 @@ export const about = () => `
       <p class="label">How we work</p>
       <div class="shead__main"><h2 class="h2">Four things we hold to on every project</h2></div>
     </div>
-    <dl class="rows rows--2">
-      ${aboutCopy.approach.map(([t, d]) => `<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
+    <dl class="rows rows--2 principles-hover">
+      ${aboutCopy.approach.map(([t, d, icon]) => `<div tabindex="0"><dt>${principleIcon(icon, { size: 44, className: 'principle__icon' })}${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
     </dl>
   </div>
 </section>

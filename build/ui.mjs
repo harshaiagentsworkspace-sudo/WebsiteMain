@@ -28,9 +28,8 @@ export const ico = {
    colour. Only the outer tag changes: width/height come from `size`, the
    file's role/aria-label are dropped and aria-hidden is set, because the
    service name sits right beside the icon. */
-const ICON_DIR = new URL('../assets/Service icons/', import.meta.url);
-const svgIcon = (file) => {
-  const src = readFileSync(new URL(file, ICON_DIR), 'utf8').trim();
+const svgFile = (dir) => (file) => {
+  const src = readFileSync(new URL(file, new URL(dir, import.meta.url)), 'utf8').trim();
   const m = src.match(/^<svg\b([^>]*)>([\s\S]*)<\/svg>$/);
   if (!m) throw new Error(`Not a single <svg> element: ${file}`);
   const attrs = m[1]
@@ -39,8 +38,13 @@ const svgIcon = (file) => {
   return ({ size = 44, className = '' } = {}) =>
     `<svg${attrs} width="${size}" height="${size}"${className ? ` class="${esc(className)}"` : ''} aria-hidden="true" focusable="false">${m[2]}</svg>`;
 };
-export const WebDevelopmentIcon = svgIcon('web-development.svg');
-export const AgenticWorkflowsIcon = svgIcon('agentic-ai-workflows.svg');
+const serviceIcon = svgFile('../assets/Service icons/');
+export const WebDevelopmentIcon = serviceIcon('web-development.svg');
+export const AgenticWorkflowsIcon = serviceIcon('agentic-ai-workflows.svg');
+/* About page principle icons (workflow-ring-v2/principle-*.svg) */
+export const principleIcon = (file, opts) => svgFile('../workflow-ring-v2/')(file)(opts);
+/* Stats bar icons (workflow-ring-v2/stat-*.svg), same inlining */
+export const statIcon = principleIcon;
 
 const ext = (href) => /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '';
 
@@ -91,11 +95,11 @@ export const pageHead = ({ label, lines, lead, actions = '' }) => `
    `site.logo.ink` is the wordmark's bounding box inside the supplied file;
    CSS crops to it so the white margin never paints and the file is never
    edited. The <img> keeps intrinsic width/height so the slot is reserved. */
-const brandMark = ({ eager = false } = {}) => {
+const brandMark = ({ eager = false, nav = false } = {}) => {
   const L = site.logo;
   return `<span class="brand__crop" style="--lg-w:${L.w};--lg-h:${L.h};`
     + `--ink-x:${L.ink.x};--ink-y:${L.ink.y};--ink-w:${L.ink.w};--ink-h:${L.ink.h}">`
-    + `<img src="${encodeURI('/' + L.src)}" alt="${esc(site.name)}"`
+    + `<img src="${encodeURI('/' + (nav && L.nav ? L.nav : L.src))}" alt="${esc(site.name)}"`
     + ` width="${L.w}" height="${L.h}" decoding="async"`
     + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + '>'
     + `</span>`;
@@ -127,7 +131,7 @@ const quickContact = () => {
 export const header = (current = '') => `
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a class="brand" href="/" aria-label="${esc(site.name)} home">${brandMark({ eager: true })}</a>
+    <a class="brand" href="/" aria-label="${esc(site.name)} home">${brandMark({ eager: true, nav: true })}</a>
     <nav class="nav" aria-label="Primary">
       ${nav.map(navItem(current)).join('')}
     </nav>
@@ -158,6 +162,12 @@ export const header = (current = '') => `
    one heading, one sentence, the real contact routes. */
 export const footer = (current = '') => `
 <footer class="ftr">
+  <div class="svc-bg ftr__bg" aria-hidden="true">
+    <div class="svc-bg__media">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/hero-vortex.mp4"></video>
+    </div>
+  </div>
   <div class="wrap">
     ${current === '/contact' ? '' : `<div class="ftr__cta">
       <div class="ftr__say">
@@ -184,10 +194,9 @@ export const footer = (current = '') => `
         <ul>${pillars.map(s => `<li><a href="${s.path}">${esc(s.title)}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h3 class="ftr__h">Studio</h3>
+        <h3 class="ftr__h">Ostendic</h3>
         <ul>
           <li><a href="/work">Work</a></li>
-          <li><a href="/pricing">Pricing</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>

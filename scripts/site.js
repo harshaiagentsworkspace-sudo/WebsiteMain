@@ -60,6 +60,31 @@
     }
   }
 
+  /* ---------- service section background videos ----------
+     Same rules as the hero clip, plus: the source is attached only when the
+     section comes near the viewport, so the homepage doesn't download them
+     up front. Paused whenever the section is off screen. */
+  var bgvids = [].slice.call(document.querySelectorAll('.bgvid[data-src]'));
+  if (bgvids.length && 'IntersectionObserver' in window) {
+    var bconn = navigator.connection || {};
+    if (window.matchMedia('(min-width: 768px)').matches && !reduce.matches && !bconn.saveData) {
+      var bio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var v = en.target;
+          if (en.isIntersecting) {
+            if (!v.getAttribute('src')) {
+              v.addEventListener('playing', function () { v.classList.add('is-on'); }, { once: true });
+              v.src = v.getAttribute('data-src');
+            }
+            var q = v.play(); if (q && q.catch) q.catch(function () { /* autoplay refused: stays hidden */ });
+          } else if (v.getAttribute('src')) v.pause();
+        });
+      }, { rootMargin: '200px 0px' });
+      bgvids.forEach(function (v) { bio.observe(v); });
+      reduce.addEventListener('change', function (m) { if (m.matches) bgvids.forEach(function (v) { v.pause(); }); });
+    }
+  }
+
   /* ---------- sequence rails (process roadmap, workflow example) ----------
      The rail fills as the list moves up through the viewport, and each step
      is marked reached when the fill passes its node. Only the rail, nodes and
@@ -110,102 +135,149 @@
   }
 
   /* ---------- workflow ring (homepage example) ----------
-     One timeline, driven by elapsed time that advances only while the
-     section is on screen. State is a pure function of that time: the ring
-     offset, the dot angle and the active step. Plays once when 40% is in
-     view, ends closed, and Replay restarts it. Reduced motion: nothing runs,
-     the completed state (the CSS default) stays, and Replay stays hidden. */
+     Loops forever, one ~11 s cycle:
+       0 – 7.5 s   the ring draws node to node; each node lifts as it is
+                   reached (4 segments of 1.875 s: 0.7 s wait, 1.175 s draw)
+       7.5 – 10 s  hold at the complete state; nothing moves
+       10 – 11 s   soft reset: ring strokes fade, nodes lower, text dims
+     then an invisible jump back to the start (everything is faded out).
+     Runs only while the section is on screen and the tab is visible, and
+     always restarts from the beginning of a cycle. Reduced motion: never
+     runs; the completed state (the CSS default) stays. */
   var loop = document.querySelector('[data-loop]');
   if (loop && !reduce.matches) (function () {
-    var HOLD = 750, DRAW = 900, STEPS = 4;              // ~1.65 s per step
-    var CLOSE_AT = HOLD + (STEPS - 1) * (HOLD + DRAW) + DRAW;   // 6.6 s, then a 0.8 s CSS settle
+    var SEG = 1875, WAIT = 700, DRAW = SEG - WAIT, STEPS = 4;
+    var CLOSE = SEG * STEPS, HOLD_END = CLOSE + 2500, CYCLE = HOLD_END + 1000;
     var tilt = loop.querySelector('.loop__tilt');
+    var box = loop.querySelector('.loop__box');
     var nodes = loop.querySelectorAll('.loop__node');
     var shadows = loop.querySelectorAll('.loop__shadow');
     var steps = loop.querySelectorAll('.loop__step');
-    var replay = loop.querySelector('.loop__replay');
-    var t = 0, last = 0, raf = 0, visible = false, started = false, active = -2;
+    var raf = 0, start = 0, phase = '', reached = -1, inView = false;
     var easeInOut = function (x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
 
-    var setActive = function (i) {
-      if (i === active) return;
-      active = i;
+    var setReached = function (n) {
+      if (n === reached) return;
+      reached = n;
       for (var k = 0; k < STEPS; k++) {
-        var on = k === i;
+        var on = k < n;
         nodes[k].classList.toggle('is-on', on);
         shadows[k].classList.toggle('is-on', on);
         steps[k].classList.toggle('is-on', on);
       }
     };
-    var render = function () {
-      var drawn = 0, arrived = 0;
-      for (var k = 0; k < STEPS; k++) {
-        var s = HOLD + k * (HOLD + DRAW);
-        if (t >= s + DRAW) { drawn += 1; arrived++; }
-        else { if (t > s) drawn += easeInOut((t - s) / DRAW); break; }
-      }
-      var frac = drawn / STEPS;
+    var setDraw = function (frac) {
       loop.style.setProperty('--draw', (100 * (1 - frac)).toFixed(3));
       loop.style.setProperty('--a', (frac * 360).toFixed(2));
-      var closed = arrived === STEPS;
-      loop.classList.toggle('is-closed', closed);
-      setActive(closed ? -1 : arrived);
-      return closed;
+    };
+    /* the start of a cycle, applied with transitions off */
+    var snapToStart = function () {
+      loop.classList.add('is-snapping');
+      loop.classList.remove('is-closed', 'is-resetting');
+      setDraw(0); setReached(1); phase = 'draw';
+      void loop.offsetWidth;                           // commit the jump before transitions return
+      loop.classList.remove('is-snapping');
     };
     var frame = function (now) {
+      var t = now - start;
+      if (t >= CYCLE) { snapToStart(); start = now; t = 0; }
+      if (t < CLOSE) {
+        var k = Math.floor(t / SEG), within = t - k * SEG;
+        var part = within > WAIT ? easeInOut((within - WAIT) / DRAW) : 0;
+        setDraw((k + part) / STEPS);
+        setReached(Math.min(STEPS, k + 1));
+      } else if (t < HOLD_END) {
+        if (phase !== 'hold') { phase = 'hold'; setDraw(1); setReached(STEPS); loop.classList.add('is-closed'); }
+      } else if (phase !== 'reset') {
+        phase = 'reset'; loop.classList.remove('is-closed'); loop.classList.add('is-resetting'); setReached(0);
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    var run = function () {
+      if (raf || !inView || document.visibilityState !== 'visible') return;
+      snapToStart();
+      start = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    var stop = function () {
+      if (raf) cancelAnimationFrame(raf);
       raf = 0;
-      if (!visible) return;                              // paused off screen
-      t += Math.min(now - last, 100); last = now;        // no jump after a tab switch
-      if (render()) return;                              // closed: stop for good
-      raf = requestAnimationFrame(frame);
-    };
-    var play = function () {
-      if (raf || !visible) return;
-      last = performance.now();
-      raf = requestAnimationFrame(frame);
-    };
-    var reset = function () {
-      if (raf) { cancelAnimationFrame(raf); raf = 0; }
-      t = 0; render();
+      snapToStart();                                   // happens off screen or in a hidden tab
     };
 
     loop.classList.add('loop--live');
-    reset();                                             // start state, before it scrolls into view
-    replay.hidden = false;
-    replay.addEventListener('click', function () { reset(); started = true; play(); });
+    snapToStart();
 
-    new IntersectionObserver(function (entries) {
+    var io = new IntersectionObserver(function (entries) {
       var e = entries[0];
-      visible = e.isIntersecting;
-      if (!visible) { if (raf) { cancelAnimationFrame(raf); raf = 0; } return; }
-      if (!started && e.intersectionRatio >= 0.4) started = true;
-      if (started && t < CLOSE_AT) play();
-    }, { threshold: [0, 0.4] }).observe(loop);
+      if (!e.isIntersecting) { inView = false; stop(); return; }
+      if (e.intersectionRatio >= 0.4) { inView = true; run(); }
+    }, { threshold: [0, 0.4] });
+    io.observe(loop);
+    var onVisibility = function () { if (document.visibilityState === 'visible') run(); else stop(); };
+    document.addEventListener('visibilitychange', onVisibility);
 
-    /* pointer parallax: desktop pointers only, at most 4 degrees */
+    /* pointer parallax: desktop mouse only, at most 4 degrees */
     var fine = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 768px)');
-    var box = loop.querySelector('.loop__box');
     var pending = null;
-    box.addEventListener('pointermove', function (e) {
+    var onMove = function (e) {
       if (!fine.matches || e.pointerType !== 'mouse') return;
       var r = box.getBoundingClientRect();
+      var queued = pending;
       pending = [((e.clientX - r.left) / r.width - .5) * 8, ((e.clientY - r.top) / r.height - .5) * -8];
+      if (queued) return;
       requestAnimationFrame(function () {
-        if (!pending) return;
         tilt.style.setProperty('--px', Math.max(-4, Math.min(4, pending[0])).toFixed(2));
         tilt.style.setProperty('--py', Math.max(-4, Math.min(4, pending[1])).toFixed(2));
         pending = null;
       });
-    });
-    box.addEventListener('pointerleave', function () { tilt.style.setProperty('--px', '0'); tilt.style.setProperty('--py', '0'); });
-    reduce.addEventListener('change', function (m) {
+    };
+    var onLeave = function () { tilt.style.setProperty('--px', '0'); tilt.style.setProperty('--py', '0'); };
+    box.addEventListener('pointermove', onMove);
+    box.addEventListener('pointerleave', onLeave);
+
+    /* reduced motion switched on mid-session: stop and show the complete state */
+    var onReduce = function (m) {
       if (!m.matches) return;
       if (raf) cancelAnimationFrame(raf);
-      raf = 0; visible = false;
-      loop.classList.remove('loop--live', 'is-closed');
-      replay.hidden = true;
+      raf = 0; inView = false;
+      loop.classList.remove('loop--live', 'is-closed', 'is-resetting');
+    };
+    reduce.addEventListener('change', onReduce);
+
+    /* teardown when the page is unloaded (no SPA unmount on this static site) */
+    window.addEventListener('pagehide', function (e) {
+      if (e.persisted) { if (raf) cancelAnimationFrame(raf); raf = 0; return; }   // kept in bfcache: just pause
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      box.removeEventListener('pointermove', onMove);
+      box.removeEventListener('pointerleave', onLeave);
+      reduce.removeEventListener('change', onReduce);
     });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) run(); });
   })();
+
+  /* ---------- quiet fade-in for [data-fade] (stats bar) ----------
+     One 400 ms opacity fade the first time the block scrolls into view.
+     Blocks already on screen at load are left alone, so nothing that is
+     visible ever disappears. Reduced motion or no JS: always visible. */
+  var fades = document.querySelectorAll('[data-fade]');
+  if (fades.length && !reduce.matches && 'IntersectionObserver' in window) {
+    var fio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        fio.unobserve(en.target);
+      });
+    }, { threshold: 0.2 });
+    Array.prototype.forEach.call(fades, function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      el.classList.add('fade-pending');
+      fio.observe(el);
+    });
+  }
 
   /* ---------- smooth in-page anchors (respecting reduced motion) ---------- */
   document.addEventListener('click', function (e) {

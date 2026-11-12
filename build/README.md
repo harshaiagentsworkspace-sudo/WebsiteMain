@@ -26,7 +26,6 @@ hidden until they're filled in. Every build prints what is still pending.
 - `NEXT_PUBLIC_CALENDLY_URL` (see `.env.example`, read at build time; defaults to https://calendly.com/harshkdubeyhd): generates `/book` with the Calendly inline widget, and every "Book a quick call" button links to `/book`
 - `site.social` (`[['LinkedIn', url], ...]`): footer links and structured data
 - `projects[].publish`: shows a project on the homepage, the Work page and the service pages
-- `packages[].publish`, `price`, `timeline`, `payment`: pricing page values
 
 The contact form posts through `db.js` (Supabase). A failed submission is
 reported as a failure, never as success.

@@ -6,8 +6,10 @@
    Everything is static HTML. The only motion is the hero background video,
    which never loads on small screens, data-saver or reduced motion.
    =========================================================================== */
-import { site, heroCopy, pillars, process, aboutCopy, published, kindLabel, stats } from './data.mjs';
-import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon } from './ui.mjs';
+import { readFileSync } from 'node:fs';
+import { site, heroCopy, pillars, process, processHome, aboutCopy, published, kindLabel } from './data.mjs';
+import { stats, statsDevWarning } from './stats.mjs';
+import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon, statIcon } from './ui.mjs';
 
 /* ---------- HERO ----------
    The vortex clip is atmosphere, not content: a poster paints immediately
@@ -38,22 +40,36 @@ export const hero = () => `
 /* ---------- SELECTED WORK ----------
    One client project, presented first and at full width, then the demo
    builds as a secondary row. Labels state each project's real status.
-   The client project uses a brand plate (official logo + its sampled
-   colours + the project's structure), never a website screenshot. */
+   The client project uses a brand plate: official logo and the project's
+   structure, and, when `heroImage` is set, a faded capture behind the logo. */
+const plateBg = (p) => p.heroImage
+  ? `<img class="plate__bg" src="/${p.heroImage.src}" alt="" width="${p.heroImage.w}" height="${p.heroImage.h}" loading="lazy" decoding="async">`
+  : '';
+
 export const brandPlate = (p) => `
-  <figure class="plate" style="--c1:${p.brand.colours[0][1]};--c2:${p.brand.colours[1][1]}">
+  <figure class="plate${p.heroImage ? ' plate--hero' : ''}" style="--logo-ar:${p.brand.h / p.brand.w}${p.brand.colours ? `;--c1:${p.brand.colours[0][1]};--c2:${p.brand.colours[1][1]}` : ''}">
     <div class="plate__logo">
-      <img src="/${p.brand.logo}" alt="${esc(p.name)} logo" width="${p.brand.w}" height="${p.brand.h}" loading="lazy" decoding="async">
+      ${plateBg(p)}
+      <img class="plate__mark" src="/${p.brand.logo}" alt="${esc(p.name)} logo" width="${p.brand.w}" height="${p.brand.h}" loading="lazy" decoding="async">
     </div>
-    <div class="plate__foot">
+    ${p.brand.verticals ? `<div class="plate__foot">
       <ul class="plate__verticals" aria-label="Digital verticals">
         ${p.brand.verticals.map(([n, d]) => `<li><strong>${esc(n)}</strong><span>${esc(d)}</span></li>`).join('')}
       </ul>
-      <ul class="plate__colours" aria-label="Brand colours">
-        ${p.brand.colours.map(([n, hex]) => `<li><i style="background:${hex}"></i><span>${esc(n)}</span><code>${hex}</code></li>`).join('')}
-      </ul>
+    </div>` : ''}
+  </figure>`;
+
+/* a project without a logo but with a heroImage: faded capture, name on top */
+const heroPlate = (p) => `
+  <figure class="plate plate--hero">
+    <div class="plate__logo">
+      ${plateBg(p)}
+      <p class="plate__name">${esc(p.name)}</p>
     </div>
   </figure>`;
+
+/* the visual for a project card: brand plate, faded hero, or screenshots */
+export const cardVisual = (p, opts) => p.brand ? brandPlate(p) : p.heroImage ? heroPlate(p) : workFigure(p, opts);
 
 /* screenshot pair for demo builds (real captures of the live product) */
 export const workFigure = (p, { phone = true } = {}) => `
@@ -70,13 +86,13 @@ export const selectedWork = () => {
   const client = list.filter(p => p.kind === 'client');
   const demos = list.filter(p => p.kind !== 'client');
   return `
-<section class="section section--white" id="work">
+<section class="section section--white work-split" id="work">
+  <div class="work-part work-part--client">${sectionVideo('/assets/work-bg.mp4')}
   <div class="wrap">
     <div class="shead">
       <p class="label">Selected work</p>
       <div class="shead__main">
         <h2 class="h2">Client work, and products we built ourselves</h2>
-        <p class="body">Every project is labelled. A client project was built for a paying client. A demo build is a working product Ostendic designed and built in-house to test an idea end to end.</p>
       </div>
     </div>
 
@@ -87,15 +103,17 @@ export const selectedWork = () => {
         <h3 class="h2">${esc(p.name)}</h3>
         <p class="body">${esc(p.what)}</p>
         <p class="body-sm">${esc(p.built)}</p>
-        <ul class="scope">${p.scope.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
         <div class="wk__links">
-          ${alink('Read the project', `/work#${p.slug}`)}
-          <a class="alink alink--quiet" href="${p.url}" target="_blank" rel="noopener">vmscareline.com${ico.arrow}</a>
+          ${alink(p.linkLabel, p.url)}
         </div>
       </div>
     </article>`).join('')}
+  </div>
+  </div>
 
     ${demos.length ? `
+  <div class="work-part work-part--demos">${sectionVideo('/assets/demos-bg.mp4')}
+  <div class="wrap">
     <div class="demos">
       <div class="demos__head">
         <h3 class="h4">Demo builds</h3>
@@ -109,35 +127,33 @@ export const selectedWork = () => {
           </a>
           <h4 class="h4"><a href="/work#${p.slug}">${esc(p.name)}</a></h4>
           <p class="body-sm">${esc(p.what)}</p>
-          ${alink('Open the live demo', p.url)}
+          ${alink(p.linkLabel, p.url)}
         </li>`).join('')}
       </ul>
-    </div>` : ''}
+    </div>
   </div>
+  </div>` : ''}
 </section>`;
 };
 
-/* ---------- STUDIO NUMBERS ----------
-   Rendered only when every figure is verified and has a stated basis.
-   `preview` (local design review only) renders unverified figures with a
-   visible marker; it is never used by a normal build. */
-export const studioNumbers = ({ preview = false } = {}) => {
-  const ok = stats.publish && stats.items.every(x => x.verified && x.basis);
-  if (!ok && !preview) return '';
-  return `
-<section class="numbers${ok ? '' : ' numbers--unverified'}" aria-label="Studio numbers">
-  <div class="wrap">
-    ${ok ? '' : '<p class="numbers__flag">Unverified figures, shown for local design review only. Not published.</p>'}
-    <dl class="numbers__row">
-      ${stats.items.map(x => `
-      <div>
-        <dt>${esc(x.label)}</dt>
-        <dd><span class="numbers__v tnum">${esc(x.value)}</span>${x.basis ? `<span class="numbers__b">${esc(x.basis)}</span>` : ''}</dd>
-      </div>`).join('')}
-    </dl>
-  </div>
-</section>`;
+/* ---------- STATS BAR ----------
+   One component, used under the hero on the homepage and the About page.
+   Values, labels and icons come only from build/stats.mjs. Each value is
+   split at render time into its leading number ("30", "4.6") and the rest
+   ("+", " / 5"); the rest is set in the accent colour. Reads as "30+
+   Projects delivered" to screen readers. Icons are decorative. */
+const splitValue = (v) => {
+  const m = String(v).match(/^(\d[\d.,]*)(.*)$/);
+  return m ? `${esc(m[1])}${m[2] ? `<span class="statsbar__suffix">${esc(m[2])}</span>` : ''}` : esc(v);
 };
+export const statsBar = () => `
+<section class="statsbar" aria-label="Ostendic at a glance" data-fade>
+  <div class="wrap">
+    <ul class="statsbar__row">
+      ${stats.map(x => `<li class="statsbar__item">${x.icon ? statIcon(x.icon, { size: 40, className: 'statsbar__icon' }) : ''}<span class="statsbar__value">${splitValue(x.value)}</span><span class="statsbar__label">${esc(x.label)}</span></li>`).join('')}
+    </ul>
+  </div>
+</section>${statsDevWarning}`;
 
 /* ---------- SEQUENCE ----------
    A connected list of steps with a rail. site.js fills the rail as the list
@@ -165,20 +181,21 @@ export const sequence = (items, cls = '') => `
    is released before the worked example below it (the earlier version made
    the whole chapter its sticky container, and the pinned heading slid over
    the example). */
-const facts = (s) => `
-  <dl class="facts">
-    <div><dt>Who it helps</dt><dd>${esc(s.who)}</dd></div>
-    <div><dt>The problem</dt><dd>${esc(s.problem)}</dd></div>
-    <div><dt>What we build</dt><dd><ul class="inline-list">${s.build.map(b => `<li>${esc(b)}</li>`).join('')}</ul></dd></div>
-    <div><dt>A project can include</dt><dd><ul class="ticks">${s.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul></dd></div>
+/* Panels use the short `panel` copy; the service pages keep the full fields. */
+const facts = ({ panel: p }) => `
+  <dl class="facts facts--panel">
+    <div><dt>Who it helps</dt><dd>${esc(p.who)}</dd></div>
+    <div><dt>The problem</dt><dd>${esc(p.problem)}</dd></div>
+    <div><dt>What we build</dt><dd>${esc(p.build)}</dd></div>
+    <div><dt>A project can include</dt><dd><ul class="ticks">${p.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul></dd></div>
   </dl>`;
 
-const chapter = (s, link, icon = '') => `
-      <div class="chap__main">
+const chapter = (s, link, icon = '', bg = '') => `
+      <div class="chap__main">${bg}
         <header class="chap__head">
           ${icon}<span class="chap__n tnum">${s.n}</span>
           <h3 class="chap__t">${esc(s.title)}</h3>
-          <p class="body">${esc(s.summary)}</p>
+          <p class="body">${esc(s.panel.summary)}</p>
           ${alink(link, s.path)}
         </header>
         ${facts(s)}
@@ -192,71 +209,91 @@ export const example = (s, dark = true) => `
       </aside>`;
 
 /* ---------- WORKFLOW RING (homepage example) ----------
-   The four steps as nodes on a ring. site.js draws the ring from node to
-   node and closes it; without JS, or with reduced motion, the completed
-   state is what renders. The ring and icons are decorative (aria-hidden);
-   the step texts are real text in an ordered list. Icons are drawn in the
-   style of the service icons: 64 viewBox, stroke 3, round caps and joins,
-   circles, lines and rounded rects only. */
-const nodeIcon = (inner) =>
-  `<svg viewBox="0 0 64 64" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
-const NODE_ICONS = [
-  /* 01 incoming enquiry: a message card with an arrow entering */
-  nodeIcon('<rect x="24" y="16" width="32" height="30" rx="6"/><line x1="34" y1="26" x2="46" y2="26"/><line x1="34" y1="35" x2="42" y2="35"/><line x1="6" y1="31" x2="28" y2="31"/><line x1="21" y1="24" x2="28" y2="31"/><line x1="21" y1="38" x2="28" y2="31"/>'),
-  /* 02 agent reads and logs: three lines with one highlighted dot */
-  nodeIcon('<line x1="26" y1="20" x2="52" y2="20"/><line x1="26" y1="32" x2="52" y2="32"/><line x1="26" y1="44" x2="44" y2="44"/><circle cx="14" cy="32" r="4.5" fill="currentColor" stroke="none"/>'),
-  /* 03 drafted reply awaiting approval: a speech bubble with a small check */
-  nodeIcon('<rect x="10" y="12" width="44" height="32" rx="8"/><line x1="20" y1="44" x2="16" y2="53"/><line x1="16" y1="53" x2="29" y2="44"/><line x1="24" y1="28" x2="30" y2="34"/><line x1="30" y1="34" x2="41" y2="22"/>'),
-  /* 04 follow-up reminder: a circle with a clock hand and a small dot */
-  nodeIcon('<circle cx="30" cy="34" r="20"/><line x1="30" y1="34" x2="30" y2="23"/><line x1="30" y1="34" x2="38" y2="39"/><circle cx="51" cy="13" r="4.5" fill="currentColor" stroke="none"/>'),
-];
+   Four steps as nodes on a ring. site.js loops the cycle: the ring draws
+   node to node while each node lifts, holds complete, then softly resets.
+   Without JS, or with reduced motion, the completed state renders (full
+   ring, all nodes lifted, all text visible).
+   Node icons are the files in workflow-ring-v2/, inlined unchanged at build
+   time (geometry, stroke, currentColor, role and aria-label kept); only the
+   fixed width/height are dropped so CSS sizes them. The ring line, the dot
+   and the shadows are decorative and aria-hidden; the step lines are real
+   text. */
+const RING_ICON_DIR = new URL('../workflow-ring-v2/', import.meta.url);
+const RING_ICONS = ['step-1-enquiry.svg', 'step-2-agent.svg', 'step-3-approve.svg', 'step-4-reminder.svg'].map(f => {
+  const src = readFileSync(new URL(f, RING_ICON_DIR), 'utf8').trim();
+  const m = src.match(/^<svg\b([^>]*)>([\s\S]*)<\/svg>$/);
+  if (!m) throw new Error(`Not a single <svg> element: ${f}`);
+  const attrs = m[1].replace(/\s(width|height|class)="[^"]*"/g, '').replace(/\sxmlns="[^"]*"/, '');
+  return `<svg${attrs} class="loop__icon" focusable="false">${m[2]}</svg>`;
+});
 
 export const exampleRing = (s) => `
       <aside class="eg eg--ring" aria-labelledby="eg-${s.slug}">
         <p class="eg__t" id="eg-${s.slug}">${esc(s.example.title)}</p>
         <div class="loop" data-loop>
-          <div class="loop__stage">
-            <div class="loop__box" aria-hidden="true">
-              <div class="loop__tilt">
-                <svg class="loop__svg" viewBox="0 0 200 200" focusable="false">
-                  <circle class="loop__track" cx="100" cy="100" r="80"/>
-                  <circle class="loop__draw" cx="100" cy="100" r="80" pathLength="100"/>
-                  <circle class="loop__draw loop__draw--done" cx="100" cy="100" r="80" pathLength="100"/>
-                </svg>
-                <span class="loop__arm"><span class="loop__dot"></span></span>
-                ${NODE_ICONS.map((icon, i) => `<span class="loop__shadow loop__at--${i}"></span><span class="loop__node loop__at--${i}">${icon}</span>`).join('')}
-              </div>
+          <div class="loop__box">
+            <div class="loop__tilt">
+              <svg class="loop__svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                <circle class="loop__track" cx="100" cy="100" r="100"/>
+                <circle class="loop__draw" cx="100" cy="100" r="100" pathLength="100"/>
+                <circle class="loop__draw loop__draw--done" cx="100" cy="100" r="100" pathLength="100"/>
+              </svg>
+              <span class="loop__arm" aria-hidden="true"><span class="loop__dot"></span></span>
+              ${RING_ICONS.map((icon, i) => `<span class="loop__shadow loop__at--${i}" aria-hidden="true"></span><span class="loop__node loop__at--${i}">${icon}</span>`).join('')}
             </div>
-            <button class="loop__replay" type="button" hidden>Replay</button>
           </div>
           <ol class="loop__steps">
-            ${s.example.steps.map((t, i) => `<li class="loop__step"><span class="loop__n tnum">${String(i + 1).padStart(2, '0')}</span><p>${esc(t)}</p></li>`).join('')}
+            ${s.example.ring.map(t => `<li class="loop__step">${esc(t)}</li>`).join('')}
           </ol>
         </div>
         <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
       </aside>`;
 
-/* `icons` is on for the homepage only; /services reuses this without them. */
-export const serviceChapters = ({ withHead = true, icons = false, ring = false } = {}) => {
+/* Background clip behind the homepage work, service, process and about sections. Same treatment
+   as the hero: decorative, attached by site.js on wider screens with motion
+   allowed, and only once the section is near the viewport. */
+const sectionVideo = (src) => `
+  <div class="svc-bg" aria-hidden="true">
+    <div class="svc-bg__media">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="${src}"></video>
+    </div>
+  </div>`;
+
+/* Agentic AI panel background: the Ferris wheel clip, placed inside the
+   panel's top block (heading + rows) so it stops where the enquiry-loop
+   example begins. Same opacity, grade and scrim as the other clips. A still
+   frame sits underneath and is what phones and reduced-motion visitors see
+   (the clip loads only on wider screens with motion allowed). */
+const sectionStill = (src, w, h, clip = '') => `
+  <div class="svc-bg" aria-hidden="true">
+    <div class="svc-bg__media">
+      <img class="svc-still" src="${src}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async">
+      ${clip ? `<video class="bgvid svc-still svc-still--vid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="${clip}"></video>` : ''}
+    </div>
+  </div>`;
+
+/* `icons` and `video` are on for the homepage only; /services reuses this without them. */
+export const serviceChapters = ({ withHead = true, icons = false, ring = false, video = false } = {}) => {
   const [web, ai] = pillars;
   return `
-<section class="section" id="services">
+<section class="section${video ? ' section--vid' : ''}" id="services">${video ? sectionVideo('/assets/web-development-bg.mp4') : ''}
   <div class="wrap">
     ${withHead ? `
     <div class="shead">
       <p class="label">Services</p>
       <div class="shead__main">
         <h2 class="h2">Two things we do, and do properly</h2>
-        <p class="body">Some businesses need one of them. Many need both: a website that brings enquiries in, and a workflow that makes sure each one is answered.</p>
       </div>
     </div>` : ''}
     <article class="chap" id="${web.slug}">${chapter(web, 'More on web development and UI/UX', icons ? WebDevelopmentIcon({ className: 'chap__icon' }) : '')}
     </article>
   </div>
 </section>
-<section class="section section--dark" id="${ai.slug}">
+<section class="section section--dark${video ? ' section--vid' : ''}" id="${ai.slug}">
   <div class="wrap">
-    <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows', icons ? AgenticWorkflowsIcon({ className: 'chap__icon' }) : '')}
+    <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows', icons ? AgenticWorkflowsIcon({ className: 'chap__icon' }) : '', video ? sectionStill('/assets/agentic-ai-bg.webp', 1920, 1040, '/assets/agentic-ai-bg.mp4') : '')}
 ${ring ? exampleRing(ai) : example(ai)}
     </article>
   </div>
@@ -264,14 +301,24 @@ ${ring ? exampleRing(ai) : example(ai)}
 };
 
 /* ---------- PROCESS ROADMAP ---------- */
-export const processSection = () => `
+export const processSection = ({ home = false } = {}) => home ? `
+<section class="section roadmap roadmap--home section--vid" id="process">${sectionVideo('/assets/process-bg.mp4')}
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">How a project runs</p>
+      <div class="shead__main">
+        <h2 class="h2">${esc(processHome.heading)}</h2>
+      </div>
+    </div>
+    ${sequence(processHome.steps.map(([n, title, body]) => ({ n, title, body })), 'seq--road')}
+  </div>
+</section>` : `
 <section class="section roadmap" id="process">
   <div class="wrap">
     <div class="shead">
       <p class="label">How a project runs</p>
       <div class="shead__main">
         <h2 class="h2">Agreed in writing before anything is built</h2>
-        <p class="body">Four stages, the same for a website or a workflow. You always know what happens next and what you will get from it.</p>
       </div>
     </div>
     ${sequence(process.map(([n, title, body, get]) => ({ n, title, body, get })), 'seq--road')}
@@ -283,12 +330,12 @@ export const processSection = () => `
    same size on every screen, so the section reads as a studio introduction
    rather than a personal profile. */
 export const aboutTeaser = () => `
-<section class="section" id="about">
+<section class="section section--vid" id="about">${sectionVideo('/assets/about-bg.mp4')}
   <div class="wrap">
     <div class="shead shead--flush">
       <p class="label">About</p>
       <div class="shead__main">
-        <h2 class="h2">Work with the person <em class="em">doing the work</em></h2>
+        <h2 class="h2">We build the online side of your business, <em class="em">so you can run the rest.</em></h2>
         <div class="about-t">
           ${aboutCopy.teaser.map(p => `<p class="body">${esc(p)}</p>`).join('')}
         </div>

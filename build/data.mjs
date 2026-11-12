@@ -50,13 +50,15 @@ export const site = {
      footer crop to `ink` in CSS so the file itself is never edited. */
   logo: {
     src: 'assets/ostendic-logo.jpg',
+    /* navbar: same artwork and ink box, transparent background */
+    nav: 'assets/ostendic-logo.png',
     w: 1746, h: 901,
     ink: { x: 296, y: 330, w: 1159, h: 223 },
   },
 
   /* meta description + structured data */
-  sub: 'Ostendic is a digital studio that designs and builds websites and web applications, and the AI workflows businesses run behind them.',
-  footer: 'A digital studio for websites, web applications and the AI workflows behind them.',
+  sub: 'Ostendic designs and builds websites and web applications, and the AI workflows businesses run behind them.',
+  footer: 'Ostendic builds websites, web applications and the AI workflows behind them.',
 };
 
 /* Derived contact helpers — every CTA goes through these, so a CTA can never
@@ -79,7 +81,7 @@ export const links = {
 /* ---------- HERO ---------- */
 export const heroCopy = {
   lines: ['Websites your customers use,', '{and the systems behind them.}'],
-  lead: 'Ostendic is a small digital studio. We design and build websites and web applications, and set up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.',
+  lead: 'Ostendic designs and builds websites and web applications, and sets up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.',
 };
 
 /* ---------- SERVICES ----------
@@ -114,6 +116,20 @@ export const pillars = [
       ['Responsive front-end development', 'Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience.'],
       ['Redesigns and improvements', 'A review of an existing site, followed by the changes that make it clearer, faster and easier to use.'],
     ],
+    /* Short copy for the service panels on the homepage and /services.
+       The fields above stay as the fuller copy on this service's own page. */
+    panel: {
+      summary: 'Websites and web apps that explain what you do, work well on a phone, and make it easy to get in touch or buy.',
+      who: 'You need a new website, a better one, or a web app your customers use.',
+      problem: 'Visitors can’t tell what you do, or how to get in touch. So they leave.',
+      build: 'Business websites, landing pages, online stores, Shopify and WordPress sites, custom web apps, redesigns.',
+      includes: [
+        'Planning the pages and the visitor’s path',
+        'Design for phone, tablet and desktop',
+        'A custom build, or WordPress and Shopify',
+        'Testing before launch',
+      ],
+    },
     principles: [
       ['Clarity first', 'A visitor should understand what you do, who it’s for and what to do next within a few seconds.'],
       ['Designed for the phone', 'Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought.'],
@@ -140,6 +156,9 @@ export const pillars = [
        case and not a product screen. */
     example: {
       title: 'An example: following up new enquiries',
+      /* short lines for the homepage ring only; `steps` stays the full text
+         used by /services and the Agentic AI page */
+      ring: ['New enquiry arrives', 'Agent logs the details', 'Reply drafted, team approves', 'Follow-up prepared, person reminded'],
       steps: [
         'A new enquiry arrives through your website form or email.',
         'An agent reads it, pulls out the key details and adds them to your CRM or spreadsheet.',
@@ -157,6 +176,18 @@ export const pillars = [
       ['API and tool integrations', 'Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it’s needed.'],
       ['Internal business systems', 'Purpose-built tools for a process specific to your business, designed around the way your team already works.'],
     ],
+    panel: {
+      summary: 'AI workflows that connect your tools and take the repetitive work off your team.',
+      who: 'Teams stuck repeating manual steps: answering enquiries, chasing leads, copying data between tools.',
+      problem: 'Leads wait for a reply. Questions pile up. Someone spends hours moving data from one tool to another.',
+      build: 'AI agents for business operations, lead follow-up, support workflows, process automation, tool integrations.',
+      includes: [
+        'Mapping where time gets lost',
+        'Designing it, including where a person approves',
+        'Building it and connecting it to your tools',
+        'Testing on real cases before going live',
+      ],
+    },
     principles: [
       ['Tied to real work', 'Every workflow starts from a task your business does today and the time it currently takes.'],
       ['People stay in control', 'Agents handle routine steps. Anything that needs judgement goes to the right person to review.'],
@@ -178,36 +209,37 @@ export const process = [
     'Logins, access and notes for your team'],
 ];
 
-/* ---------- STUDIO NUMBERS ----------
-   Proposed figures, NOT verified. Nothing in this repository (no CRM export,
-   client list, invoices or review records) supports them, so they are not
-   published. To publish: record what each number counts and where it comes
-   from in `basis`, set `verified: true` on every item, then `publish: true`.
-   A rating needs a named public source (e.g. Google Business Profile) and
-   the number of reviews it is based on. */
-export const stats = {
-  publish: false,
-  items: [
-    { value: '30+', label: 'Projects completed', verified: false,
-      basis: null },  // PENDING: count from project records; define "completed"; don't count demo builds as client work
-    { value: '20+', label: 'Clients served', verified: false,
-      basis: null },  // PENDING: unique paying clients from invoices/CRM; one client with several projects counts once
-    { value: '4.6', label: 'Client rating', verified: false,
-      basis: null },  // PENDING: public source + number of reviews, e.g. "4.6 on Google, 18 reviews"
+/* Homepage version of the process: shorter copy, no "You receive" row.
+   /services keeps the full `process` above. */
+export const processHome = {
+  heading: 'Four steps. Nothing hidden.',
+  steps: [
+    ['01', 'Talk it through', 'Tell us what’s not working. We’ll say if we can’t help.'],
+    ['02', 'Agree it in writing', 'Scope, price and dates on paper before any work starts.'],
+    ['03', 'Build, with check-ins', 'You see progress at set points, not just at the end.'],
+    ['04', 'Launch and hand over', 'You get the logins and notes to run it yourself.'],
   ],
 };
 
-/* ---------- ABOUT ---------- */
 export const aboutCopy = {
+  /* About page hero (homepage teaser below keeps its own copy) */
+  hero: {
+    lead: 'Ostendic builds websites and AI workflows that help small businesses look credible, get noticed and run smoothly.',
+    body: [
+      'We cover both sides of how a business shows up online: the website customers see, and the workflows that handle what happens after they get in touch.',
+      'Ostendic is small by design. Every project is scoped in writing, built with care and handed over in a form your team can run.',
+    ],
+  },
   teaser: [
-    'Ostendic is run by Harsh Dubey. When you work with Ostendic, you work with him directly, from the first conversation through to launch.',
-    'The studio covers both sides of how a business shows up online: the website or product customers use, and the workflows that handle what happens after they get in touch.',
+    'Ostendic builds websites and AI agentic workflows for businesses that want to look credible and run smoothly.',
+    'Your site brings people in. Your workflows handle what happens next. We build both, and hand them over so your team can run them.',
   ],
+  /* [title, description, icon file in workflow-ring-v2/] */
   approach: [
-    ['Start with the business problem', 'Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you.'],
-    ['Say what it costs before starting', 'Every piece of work is scoped and priced in writing before it begins, including what is not included.'],
-    ['Build what you can keep running', 'We choose platforms and tools your team can live with after launch, and hand over what you need to manage them.'],
-    ['Keep people in the loop', 'In AI workflows, routine steps can be automated. Decisions that need judgement stay with a person.'],
+    ['Start with the business problem', 'Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you.', 'principle-1-problem.svg'],
+    ['Say what it costs before starting', 'Every piece of work is scoped and priced in writing before it begins, including what is not included.', 'principle-2-cost.svg'],
+    ['Build what you can keep running', 'We choose platforms and tools your team can live with after launch, and hand over what you need to manage them.', 'principle-3-keep-running.svg'],
+    ['Keep people in the loop', 'In AI workflows, routine steps can be automated. Decisions that need judgement stay with a person.', 'principle-4-people.svg'],
   ],
 };
 
@@ -217,9 +249,13 @@ export const aboutCopy = {
    order. Demo descriptions are limited to what the live product visibly
    does; the client entry uses the project record, with no invented results.
 
-   VMS Careline is shown WITHOUT any website screenshot or live preview: its
-   visual is a brand plate built from the official logo file and the two
-   colours sampled from it. */
+   VMS Careline's visual is a brand plate: the official logo over a faded
+   capture of its homepage. `colours` only tints the plate's frame; the
+   names and hex codes are not shown.
+
+   heroImage (optional, any project): { src, w, h }. When set, the card shows
+   that image faded behind the project's logo (brand.logo) or name. When not
+   set, the card keeps its current visual. */
 export const projects = [
   {
     slug: 'vms-careline', name: 'VMS Careline', kind: 'client', publish: true,
@@ -227,14 +263,16 @@ export const projects = [
     brand: {
       logo: 'assets/logos/vms-careline.png', w: 900, h: 290,
       colours: [['Careline navy', '#0C6084'], ['Careline teal', '#189C84']],
-      verticals: [['VMS Careline', 'Healthcare products'], ['VMS Cart', 'Separate cart vertical']],
+      verticals: [['VMS Careline', 'Healthcare Ecommerce Platform']],
     },
+    heroImage: { src: 'assets/work/vms-careline.jpg', w: 1200, h: 800 },
     area: 'Healthcare e-commerce · India',
     pillars: ['web-development', 'agentic-ai-workflows'],
-    scope: ['Brand structure', 'UI/UX design', 'Website development', 'E-commerce', 'Enquiry automation'],
-    what: 'A healthcare e-commerce business in India, restructured into two clear digital verticals: VMS Careline and VMS Cart.',
-    problem: 'One digital presence carried two quite different offerings, so customers had to work out which part of the business they were in. Enquiries were handled manually, and how quickly someone got a reply depended on who was available.',
-    built: 'Separate verticals, each with its own audience, structure and buying path. A commerce experience rebuilt around how these products are actually chosen, with clearer product discovery and presentation. An automated enquiry path from first contact through first response to follow-up.',
+    scope: ['UI/UX design', 'Website development', 'E-commerce', 'Enquiry automation'],
+    what: 'The website and brand structure for VMS Careline, a healthcare e-commerce business in India.',
+    problem: 'Two kinds of customers, one tangled site. Products were hard to find, and enquiries had no clear path to a reply.',
+    built: 'Two separate verticals: VMS Careline and VMS Cart. A store built around how people choose products. An automated path from first enquiry to follow-up.',
+    linkLabel: 'Visit the live site',
     contribution: 'Client project. Ostendic, led by Harsh Dubey, handled the brand structure, UX, website development and enquiry automation.',
   },
   {
@@ -244,9 +282,10 @@ export const projects = [
     images: { desktop: 'assets/work/truereview-desktop.jpg', phone: 'assets/work/truereview-phone.jpg' },
     area: 'Web application · AI analysis',
     pillars: ['web-development', 'agentic-ai-workflows'],
-    what: 'A free tool that checks the reviews on a product listing before you buy.',
-    problem: 'Shoppers can’t easily tell which product reviews to trust, or spot the complaints buried under hundreds of five-star ratings.',
-    built: 'Product concept, interface design and front end, plus an AI review flow. You paste a product link or name, and the tool scans its reviews for likely fakes, repeated patterns and buried complaints, then gives a trust score with a breakdown.',
+    what: 'A demo tool that helps shoppers decide if a product is worth buying.',
+    problem: 'Online reviews are hard to trust, so it’s hard to know what’s actually worth buying.',
+    built: 'A working tool where you ask about a product and get a score based on its genuine reviews.',
+    linkLabel: 'Try the demo',
     contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
   {
@@ -255,9 +294,10 @@ export const projects = [
     images: { desktop: 'assets/work/viralcheck-desktop.jpg', phone: 'assets/work/viralcheck-phone.jpg' },
     area: 'Web application · AI review',
     pillars: ['web-development', 'agentic-ai-workflows'],
-    what: 'A free tool that reviews a piece of written content (a post, article or newsletter) before it is published.',
-    problem: 'Creators and small marketing teams usually find out whether a post works after publishing it, when it’s too late to change.',
-    built: 'Interface design and front end, plus an AI review flow. You paste the content, choose the platform, and get feedback on hook strength, readability, SEO gaps and call-to-action clarity, with suggested rewrites.',
+    what: 'A demo tool we built that scores a piece of content.',
+    problem: 'Creators guess what will work, then post and hope.',
+    built: 'A working tool with an AI-assisted interface that scores your content.',
+    linkLabel: 'Try the demo',
     contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
   {
@@ -266,68 +306,15 @@ export const projects = [
     images: { desktop: 'assets/work/launchmirror-desktop.jpg', phone: 'assets/work/launchmirror-phone.jpg' },
     area: 'Web application · AI analysis',
     pillars: ['web-development', 'agentic-ai-workflows'],
-    what: 'A free web tool that gives Indian founders a structured first read on a business idea before they commit to building it.',
-    problem: 'First-time founders often start building before testing whether an idea holds up. Market timing, competition and cost get checked late, if at all.',
-    built: 'Product concept, interface design and front end, plus an AI analysis flow. The founder answers seven questions and receives a viability score out of 100, a market check, short statements on strengths, weaknesses and risk, and a 90-day action plan.',
+    what: 'A demo tool that gives you a structured first read on a business idea before you commit to building it.',
+    problem: 'It’s easy to start building before you’ve checked whether an idea holds up. Market timing, competition and cost often get checked late, if at all.',
+    built: 'A working tool where you answer seven questions about your idea. You get a viability score out of 100, a market check, a short read on strengths, weaknesses and risks, and a 90-day action plan.',
+    linkLabel: 'Try the demo',
     contribution: 'Designed and built in-house by Ostendic as a demonstration product.',
   },
 ];
 export const published = projects.filter(p => p.publish);
 export const kindLabel = { client: 'Client project', demo: 'Demo build', sample: 'Sample' };
-
-/* ---------- PRICING ----------
-   Each package has the same fields. A null value is not published: the
-   page shows a neutral fallback instead of an invented figure. Packages
-   with `publish: false` do not render at all. */
-export const packages = [
-  {
-    slug: 'diagnostic', name: 'Diagnostic', publish: true,
-    for: 'Businesses that know something isn’t working, such as a website that doesn’t bring in enquiries or a process that eats your team’s time, but aren’t sure what to change first.',
-    includes: [
-      'A review of your website, a product flow or one business process',
-      'A written summary of what is getting in the way, in plain language',
-      'Prioritised recommendations: what to fix first and what can wait',
-      'If you want it, a scoped and priced proposal for the work',
-    ],
-    excludes: ['Design or development work', 'Building or changing a workflow'],
-    price: null,      // PENDING: diagnostic fee (INR)
-    timeline: null,   // PENDING: delivery time for the written review
-    payment: null,    // PENDING: payment terms
-  },
-  {
-    slug: 'starter', name: 'Starter website', publish: false,
-    hold: 'Proposed at ₹12,000 with a five-working-day delivery target. Do not publish until the exact pages, content responsibilities, revision rounds, exclusions and payment terms are confirmed.',
-    for: 'Local businesses that need a clear, professional website quickly.',
-    includes: [],     // PENDING: exact deliverables (pages, sections, forms)
-    excludes: [],     // PENDING: exclusions
-    revisions: null,  // PENDING: revision rounds
-    price: null,      // proposed ₹12,000 — unconfirmed
-    timeline: null,   // proposed 5 working days — unconfirmed
-    payment: null,
-  },
-  {
-    slug: 'custom', name: 'Larger and custom projects', publish: true,
-    for: 'Larger websites, e-commerce stores, web applications and AI workflows that need a scope of their own.',
-    includes: [
-      'A written scope that lists what will be built and what won’t',
-      'Design, development and testing',
-      'Review points while the work is in progress',
-      'Launch and handover',
-    ],
-    excludes: ['Third-party costs (listed below)', 'Changes outside the agreed scope, which are quoted separately before they start'],
-    quoted: true,     // custom work is quoted per scope by nature
-    price: null,
-    timeline: null,
-    payment: null,    // PENDING: standard payment schedule (e.g. deposit / milestones)
-  },
-];
-export const thirdPartyCosts = [
-  'Domain name registration and renewal',
-  'Hosting',
-  'Platform subscriptions, such as a Shopify plan',
-  'Paid themes, plugins or apps',
-  'Usage charges for AI models and other paid APIs',
-];
 
 /* ---------- ENQUIRY FORM ---------- */
 export const budgets = ['Not sure yet', 'Under ₹15,000', '₹15,000 – ₹50,000', '₹50,000 – ₹1.5 lakh', 'Above ₹1.5 lakh'];
@@ -344,7 +331,6 @@ export const interests = [
 export const nav = [
   ['Services', '/services', pillars.map(p => [p.title, p.path])],
   ['Work', '/work'],
-  ['Pricing', '/pricing'],
   ['About', '/about'],
   ['Contact', '/contact'],
 ];
@@ -354,12 +340,8 @@ export const pending = [
   !site.phone && 'Phone number (site.phone): click-to-call is hidden until set.',
   !site.whatsapp && 'WhatsApp number (site.whatsapp): WhatsApp buttons are hidden until set.',
   !site.booking && 'Booking link (site.booking): no /book page is generated, and CTAs go to /contact reading "Start a conversation", until a Calendly/Cal.com 30-minute event URL is set.',
-  !stats.publish && 'Studio numbers (stats): 30+ projects / 20+ clients / 4.6 rating are unverified and not shown. Add the basis for each and set verified + publish.',
   !site.social.length && 'LinkedIn / Instagram URLs (site.social): no social links shown until set.',
   ...projects.filter(p => !p.publish).map(p => `Work: ${p.name} is held back. ${p.hold}`),
   ...projects.filter(p => p.publish && p.caution).map(p => `Work: ${p.name}. ${p.caution}`),
-  ...packages.filter(p => !p.publish).map(p => `Pricing: ${p.name} is held back. ${p.hold}`),
-  ...packages.filter(p => p.publish && !p.price && !p.quoted).map(p => `Pricing: ${p.name} has no published price yet.`),
-  ...packages.filter(p => p.publish && !p.payment).map(p => `Pricing: ${p.name} has no published payment terms yet.`),
   'CONTACT FORM IS NOT DELIVERING: the Supabase project in db.js (jyikbiiyqixesapwkkfm.supabase.co) does not resolve in public DNS (checked 11 Nov 2026). The form shows an honest failure with the email address. Create a new Supabase project (table "leads": name, email, company, budget, project_description) or switch to a form service, update db.js, then set up and test email notification to harsh@ostendic.com.',
 ].filter(Boolean);
