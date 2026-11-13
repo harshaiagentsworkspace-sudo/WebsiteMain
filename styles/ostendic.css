@@ -367,6 +367,11 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .work-part--client { padding-top: var(--sec-y); padding-bottom: clamp(64px, 8vw, 112px); }
 .work-part--client:last-child { padding-bottom: var(--sec-y); }
 .work-part--demos { padding-bottom: var(--sec-y); }
+/* Work page: the client-work clip from the homepage behind the page head and
+   the VMS Careline case. overflow: clip (not hidden) keeps the plate sticky. */
+.work-hero { position: relative; isolation: isolate; overflow: clip; }
+/* a page head with a background clip (About) */
+.phead--vid { position: relative; isolation: isolate; overflow: hidden; }
 .work-part--demos .demos { margin-top: 0; }
 /* the Demo builds clip sits fainter than the other section clips */
 .work-part--demos .svc-bg__media { opacity: .2; }

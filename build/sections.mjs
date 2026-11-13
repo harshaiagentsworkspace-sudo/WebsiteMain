@@ -252,7 +252,7 @@ export const exampleRing = (s) => `
 /* Background clip behind the homepage work, service, process and about sections. Same treatment
    as the hero: decorative, attached by site.js on wider screens with motion
    allowed, and only once the section is near the viewport. */
-const sectionVideo = (src) => `
+export const sectionVideo = (src) => `
   <div class="svc-bg" aria-hidden="true">
     <div class="svc-bg__media">
       <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"

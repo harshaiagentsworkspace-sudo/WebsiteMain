@@ -114,15 +114,7 @@ ${work.length ? `
 };
 
 /* ========================= WORK ========================= */
-export const work = () => `
-${pageHead({
-  label: 'Work',
-  lines: ['What we’ve built, and what it does'],
-})}
-
-<section class="section section--flush-t">
-  <div class="wrap">
-    ${published.map(p => `
+const workCase = (p) => `
     <article class="case" id="${p.slug}">
       ${S.cardVisual(p)}
       <div class="case__body">
@@ -134,7 +126,27 @@ ${pageHead({
         </dl>
         <div class="btn-row">${btn(p.linkLabel, p.url, 'ghost')}</div>
       </div>
-    </article>`).join('')}
+    </article>`;
+
+/* The page head and the first case (the client project) sit over the same
+   client-work clip the homepage uses. */
+export const work = () => `
+<div class="work-hero">${S.sectionVideo('/assets/work-bg.mp4')}
+${pageHead({
+  label: 'Work',
+  lines: ['What we’ve built, and what it does'],
+})}
+
+<section class="section section--flush-t">
+  <div class="wrap">
+    ${published.slice(0, 1).map(workCase).join('')}
+  </div>
+</section>
+</div>
+
+<section class="section section--flush-t">
+  <div class="wrap">
+    ${published.slice(1).map(workCase).join('')}
 
     <div class="note">
       <h2 class="h4">About client work</h2>
@@ -146,7 +158,7 @@ ${pageHead({
 
 /* ========================= ABOUT ========================= */
 export const about = () => `
-<section class="phead">
+<section class="phead phead--vid">${S.sectionVideo('/assets/about-hero-bg.mp4')}
   <div class="wrap about-hero">
     <div class="about-hero__text">
       <p class="label">About</p>
@@ -163,7 +175,7 @@ export const about = () => `
 </section>
 ${S.statsBar()}
 
-<section class="section section--white">
+<section class="section section--white section--vid">${S.sectionVideo('/assets/process-bg.mp4')}
   <div class="wrap">
     <div class="shead">
       <p class="label">How we work</p>
@@ -175,7 +187,7 @@ ${S.statsBar()}
   </div>
 </section>
 
-<section class="section">
+<section class="section section--vid">${S.sectionVideo('/assets/demos-bg.mp4')}
   <div class="wrap">
     <div class="shead">
       <p class="label">What Ostendic does</p>
@@ -349,6 +361,7 @@ export const book = () => `
 /* ========================= BLOG =========================
    Posts come from build/blog.mjs. No dates, authors or counts. */
 export const blogIndex = () => `
+<div class="work-hero">${S.sectionVideo('/assets/blog-bg.mp4')}
 <section class="phead">
   <div class="wrap">
     <div class="shead shead--flush">
@@ -370,6 +383,7 @@ export const blogIndex = () => `
     </ul>
   </div>
 </section>
+</div>
 `;
 
 export const blogPost = (p) => `
