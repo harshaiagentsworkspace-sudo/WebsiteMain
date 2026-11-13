@@ -95,7 +95,7 @@ export const pageHead = ({ label, lines, lead, actions = '' }) => `
    `site.logo.ink` is the wordmark's bounding box inside the supplied file;
    CSS crops to it so the white margin never paints and the file is never
    edited. The <img> keeps intrinsic width/height so the slot is reserved. */
-const brandMark = ({ eager = false, nav = false } = {}) => {
+export const brandMark = ({ eager = false, nav = false } = {}) => {
   const L = site.logo;
   return `<span class="brand__crop" style="--lg-w:${L.w};--lg-h:${L.h};`
     + `--ink-x:${L.ink.x};--ink-y:${L.ink.y};--ink-w:${L.ink.w};--ink-h:${L.ink.h}">`

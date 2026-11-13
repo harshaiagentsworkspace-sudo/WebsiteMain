@@ -329,6 +329,14 @@ export const processSection = ({ home = false } = {}) => home ? `
    Text-led. The founder appears as a small portrait beside his name, the
    same size on every screen, so the section reads as a studio introduction
    rather than a personal profile. */
+/* Founder line: small photo, name, role. Homepage About teaser and the
+   About page hero. `extra` goes after the name (e.g. a link). */
+export const founderSig = (extra = '') => `<div class="sig">
+          <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" loading="lazy" decoding="async"></span>
+          <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
+          ${extra}
+        </div>`;
+
 export const aboutTeaser = () => `
 <section class="section section--vid" id="about">${sectionVideo('/assets/about-bg.mp4')}
   <div class="wrap">
@@ -339,11 +347,7 @@ export const aboutTeaser = () => `
         <div class="about-t">
           ${aboutCopy.teaser.map(p => `<p class="body">${esc(p)}</p>`).join('')}
         </div>
-        <div class="sig">
-          <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" loading="lazy" decoding="async"></span>
-          <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
-          ${alink('More about Ostendic', '/about')}
-        </div>
+        ${founderSig(alink('More about Ostendic', '/about'))}
       </div>
     </div>
   </div>

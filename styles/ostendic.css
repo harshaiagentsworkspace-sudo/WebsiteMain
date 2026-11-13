@@ -646,11 +646,16 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 
 /* about */
 .about-hero { --photo: 280px; display: grid; grid-template-columns: minmax(0, 1fr) var(--photo);
-  grid-template-areas: "text photo" "cta photo"; gap: 28px clamp(40px, 6vw, 96px); align-items: start; }
+  grid-template-areas: "text photo"; gap: 28px clamp(40px, 6vw, 96px); align-items: start; }
 .about-hero__text { grid-area: text; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
 .about-hero__h { font-size: clamp(2rem, 1.25rem + 2.5vw, 3.4rem); max-width: 18ch; }
 .about-hero__img { grid-area: photo; width: var(--photo); margin: 0; }
-.about-hero__cta { grid-area: cta; }
+.svc-links + .btn-row { margin-top: clamp(28px, 4vw, 44px); }
+/* the Ostendic wordmark in place of the photo: as wide as the column,
+   centred against the text, over the hero clip */
+.about-hero:has(.about-hero__logo) { --photo: clamp(200px, 30vw, 380px); }
+.about-hero__logo { grid-area: photo; width: var(--photo); margin: 0; align-self: center; display: flex; justify-content: center; }
+.about-hero__logo .brand__crop { --brand-h: calc(var(--photo) * 239 / 1183); }
 .svc-links { border-bottom: 1px solid var(--line-2); }
 .svc-links a { display: grid; grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.3fr) 24px; gap: 8px 24px; align-items: baseline;
   padding: 28px 0; border-top: 1px solid var(--line-2); }
@@ -837,7 +842,7 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
   .statsbar__item { --pad: 24px; justify-items: start; }
   .statsbar__item + .statsbar__item { border-left: 0; border-top: 1px solid var(--line); }
   .principle__icon { width: 36px; height: 36px; }
-  .about-hero { --photo: 200px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "photo" "cta"; }
+  .about-hero { --photo: 200px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "photo"; }
   .booking__panel, .booking__embed { min-height: 640px; }
   /* on phones the date picker and the time list stack, so give the widget room instead of a scroll box inside the page */
   .booking__embed.calendly-inline-widget { height: 1050px; }

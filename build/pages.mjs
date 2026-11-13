@@ -5,7 +5,7 @@ import {
   site, links, pillars, aboutCopy, published, kindLabel, bookingProvider,
   budgets, interests,
 } from './data.mjs';
-import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon } from './ui.mjs';
+import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark } from './ui.mjs';
 import * as S from './sections.mjs';
 import { posts, readingTime } from './blog.mjs';
 
@@ -165,12 +165,9 @@ export const about = () => `
       <h1 class="h1 about-hero__h">Small businesses deserve to show up like the big ones.</h1>
       <p class="lead">${esc(aboutCopy.hero.lead)}</p>
       ${aboutCopy.hero.body.map(p => `<p class="body">${esc(p)}</p>`).join('\n      ')}
+      ${S.founderSig()}
     </div>
-    <figure class="about-hero__img">
-      <img src="/${site.principalImage}" alt="${esc(site.principal)}, ${esc(site.principalRole)} of ${esc(site.name)}"
-           width="800" height="800" decoding="async" fetchpriority="high">
-    </figure>
-    <div class="btn-row about-hero__cta">${startBtn('primary')}</div>
+    <figure class="about-hero__logo">${brandMark({ eager: true, nav: true })}</figure>
   </div>
 </section>
 ${S.statsBar()}
@@ -196,6 +193,7 @@ ${S.statsBar()}
     <ul class="svc-links">
       ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="svc-links__t">${esc(p.title)}</span><span class="body-sm">${esc(p.summary)}</span>${ico.right}</a></li>`).join('')}
     </ul>
+    <div class="btn-row">${startBtn('primary')}</div>
   </div>
 </section>
 `;
