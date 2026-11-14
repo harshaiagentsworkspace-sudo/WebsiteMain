@@ -7,7 +7,7 @@
    which never loads on small screens, data-saver or reduced motion.
    =========================================================================== */
 import { readFileSync } from 'node:fs';
-import { site, heroCopy, pillars, process, processHome, aboutCopy, published, kindLabel } from './data.mjs';
+import { site, heroCopy, homeCopy, pillars, process, processHome, aboutCopy, published, kindLabel } from './data.mjs';
 import { stats, statsDevWarning } from './stats.mjs';
 import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon, statIcon } from './ui.mjs';
 
@@ -29,7 +29,7 @@ export const hero = () => `
     <p class="lead hero__lead">${esc(heroCopy.lead)}</p>
     <div class="btn-row hero__cta">
       ${startBtn('primary', { eager: true })}
-      ${btn('See selected work', '#work', 'ghost')}
+      ${btn(heroCopy.secondaryButton, '#work', 'ghost')}
     </div>
     <ul class="hero__index" aria-label="Services">
       ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="hero__index-t">${esc(p.title)}</span>${ico.right}</a></li>`).join('')}
@@ -125,6 +125,9 @@ export const selectedWork = () => {
           <a class="demo__img" href="/work#${p.slug}" tabindex="-1" aria-hidden="true">
             <img src="/${p.images.desktop}" alt="" width="1600" height="1000" loading="lazy" decoding="async">
           </a>
+          ${p.mark ? `<a class="demo__logo" href="/work#${p.slug}" tabindex="-1" aria-hidden="true" style="background:${p.mark.bg}">
+            <img src="/${p.mark.logo}" alt="" width="${p.mark.w}" height="${p.mark.h}" loading="lazy" decoding="async">
+          </a>` : ''}
           <h4 class="h4"><a href="/work#${p.slug}">${esc(p.name)}</a></h4>
           <p class="body-sm">${esc(p.what)}</p>
           ${alink(p.linkLabel, p.url)}
@@ -284,7 +287,7 @@ export const serviceChapters = ({ withHead = true, icons = false, ring = false, 
     <div class="shead">
       <p class="label">Services</p>
       <div class="shead__main">
-        <h2 class="h2">Two things we do, and do properly</h2>
+        <h2 class="h2">${esc(homeCopy.servicesHeading)}</h2>
       </div>
     </div>` : ''}
     <article class="chap" id="${web.slug}">${chapter(web, 'More on web development and UI/UX', icons ? WebDevelopmentIcon({ className: 'chap__icon' }) : '')}
@@ -343,7 +346,7 @@ export const aboutTeaser = () => `
     <div class="shead shead--flush">
       <p class="label">About</p>
       <div class="shead__main">
-        <h2 class="h2">We build the online side of your business, <em class="em">so you can run the rest.</em></h2>
+        <h2 class="h2">${esc(homeCopy.about.heading)}${homeCopy.about.headingItalic ? ` <em class="em">${esc(homeCopy.about.headingItalic)}</em>` : ''}</h2>
         <div class="about-t">
           ${aboutCopy.teaser.map(p => `<p class="body">${esc(p)}</p>`).join('')}
         </div>

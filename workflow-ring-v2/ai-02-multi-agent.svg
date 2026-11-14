@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Multi-agent systems">
+  <circle cx="32" cy="32" r="22"></circle>
+  <circle cx="32.00" cy="10.00" r="5.2" fill="currentColor" stroke="none"></circle>
+  <circle cx="51.05" cy="43.00" r="5.2" fill="currentColor" stroke="none"></circle>
+  <circle cx="12.95" cy="43.00" r="5.2" fill="currentColor" stroke="none"></circle>
+</svg>

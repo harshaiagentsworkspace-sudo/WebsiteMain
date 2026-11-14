@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="E-commerce development">
+  <rect x="10" y="22" width="44" height="35" rx="8"></rect>
+  <path d="M22 28V22A10 10 0 0 1 42 22V28"></path>
+  <circle cx="32" cy="41" r="4.8" fill="currentColor" stroke="none"></circle>
+</svg>

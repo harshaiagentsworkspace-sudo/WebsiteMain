@@ -242,8 +242,18 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .mnav__in { min-height: 100%; padding: 16px var(--pad-x) 32px; display: flex; flex-direction: column; }
 .mnav__link { font-size: 1.75rem; letter-spacing: -.03em; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .mnav__link[aria-current="page"] { color: var(--accent); }
-.mnav__svc { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; }
-.mnav__svc a { display: flex; gap: 12px; padding: 10px 0; font-size: var(--t-sm); color: var(--ink-2); }
+/* Services in the phone menu: a dropdown with the two service pages */
+.mnav__group > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; list-style: none; }
+.mnav__group > summary::-webkit-details-marker { display: none; }
+.mnav__caret { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-2);
+  transition: transform .25s var(--ease); }
+.mnav__caret svg { width: 14px; height: 14px; }
+.mnav__group[open] .mnav__caret { transform: rotate(180deg); }
+.mnav__group[open] > summary { border-bottom-color: transparent; }
+.mnav__sub { display: flex; flex-direction: column; padding: 2px 0 12px; border-bottom: 1px solid var(--line); }
+.mnav__sub a { display: flex; align-items: baseline; gap: 14px; padding: 12px 0 12px 4px; font-size: 1.15rem; letter-spacing: -.01em; color: var(--ink-2); }
+.mnav__sub a .tnum { font-size: var(--t-xs); color: var(--ink-3); }
+.mnav__sub a[aria-current="page"] { color: var(--accent); }
 .mnav__foot { margin-top: auto; padding-top: 28px; display: flex; flex-direction: column; gap: 12px; }
 .mnav__foot .btn { width: 100%; }
 .mnav__foot .alink { align-self: flex-start; }
@@ -385,6 +395,7 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .demo__img img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 10px;
   border: 1px solid var(--line); transition: transform .3s var(--ease); }
 .demo__img:hover img { transform: translateY(-3px); }
+.demo__logo { display: none; }
 .demo .h4 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- 8b. STATS BAR (homepage + About, values in build/stats.mjs) ----------
@@ -599,15 +610,121 @@ body.menu-open .mnav { visibility: visible; opacity: 1; transition: opacity .25s
 .principles > div { display: flex; flex-direction: column; gap: 8px; padding: 20px 0; border-top: 1px solid var(--line-dark); }
 .principles .h4 { color: var(--ink-inv); }
 
+/* Service pages: frosted "liquid glass" cards over a clip kept in the site's
+   light theme. The clip (or its poster where it doesn't play) is blurred and
+   washed with white, so it reads as soft colour rather than a picture; the
+   cards are white glass with the site's normal dark text. */
+.section--glass { background: var(--bg-alt); }
+/* scale hides the soft, see-through edge the blur leaves at the frame's border */
+.glass-bg .svc-bg__media { opacity: 1; background: center / cover no-repeat;
+  filter: blur(18px) saturate(.9); transform: scale(1.1); }
+.glass-bg::after { background:
+  linear-gradient(to bottom, var(--bg-alt) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 84%, var(--bg-alt) 100%),
+  rgba(255,255,255,.62); }
+
+.glass { position: relative; isolation: isolate; display: flex; flex-direction: column; gap: 12px; padding: 26px;
+  color: var(--ink); border-radius: 22px; border: 1px solid rgba(255,255,255,.9);
+  background: linear-gradient(150deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.5) 60%, rgba(255,255,255,.42) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 0 0 1px rgba(17,19,20,.05), inset 0 1px 0 #fff, 0 22px 44px -30px rgba(17,19,20,.35);
+  transition: transform .35s var(--ease), box-shadow .3s var(--ease), background-color .3s var(--ease); }
+/* the light catching the glass's top-left edge */
+.glass::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(120% 70% at 0% 0%, rgba(255,255,255,.7), rgba(255,255,255,0) 60%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(255,255,255,.88); }
+}
+.glass .h4 { color: var(--ink); margin-top: 18px; }
+.glass .body, .glass .body-sm { color: var(--ink-2); }
+.glass__pill { align-self: flex-start; padding: 5px 13px; border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  background: rgba(255,255,255,.55); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-2); line-height: 1.4; }
+.glass__lead { color: var(--ink); font-size: var(--t-body); line-height: 1.5; margin-top: 24px; }
+.glass__ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent); }
+.glass__ico svg { width: 18px; height: 18px; }
+.glass__ico + .h4 { margin-top: 14px; }
+
+/* the worked example on a service page: one large glass panel, with each
+   step on its own frosted tile. The rail runs behind the tiles, so it shows
+   as a connector in the gaps, and each node sits on it inside its tile. */
+.section--eg .eg { position: relative; isolation: isolate; border-radius: 26px; border: 1px solid rgba(255,255,255,.9);
+  background: linear-gradient(150deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.45) 60%, rgba(255,255,255,.38) 100%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 0 0 1px rgba(17,19,20,.05), inset 0 1px 0 #fff, 0 30px 60px -36px rgba(17,19,20,.4); }
+.section--eg .eg::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(90% 60% at 0% 0%, rgba(255,255,255,.7), rgba(255,255,255,0) 60%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .section--eg .eg { background: rgba(255,255,255,.88); }
+}
+.section--eg .eg__t { font-size: var(--t-h3); letter-spacing: -.02em; line-height: 1.2; margin-bottom: 32px; }
+.section--eg .seq--eg { --node-bg: #fff; }
+.section--eg .seq__list { gap: 16px; }
+.section--eg .seq__rail { top: 29px; }
+.section--eg .seq__item { padding: 60px 22px 24px; border-radius: 18px; border: 1px solid rgba(255,255,255,.95);
+  background: rgba(255,255,255,.6); box-shadow: 0 0 0 1px rgba(17,19,20,.04), 0 14px 30px -24px rgba(17,19,20,.35); }
+.section--eg .seq__node { top: 22px; left: 22px; }
+.section--eg .seq__n { display: inline-block; align-self: flex-start; padding: 4px 11px; border: 1px solid var(--line-2);
+  border-radius: var(--r-pill); background: rgba(255,255,255,.6); font-size: 12px; letter-spacing: .08em; }
+.section--eg .seq__d { color: var(--ink); font-size: var(--t-body); line-height: 1.5; }
+.section--eg .eg__note { margin-top: 24px; }
+@media (max-width: 860px) {
+  .section--eg .seq__list { row-gap: 14px; }
+  .section--eg .seq__rail { left: 29px; top: 30px; bottom: 30px; }
+  .section--eg .seq__item { padding: 22px 22px 22px 60px; }
+  .section--eg .seq__node { top: 26px; }
+}
+
+.svc-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: clamp(56px, 7vw, 96px); }
+.svc-intro .glass { padding: clamp(26px, 3vw, 40px); gap: 20px; }
+.svc-intro .body { font-size: var(--t-lead); color: var(--ink); line-height: 1.5; }
+.glass-grid { display: grid; gap: 16px; }
+.glass-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.glass-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.glass-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.glass-sub { margin: clamp(48px, 6vw, 72px) 0 20px; }
+@media (hover: hover) {
+  .glass-grid .glass:hover { transform: translateY(-4px); background-color: rgba(255,255,255,.25);
+    box-shadow: 0 0 0 1px rgba(17,19,20,.08), inset 0 1px 0 #fff, 0 28px 48px -28px rgba(17,19,20,.4); }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .glass-grid .glass:hover { transform: none; }
+}
+@media (max-width: 1100px) {
+  .glass-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .glass-grid--5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .svc-intro, .glass-grid--4, .glass-grid--5, .glass-grid--3 { grid-template-columns: 1fr; }
+  .glass { padding: 22px; }
+  .glass__lead { margin-top: 12px; }
+}
+
 .mini-work { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .mini-work a { display: grid; grid-template-columns: 42% 1fr; gap: 20px; align-items: center; padding: 14px;
   border: 1px solid var(--line); border-radius: var(--r); transition: border-color .2s var(--ease); }
 .mini-work a:hover { border-color: var(--ink); }
 .mini-work__logo { display: grid; place-items: center; aspect-ratio: 16 / 10; padding: 12% 10%; border-radius: 8px;
   border: 1px solid var(--line); background: #F7F8F6; }
-.mini-work__logo img { border: 0; aspect-ratio: auto; object-fit: contain; border-radius: 0; }
 .mini-work img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid var(--line); }
+/* a logo keeps its own shape and is shown whole: this must outrank the
+   screenshot rule above, which would crop it to 16:10 */
+.mini-work .mini-work__logo img { width: 100%; height: auto; max-height: 100%; border: 0; aspect-ratio: auto;
+  object-fit: contain; border-radius: 0; }
 .mini-work__t { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+/* related work on the service pages: the same white glass as the cards above */
+.mini-work a.glass { border: 1px solid rgba(255,255,255,.9); border-radius: 22px; padding: 16px;
+  transition: transform .35s var(--ease), box-shadow .3s var(--ease), background-color .3s var(--ease); }
+.mini-work a.glass:hover { border-color: rgba(255,255,255,.9); }
+.mini-work a.glass img:not(.mini-work__logo img) { border-radius: 12px; }
+.mini-work a.glass .mini-work__logo { border-radius: 12px; border-color: rgba(17,19,20,.06); }
+@media (hover: hover) {
+  .mini-work a.glass:hover { transform: translateY(-4px); background-color: rgba(255,255,255,.25);
+    box-shadow: 0 0 0 1px rgba(17,19,20,.08), inset 0 1px 0 #fff, 0 28px 48px -28px rgba(17,19,20,.4); }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .mini-work a.glass:hover { transform: none; }
+}
 
 .other { display: flex; flex-direction: column; gap: 14px; }
 .other__link { display: inline-flex; align-items: center; gap: 16px; font-size: var(--t-h3); letter-spacing: -.02em; }
@@ -771,7 +888,7 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
   .facts { margin-top: 8px; }
   .booking__intro, .booking__panel { grid-column: 1 / -1; }
   .booking__intro { position: static; max-width: 680px; }
-  .case > .wk__fig, .case > .plate { position: static; }
+  .case > .wk__fig, .case > .plate { position: relative; top: auto; }
   .case > .wk__fig, .case > .plate, .case__body { grid-column: 1 / -1; }
   .case__body { max-width: 680px; }
   .contact__main, .contact__side { grid-column: 1 / -1; }
@@ -941,4 +1058,237 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
   .loop__shadow { display: none; }
   .loop__node, .loop--live .loop__node.is-on { --z: 0px; }
   .loop__step { font-size: 1rem; padding: 14px 0; }
+}
+
+/* ---------- 18. PHONE LAYOUT ----------
+   Most visitors arrive on a phone. Here the page gets shorter, not just
+   narrower: tighter section spacing, compact stats, and every run of
+   cards becomes a horizontal swipe row (scroll-snap, the next card peeking
+   in at the edge) instead of a tall stack. Desktop is unaffected. */
+@media (max-width: 640px) {
+  :root { --sec-y: 60px; --sec-y-sm: 44px; --t-h1: 2.05rem; }
+  .shead { margin-bottom: 24px; gap: 8px; }
+  .shead .h2 { font-size: 1.85rem; line-height: 1.1; }
+
+  /* hero: the two service links duplicate the menu; the stats sit close under the buttons */
+  .hero { padding-bottom: 36px; }
+  .hero__in { gap: 18px; }
+  .hero__lead { font-size: 1.02rem; }
+  .hero__index { display: none; }
+  .phead { padding-bottom: 40px; }
+
+  /* stats: one row of three instead of three stacked boxes */
+  .statsbar { margin-top: 0; }
+  .statsbar__row { grid-template-columns: repeat(3, minmax(0, 1fr)); border-radius: 16px; }
+  .statsbar__item { --pad: 16px 8px; justify-items: center; text-align: center; row-gap: 6px; }
+  .statsbar__item + .statsbar__item { border-top: 0; border-left: 1px solid var(--line); }
+  .statsbar__icon { width: 24px; height: 24px; }
+  .statsbar__value { font-size: 1.6rem; }
+  .statsbar__label { font-size: 10px; letter-spacing: .04em; }
+
+  /* swipe rows */
+  .glass-grid, .mini-work, .rows--2, .facts--panel {
+    display: flex; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad-x); scrollbar-width: none;
+    margin-inline: calc(-1 * var(--pad-x)); padding: 6px var(--pad-x) 18px; }
+  .glass-grid::-webkit-scrollbar, .mini-work::-webkit-scrollbar,
+  .rows--2::-webkit-scrollbar, .facts--panel::-webkit-scrollbar { display: none; }
+  .glass-grid > *, .mini-work > li, .rows--2 > div, .facts--panel > div {
+    flex: 0 0 84%; min-width: 0; scroll-snap-align: start; }
+  .glass-grid--5 > * { flex-basis: 70%; }
+  .mini-work a { height: 100%; align-content: start; }
+
+  /* facts and the About principles become small cards inside their row */
+  .facts--panel > div, .rows--2 > div, .rows--2 > div:last-child, .facts--panel > div:last-child {
+    display: flex; flex-direction: column; gap: 10px; padding: 20px; align-items: stretch;
+    border: 1px solid rgba(128,128,128,.28); border-radius: 16px; background: rgba(128,128,128,.07); }
+  .section--white .rows--2 > div { background: var(--bg); }
+
+  /* glass sections */
+  .svc-intro { margin-bottom: 40px; gap: 12px; }
+  .svc-intro .body { font-size: 1.05rem; }
+  .glass-sub { margin: 28px 0 12px; }
+  .glass .h4 { margin-top: 10px; }
+
+  /* process steps: smaller numerals, tighter spacing */
+  .seq__list { row-gap: 24px; }
+  .seq--road .seq__n { font-size: 1.6rem; }
+  .seq--road .seq__item { gap: 8px; }
+
+  /* the workflow ring */
+  .loop { --ring: 236px; --node: 60px; --icon: 32px; gap: 20px; }
+  .loop__step { padding: 11px 0; }
+
+  /* work page */
+  .case { gap: 24px; }
+  .case__body { gap: 16px; }
+
+  .about-hero:has(.about-hero__logo) { --photo: 170px; }
+}
+@media (max-width: 640px) {
+  /* fact cards size to their own text instead of the tallest card's */
+  .facts--panel { align-items: flex-start; }
+}
+@media (max-width: 640px) {
+  /* swipe rows inside a column that shrink-wraps its children must still span the screen */
+  .case__body > .facts--panel { align-self: stretch; width: auto; }
+}
+
+@media (max-width: 640px) {
+  /* homepage demo builds: small, clean cards two to a row, each showing the
+     product's logo on its brand colour instead of a full-page screenshot */
+  .demos__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .demo { gap: 6px; padding: 8px 8px 14px; border: 1px solid var(--line); border-radius: 16px;
+    background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .demo__img { display: none; }
+  .demo__logo { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 3; margin-bottom: 6px;
+    border-radius: 11px; padding: 0 12%; }
+  .demo__logo img { width: 100%; height: auto; }
+  .demo > .h4, .demo > .body-sm, .demo > .alink { margin-inline: 6px; }
+  .demo > .h4 { font-size: 1rem; }
+  .demo > .body-sm { font-size: .8125rem; line-height: 1.45; display: -webkit-box; -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
+  .demo > .alink { font-size: .8125rem; margin-top: auto; }
+  .demos__head { margin-bottom: 18px; }
+}
+@media (max-width: 640px) {
+  /* service chapters (homepage, /services): small cards two to a row, not a
+     swipe row; the checklist card takes the full width under them */
+  .facts--panel:not(.facts--case) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+    overflow: visible; margin-inline: 0; padding: 0; align-items: stretch; }
+  .facts--panel:not(.facts--case) > div { gap: 8px; padding: 14px; border-radius: 14px; }
+  .facts--panel:not(.facts--case) > div:nth-child(n+3) { grid-column: 1 / -1; }
+  .facts--panel:not(.facts--case) dt, .section--dark .facts--panel:not(.facts--case) dt { font-size: 11px; letter-spacing: .06em; }
+  .facts--panel:not(.facts--case) dd, .section--dark .facts--panel:not(.facts--case) dd { font-size: 14px; line-height: 1.45; }
+  .facts--panel:not(.facts--case) .ticks { gap: 8px; }
+  .facts--panel:not(.facts--case) .ticks li, .section--dark .facts--panel:not(.facts--case) .ticks li { font-size: 14px; }
+}
+@media (max-width: 640px) {
+  /* No swipe rows left: service-page glass cards, related work, the About
+     principles and the Work page facts all sit as small cards, two to a row.
+     Odd counts end on one full-width card. */
+  .glass-grid, .mini-work, .rows--2, .facts--case {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+    overflow: visible; scroll-snap-type: none; margin-inline: 0; padding: 0; }
+  .glass-grid > *, .mini-work > li, .rows--2 > div, .facts--case > div { min-width: 0; }
+  .glass-grid--5 > :last-child, .glass-grid--3 > :last-child, .facts--case > div:nth-child(n+3) { grid-column: 1 / -1; }
+
+  /* liquid glass, sized down for half-width cards */
+  .glass-grid .glass { padding: 14px; gap: 8px; border-radius: 16px; }
+  .glass__pill { font-size: 10px; padding: 3px 9px; letter-spacing: .06em; }
+  .glass-grid .glass .h4 { font-size: .95rem; line-height: 1.25; margin-top: 6px; }
+  .glass-grid .glass .body-sm { font-size: .8125rem; line-height: 1.45; }
+  .glass__lead { font-size: .875rem; margin-top: 8px; }
+  .glass__ico { width: 32px; height: 32px; }
+  .glass__ico svg { width: 15px; height: 15px; }
+  .glass__ico + .h4 { margin-top: 6px; }
+  .svc-intro .glass { padding: 18px; gap: 12px; }
+  .svc-intro .body { font-size: .95rem; }
+
+  /* related work: logo panel on top, name and line below */
+  .mini-work a.glass { grid-template-columns: 1fr; gap: 10px; padding: 8px 8px 14px; border-radius: 16px; }
+  .mini-work__logo { aspect-ratio: 4 / 3; padding: 0 12%; }
+  .mini-work__t { gap: 4px; padding-inline: 6px; }
+  .mini-work__t strong { font-size: .95rem; }
+  .mini-work__t .body-sm { font-size: .8125rem; line-height: 1.45; }
+
+  /* About principles */
+  .rows--2 > div, .rows--2 > div:last-child { padding: 14px; gap: 8px; border-radius: 14px; }
+  .rows--2 .principle__icon { width: 28px; height: 28px; margin-bottom: 10px; }
+  .rows--2 dt { font-size: .95rem; line-height: 1.3; }
+  .rows--2 dd { font-size: .8125rem; line-height: 1.45; }
+
+  /* Work page facts */
+  .facts--case > div, .facts--case > div:last-child { gap: 6px; padding: 14px; border-radius: 14px; }
+  .facts--case dt { font-size: 11px; letter-spacing: .06em; }
+  .facts--case dd { font-size: 14px; line-height: 1.45; }
+}
+
+/* ---------- 19. LIQUID GLASS: icons, About, Blog, Contact ----------
+   The same white glass as the service pages (section 9's .glass), applied
+   on desktop and phone. */
+/* icon tile: the service icons (workflow-ring-v2/service-*, ai-*) and the
+   About principle icons sit in a small frosted square */
+.glass__tile { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; flex: none;
+  background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.95); color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(17,19,20,.05), 0 8px 18px -12px rgba(17,19,20,.35); }
+.glass__tile svg { width: 28px; height: 28px; }
+.glass__tile + .h4 { margin-top: 16px; }
+
+/* About: "Two services" as two glass link cards */
+.glass-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.glass--link { height: 100%; gap: 14px; }
+.glass--link .glass__pill { margin-top: 10px; }
+.glass--link .h3 { letter-spacing: -.02em; line-height: 1.15; }
+.glass__go { margin-top: auto; padding-top: 10px; display: inline-flex; align-items: center; gap: 8px;
+  font-size: var(--t-sm); font-weight: 500; color: var(--ink); }
+.glass__go svg { width: 18px; height: 18px; transition: transform .2s var(--ease); }
+.glass--link:hover .glass__go svg { transform: translateX(4px); }
+.glass-grid--2 + .btn-row { margin-top: clamp(28px, 4vw, 44px); }
+
+/* the same glass surface for blog cards and the contact panels */
+.post-card.glass, .section--glass .contact__form, .section--glass .direct {
+  border: 1px solid rgba(255,255,255,.9); border-radius: 22px;
+  background: linear-gradient(150deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.5) 60%, rgba(255,255,255,.42) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 0 0 1px rgba(17,19,20,.05), inset 0 1px 0 #fff, 0 22px 44px -30px rgba(17,19,20,.35); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .post-card.glass, .section--glass .contact__form, .section--glass .direct { background: rgba(255,255,255,.88); }
+}
+.post-card.glass { padding: clamp(22px, 2.6vw, 30px); }
+.post-card.glass .label { padding: 4px 11px; border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  background: rgba(255,255,255,.55); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+@media (hover: hover) {
+  .post-card.glass:hover { transform: translateY(-4px); background-color: rgba(255,255,255,.25);
+    box-shadow: 0 0 0 1px rgba(17,19,20,.08), inset 0 1px 0 #fff, 0 28px 48px -28px rgba(17,19,20,.4); }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) { .post-card.glass:hover { transform: none; } }
+
+/* contact: the form and the direct links on glass; fields slightly frosted */
+.section--glass .contact__form { padding: clamp(22px, 3vw, 40px); }
+.section--glass .field input, .section--glass .field select, .section--glass .field textarea {
+  background: rgba(255,255,255,.72); border-color: rgba(17,19,20,.12); }
+.section--glass .field input:focus, .section--glass .field select:focus, .section--glass .field textarea:focus { background: #fff; }
+.section--glass .direct { padding: 6px 22px; margin-top: 0; }
+.section--glass .direct li:first-child a { border-top: 0; }
+.section--glass .ctabs__tab:not([aria-selected="true"]) { background: rgba(255,255,255,.6); }
+
+@media (max-width: 1100px) {
+  .glass-grid--2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .glass__tile { width: 40px; height: 40px; border-radius: 11px; }
+  .glass__tile svg { width: 22px; height: 22px; }
+  .glass-grid .glass__tile + .h4 { margin-top: 10px; }
+  .glass-grid--2 { grid-template-columns: 1fr; }
+  .glass--link { padding: 18px; }
+  .glass--link .h3 { font-size: 1.3rem; }
+  .post-card.glass { padding: 20px; }
+  .section--glass .direct { padding: 4px 18px; }
+}
+
+/* Blog articles: the blog clip, blurred and washed, behind a glass reading
+   sheet (more opaque than the cards, so long text stays easy to read) and a
+   glass call-to-action card */
+.post.section--glass { position: relative; isolation: isolate; overflow: hidden; }
+.post.section--glass .post__in { max-width: calc(780px + 2 * var(--pad-x)); }
+.post__sheet, .post.section--glass .post__cta {
+  width: 100%; border: 1px solid rgba(255,255,255,.95); border-radius: 26px;
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 0 0 1px rgba(17,19,20,.05), inset 0 1px 0 #fff, 0 30px 60px -36px rgba(17,19,20,.4); }
+.post__sheet { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: clamp(24px, 4.5vw, 52px);
+  background: linear-gradient(160deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.8) 100%); }
+.post.section--glass .post__cta { margin-top: 20px; padding: clamp(22px, 3.5vw, 36px); border-top: 1px solid rgba(255,255,255,.95);
+  background: linear-gradient(150deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.5) 60%, rgba(255,255,255,.42) 100%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .post__sheet, .post.section--glass .post__cta { background: rgba(255,255,255,.94); }
+}
+.post__sheet .label { padding: 4px 11px; border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  background: rgba(255,255,255,.6); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.post__sheet .post__body { margin-top: 8px; }
+.post.section--glass .post__back { margin-bottom: 4px; }
+@media (max-width: 640px) {
+  .post__sheet { padding: 22px 20px; border-radius: 20px; }
+  .post__sheet .post__body { font-size: 17px; }
+  .post.section--glass .post__cta { padding: 20px; border-radius: 20px; }
 }

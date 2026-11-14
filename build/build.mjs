@@ -1,6 +1,6 @@
 /* Static site generator — writes .html into the project root.
    Run: node build/build.mjs                                            */
-import { writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { page } from './ui.mjs';
@@ -91,6 +91,13 @@ for (const p of posts) add(`blog/${p.slug}.html`, page({
   title: T(p.title), desc: p.excerpt,
   current: `/blog/${p.slug}`, body: P.blogPost(p), noindex: BLOG_IS_PLACEHOLDER,
 }));
+/* a post deleted (or turned back into a draft) in the admin panel loses its page */
+const liveSlugs = new Set(posts.map(p => `${p.slug}.html`));
+if (existsSync(join(ROOT, 'blog'))) {
+  for (const f of readdirSync(join(ROOT, 'blog'))) {
+    if (f.endsWith('.html') && !liveSlugs.has(f)) { rmSync(join(ROOT, 'blog', f)); console.log(`Removed blog/${f}`); }
+  }
+}
 
 /* Retired pages. Resources held one off-brand download and Careers
    described no real hiring process. Their generated HTML is removed;
@@ -110,7 +117,7 @@ add('sitemap.xml',
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes.map(r => `  <url><loc>${site.url}${r === '/' ? '/' : r}</loc></url>`).join('\n')}
 </urlset>`);
-add('robots.txt', `User-agent: *\nAllow: /\nDisallow: /legacy/\nDisallow: /orbix-reference/\nDisallow: /form-studio/\n\nSitemap: ${site.url}/sitemap.xml\n`);
+add('robots.txt', `User-agent: *\nAllow: /\nDisallow: /legacy/\nDisallow: /orbix-reference/\nDisallow: /form-studio/\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${site.url}/sitemap.xml\n`);
 
 console.log(`Built ${written.length} files:`);
 for (const w of written) console.log('  ' + w);

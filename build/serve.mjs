@@ -20,6 +20,12 @@ const TYPES = {
 
 const exists = async (p) => { try { return (await stat(p)).isFile(); } catch { return false; } };
 
+/* Admin panel, local mode: without GITHUB_TOKEN, saves go straight to
+   content/*.json on this machine and the site rebuilds. The password is
+   ADMIN_PASSWORD if set, otherwise a local-only default printed below. */
+if (!process.env.GITHUB_TOKEN) process.env.ADMIN_LOCAL = '1';
+if (!process.env.ADMIN_PASSWORD) process.env.ADMIN_PASSWORD = 'ostendic-local';
+
 const server = createServer(async (req, res) => {
   const started = Date.now();
   let url = decodeURIComponent((req.url || '/').split('?')[0]);
@@ -30,6 +36,21 @@ const server = createServer(async (req, res) => {
   // retired permanently: the Pricing page
   const gone = { '/pricing': '/' };
   if (gone[url]) { res.writeHead(308, { Location: gone[url] }); res.end(); console.log(`  308  ${url}`); return; }
+
+  // the admin panel's API, as Vercel would run it (local mode: edits the
+  // content files on disk and rebuilds the site)
+  const api = url.match(/^\/api\/admin\/([a-z]+)$/);
+  if (api) {
+    try {
+      const mod = await import(new URL(`../api/admin/${api[1]}.mjs`, import.meta.url));
+      await mod.default(req, res);
+      console.log(`  ${res.statusCode}  ${req.method} ${url}`);
+    } catch (e) {
+      if (!res.headersSent) { res.writeHead(404, { 'Content-Type': 'application/json' }); res.end('{"error":"Not found"}'); }
+      console.log(`  404  ${req.method} ${url}  ${e.code === 'ERR_MODULE_NOT_FOUND' ? '' : e.message}`);
+    }
+    return;
+  }
 
   // block traversal
   const safe = normalize(url).replace(/^(\.\.[/\\])+/, '');
@@ -79,6 +100,7 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\n  Ostendic dev server\n  http://localhost:${PORT}\n`);
   console.log('  Routes: /  /services  /work  /about  /blog  /contact  /book  /privacy  /terms\n');
+  console.log(`  Admin panel: http://localhost:${PORT}/admin  (${process.env.ADMIN_LOCAL === '1' ? 'local mode, saves to content/*.json' : 'GitHub mode'}; password: ${process.env.ADMIN_PASSWORD === 'ostendic-local' ? 'ostendic-local' : 'ADMIN_PASSWORD'})`);
   console.log('  Rebuild after editing build/*.mjs:  node build/build.mjs');
   console.log('  Stop: Ctrl+C\n');
 });

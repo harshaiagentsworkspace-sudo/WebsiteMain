@@ -81,8 +81,8 @@ export const head = (lines, cls = 'h2', tag = 'h2') => {
 };
 
 /* Page header for inner pages: one heading, one lead, no badges. */
-export const pageHead = ({ label, lines, lead, actions = '' }) => `
-<section class="phead">
+export const pageHead = ({ label, lines, lead, actions = '', bg = '' }) => `
+<section class="phead${bg ? ' phead--vid' : ''}">${bg}
   <div class="wrap phead__in">
     ${label ? `<p class="label">${esc(label)}</p>` : ''}
     ${head(lines, 'h1', 'h1')}
@@ -144,10 +144,16 @@ export const header = (current = '') => `
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
   <nav class="mnav__in" aria-label="Mobile">
-    ${nav.map(([l, h]) => `<a class="mnav__link" href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
-    <div class="mnav__svc">
-      ${pillars.map(s => `<a href="${s.path}">${esc(s.title)}</a>`).join('')}
-    </div>
+    ${nav.map(([l, h, kids]) => kids
+      /* an item with children (Services) opens in place to its pages;
+         it doesn't lead to an overview page of its own */
+      ? `<details class="mnav__group"${kids.some(([, kh]) => isCurrent(current, kh)) ? ' open' : ''}>
+      <summary class="mnav__link">${esc(l)}<span class="mnav__caret" aria-hidden="true">${ico.caret}</span></summary>
+      <div class="mnav__sub">
+        ${kids.map(([kl, kh], i) => `<a href="${kh}"${isCurrent(current, kh) ? ' aria-current="page"' : ''}><span class="tnum">${String(i + 1).padStart(2, '0')}</span>${esc(kl)}</a>`).join('')}
+      </div>
+    </details>`
+      : `<a class="mnav__link" href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}
     <div class="mnav__foot">
       ${startBtn('primary')}
       ${waBtn('ghost')}

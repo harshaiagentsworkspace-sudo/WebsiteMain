@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Internal business systems">
+  <rect x="6" y="8" width="52" height="48" rx="9"></rect>
+  <path d="M24 8V56"></path>
+  <g fill="currentColor" stroke="none"><circle cx="15" cy="19" r="2.6"></circle><circle cx="15" cy="29" r="2.6"></circle><circle cx="15" cy="39" r="2.6"></circle><rect x="32" y="38" width="18" height="10" rx="3"></rect></g>
+  <path d="M32 19H50M32 28H42"></path>
+</svg>

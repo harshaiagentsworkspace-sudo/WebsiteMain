@@ -16,7 +16,7 @@
       if ('inert' in mnav) mnav.inert = !open;
       document.documentElement.style.overflow = open ? 'hidden' : '';
       if (open) {
-        var first = mnav.querySelector('a');
+        var first = mnav.querySelector('summary, a');
         if (first) first.focus({ preventScroll: true });
       }
     };
@@ -38,14 +38,13 @@
   }
 
   /* ---------- hero background video ----------
-     The poster is painted by CSS. The 3 MB clip is attached only on wider
-     screens, with motion allowed and no data-saver, so phones never pay
-     for it. It pauses when scrolled out of view. */
+     The poster is painted by CSS. The clip is attached on every screen size
+     (most visitors are on phones), but not with reduced motion or
+     data-saver on. It pauses when scrolled out of view. */
   var vid = document.querySelector('.hero__vid[data-src]');
   if (vid) {
     var conn = navigator.connection || {};
-    var wideEnough = window.matchMedia('(min-width: 768px)').matches;
-    if (wideEnough && !reduce.matches && !conn.saveData) {
+    if (!reduce.matches && !conn.saveData) {
       vid.src = vid.getAttribute('data-src');
       vid.addEventListener('playing', function () { vid.classList.add('is-on'); }, { once: true });
       var p = vid.play();
@@ -67,7 +66,7 @@
   var bgvids = [].slice.call(document.querySelectorAll('.bgvid[data-src]'));
   if (bgvids.length && 'IntersectionObserver' in window) {
     var bconn = navigator.connection || {};
-    if (window.matchMedia('(min-width: 768px)').matches && !reduce.matches && !bconn.saveData) {
+    if (!reduce.matches && !bconn.saveData) {
       var bio = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           var v = en.target;

@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "headline": [
+      "Websites your customers use,",
+      "{and the systems behind them.}"
+    ],
+    "intro": "Ostendic designs and builds websites and web applications, and sets up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.",
+    "secondaryButton": "See selected work"
+  },
+  "services": {
+    "heading": "Two things we do, and do properly",
+    "panels": {
+      "web-development": {
+        "summary": "Websites and web apps that explain what you do, work well on a phone, and make it easy to get in touch or buy.",
+        "who": "You need a new website, a better one, or a web app your customers use.",
+        "problem": "Visitors can’t tell what you do, or how to get in touch. So they leave.",
+        "build": "Business websites, landing pages, online stores, Shopify and WordPress sites, custom web apps, redesigns.",
+        "includes": [
+          "Planning the pages and the visitor’s path",
+          "Design for phone, tablet and desktop",
+          "A custom build, or WordPress and Shopify",
+          "Testing before launch"
+        ]
+      },
+      "agentic-ai-workflows": {
+        "summary": "AI workflows that connect your tools and take the repetitive work off your team.",
+        "who": "Teams stuck repeating manual steps: answering enquiries, chasing leads, copying data between tools.",
+        "problem": "Leads wait for a reply. Questions pile up. Someone spends hours moving data from one tool to another.",
+        "build": "AI agents for business operations, lead follow-up, support workflows, process automation, tool integrations.",
+        "includes": [
+          "Mapping where time gets lost",
+          "Designing it, including where a person approves",
+          "Building it and connecting it to your tools",
+          "Testing on real cases before going live"
+        ]
+      }
+    }
+  },
+  "process": {
+    "heading": "Four steps. Nothing hidden.",
+    "steps": [
+      {
+        "title": "Talk it through",
+        "text": "Tell us what’s not working. We’ll say if we can’t help."
+      },
+      {
+        "title": "Agree it in writing",
+        "text": "Scope, price and dates on paper before any work starts."
+      },
+      {
+        "title": "Build, with check-ins",
+        "text": "You see progress at set points, not just at the end."
+      },
+      {
+        "title": "Launch and hand over",
+        "text": "You get the logins and notes to run it yourself."
+      }
+    ]
+  },
+  "about": {
+    "heading": "We build the online side of your business,",
+    "headingItalic": "so you can run the rest.",
+    "paragraphs": [
+      "Ostendic builds websites and AI agentic workflows for businesses that want to look credible and run smoothly.",
+      "Your site brings people in. Your workflows handle what happens next. We build both, and hand them over so your team can run them."
+    ]
+  }
+}

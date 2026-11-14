@@ -88,10 +88,24 @@ export const links = {
   startLabel: site.booking ? 'Book a quick call' : 'Start a conversation',
 };
 
+/* ---------- HOME PAGE (editable) ----------
+   The hero, the service panels' short copy, the process steps and the
+   About teaser on the home page come from content/home.json, which the
+   admin panel (/admin) edits. Everything else in this file stays here. */
+import { loadContent } from './content.mjs';
+const home = loadContent('home');
+
 /* ---------- HERO ---------- */
 export const heroCopy = {
-  lines: ['Websites your customers use,', '{and the systems behind them.}'],
-  lead: 'Ostendic designs and builds websites and web applications, and sets up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.',
+  lines: home.hero.headline,
+  lead: home.hero.intro,
+  secondaryButton: home.hero.secondaryButton,
+};
+
+/* Headings on the home page that the admin panel also edits */
+export const homeCopy = {
+  servicesHeading: home.services.heading,
+  about: { heading: home.about.heading, headingItalic: home.about.headingItalic },
 };
 
 /* ---------- SERVICES ----------
@@ -205,6 +219,8 @@ export const pillars = [
     ],
   },
 ];
+/* the home page panels' short copy comes from content/home.json */
+for (const p of pillars) Object.assign(p.panel, home.services.panels[p.slug]);
 
 /* ---------- PROCESS ----------
    One process, used once. No durations: timelines are agreed per scope. */
@@ -222,13 +238,8 @@ export const process = [
 /* Homepage version of the process: shorter copy, no "You receive" row.
    /services keeps the full `process` above. */
 export const processHome = {
-  heading: 'Four steps. Nothing hidden.',
-  steps: [
-    ['01', 'Talk it through', 'Tell us what’s not working. We’ll say if we can’t help.'],
-    ['02', 'Agree it in writing', 'Scope, price and dates on paper before any work starts.'],
-    ['03', 'Build, with check-ins', 'You see progress at set points, not just at the end.'],
-    ['04', 'Launch and hand over', 'You get the logins and notes to run it yourself.'],
-  ],
+  heading: home.process.heading,
+  steps: home.process.steps.map((s, i) => [String(i + 1).padStart(2, '0'), s.title, s.text]),
 };
 
 export const aboutCopy = {
@@ -240,10 +251,8 @@ export const aboutCopy = {
       'Ostendic is small by design. Every project is scoped in writing, built with care and handed over in a form your team can run.',
     ],
   },
-  teaser: [
-    'Ostendic builds websites and AI agentic workflows for businesses that want to look credible and run smoothly.',
-    'Your site brings people in. Your workflows handle what happens next. We build both, and hand them over so your team can run them.',
-  ],
+  /* homepage About teaser: from content/home.json */
+  teaser: home.about.paragraphs,
   /* [title, description, icon file in workflow-ring-v2/] */
   approach: [
     ['Start with the business problem', 'Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you.', 'principle-1-problem.svg'],
@@ -262,6 +271,11 @@ export const aboutCopy = {
    VMS Careline's visual is a brand plate: the official logo over a faded
    capture of its homepage. `colours` only tints the plate's frame; the
    names and hex codes are not shown.
+
+   mark (optional, demos): { logo, w, h, bg }. The product's own logo, shown
+   on its brand colour in the "Where we have applied this" cards on the
+   service pages instead of a screenshot. Rendered from each demo's header
+   (same SVG, font and colours). Work page cards are unchanged.
 
    heroImage (optional, any project): { src, w, h }. When set, the card shows
    that image faded behind the project's logo (brand.logo) or name. When not
@@ -289,6 +303,7 @@ export const projects = [
     slug: 'truereview', name: 'TrueReview', kind: 'demo', publish: true,
     caution: 'The live demo still shows unverified figures (“2M+ reviews analysed”, “94% accuracy”, “500+ products”, “4.9 stars”) and “[User Photo]” placeholders. The site uses a screenshot of the tool itself, but visitors who open the demo will see them. Remove them from the demo.',
     url: 'https://tru-review-lilac.vercel.app/',
+    mark: { logo: 'assets/logos/truereview.png', w: 626, h: 128, bg: '#1B4D3E' },
     images: { desktop: 'assets/work/truereview-desktop.jpg', phone: 'assets/work/truereview-phone.jpg' },
     area: 'Web application · AI analysis',
     pillars: ['web-development', 'agentic-ai-workflows'],
@@ -301,6 +316,7 @@ export const projects = [
   {
     slug: 'viralcheck', name: 'ViralCheck', kind: 'demo', publish: true,
     url: 'https://viralcheckcontent.vercel.app/',
+    mark: { logo: 'assets/logos/viralcheck.png', w: 561, h: 144, bg: '#FBF5E9' },
     images: { desktop: 'assets/work/viralcheck-desktop.jpg', phone: 'assets/work/viralcheck-phone.jpg' },
     area: 'Web application · AI review',
     pillars: ['web-development', 'agentic-ai-workflows'],
@@ -313,6 +329,7 @@ export const projects = [
   {
     slug: 'launchmirror', name: 'LaunchMirror', kind: 'demo', publish: true,
     url: 'https://launchmirror.vercel.app/',
+    mark: { logo: 'assets/logos/launchmirror.png', w: 586, h: 128, bg: '#371F31' },
     images: { desktop: 'assets/work/launchmirror-desktop.jpg', phone: 'assets/work/launchmirror-phone.jpg' },
     area: 'Web application · AI analysis',
     pillars: ['web-development', 'agentic-ai-workflows'],

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin | Ostendic</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="/styles/ostendic.css">
+<link rel="stylesheet" href="/styles/admin.css">
+</head>
+<body class="adm">
+<!-- Ostendic admin panel: edits content/blog.json and content/home.json
+     through /api/admin/*. Not linked from the site; noindex; robots.txt
+     disallows it. Everything it saves is plain text, escaped by the build. -->
+
+<div class="adm-bg" aria-hidden="true"></div>
+
+<main class="adm-login" id="login" hidden>
+  <form class="adm-card adm-login__card" id="loginForm">
+    <span class="adm-wordmark">Ostendic</span>
+    <h1 class="adm-h1">Admin</h1>
+    <p class="adm-muted">Edit the blog and the home page.</p>
+    <label class="adm-field"><span>Password</span>
+      <input type="password" id="loginPw" autocomplete="current-password" required></label>
+    <p class="adm-error" id="loginErr" role="alert" hidden></p>
+    <button class="btn btn--primary adm-btn-wide" type="submit"><span class="btn-label">Log in</span></button>
+  </form>
+</main>
+
+<div class="adm-app" id="app" hidden>
+  <header class="adm-top">
+    <div class="adm-top__in">
+      <a class="adm-brand" href="/" target="_blank" rel="noopener"><span class="adm-wordmark">Ostendic</span><span class="adm-brand__tag">Admin</span></a>
+      <nav class="adm-tabs" role="tablist" aria-label="Sections">
+        <button class="adm-tab" role="tab" id="tab-blog" aria-selected="true" aria-controls="view-blog" data-view="blog">Blog</button>
+        <button class="adm-tab" role="tab" id="tab-home" aria-selected="false" aria-controls="view-home" data-view="home">Home page</button>
+      </nav>
+      <div class="adm-top__end">
+        <span class="adm-mode" id="modeBadge"></span>
+        <button class="adm-link" type="button" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- save bar: appears when there are unsaved changes -->
+  <div class="adm-savebar" id="saveBar" hidden>
+    <div class="adm-savebar__in">
+      <span id="saveBarText">You have unsaved changes.</span>
+      <div class="adm-savebar__act">
+        <button class="adm-link" type="button" id="discardBtn">Discard</button>
+        <button class="btn btn--primary" type="button" id="saveBtn"><span class="btn-label">Publish changes</span></button>
+      </div>
+    </div>
+  </div>
+
+  <main class="adm-main">
+    <div class="adm-notice" id="notice" role="status" aria-live="polite" hidden></div>
+
+    <!-- BLOG -->
+    <section class="adm-view" id="view-blog" role="tabpanel" aria-labelledby="tab-blog">
+      <div class="adm-list" id="blogList">
+        <div class="adm-head">
+          <div><h1 class="adm-h1">Blog posts</h1><p class="adm-muted">Drafts are saved but not shown on the site. The order here is the order on /blog.</p></div>
+          <button class="btn btn--primary" type="button" id="newPostBtn"><span class="btn-label">New post</span></button>
+        </div>
+        <label class="adm-switch adm-card">
+          <input type="checkbox" id="blogIndexable">
+          <span><strong>Show the blog to search engines</strong><span class="adm-muted">Off while the posts are placeholders: the blog stays visible to visitors but is hidden from Google and left out of the sitemap.</span></span>
+        </label>
+        <ul class="adm-posts" id="posts"></ul>
+      </div>
+
+      <form class="adm-editor" id="postEditor" hidden novalidate>
+        <button class="adm-link adm-back" type="button" id="backToList">← All posts</button>
+        <div class="adm-card adm-form">
+          <h2 class="adm-h2" id="editorTitle">Edit post</h2>
+          <label class="adm-field"><span>Title</span><input id="pTitle" maxlength="120" required></label>
+          <label class="adm-field"><span>URL name <em class="adm-muted" id="pUrl"></em></span>
+            <input id="pSlug" maxlength="80" pattern="[a-z0-9]+(-[a-z0-9]+)*" required spellcheck="false">
+            <small class="adm-muted">Lowercase letters, numbers and hyphens. Changing it on a published post changes its web address.</small></label>
+          <div class="adm-row">
+            <label class="adm-field"><span>Category</span><input id="pCategory" maxlength="40" list="categories" required><datalist id="categories"></datalist></label>
+            <label class="adm-switch adm-switch--inline"><input type="checkbox" id="pDraft"><span><strong>Draft</strong><span class="adm-muted">Not shown on the site</span></span></label>
+          </div>
+          <label class="adm-field"><span>Summary <small class="adm-count" data-for="pExcerpt"></small></span>
+            <textarea id="pExcerpt" rows="2" maxlength="240" required></textarea>
+            <small class="adm-muted">Shown on the blog page and in search results.</small></label>
+          <label class="adm-field"><span>Article</span>
+            <textarea id="pBody" rows="16" required></textarea>
+            <small class="adm-muted">Leave an empty line between paragraphs. Plain text only.</small></label>
+          <div class="adm-form__foot">
+            <button class="adm-link adm-danger" type="button" id="deletePost">Delete post</button>
+            <span class="adm-muted" id="pWords"></span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- HOME -->
+    <section class="adm-view" id="view-home" role="tabpanel" aria-labelledby="tab-home" hidden>
+      <div class="adm-head"><div><h1 class="adm-h1">Home page</h1><p class="adm-muted">Text for the home page. Wrap words in {curly braces} in the headline to set them in italics.</p></div></div>
+      <form id="homeForm" novalidate></form>
+    </section>
+  </main>
+</div>
+
+<div class="adm-toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="/scripts/admin.js" defer></script>
+</body>
+</html>

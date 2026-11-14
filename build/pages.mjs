@@ -2,10 +2,11 @@
    OSTENDIC — PAGE COMPOSITIONS
    =========================================================================== */
 import {
-  site, links, pillars, aboutCopy, published, kindLabel, bookingProvider,
+  site, links, pillars, aboutCopy, published, bookingProvider,
   budgets, interests,
 } from './data.mjs';
-import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark } from './ui.mjs';
+import { readdirSync } from 'node:fs';
+import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark, WebDevelopmentIcon, AgenticWorkflowsIcon } from './ui.mjs';
 import * as S from './sections.mjs';
 import { posts, readingTime } from './blog.mjs';
 
@@ -30,7 +31,32 @@ ${S.serviceChapters({ withHead: false })}
 ${S.processSection()}
 `;
 
+/* Service pages: frosted-glass cards over a full-strength clip. The poster
+   is the backdrop wherever the clip doesn't play (phones, reduced motion,
+   data saver), so the glass always has something to blur. */
+const glassClips = {
+  'web-development': ['work-bg', 'demos-bg', 'clients-vortex'],
+  'agentic-ai-workflows': ['about-hero-bg', 'hero-vortex', 'process-bg', 'agentic-ai-bg'],
+};
+const glassBg = (name) => `
+  <div class="svc-bg glass-bg" aria-hidden="true">
+    <div class="svc-bg__media" style="background-image:url('/assets/${name}-poster.jpg')">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/${name}.mp4"></video>
+    </div>
+  </div>`;
+
+/* Icons for the "What we build" cards, in card order: workflow-ring-v2/
+   service-01..08-*.svg for web development, ai-01..08-*.svg for AI. */
+const ICON_DIR = new URL('../workflow-ring-v2/', import.meta.url);
+const svcIconPrefix = { 'web-development': 'service-', 'agentic-ai-workflows': 'ai-' };
+const serviceIcons = (slug) => readdirSync(ICON_DIR).filter(f => f.startsWith(svcIconPrefix[slug]) && f.endsWith('.svg')).sort();
+const pillarIcon = { 'web-development': WebDevelopmentIcon, 'agentic-ai-workflows': AgenticWorkflowsIcon };
+
 export const pillarPage = (s) => {
+  const clips = glassClips[s.slug];
+  const icons = serviceIcons(s.slug);
+  if (icons.length !== s.services.length) throw new Error(`${s.slug}: ${icons.length} icons for ${s.services.length} services`);
   const other = pillars.find(p => p.slug !== s.slug);
   const work = published.filter(p => p.pillars.includes(s.slug));
   return `
@@ -39,51 +65,50 @@ ${pageHead({
   lines: [s.title],
   lead: s.summary,
   actions: startBtn('primary') + waBtn('ghost'),
+  bg: s.slug === 'web-development' ? S.sectionVideo('/assets/web-development-bg.mp4') : '',
 })}
 
-<section class="section section--white">
+<section class="section section--vid section--glass">${glassBg(clips[0])}
   <div class="wrap">
-    <div class="split">
-      <div class="split__a">
-        <p class="label">Who it helps</p>
-        <p class="body">${esc(s.who)}</p>
-        <p class="label mt-24">The problem</p>
-        <p class="body">${esc(s.problem)}</p>
-      </div>
-      <div class="split__b">
-        <h2 class="h3">What we build</h2>
-        <dl class="rows">
-          ${s.services.map(([t, d]) => `<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
-        </dl>
-      </div>
+    <div class="svc-intro">
+      <div class="glass"><span class="glass__pill">Who it helps</span><p class="body">${esc(s.who)}</p></div>
+      <div class="glass"><span class="glass__pill">The problem</span><p class="body">${esc(s.problem)}</p></div>
     </div>
+    <div class="shead">
+      <p class="label">Services</p>
+      <div class="shead__main"><h2 class="h2">What we build</h2></div>
+    </div>
+    <ul class="glass-grid glass-grid--4">
+      ${s.services.map(([t, d], i) => `<li class="glass"><span class="glass__tile">${principleIcon(icons[i], { size: 28 })}</span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></li>`).join('')}
+    </ul>
   </div>
 </section>
 
 ${s.example ? `
-<section class="section">
+<section class="section section--vid section--glass section--eg">${glassBg(clips[3])}
   <div class="wrap">
     ${S.example(s, false)}
   </div>
 </section>` : ''}
 
-<section class="section section--dark">
+<section class="section section--vid section--glass">${glassBg(clips[1])}
   <div class="wrap">
     <div class="shead">
       <p class="label">How we approach it</p>
       <div class="shead__main"><h2 class="h2">What an engagement includes</h2></div>
     </div>
-    <div class="split">
-      <ul class="ticks ticks--lg split__a">${s.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul>
-      <div class="split__b principles">
-        ${s.principles.map(([t, d]) => `<div><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></div>`).join('')}
-      </div>
+    <ol class="glass-grid glass-grid--5">
+      ${s.includes.map((b, i) => `<li class="glass glass--step"><span class="glass__pill tnum">Step ${String(i + 1).padStart(2, '0')}</span><p class="glass__lead">${esc(b)}</p></li>`).join('')}
+    </ol>
+    <p class="label glass-sub">What we hold to</p>
+    <div class="glass-grid glass-grid--3">
+      ${s.principles.map(([t, d]) => `<div class="glass"><span class="glass__ico">${ico.check}</span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></div>`).join('')}
     </div>
   </div>
 </section>
 
 ${work.length ? `
-<section class="section section--white">
+<section class="section section--vid section--glass">${glassBg(clips[2])}
   <div class="wrap">
     <div class="shead">
       <p class="label">Related work</p>
@@ -92,11 +117,11 @@ ${work.length ? `
     <ul class="mini-work">
       ${work.map(p => `
       <li>
-        <a href="/work#${p.slug}">
-          ${p.brand
-            ? `<span class="mini-work__logo"><img src="/${p.brand.logo}" alt="" width="${p.brand.w}" height="${p.brand.h}" loading="lazy" decoding="async"></span>`
+        <a class="glass" href="/work#${p.slug}">
+          ${p.brand || p.mark
+            ? (({ logo, w, h, bg }) => `<span class="mini-work__logo"${bg ? ` style="background:${bg}"` : ''}><img src="/${logo}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async"></span>`)(p.mark || p.brand)
             : `<img src="/${p.images.desktop}" alt="" width="1600" height="1000" loading="lazy" decoding="async">`}
-          <span class="mini-work__t"><span class="tag tag--${p.kind}">${kindLabel[p.kind]}</span><strong>${esc(p.name)}</strong><span class="body-sm">${esc(p.what)}</span></span>
+          <span class="mini-work__t"><strong>${esc(p.name)}</strong><span class="body-sm">${esc(p.what)}</span></span>
         </a>
       </li>`).join('')}
     </ul>
@@ -172,26 +197,26 @@ export const about = () => `
 </section>
 ${S.statsBar()}
 
-<section class="section section--white section--vid">${S.sectionVideo('/assets/process-bg.mp4')}
+<section class="section section--vid section--glass">${glassBg('process-bg')}
   <div class="wrap">
     <div class="shead">
       <p class="label">How we work</p>
       <div class="shead__main"><h2 class="h2">Four things we hold to on every project</h2></div>
     </div>
-    <dl class="rows rows--2 principles-hover">
-      ${aboutCopy.approach.map(([t, d, icon]) => `<div tabindex="0"><dt>${principleIcon(icon, { size: 44, className: 'principle__icon' })}${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}
-    </dl>
+    <ul class="glass-grid glass-grid--4">
+      ${aboutCopy.approach.map(([t, d, icon]) => `<li class="glass"><span class="glass__tile">${principleIcon(icon, { size: 28 })}</span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></li>`).join('')}
+    </ul>
   </div>
 </section>
 
-<section class="section section--vid">${S.sectionVideo('/assets/demos-bg.mp4')}
+<section class="section section--vid section--glass">${glassBg('demos-bg')}
   <div class="wrap">
     <div class="shead">
       <p class="label">What Ostendic does</p>
       <div class="shead__main"><h2 class="h2">Two services</h2></div>
     </div>
-    <ul class="svc-links">
-      ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="svc-links__t">${esc(p.title)}</span><span class="body-sm">${esc(p.summary)}</span>${ico.right}</a></li>`).join('')}
+    <ul class="glass-grid glass-grid--2">
+      ${pillars.map(p => `<li><a class="glass glass--link" href="${p.path}"><span class="glass__tile">${pillarIcon[p.slug]({ size: 28 })}</span><span class="glass__pill tnum">Service ${p.n}</span><h3 class="h3">${esc(p.title)}</h3><p class="body-sm">${esc(p.summary)}</p><span class="glass__go">Learn more${ico.right}</span></a></li>`).join('')}
     </ul>
     <div class="btn-row">${startBtn('primary')}</div>
   </div>
@@ -280,7 +305,7 @@ export const contact = () => {
       <div class="contact__form">${form}
       </div>`;
   return `
-<section class="phead phead--contact">
+<section class="phead phead--contact phead--vid section--glass">${glassBg('about-bg')}
   <div class="wrap contact">
     <div class="contact__main">
       <p class="label">Contact</p>
@@ -359,7 +384,7 @@ export const book = () => `
 /* ========================= BLOG =========================
    Posts come from build/blog.mjs. No dates, authors or counts. */
 export const blogIndex = () => `
-<div class="work-hero">${S.sectionVideo('/assets/blog-bg.mp4')}
+<div class="work-hero section--glass">${glassBg('blog-bg')}
 <section class="phead">
   <div class="wrap">
     <div class="shead shead--flush">
@@ -372,7 +397,7 @@ export const blogIndex = () => `
   <div class="wrap">
     <ul class="posts">
       ${posts.map(p => `
-      <li class="post-card">
+      <li class="post-card glass">
         <p class="label">${esc(p.category)}</p>
         <h2 class="h4 post-card__t"><a href="/blog/${p.slug}">${esc(p.title)}</a></h2>
         <p class="body-sm">${esc(p.excerpt)}</p>
@@ -385,14 +410,16 @@ export const blogIndex = () => `
 `;
 
 export const blogPost = (p) => `
-<article class="post">
+<article class="post section--glass">${glassBg('blog-bg')}
   <div class="wrap post__in">
     <a class="post__back" href="/blog"><span aria-hidden="true">←</span> Back to all posts</a>
-    <p class="label">${esc(p.category)}</p>
-    <h1 class="h1 post__t">${esc(p.title)}</h1>
-    <p class="post__meta">${readingTime(p)}</p>
-    <div class="post__body">
-      ${p.body.map(t => `<p>${esc(t)}</p>`).join('\n      ')}
+    <div class="post__sheet">
+      <p class="label">${esc(p.category)}</p>
+      <h1 class="h1 post__t">${esc(p.title)}</h1>
+      <p class="post__meta">${readingTime(p)}</p>
+      <div class="post__body">
+        ${p.body.map(t => `<p>${esc(t)}</p>`).join('\n        ')}
+      </div>
     </div>
     <aside class="post__cta" aria-label="Get in touch">
       <h2 class="h3">Got something to build or fix?</h2>

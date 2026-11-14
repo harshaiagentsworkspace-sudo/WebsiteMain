@@ -45,10 +45,12 @@
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
   <nav class="mnav__in" aria-label="Mobile">
-    <a class="mnav__link" href="/services" aria-current="page">Services</a><a class="mnav__link" href="/work">Work</a><a class="mnav__link" href="/about">About</a><a class="mnav__link" href="/blog">Blog</a><a class="mnav__link" href="/contact">Contact</a>
-    <div class="mnav__svc">
-      <a href="/services/web-development">Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows">Agentic AI Workflows</a>
-    </div>
+    <details class="mnav__group" open>
+      <summary class="mnav__link">Services<span class="mnav__caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+      <div class="mnav__sub">
+        <a href="/services/web-development" aria-current="page"><span class="tnum">01</span>Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows"><span class="tnum">02</span>Agentic AI Workflows</a>
+      </div>
+    </details><a class="mnav__link" href="/work">Work</a><a class="mnav__link" href="/about">About</a><a class="mnav__link" href="/blog">Blog</a><a class="mnav__link" href="/contact">Contact</a>
     <div class="mnav__foot">
       <a class="btn btn--primary btn--ava" href="/book"><span class="btn-label">Book a quick call</span><span class="btn__ava face"><img src="/assets/harsh-dubey.jpg" alt="" width="96" height="96" decoding="async" loading="lazy"></span></a>
       
@@ -60,7 +62,13 @@
 <main id="main">
 
 
-<section class="phead">
+<section class="phead phead--vid">
+  <div class="svc-bg" aria-hidden="true">
+    <div class="svc-bg__media">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/web-development-bg.mp4"></video>
+    </div>
+  </div>
   <div class="wrap phead__in">
     <p class="label">Service 01</p>
     <h1 class="h1">Web Development and UI/UX Design</h1>
@@ -69,44 +77,97 @@
   </div>
 </section>
 
-<section class="section section--white">
-  <div class="wrap">
-    <div class="split">
-      <div class="split__a">
-        <p class="label">Who it helps</p>
-        <p class="body">Businesses that need a new website, a better one, or a web application their customers or team will use every day.</p>
-        <p class="label mt-24">The problem</p>
-        <p class="body">Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.</p>
-      </div>
-      <div class="split__b">
-        <h2 class="h3">What we build</h2>
-        <dl class="rows">
-          <div><dt>Website design and development</dt><dd>Business websites planned around what visitors need to understand, then designed and built to load quickly on any device.</dd></div><div><dt>UI/UX design</dt><dd>User flows, wireframes and interface design that make a website or product easier to understand and easier to use.</dd></div><div><dt>Landing pages</dt><dd>Focused pages for a campaign, product or offer, with one clear message and one clear next step.</dd></div><div><dt>E-commerce development</dt><dd>Online stores designed around how customers browse, compare and buy, from product page to checkout.</dd></div><div><dt>Shopify and WordPress</dt><dd>Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work.</dd></div><div><dt>Custom web applications</dt><dd>Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done.</dd></div><div><dt>Responsive front-end development</dt><dd>Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience.</dd></div><div><dt>Redesigns and improvements</dt><dd>A review of an existing site, followed by the changes that make it clearer, faster and easier to use.</dd></div>
-        </dl>
-      </div>
+<section class="section section--vid section--glass">
+  <div class="svc-bg glass-bg" aria-hidden="true">
+    <div class="svc-bg__media" style="background-image:url('/assets/work-bg-poster.jpg')">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/work-bg.mp4"></video>
     </div>
+  </div>
+  <div class="wrap">
+    <div class="svc-intro">
+      <div class="glass"><span class="glass__pill">Who it helps</span><p class="body">Businesses that need a new website, a better one, or a web application their customers or team will use every day.</p></div>
+      <div class="glass"><span class="glass__pill">The problem</span><p class="body">Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.</p></div>
+    </div>
+    <div class="shead">
+      <p class="label">Services</p>
+      <div class="shead__main"><h2 class="h2">What we build</h2></div>
+    </div>
+    <ul class="glass-grid glass-grid--4">
+      <li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="6" y="9" width="52" height="46" rx="9"></rect>
+  <path d="M6 24H58"></path>
+  <circle cx="16" cy="16.5" r="2.6" fill="currentColor" stroke="none"></circle>
+  <rect x="14" y="32" width="14" height="14" rx="3.5" fill="currentColor" stroke="none"></rect>
+  <path d="M36 35H49M36 43H44"></path>
+</svg></span><h3 class="h4">Website design and development</h3><p class="body-sm">Business websites planned around what visitors need to understand, then designed and built to load quickly on any device.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="8" y="10" width="38" height="32" rx="6"></rect>
+  <circle cx="8" cy="10" r="3" fill="currentColor" stroke="none"></circle>
+  <circle cx="46" cy="10" r="3" fill="currentColor" stroke="none"></circle>
+  <circle cx="8" cy="42" r="3" fill="currentColor" stroke="none"></circle>
+  <path d="M33 30V57L40.5 49.5L46 61L52 58.5L46.5 47H57Z" fill="currentColor" stroke="none"></path>
+</svg></span><h3 class="h4">UI/UX design</h3><p class="body-sm">User flows, wireframes and interface design that make a website or product easier to understand and easier to use.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="13" y="5" width="38" height="54" rx="9"></rect>
+  <path d="M22 17H42M22 25H34"></path>
+  <rect x="22" y="38" width="20" height="9" rx="4.5" fill="currentColor" stroke="none"></rect>
+</svg></span><h3 class="h4">Landing pages</h3><p class="body-sm">Focused pages for a campaign, product or offer, with one clear message and one clear next step.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="10" y="22" width="44" height="35" rx="8"></rect>
+  <path d="M22 28V22A10 10 0 0 1 42 22V28"></path>
+  <circle cx="32" cy="41" r="4.8" fill="currentColor" stroke="none"></circle>
+</svg></span><h3 class="h4">E-commerce development</h3><p class="body-sm">Online stores designed around how customers browse, compare and buy, from product page to checkout.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="6" y="8" width="42" height="36" rx="8"></rect>
+  <path d="M6 20H48"></path>
+  <path d="M30 54L50 34" stroke-width="8"></path>
+  <path d="M25 59L27.5 49L35 56.5Z" fill="currentColor" stroke="none"></path>
+</svg></span><h3 class="h4">Shopify and WordPress</h3><p class="body-sm">Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <path d="M21 17L7 32L21 47"></path>
+  <path d="M43 17L57 32L43 47"></path>
+  <circle cx="32" cy="32" r="5" fill="currentColor" stroke="none"></circle>
+</svg></span><h3 class="h4">Custom web applications</h3><p class="body-sm">Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="5" y="9" width="33" height="26" rx="5"></rect>
+  <path d="M21.5 35V44M13 44H30"></path>
+  <rect x="43" y="22" width="16" height="34" rx="5" fill="currentColor" stroke="none"></rect>
+</svg></span><h3 class="h4">Responsive front-end development</h3><p class="body-sm">Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience.</p></li><li class="glass"><span class="glass__tile"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true" focusable="false">
+  <rect x="3" y="19" width="22" height="26" rx="7"></rect>
+  <path d="M29 32H38M34 27.5L38.5 32L34 36.5"></path>
+  <rect x="42" y="17" width="19" height="30" rx="7" fill="currentColor" stroke="none"></rect>
+</svg></span><h3 class="h4">Redesigns and improvements</h3><p class="body-sm">A review of an existing site, followed by the changes that make it clearer, faster and easier to use.</p></li>
+    </ul>
   </div>
 </section>
 
 
 
-<section class="section section--dark">
+<section class="section section--vid section--glass">
+  <div class="svc-bg glass-bg" aria-hidden="true">
+    <div class="svc-bg__media" style="background-image:url('/assets/demos-bg-poster.jpg')">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/demos-bg.mp4"></video>
+    </div>
+  </div>
   <div class="wrap">
     <div class="shead">
       <p class="label">How we approach it</p>
       <div class="shead__main"><h2 class="h2">What an engagement includes</h2></div>
     </div>
-    <div class="split">
-      <ul class="ticks ticks--lg split__a"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg><span>Planning the pages, content and the path a visitor takes</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg><span>UI/UX design for phone, tablet and desktop</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg><span>Development as a custom build, or on WordPress or Shopify if you want to manage it yourself</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg><span>Testing across devices and browsers before launch</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg><span>Launch, and a handover of everything you need to run it</span></li></ul>
-      <div class="split__b principles">
-        <div><h3 class="h4">Clarity first</h3><p class="body-sm">A visitor should understand what you do, who it’s for and what to do next within a few seconds.</p></div><div><h3 class="h4">Designed for the phone</h3><p class="body-sm">Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought.</p></div><div><h3 class="h4">Easy to maintain</h3><p class="body-sm">Sensible platforms and clean structure, so the site stays easy to update after launch.</p></div>
-      </div>
+    <ol class="glass-grid glass-grid--5">
+      <li class="glass glass--step"><span class="glass__pill tnum">Step 01</span><p class="glass__lead">Planning the pages, content and the path a visitor takes</p></li><li class="glass glass--step"><span class="glass__pill tnum">Step 02</span><p class="glass__lead">UI/UX design for phone, tablet and desktop</p></li><li class="glass glass--step"><span class="glass__pill tnum">Step 03</span><p class="glass__lead">Development as a custom build, or on WordPress or Shopify if you want to manage it yourself</p></li><li class="glass glass--step"><span class="glass__pill tnum">Step 04</span><p class="glass__lead">Testing across devices and browsers before launch</p></li><li class="glass glass--step"><span class="glass__pill tnum">Step 05</span><p class="glass__lead">Launch, and a handover of everything you need to run it</p></li>
+    </ol>
+    <p class="label glass-sub">What we hold to</p>
+    <div class="glass-grid glass-grid--3">
+      <div class="glass"><span class="glass__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg></span><h3 class="h4">Clarity first</h3><p class="body-sm">A visitor should understand what you do, who it’s for and what to do next within a few seconds.</p></div><div class="glass"><span class="glass__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg></span><h3 class="h4">Designed for the phone</h3><p class="body-sm">Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought.</p></div><div class="glass"><span class="glass__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg></span><h3 class="h4">Easy to maintain</h3><p class="body-sm">Sensible platforms and clean structure, so the site stays easy to update after launch.</p></div>
     </div>
   </div>
 </section>
 
 
-<section class="section section--white">
+<section class="section section--vid section--glass">
+  <div class="svc-bg glass-bg" aria-hidden="true">
+    <div class="svc-bg__media" style="background-image:url('/assets/clients-vortex-poster.jpg')">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/clients-vortex.mp4"></video>
+    </div>
+  </div>
   <div class="wrap">
     <div class="shead">
       <p class="label">Related work</p>
@@ -115,27 +176,27 @@
     <ul class="mini-work">
       
       <li>
-        <a href="/work#vms-careline">
+        <a class="glass" href="/work#vms-careline">
           <span class="mini-work__logo"><img src="/assets/logos/vms-careline.png" alt="" width="900" height="290" loading="lazy" decoding="async"></span>
-          <span class="mini-work__t"><span class="tag tag--client">Client project</span><strong>VMS Careline</strong><span class="body-sm">The website and brand structure for VMS Careline, a healthcare e-commerce business in India.</span></span>
+          <span class="mini-work__t"><strong>VMS Careline</strong><span class="body-sm">The website and brand structure for VMS Careline, a healthcare e-commerce business in India.</span></span>
         </a>
       </li>
       <li>
-        <a href="/work#truereview">
-          <img src="/assets/work/truereview-desktop.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
-          <span class="mini-work__t"><span class="tag tag--demo">Demo build</span><strong>TrueReview</strong><span class="body-sm">A demo tool that helps shoppers decide if a product is worth buying.</span></span>
+        <a class="glass" href="/work#truereview">
+          <span class="mini-work__logo" style="background:#1B4D3E"><img src="/assets/logos/truereview.png" alt="" width="626" height="128" loading="lazy" decoding="async"></span>
+          <span class="mini-work__t"><strong>TrueReview</strong><span class="body-sm">A demo tool that helps shoppers decide if a product is worth buying.</span></span>
         </a>
       </li>
       <li>
-        <a href="/work#viralcheck">
-          <img src="/assets/work/viralcheck-desktop.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
-          <span class="mini-work__t"><span class="tag tag--demo">Demo build</span><strong>ViralCheck</strong><span class="body-sm">A demo tool we built that scores a piece of content.</span></span>
+        <a class="glass" href="/work#viralcheck">
+          <span class="mini-work__logo" style="background:#FBF5E9"><img src="/assets/logos/viralcheck.png" alt="" width="561" height="144" loading="lazy" decoding="async"></span>
+          <span class="mini-work__t"><strong>ViralCheck</strong><span class="body-sm">A demo tool we built that scores a piece of content.</span></span>
         </a>
       </li>
       <li>
-        <a href="/work#launchmirror">
-          <img src="/assets/work/launchmirror-desktop.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
-          <span class="mini-work__t"><span class="tag tag--demo">Demo build</span><strong>LaunchMirror</strong><span class="body-sm">A demo tool that gives you a structured first read on a business idea before you commit to building it.</span></span>
+        <a class="glass" href="/work#launchmirror">
+          <span class="mini-work__logo" style="background:#371F31"><img src="/assets/logos/launchmirror.png" alt="" width="586" height="128" loading="lazy" decoding="async"></span>
+          <span class="mini-work__t"><strong>LaunchMirror</strong><span class="body-sm">A demo tool that gives you a structured first read on a business idea before you commit to building it.</span></span>
         </a>
       </li>
     </ul>

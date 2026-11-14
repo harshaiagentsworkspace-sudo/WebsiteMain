@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Shopify and WordPress">
+  <rect x="6" y="8" width="42" height="36" rx="8"></rect>
+  <path d="M6 20H48"></path>
+  <path d="M30 54L50 34" stroke-width="8"></path>
+  <path d="M25 59L27.5 49L35 56.5Z" fill="currentColor" stroke="none"></path>
+</svg>

@@ -45,10 +45,12 @@
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
   <nav class="mnav__in" aria-label="Mobile">
-    <a class="mnav__link" href="/services">Services</a><a class="mnav__link" href="/work" aria-current="page">Work</a><a class="mnav__link" href="/about">About</a><a class="mnav__link" href="/blog">Blog</a><a class="mnav__link" href="/contact">Contact</a>
-    <div class="mnav__svc">
-      <a href="/services/web-development">Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows">Agentic AI Workflows</a>
-    </div>
+    <details class="mnav__group">
+      <summary class="mnav__link">Services<span class="mnav__caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+      <div class="mnav__sub">
+        <a href="/services/web-development"><span class="tnum">01</span>Web Development and UI/UX Design</a><a href="/services/agentic-ai-workflows"><span class="tnum">02</span>Agentic AI Workflows</a>
+      </div>
+    </details><a class="mnav__link" href="/work" aria-current="page">Work</a><a class="mnav__link" href="/about">About</a><a class="mnav__link" href="/blog">Blog</a><a class="mnav__link" href="/contact">Contact</a>
     <div class="mnav__foot">
       <a class="btn btn--primary btn--ava" href="/book"><span class="btn-label">Book a quick call</span><span class="btn__ava face"><img src="/assets/harsh-dubey.jpg" alt="" width="96" height="96" decoding="async" loading="lazy"></span></a>
       

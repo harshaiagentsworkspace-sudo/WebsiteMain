@@ -3,5 +3,7 @@ Allow: /
 Disallow: /legacy/
 Disallow: /orbix-reference/
 Disallow: /form-studio/
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://www.ostendic.com/sitemap.xml
