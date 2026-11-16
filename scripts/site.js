@@ -84,6 +84,36 @@
     }
   }
 
+  /* ---------- phones that refuse autoplay ----------
+     iOS Low Power Mode and Android battery saver reject a muted autoplay
+     clip's play(). They do allow play() started by a tap, so on each tap,
+     click or key press, every attached clip that is on screen and hasn't
+     started yet is played. Once a clip has played it keeps the right to
+     resume, so the listeners remove themselves when all clips are running.
+     Poster frames stay visible underneath until then. */
+  var allClips = [].slice.call(document.querySelectorAll('video.hero__vid, video.bgvid'));
+  if (allClips.length && !reduce.matches && !(navigator.connection || {}).saveData) {
+    var onScreen = function (v) {
+      var r = v.getBoundingClientRect();
+      return r.bottom > 0 && r.top < (window.innerHeight || 800) && r.width > 0;
+    };
+    var unlock = function () {
+      allClips.forEach(function (v) {
+        if (!v.getAttribute('src') && v.getAttribute('data-src') && onScreen(v)) {
+          v.addEventListener('playing', function () { v.classList.add('is-on'); }, { once: true });
+          v.src = v.getAttribute('data-src');
+        }
+        if (v.getAttribute('src') && !v.classList.contains('is-on') && onScreen(v)) {
+          var q = v.play(); if (q && q.catch) q.catch(function () {});
+        }
+      });
+      if (allClips.every(function (v) { return v.classList.contains('is-on'); })) {
+        ['touchend', 'click', 'keydown'].forEach(function (t) { document.removeEventListener(t, unlock, true); });
+      }
+    };
+    ['touchend', 'click', 'keydown'].forEach(function (t) { document.addEventListener(t, unlock, { capture: true, passive: true }); });
+  }
+
   /* ---------- sequence rails (process roadmap, workflow example) ----------
      The rail fills as the list moves up through the viewport, and each step
      is marked reached when the fill passes its node. Only the rail, nodes and

@@ -6,7 +6,7 @@
    Everything is static HTML. The only motion is the hero background video,
    which never loads on small screens, data-saver or reduced motion.
    =========================================================================== */
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { site, heroCopy, homeCopy, pillars, process, processHome, aboutCopy, published, kindLabel } from './data.mjs';
 import { stats, statsDevWarning } from './stats.mjs';
 import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon, statIcon } from './ui.mjs';
@@ -252,12 +252,19 @@ export const exampleRing = (s) => `
         <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
       </aside>`;
 
-/* Background clip behind the homepage work, service, process and about sections. Same treatment
-   as the hero: decorative, attached by site.js on wider screens with motion
-   allowed, and only once the section is near the viewport. */
+/* Background clip behind the homepage work, service, process and about
+   sections. Decorative: site.js attaches the clip once the section is near
+   the viewport (any screen size; not with reduced motion or data saver).
+   The clip's poster frame (assets/<name>-poster.jpg) is painted underneath,
+   so the section has its backdrop while the clip loads, and on phones that
+   refuse autoplay (iOS Low Power Mode, Android battery saver). */
+const posterOf = (src) => {
+  const p = src.replace(/\.mp4$/, '-poster.jpg');
+  return existsSync(new URL(`..${p}`, import.meta.url)) ? p : '';
+};
 export const sectionVideo = (src) => `
   <div class="svc-bg" aria-hidden="true">
-    <div class="svc-bg__media">
+    <div class="svc-bg__media"${posterOf(src) ? ` style="background-image:url('${posterOf(src)}')"` : ''}>
       <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
              disablepictureinpicture data-src="${src}"></video>
     </div>
