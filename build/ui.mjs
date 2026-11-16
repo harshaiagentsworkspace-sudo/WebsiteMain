@@ -169,7 +169,7 @@ export const header = (current = '') => `
 export const footer = (current = '') => `
 <footer class="ftr">
   <div class="svc-bg ftr__bg" aria-hidden="true">
-    <div class="svc-bg__media">
+    <div class="svc-bg__media" style="background-image:url('/assets/hero-vortex-poster.jpg')">
       <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
              disablepictureinpicture data-src="/assets/hero-vortex.mp4"></video>
     </div>
