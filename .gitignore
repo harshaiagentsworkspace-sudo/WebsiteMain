@@ -14,3 +14,8 @@ assets/Animate_swirling_sky_vortex_*.mp4
 
 # admin panel local data (enquiries, activity log, history snapshots)
 .data/
+
+# Separate app (own dependencies and build output), not part of this site
+form-studio/
+# Raw video masters; the site loads the compressed encodes in assets/
+workflow-ring-v2/*.mp4
