@@ -1,0 +1,159 @@
+{
+  "web-development": {
+    "title": "Web Development and UI/UX Design",
+    "short": "Web development & UI/UX",
+    "summary": "Websites, web applications and digital products that explain what a business does, work properly on a phone and make it easy for customers to get in touch or buy.",
+    "who": "Businesses that need a new website, a better one, or a web application their customers or team will use every day.",
+    "problem": "Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.",
+    "build": [
+      "Business websites",
+      "Landing pages",
+      "E-commerce stores",
+      "Shopify and WordPress sites",
+      "Custom web applications",
+      "Website redesigns"
+    ],
+    "includes": [
+      "Planning the pages, content and the path a visitor takes",
+      "UI/UX design for phone, tablet and desktop",
+      "Development as a custom build, or on WordPress or Shopify if you want to manage it yourself",
+      "Testing across devices and browsers before launch",
+      "Launch, and a handover of everything you need to run it"
+    ],
+    "services": [
+      {
+        "title": "Website design and development",
+        "text": "Business websites planned around what visitors need to understand, then designed and built to load quickly on any device."
+      },
+      {
+        "title": "UI/UX design",
+        "text": "User flows, wireframes and interface design that make a website or product easier to understand and easier to use."
+      },
+      {
+        "title": "Landing pages",
+        "text": "Focused pages for a campaign, product or offer, with one clear message and one clear next step."
+      },
+      {
+        "title": "E-commerce development",
+        "text": "Online stores designed around how customers browse, compare and buy, from product page to checkout."
+      },
+      {
+        "title": "Shopify and WordPress",
+        "text": "Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work."
+      },
+      {
+        "title": "Custom web applications",
+        "text": "Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done."
+      },
+      {
+        "title": "Responsive front-end development",
+        "text": "Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience."
+      },
+      {
+        "title": "Redesigns and improvements",
+        "text": "A review of an existing site, followed by the changes that make it clearer, faster and easier to use."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Clarity first",
+        "text": "A visitor should understand what you do, who it’s for and what to do next within a few seconds."
+      },
+      {
+        "title": "Designed for the phone",
+        "text": "Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought."
+      },
+      {
+        "title": "Easy to maintain",
+        "text": "Sensible platforms and clean structure, so the site stays easy to update after launch."
+      }
+    ]
+  },
+  "agentic-ai-workflows": {
+    "title": "Agentic AI Workflows",
+    "short": "Agentic AI workflows",
+    "summary": "Connected, AI-powered workflows that coordinate tasks across your tools and take repetitive manual work off your team.",
+    "who": "Businesses where the same manual steps repeat every day: answering enquiries, chasing leads, copying information between tools, preparing updates.",
+    "problem": "Work gets stuck between tools and people. Leads wait for a reply, customer questions pile up, and someone spends hours moving information from one place to another.",
+    "build": [
+      "AI agents for business operations",
+      "Multi-agent systems",
+      "Lead management and follow-up",
+      "Sales and marketing workflows",
+      "Customer support workflows",
+      "Process automation",
+      "API and tool integrations",
+      "Internal business systems"
+    ],
+    "includes": [
+      "Mapping the current process and where time is being lost",
+      "Designing the workflow, including where a person reviews or approves",
+      "Building it and connecting it to the tools you already use",
+      "Testing it on real cases before it goes live",
+      "Documentation, and adjustments once your team is using it"
+    ],
+    "services": [
+      {
+        "title": "AI agents for business operations",
+        "text": "Agents that take on recurring tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters."
+      },
+      {
+        "title": "Multi-agent systems",
+        "text": "Several specialised agents working on a larger process, each responsible for one part, with clear handovers between them."
+      },
+      {
+        "title": "Lead management and follow-up",
+        "text": "New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold."
+      },
+      {
+        "title": "Sales and marketing workflows",
+        "text": "Research, outreach preparation, content drafts and reporting, with your team approving what goes out."
+      },
+      {
+        "title": "Customer support workflows",
+        "text": "Incoming questions sorted, answered from your own information where appropriate, and passed to a person when one is needed."
+      },
+      {
+        "title": "Process automation",
+        "text": "Repetitive processes mapped, simplified and automated, so information moves between tools without being re-typed."
+      },
+      {
+        "title": "API and tool integrations",
+        "text": "Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it’s needed."
+      },
+      {
+        "title": "Internal business systems",
+        "text": "Purpose-built tools for a process specific to your business, designed around the way your team already works."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Tied to real work",
+        "text": "Every workflow starts from a task your business does today and the time it currently takes."
+      },
+      {
+        "title": "People stay in control",
+        "text": "Agents handle routine steps. Anything that needs judgement goes to the right person to review."
+      },
+      {
+        "title": "Built around your tools",
+        "text": "We connect the CRM, inbox, forms and spreadsheets you already use instead of replacing them."
+      }
+    ],
+    "example": {
+      "title": "An example: following up new enquiries",
+      "ring": [
+        "New enquiry arrives",
+        "Agent logs the details",
+        "Reply drafted, team approves",
+        "Follow-up prepared, person reminded"
+      ],
+      "steps": [
+        "A new enquiry arrives through your website form or email.",
+        "An agent reads it, pulls out the key details and adds them to your CRM or spreadsheet.",
+        "It drafts a reply using your own service and pricing information, and passes it to your team to approve.",
+        "If the customer hasn’t replied after a set time, it prepares a follow-up and reminds the right person."
+      ]
+    }
+  }
+}

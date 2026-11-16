@@ -3,12 +3,13 @@
    =========================================================================== */
 import {
   site, links, pillars, aboutCopy, published, bookingProvider,
-  budgets, interests,
+  budgets, interests, pagesCopy as PC,
 } from './data.mjs';
 import { readdirSync } from 'node:fs';
 import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark, WebDevelopmentIcon, AgenticWorkflowsIcon } from './ui.mjs';
 import * as S from './sections.mjs';
-import { posts, readingTime } from './blog.mjs';
+import { posts, readingTime, renderBody, fmtDate, src as mediaSrc } from './blog.mjs';
+import { sanitizeInline } from './schema.mjs';
 
 /* ========================= HOME ========================= */
 export const home = () => `
@@ -23,9 +24,9 @@ ${S.aboutTeaser()}
 /* ========================= SERVICES ========================= */
 export const servicesIndex = () => `
 ${pageHead({
-  label: 'Services',
-  lines: ['Websites and web applications, and the AI workflows behind them'],
-  lead: 'Ostendic works in two areas. They are often used together, but each stands on its own.',
+  label: PC.services.label,
+  lines: [PC.services.heading],
+  lead: PC.services.lead,
 })}
 ${S.serviceChapters({ withHead: false })}
 ${S.processSection()}
@@ -158,8 +159,8 @@ const workCase = (p) => `
 export const work = () => `
 <div class="work-hero">${S.sectionVideo('/assets/work-bg.mp4')}
 ${pageHead({
-  label: 'Work',
-  lines: ['What we’ve built, and what it does'],
+  label: PC.work.label,
+  lines: [PC.work.heading],
 })}
 
 <section class="section section--flush-t">
@@ -174,8 +175,8 @@ ${pageHead({
     ${published.slice(1).map(workCase).join('')}
 
     <div class="note">
-      <h2 class="h4">About client work</h2>
-      <p class="body-sm">Client projects are shown here only with the client’s agreement, and with an exact description of what Ostendic did. We don’t publish client results or figures we can’t verify.</p>
+      <h2 class="h4">${esc(PC.work.noteTitle)}</h2>
+      <p class="body-sm">${esc(PC.work.noteText)}</p>
     </div>
   </div>
 </section>
@@ -187,7 +188,7 @@ export const about = () => `
   <div class="wrap about-hero">
     <div class="about-hero__text">
       <p class="label">About</p>
-      <h1 class="h1 about-hero__h">Small businesses deserve to show up like the big ones.</h1>
+      <h1 class="h1 about-hero__h">${esc(aboutCopy.hero.heading)}</h1>
       <p class="lead">${esc(aboutCopy.hero.lead)}</p>
       ${aboutCopy.hero.body.map(p => `<p class="body">${esc(p)}</p>`).join('\n      ')}
       ${S.founderSig()}
@@ -200,8 +201,8 @@ ${S.statsBar()}
 <section class="section section--vid section--glass">${glassBg('process-bg')}
   <div class="wrap">
     <div class="shead">
-      <p class="label">How we work</p>
-      <div class="shead__main"><h2 class="h2">Four things we hold to on every project</h2></div>
+      <p class="label">${esc(PC.about.approachLabel)}</p>
+      <div class="shead__main"><h2 class="h2">${esc(PC.about.approachHeading)}</h2></div>
     </div>
     <ul class="glass-grid glass-grid--4">
       ${aboutCopy.approach.map(([t, d, icon]) => `<li class="glass"><span class="glass__tile">${principleIcon(icon, { size: 28 })}</span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></li>`).join('')}
@@ -212,8 +213,8 @@ ${S.statsBar()}
 <section class="section section--vid section--glass">${glassBg('demos-bg')}
   <div class="wrap">
     <div class="shead">
-      <p class="label">What Ostendic does</p>
-      <div class="shead__main"><h2 class="h2">Two services</h2></div>
+      <p class="label">${esc(PC.about.servicesLabel)}</p>
+      <div class="shead__main"><h2 class="h2">${esc(PC.about.servicesHeading)}</h2></div>
     </div>
     <ul class="glass-grid glass-grid--2">
       ${pillars.map(p => `<li><a class="glass glass--link" href="${p.path}"><span class="glass__tile">${pillarIcon[p.slug]({ size: 28 })}</span><span class="glass__pill tnum">Service ${p.n}</span><h3 class="h3">${esc(p.title)}</h3><p class="body-sm">${esc(p.summary)}</p><span class="glass__go">Learn more${ico.right}</span></a></li>`).join('')}
@@ -309,7 +310,7 @@ export const contact = () => {
   <div class="wrap contact">
     <div class="contact__main">
       <p class="label">Contact</p>
-      <h1 class="h2 contact__h">Got something to build or fix?</h1>
+      <h1 class="h2 contact__h">${esc(PC.contact.heading)}</h1>
       ${tabs}
     </div>
     <aside class="contact__side" aria-label="Other ways to reach us">
@@ -367,8 +368,8 @@ export const book = () => `
   <div class="wrap booking">
     <div class="booking__intro">
       <p class="label">Book a call</p>
-      <h1 class="h1">Book a quick call</h1>
-      <p class="lead">A short call about what you want to build or fix, and the sensible next step. ${esc(site.principal.split(' ')[0])} replies to emails within one business day.</p>
+      <h1 class="h1">${esc(PC.book.heading)}</h1>
+      <p class="lead">${esc(PC.book.lead)}</p>
       <div class="sig">
         <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" decoding="async"></span>
         <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
@@ -382,44 +383,61 @@ export const book = () => `
 `;
 
 /* ========================= BLOG =========================
-   Posts come from build/blog.mjs. No dates, authors or counts. */
+   Posts come from content/blog.json (Admin › Blog). */
+const postCard = (p) => `
+      <li class="post-card glass${p.featuredImage && p.featuredImage.src ? ' post-card--img' : ''}">
+        ${p.featuredImage && p.featuredImage.src ? `<a class="post-card__img" href="/blog/${p.slug}" tabindex="-1" aria-hidden="true"><img src="${esc(mediaSrc(p.featuredImage.src))}" alt="" loading="lazy" decoding="async"></a>` : ''}
+        <p class="label">${esc(p.category)}</p>
+        <h2 class="h4 post-card__t"><a href="/blog/${p.slug}">${esc(p.title)}</a></h2>
+        <p class="body-sm">${esc(p.excerpt)}</p>
+        <a class="alink post-card__more" href="/blog/${p.slug}" aria-label="Read: ${esc(p.title)}">Read${ico.arrow}</a>
+      </li>`;
+
 export const blogIndex = () => `
 <div class="work-hero section--glass">${glassBg('blog-bg')}
 <section class="phead">
   <div class="wrap">
     <div class="shead shead--flush">
       <p class="label">Blog</p>
-      <div class="shead__main"><h1 class="h2">Plain talk about websites and AI workflows.</h1></div>
+      <div class="shead__main"><h1 class="h2">${esc(PC.blog.heading)}</h1></div>
     </div>
   </div>
 </section>
 <section class="section section--flush-t">
   <div class="wrap">
     <ul class="posts">
-      ${posts.map(p => `
-      <li class="post-card glass">
-        <p class="label">${esc(p.category)}</p>
-        <h2 class="h4 post-card__t"><a href="/blog/${p.slug}">${esc(p.title)}</a></h2>
-        <p class="body-sm">${esc(p.excerpt)}</p>
-        <a class="alink post-card__more" href="/blog/${p.slug}" aria-label="Read: ${esc(p.title)}">Read${ico.arrow}</a>
-      </li>`).join('')}
+      ${posts.map(postCard).join('')}
     </ul>
   </div>
 </section>
 </div>
 `;
 
-export const blogPost = (p) => `
+export const blogPost = (p) => {
+  const { html, toc } = renderBody(p.body);
+  const related = posts.filter(x => x.slug !== p.slug && x.category === p.category).slice(0, 2);
+  const img = p.featuredImage && p.featuredImage.src;
+  const meta = [
+    p.author ? esc(p.author) : '',
+    p.publishedAt ? `<time datetime="${p.publishedAt}">${fmtDate(p.publishedAt)}</time>` : '',
+    p.updatedAt && p.updatedAt > p.publishedAt ? `Updated <time datetime="${p.updatedAt}">${fmtDate(p.updatedAt)}</time>` : '',
+    readingTime(p),
+  ].filter(Boolean).join('<span aria-hidden="true"> · </span>');
+  return `
 <article class="post section--glass">${glassBg('blog-bg')}
   <div class="wrap post__in">
     <a class="post__back" href="/blog"><span aria-hidden="true">←</span> Back to all posts</a>
     <div class="post__sheet">
       <p class="label">${esc(p.category)}</p>
       <h1 class="h1 post__t">${esc(p.title)}</h1>
-      <p class="post__meta">${readingTime(p)}</p>
+      <p class="post__meta">${meta}</p>
+      ${img ? `<figure class="post__hero"><img src="${esc(mediaSrc(img))}" alt="${esc(p.featuredImage.alt || '')}" decoding="async" fetchpriority="high"></figure>` : ''}
+      ${p.toc && toc.length > 1 ? `<nav class="post__toc" aria-label="In this article"><p class="label">In this article</p><ol>${toc.map(([l, id, t]) => `<li class="post__toc-${l}"><a href="#${id}">${esc(t)}</a></li>`).join('')}</ol></nav>` : ''}
       <div class="post__body">
-        ${p.body.map(t => `<p>${esc(t)}</p>`).join('\n        ')}
+        ${html}
       </div>
+      ${p.faq && p.faq.length ? `<section class="post__faq" aria-labelledby="faq-h"><h2 id="faq-h">Frequently asked questions</h2>${p.faq.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</section>` : ''}
+      ${p.tags && p.tags.length ? `<ul class="post__tags" aria-label="Tags">${p.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
     </div>
     <aside class="post__cta" aria-label="Get in touch">
       <h2 class="h3">Got something to build or fix?</h2>
@@ -428,13 +446,16 @@ export const blogPost = (p) => `
         <a class="alink" href="/contact#message">Or send a message${ico.arrow}</a>
       </div>
     </aside>
+    ${related.length ? `<section class="post__related" aria-label="Related posts"><p class="label">Keep reading</p><ul class="posts">${related.map(postCard).join('')}</ul></section>` : ''}
   </div>
 </article>
 `;
+};
 
 /* ========================= LEGAL ========================= */
+export const legalParas = (list) => list.map(t => `<p>${sanitizeInline(t)}</p>`).join('');
 export const legal = (title, body) => `
-${pageHead({ lines: [title], lead: 'Last updated 11 November 2026.' })}
+${pageHead({ lines: [title], lead: PC.legal.updated })}
 <section class="section section--flush-t">
   <div class="wrap prose">${body}</div>
 </section>`;

@@ -11,3 +11,6 @@ assets/Vortex_rotating_over_static_land*.mp4
 # Same for the client-section master: 14.6 MB at 1920x1080. The site loads
 # assets/clients-vortex.mp4, the 1.7 MB web encode made from it.
 assets/Animate_swirling_sky_vortex_*.mp4
+
+# admin panel local data (enquiries, activity log, history snapshots)
+.data/

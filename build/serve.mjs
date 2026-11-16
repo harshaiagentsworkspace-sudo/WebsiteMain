@@ -30,19 +30,34 @@ const server = createServer(async (req, res) => {
   const started = Date.now();
   let url = decodeURIComponent((req.url || '/').split('?')[0]);
 
-  // mirror vercel.json redirects for retired pages
-  const moved = { '/careers': '/contact', '/resources': '/' };
-  if (moved[url]) { res.writeHead(307, { Location: moved[url] }); res.end(); console.log(`  307  ${url}`); return; }
-  // retired permanently: the Pricing page
-  const gone = { '/pricing': '/' };
-  if (gone[url]) { res.writeHead(308, { Location: gone[url] }); res.end(); console.log(`  308  ${url}`); return; }
+  // mirror vercel.json redirects (edited in Admin > Redirects)
+  try {
+    const { redirects = [] } = JSON.parse(await readFile(join(ROOT, 'vercel.json'), 'utf8'));
+    for (const r of redirects) {
+      /* path-to-regexp subset: literal segments, :name and :name(a|b) */
+      const names = [];
+      const lit = (t) => [...t].map(c => /[A-Za-z0-9_~-]/.test(c) ? c : `[${c}]`).join('');
+      const pattern = r.source.split('/').map(seg => {
+        const p = seg.match(/^:([A-Za-z]+)(.*)$/);
+        if (!p) return lit(seg);
+        names.push(p[1]);
+        return p[2] && p[2][0] === '(' && p[2].endsWith(')') ? p[2] : '([^/]+)';
+      }).join('/');
+      const m = url.match(new RegExp(`^${pattern}$`));
+      if (!m) continue;
+      let dest = r.destination;
+      names.forEach((n, i) => { dest = dest.replace(':' + n, m[i + 1]); });
+      const code = r.permanent ? 308 : 307;
+      res.writeHead(code, { Location: dest }); res.end(); console.log(`  ${code}  ${url} -> ${dest}`); return;
+    }
+  } catch { /* bad vercel.json: serve without redirects */ }
 
   // the admin panel's API, as Vercel would run it (local mode: edits the
   // content files on disk and rebuilds the site)
-  const api = url.match(/^\/api\/admin\/([a-z]+)$/);
+  const api = url.match(/^\/api\/((?:admin\/)?[a-z]+)$/);
   if (api) {
     try {
-      const mod = await import(new URL(`../api/admin/${api[1]}.mjs`, import.meta.url));
+      const mod = await import(new URL(`../api/${api[1]}.mjs`, import.meta.url));
       await mod.default(req, res);
       console.log(`  ${res.statusCode}  ${req.method} ${url}`);
     } catch (e) {
@@ -54,6 +69,7 @@ const server = createServer(async (req, res) => {
 
   // block traversal
   const safe = normalize(url).replace(/^(\.\.[/\\])+/, '');
+  if (/^[/\\](\.data|\.git|\.env)/.test(safe)) { res.writeHead(404); res.end(); console.log(`  404  ${url}`); return; }
   let file = join(ROOT, safe);
 
   // resolution order, matching cleanUrls

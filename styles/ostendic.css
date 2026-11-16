@@ -1292,3 +1292,45 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
   .post__sheet .post__body { font-size: 17px; }
   .post.section--glass .post__cta { padding: 20px; border-radius: 20px; }
 }
+
+/* ===================== BLOG ARTICLE ELEMENTS =====================
+   Rich content from the admin post editor: headings, lists, quotes,
+   images, video embeds, code, buttons, table of contents, FAQ, tags. */
+.post__body h1, .post__body h2, .post__body h3, .post__body h4 { color: var(--ink); letter-spacing: -.015em; line-height: 1.2; scroll-margin-top: calc(var(--hdr-h) + 16px); }
+.post__body h1, .post__body h2 { font-size: var(--t-h3); margin-top: .9em; }
+.post__body h3 { font-size: var(--t-h4); margin-top: .6em; }
+.post__body h4 { font-size: 1.05rem; margin-top: .4em; }
+.post__body ul, .post__body ol { padding-left: 1.3em; display: flex; flex-direction: column; gap: .35em; }
+.post__body ul { list-style: disc; } .post__body ol { list-style: decimal; }
+.post__body li::marker { color: var(--accent); }
+.post__body a, .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.post__body a:hover, .prose a:hover { text-decoration-thickness: 2px; }
+.post__body blockquote { margin: .4em 0; padding: 4px 0 4px 20px; border-left: 3px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 1.2em; line-height: 1.45; color: var(--ink); }
+.post__body blockquote cite { display: block; margin-top: 8px; font: normal 500 var(--t-sm)/1.4 var(--sans); color: var(--ink-3); }
+.post__body code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; background: rgba(17,19,20,.06); padding: .1em .35em; border-radius: 5px; }
+.post__body pre { background: #16181A; color: #ECECE8; padding: 18px 20px; border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+.post__body pre code { background: none; padding: 0; color: inherit; }
+.post__body hr { border: 0; border-top: 1px solid var(--line-2); margin: .8em 0; }
+.post__body mark { background: #FDF0B8; padding: 0 .15em; border-radius: 3px; }
+.post__fig { margin: .4em 0; }
+.post__fig img, .post__hero img { width: 100%; height: auto; border-radius: 14px; }
+.post__fig figcaption { margin-top: 8px; font-size: var(--t-xs); color: var(--ink-3); text-align: center; }
+.post__hero { width: 100%; margin: 4px 0 8px; }
+.post__embed { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #000; }
+.post__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.post__btn { margin: .2em 0; }
+.post__toc { width: 100%; padding: 16px 20px; border-radius: 14px; background: rgba(17,19,20,.035); border: 1px solid var(--line); }
+.post__toc ol { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; list-style: decimal; padding-left: 1.2em; font-size: var(--t-sm); }
+.post__toc .post__toc-3 { margin-left: 1em; list-style: circle; }
+.post__toc a { color: var(--ink-2); }
+.post__toc a:hover { color: var(--ink); text-decoration: underline; }
+.post__faq { width: 100%; margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.post__faq h2 { font-size: var(--t-h4); margin-bottom: 4px; }
+.post__faq details { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: rgba(255,255,255,.6); }
+.post__faq summary { cursor: pointer; font-weight: 500; }
+.post__faq details p { margin-top: 8px; color: var(--ink-2); }
+.post__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.post__tags li { font-size: var(--t-xs); padding: 3px 11px; border-radius: var(--r-pill); border: 1px solid var(--line-2); color: var(--ink-2); }
+.post__related { width: 100%; margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+.post-card__img { display: block; width: calc(100% + 2 * clamp(22px, 2.6vw, 30px)); margin: calc(-1 * clamp(22px, 2.6vw, 30px)) calc(-1 * clamp(22px, 2.6vw, 30px)) 4px; aspect-ratio: 16 / 9; overflow: hidden; border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.post-card__img img { width: 100%; height: 100%; object-fit: cover; }

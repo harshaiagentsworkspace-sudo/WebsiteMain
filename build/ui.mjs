@@ -177,8 +177,8 @@ export const footer = (current = '') => `
   <div class="wrap">
     ${current === '/contact' ? '' : `<div class="ftr__cta">
       <div class="ftr__say">
-        <h2 class="h2">Tell us what you’re working on.</h2>
-        <p class="lead">A short message is enough to start. You’ll hear back from ${esc(site.principal.split(' ')[0])} directly.</p>
+        <h2 class="h2">${esc(site.footerCta.heading)}</h2>
+        <p class="lead">${esc(site.footerCta.text.replace(/\{name\}/g, site.principal.split(' ')[0]))}</p>
       </div>
       <div class="ftr__act">
         <div class="btn-row">
@@ -229,26 +229,42 @@ export const footer = (current = '') => `
   </div>
 </footer>`;
 
-/* ---------- page shell ---------- */
-export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '', noindex = false }) => `<!doctype html>
+/* ---------- page shell ----------
+   SEO: title, description, canonical, robots, Open Graph / X cards,
+   Organization JSON-LD on every page plus any page-specific `jsonld`,
+   and the verification / analytics tags from Admin › Settings. */
+const absUrl = (u) => !u ? '' : /^https?:\/\//.test(u) ? u : `${site.url}/${String(u).replace(/^\/+/, '')}`;
+export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '', noindex = false,
+  ogImage = '', ogType = 'website', canonical = '', jsonld = [], headExtra = '', ogTitle = '', ogDesc = '' }) => {
+  const canon = canonical || `${site.url}${current || '/'}`;
+  const img = absUrl(ogImage || site.seo.defaultOgImage);
+  const S = site.seo;
+  return `<!doctype html>
 <html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
-${noindex ? '<meta name="robots" content="noindex, nofollow">\n' : ''}
-<link rel="canonical" href="${site.url}${current || '/'}">
-<meta name="theme-color" content="#F2F2F0">
-<meta property="og:type" content="website">
+${noindex ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="robots" content="index, follow, max-image-preview:large">'}
+<link rel="canonical" href="${esc(canon)}">
+${S.googleVerification ? `<meta name="google-site-verification" content="${esc(S.googleVerification)}">
+` : ''}${S.bingVerification ? `<meta name="msvalidate.01" content="${esc(S.bingVerification)}">
+` : ''}<meta name="theme-color" content="#F2F2F0">
+<meta property="og:type" content="${ogType}">
 <meta property="og:site_name" content="${esc(site.name)}">
-<meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(desc)}">
-<meta property="og:url" content="${site.url}${current || '/'}">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:description" content="${esc(desc)}">
+<meta property="og:title" content="${esc(ogTitle || title)}">
+<meta property="og:description" content="${esc(ogDesc || desc)}">
+<meta property="og:url" content="${esc(canon)}">
+${img ? `<meta property="og:image" content="${esc(img)}">
+` : ''}<meta name="twitter:card" content="${img ? 'summary_large_image' : 'summary'}">
+${S.twitterHandle ? `<meta name="twitter:site" content="${esc(S.twitterHandle)}">
+` : ''}${img ? `<meta name="twitter:image" content="${esc(img)}">
+` : ''}${headExtra}
+<meta name="twitter:title" content="${esc(ogTitle || title)}">
+<meta name="twitter:description" content="${esc(ogDesc || desc)}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="${esc(site.name)} blog" href="/blog/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
@@ -262,7 +278,10 @@ ${preload}<link rel="stylesheet" href="/styles/ostendic.css">
   ...(site.social.length ? { sameAs: site.social.map(([, h]) => h) } : {}),
   knowsAbout: ['Website design and development', 'UI/UX design', 'Web applications', 'E-commerce', 'Agentic AI workflows', 'Process automation'],
 })}</script>
-</head>
+${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>
+`).join('')}${S.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(S.ga4)}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',${JSON.stringify(S.ga4)});</script>
+` : ''}</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 ${header(current)}
@@ -275,3 +294,4 @@ ${needsForm ? `<script>window.OSTENDIC_EMAIL=${JSON.stringify(site.email)};windo
 ${needsBooking ? '<script src="/scripts/booking.js" defer></script>\n' : ''}<script src="/scripts/site.js" defer></script>
 </body>
 </html>`;
+};

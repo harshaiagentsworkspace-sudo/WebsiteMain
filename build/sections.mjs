@@ -7,7 +7,7 @@
    which never loads on small screens, data-saver or reduced motion.
    =========================================================================== */
 import { readFileSync } from 'node:fs';
-import { site, heroCopy, homeCopy, pillars, process, processHome, aboutCopy, published, kindLabel } from './data.mjs';
+import { site, heroCopy, homeCopy, pillars, process, processHome, aboutCopy, published, kindLabel, pagesCopy } from './data.mjs';
 import { stats, statsDevWarning } from './stats.mjs';
 import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon, statIcon } from './ui.mjs';
 
@@ -92,7 +92,7 @@ export const selectedWork = () => {
     <div class="shead">
       <p class="label">Selected work</p>
       <div class="shead__main">
-        <h2 class="h2">Client work, and products we built ourselves</h2>
+        <h2 class="h2">${esc(pagesCopy.work.selectedHeading)}</h2>
       </div>
     </div>
 

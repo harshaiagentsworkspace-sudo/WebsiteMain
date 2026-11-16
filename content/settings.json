@@ -1,0 +1,65 @@
+{
+  "identity": {
+    "name": "Ostendic",
+    "url": "https://www.ostendic.com",
+    "email": "harsh@ostendic.com",
+    "principal": "Harsh Dubey",
+    "principalRole": "Founder",
+    "principalImage": "assets/harsh-dubey.jpg",
+    "sub": "Ostendic designs and builds websites and web applications, and the AI workflows businesses run behind them.",
+    "footer": "Ostendic builds websites, web applications and the AI workflows behind them."
+  },
+  "contact": {
+    "phoneDisplay": "",
+    "phoneTel": "",
+    "whatsapp": "",
+    "booking": "https://calendly.com/harshkdubeyhd",
+    "social": []
+  },
+  "seo": {
+    "titleSuffix": " | Ostendic",
+    "defaultOgImage": "",
+    "twitterHandle": "",
+    "googleVerification": "",
+    "bingVerification": "",
+    "ga4": ""
+  },
+  "form": {
+    "interests": [
+      "A new website or a redesign",
+      "UI/UX design",
+      "A web app or online store",
+      "An AI workflow or automation",
+      "A website and an AI workflow",
+      "Not sure yet"
+    ],
+    "budgets": [
+      "Not sure yet",
+      "Under ₹15,000",
+      "₹15,000 to ₹50,000",
+      "₹50,000 to ₹1.5 lakh",
+      "Above ₹1.5 lakh"
+    ]
+  },
+  "stats": {
+    "placeholder": true,
+    "items": [
+      {
+        "value": "30+",
+        "label": "Projects delivered"
+      },
+      {
+        "value": "20+",
+        "label": "Clients served"
+      },
+      {
+        "value": "4.6 / 5",
+        "label": "Average client rating"
+      }
+    ]
+  },
+  "footerCta": {
+    "heading": "Tell us what you’re working on.",
+    "text": "A short message is enough to start. You’ll hear back from {name} directly."
+  }
+}

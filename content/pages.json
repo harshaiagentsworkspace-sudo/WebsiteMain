@@ -1,0 +1,137 @@
+{
+  "seo": {
+    "/": {
+      "title": "Ostendic | Websites, UI/UX design and agentic AI workflows",
+      "description": "Ostendic designs and builds websites and web applications, and the AI workflows businesses run behind them.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/services": {
+      "title": "Services | Ostendic",
+      "description": "Two services: web development and UI/UX design, and agentic AI workflows that coordinate tasks across your tools and reduce repetitive manual work.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/services/web-development": {
+      "title": "Web Development and UI/UX Design | Ostendic",
+      "description": "Website design and development, UI/UX design, landing pages, e-commerce, Shopify and WordPress, custom web applications and redesigns from Ostendic.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/services/agentic-ai-workflows": {
+      "title": "Agentic AI Workflows | Ostendic",
+      "description": "AI agents and connected workflows for lead follow-up, customer support, sales and marketing, process automation and tool integrations, designed with people kept in control.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/work": {
+      "title": "Work | Ostendic",
+      "description": "Products Ostendic has designed and built, each labelled as a client project, demo build or sample.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/about": {
+      "title": "About | Ostendic",
+      "description": "Ostendic is run by Harsh Dubey, designing and building websites, web applications and AI workflows.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/blog": {
+      "title": "Blog | Ostendic",
+      "description": "Plain talk about websites and AI workflows for small businesses.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/contact": {
+      "title": "Contact | Ostendic",
+      "description": "Tell Ostendic about a website, UI/UX design or AI workflow project. Replies come from the founder directly.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/book": {
+      "title": "Book a quick call | Ostendic",
+      "description": "Book a quick call with Harsh Dubey of Ostendic about a website, UI/UX design or an AI workflow. Pick a date and time that suits you.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/privacy": {
+      "title": "Privacy | Ostendic",
+      "description": "How Ostendic handles the information you send us.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/terms": {
+      "title": "Terms | Ostendic",
+      "description": "Terms of use for the Ostendic website.",
+      "ogImage": "",
+      "noindex": false
+    }
+  },
+  "services": {
+    "label": "Services",
+    "heading": "Websites and web applications, and the AI workflows behind them",
+    "lead": "Ostendic works in two areas. They are often used together, but each stands on its own."
+  },
+  "work": {
+    "label": "Work",
+    "heading": "What we’ve built, and what it does",
+    "selectedHeading": "Client work, and products we built ourselves",
+    "noteTitle": "About client work",
+    "noteText": "Client projects are shown here only with the client’s agreement, and with an exact description of what Ostendic did. We don’t publish client results or figures we can’t verify."
+  },
+  "about": {
+    "heading": "Small businesses deserve to show up like the big ones.",
+    "lead": "Ostendic builds websites and AI workflows that help small businesses look credible, get noticed and run smoothly.",
+    "body": [
+      "We cover both sides of how a business shows up online: the website customers see, and the workflows that handle what happens after they get in touch.",
+      "Ostendic is small by design. Every project is scoped in writing, built with care and handed over in a form your team can run."
+    ],
+    "approachLabel": "How we work",
+    "approachHeading": "Four things we hold to on every project",
+    "approach": [
+      {
+        "title": "Start with the business problem",
+        "text": "Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you."
+      },
+      {
+        "title": "Say what it costs before starting",
+        "text": "Every piece of work is scoped and priced in writing before it begins, including what is not included."
+      },
+      {
+        "title": "Build what you can keep running",
+        "text": "We choose platforms and tools your team can live with after launch, and hand over what you need to manage them."
+      },
+      {
+        "title": "Keep people in the loop",
+        "text": "In AI workflows, routine steps can be automated. Decisions that need judgement stay with a person."
+      }
+    ],
+    "servicesLabel": "What Ostendic does",
+    "servicesHeading": "Two services"
+  },
+  "contact": {
+    "heading": "Got something to build or fix?"
+  },
+  "book": {
+    "heading": "Book a quick call",
+    "lead": "A short call about what you want to build or fix, and the sensible next step. Harsh replies to emails within one business day."
+  },
+  "blog": {
+    "heading": "Plain talk about websites and AI workflows."
+  },
+  "legal": {
+    "updated": "Last updated 11 November 2026.",
+    "privacy": [
+      "We collect only what you send through the enquiry form on this site: your name, email address, and, if you choose to give them, your phone number, business name, budget range, the service you’re interested in and your project description.",
+      "We use those details for one purpose: to reply to your enquiry and, if we work together, to scope and deliver the work. We don’t sell them, and we don’t add you to a marketing list.",
+      "Enquiries are stored in our database for as long as we reasonably need them for an ongoing or possible engagement. Ask us to delete yours and we will.",
+      "For anything about your data, email <a href=\"mailto:harsh@ostendic.com\">harsh@ostendic.com</a>."
+    ],
+    "terms": [
+      "This site is provided for information. Content may change without notice, and nothing on it is an offer or a contract.",
+      "Project work is governed by the written scope and agreement for that project. Where anything on this site conflicts with a signed agreement, the agreement takes precedence.",
+      "Names and marks of other products shown on this site belong to their owners.",
+      "Questions: <a href=\"mailto:harsh@ostendic.com\">harsh@ostendic.com</a>."
+    ]
+  }
+}

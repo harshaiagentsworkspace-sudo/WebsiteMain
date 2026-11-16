@@ -393,6 +393,10 @@
       company: form.company.value.trim() || null,
       budget: form.budget.value,
       project_description: form.project.value.trim() + '\n\n' + extra.join('\n'),
+      /* the same details, unflattened, for the admin inbox (/api/enquiry) */
+      phone: form.phone.value.trim(),
+      interest: form.help.value,
+      message: form.project.value.trim(),
     };
 
     submit.disabled = true;

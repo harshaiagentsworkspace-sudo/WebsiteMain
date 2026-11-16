@@ -5,5 +5,7 @@ Disallow: /orbix-reference/
 Disallow: /form-studio/
 Disallow: /admin
 Disallow: /api/
+Disallow: /build/
+Disallow: /content/
 
 Sitemap: https://www.ostendic.com/sitemap.xml

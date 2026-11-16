@@ -1,0 +1,138 @@
+{
+  "projects": [
+    {
+      "slug": "vms-careline",
+      "name": "VMS Careline",
+      "kind": "client",
+      "publish": true,
+      "url": "https://vmscareline.com/",
+      "brand": {
+        "logo": "assets/logos/vms-careline.png",
+        "w": 900,
+        "h": 290,
+        "colours": [
+          {
+            "name": "Careline navy",
+            "hex": "#0C6084"
+          },
+          {
+            "name": "Careline teal",
+            "hex": "#189C84"
+          }
+        ],
+        "verticals": [
+          {
+            "name": "VMS Careline",
+            "text": "Healthcare Ecommerce Platform"
+          }
+        ]
+      },
+      "heroImage": {
+        "src": "assets/work/vms-careline.jpg",
+        "w": 1200,
+        "h": 800
+      },
+      "area": "Healthcare e-commerce · India",
+      "pillars": [
+        "web-development",
+        "agentic-ai-workflows"
+      ],
+      "scope": [
+        "UI/UX design",
+        "Website development",
+        "E-commerce",
+        "Enquiry automation"
+      ],
+      "what": "The website and brand structure for VMS Careline, a healthcare e-commerce business in India.",
+      "problem": "Two kinds of customers, one tangled site. Products were hard to find, and enquiries had no clear path to a reply.",
+      "built": "Two separate verticals: VMS Careline and VMS Cart. A store built around how people choose products. An automated path from first enquiry to follow-up.",
+      "linkLabel": "Visit the live site",
+      "contribution": "Client project. Ostendic, led by Harsh Dubey, handled the brand structure, UX, website development and enquiry automation."
+    },
+    {
+      "slug": "truereview",
+      "name": "TrueReview",
+      "kind": "demo",
+      "publish": true,
+      "caution": "The live demo still shows unverified figures (“2M+ reviews analysed”, “94% accuracy”, “500+ products”, “4.9 stars”) and “[User Photo]” placeholders. The site uses a screenshot of the tool itself, but visitors who open the demo will see them. Remove them from the demo.",
+      "url": "https://tru-review-lilac.vercel.app/",
+      "mark": {
+        "logo": "assets/logos/truereview.png",
+        "w": 626,
+        "h": 128,
+        "bg": "#1B4D3E"
+      },
+      "images": {
+        "desktop": "assets/work/truereview-desktop.jpg",
+        "phone": "assets/work/truereview-phone.jpg"
+      },
+      "area": "Web application · AI analysis",
+      "pillars": [
+        "web-development",
+        "agentic-ai-workflows"
+      ],
+      "what": "A demo tool that helps shoppers decide if a product is worth buying.",
+      "problem": "Online reviews are hard to trust, so it’s hard to know what’s actually worth buying.",
+      "built": "A working tool where you ask about a product and get a score based on its genuine reviews.",
+      "linkLabel": "Try the demo",
+      "contribution": "Designed and built in-house by Ostendic as a demonstration product.",
+      "scope": []
+    },
+    {
+      "slug": "viralcheck",
+      "name": "ViralCheck",
+      "kind": "demo",
+      "publish": true,
+      "url": "https://viralcheckcontent.vercel.app/",
+      "mark": {
+        "logo": "assets/logos/viralcheck.png",
+        "w": 561,
+        "h": 144,
+        "bg": "#FBF5E9"
+      },
+      "images": {
+        "desktop": "assets/work/viralcheck-desktop.jpg",
+        "phone": "assets/work/viralcheck-phone.jpg"
+      },
+      "area": "Web application · AI review",
+      "pillars": [
+        "web-development",
+        "agentic-ai-workflows"
+      ],
+      "what": "A demo tool we built that scores a piece of content.",
+      "problem": "Creators guess what will work, then post and hope.",
+      "built": "A working tool with an AI-assisted interface that scores your content.",
+      "linkLabel": "Try the demo",
+      "contribution": "Designed and built in-house by Ostendic as a demonstration product.",
+      "scope": []
+    },
+    {
+      "slug": "launchmirror",
+      "name": "LaunchMirror",
+      "kind": "demo",
+      "publish": true,
+      "url": "https://launchmirror.vercel.app/",
+      "mark": {
+        "logo": "assets/logos/launchmirror.png",
+        "w": 586,
+        "h": 128,
+        "bg": "#371F31"
+      },
+      "images": {
+        "desktop": "assets/work/launchmirror-desktop.jpg",
+        "phone": "assets/work/launchmirror-phone.jpg"
+      },
+      "area": "Web application · AI analysis",
+      "pillars": [
+        "web-development",
+        "agentic-ai-workflows"
+      ],
+      "what": "A demo tool that gives you a structured first read on a business idea before you commit to building it.",
+      "problem": "It’s easy to start building before you’ve checked whether an idea holds up. Market timing, competition and cost often get checked late, if at all.",
+      "built": "A working tool where you answer seven questions about your idea. You get a viability score out of 100, a market check, a short read on strengths, weaknesses and risks, and a 90-day action plan.",
+      "linkLabel": "Try the demo",
+      "contribution": "Designed and built in-house by Ostendic as a demonstration product.",
+      "scope": []
+    }
+  ]
+}
