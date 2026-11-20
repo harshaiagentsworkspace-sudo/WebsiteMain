@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.ostendic.com/</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/services</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/services/web-development</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/services/agentic-ai-workflows</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/work</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/about</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/contact</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/book</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/privacy</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://www.ostendic.com/terms</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://www.ostendic.com/</loc></url>
+  <url><loc>https://www.ostendic.com/services</loc></url>
+  <url><loc>https://www.ostendic.com/services/web-development</loc></url>
+  <url><loc>https://www.ostendic.com/services/ai-automation</loc></url>
+  <url><loc>https://www.ostendic.com/services/ai-agent-development</loc></url>
+  <url><loc>https://www.ostendic.com/services/business-consulting</loc></url>
+  <url><loc>https://www.ostendic.com/work</loc></url>
+  <url><loc>https://www.ostendic.com/about</loc></url>
+  <url><loc>https://www.ostendic.com/contact</loc></url>
+  <url><loc>https://www.ostendic.com/book</loc></url>
+  <url><loc>https://www.ostendic.com/privacy</loc></url>
+  <url><loc>https://www.ostendic.com/terms</loc></url>
 
 </urlset>

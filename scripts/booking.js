@@ -29,7 +29,12 @@
     if (name === 'done') { mount.hidden = true; states.done.focus(); }
   };
   var ready = function () { if (current === 'loading') show('ready'); };
-  var booked = function () { show('done'); };
+  var booked = function () {
+    if (current === 'done') return; /* Cal.com can fire two success events */
+    show('done');
+    /* analytics (no-op without GA4); the provider's own event, so it fires once per real booking */
+    if (typeof window.ostTrack === 'function') window.ostTrack('book_consultation', { booking_provider: provider || '' });
+  };
   var fail = function () { if (current === 'loading') { show('error'); mount.hidden = true; } };
   var timer = null;
   var clear = function () { clearTimeout(timer); };

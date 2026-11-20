@@ -12,11 +12,18 @@
      until it is filled in, and `build.mjs` prints a PENDING list on every
      build so the gaps stay visible.
 
-   Positioning: a digital studio with two service areas —
+   Positioning: a digital growth and business solutions partner with four
+   service pages (SERVICE_SLUGS in schema.mjs):
      01  Web Development and UI/UX Design
-     02  Agentic AI Workflows
+     02  AI Automation
+     03  AI Agent Development
+     04  Business Consulting
+   The homepage presents three areas: websites (01), AI automation and
+   agents (02 + 03) and consulting (04).
    =========================================================================== */
+import { existsSync } from 'node:fs';
 import { loadContent } from './content.mjs';
+import { SERVICE_SLUGS } from './schema.mjs';
 
 const settings = loadContent('settings');
 const home = loadContent('home');
@@ -27,8 +34,12 @@ export const media = loadContent('media');
 
 const I = settings.identity, C = settings.contact;
 
+/* the founder photo at button/signature size, when a -192 copy exists
+   next to the original (assets/harsh-dubey-192.jpg) */
+const small = I.principalImage.replace(/(\.[a-z]+)$/i, '-192$1');
 export const site = {
   ...I,
+  avatar: existsSync(new URL(`../${small}`, import.meta.url)) ? small : I.principalImage,
   /* booking: env var wins (set in Vercel), then the admin setting */
   booking: globalThis.process.env.NEXT_PUBLIC_CALENDLY_URL || C.booking || null,
   /* Web3Forms access key: a public key by design (it can only send to the
@@ -46,6 +57,10 @@ export const site = {
   logo: {
     src: 'assets/ostendic-logo.jpg',
     nav: 'assets/ostendic-logo.png',
+    /* what the pages load: the same canvas at half size (the CSS crop works
+       in ratios, so it renders identically at a fraction of the bytes).
+       The full-size PNG stays the logo in structured data. */
+    web: 'assets/ostendic-logo-nav.webp',
     w: 1746, h: 901,
     ink: { x: 284, y: 322, w: 1183, h: 239 },
   },
@@ -70,28 +85,38 @@ export const links = {
 export const heroCopy = {
   lines: home.hero.headline,
   lead: home.hero.intro,
+  primaryButton: home.hero.primaryButton,
   secondaryButton: home.hero.secondaryButton,
 };
 export const homeCopy = {
+  problems: home.problems,
+  audiences: home.audiences,
+  benefits: home.benefits,
+  solutions: home.solutions,
+  faq: home.faq,
   servicesHeading: home.services.heading,
   about: { heading: home.about.heading, headingItalic: home.about.headingItalic },
 };
 
 /* ---------- SERVICES ----------
-   Exactly two service areas, fixed slugs and order. */
+   Fixed slugs and order (SERVICE_SLUGS). */
 const tuples = (arr) => arr.map(x => [x.title, x.text]);
-export const pillars = [['web-development', '01'], ['agentic-ai-workflows', '02']].map(([slug, n]) => {
+export const pillars = SERVICE_SLUGS.map((slug, i) => {
   const s = services[slug];
+  const panel = home.services.panels[slug];
   return {
-    slug, n, path: `/services/${slug}`,
-    title: s.title, short: s.short, summary: s.summary, who: s.who, problem: s.problem,
+    slug, n: String(i + 1).padStart(2, '0'), path: `/services/${slug}`,
+    title: s.title, heading: s.heading || s.title, short: s.short, summary: s.summary, who: s.who, problem: s.problem,
     build: s.build, includes: s.includes,
+    servicesHeading: s.servicesHeading || 'What we build',
     services: tuples(s.services), principles: tuples(s.principles),
+    details: s.details || [], faq: s.faq || [],
     ...(s.example ? { example: s.example } : {}),
     /* short copy for the panels on the homepage and /services */
-    panel: { ...home.services.panels[slug] },
+    panel: { ...panel, title: panel.title || s.title },
   };
 });
+export const pillar = Object.fromEntries(pillars.map(p => [p.slug, p]));
 
 /* ---------- PROCESS ----------
    /services keeps the full process; the homepage uses the editable one. */
@@ -159,7 +184,7 @@ export const pending = [
   !site.whatsapp && 'WhatsApp number (Admin › Settings): WhatsApp buttons are hidden until set.',
   !site.booking && 'Booking link (Admin › Settings): no /book page is generated until a Calendly/Cal.com URL is set.',
   !site.social.length && 'LinkedIn / Instagram URLs (Admin › Settings): no social links shown until set.',
-  statsConfig.placeholder && 'Stats bar shows placeholder numbers (Admin › Settings › Stats).',
+  statsConfig.placeholder && 'Stats bar is hidden: its numbers are marked as placeholders (Admin › Settings › Stats). Enter verified figures to show it.',
   ...projects.filter(p => p.publish && p.caution).map(p => `Work: ${p.name}. ${p.caution}`),
   !site.formKey && 'CONTACT FORM IS NOT DELIVERING: no Web3Forms access key (WEB3FORMS_ACCESS_KEY).',
 ].filter(Boolean);

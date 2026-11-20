@@ -43,6 +43,14 @@ export const WebDevelopmentIcon = serviceIcon('web-development.svg');
 export const AgenticWorkflowsIcon = serviceIcon('agentic-ai-workflows.svg');
 /* About page principle icons (workflow-ring-v2/principle-*.svg) */
 export const principleIcon = (file, opts) => svgFile('../workflow-ring-v2/')(file)(opts);
+/* one icon per service page (homepage chapters, About, /services) */
+const SERVICE_ICON = {
+  'web-development': WebDevelopmentIcon,
+  'ai-automation': AgenticWorkflowsIcon,
+  'ai-agent-development': (o) => principleIcon('ai-01-agents.svg', o),
+  'business-consulting': (o) => principleIcon('principle-1-problem.svg', o),
+};
+export const serviceIconFor = (slug, opts) => (SERVICE_ICON[slug] || AgenticWorkflowsIcon)(opts);
 /* Stats bar icons (workflow-ring-v2/stat-*.svg), same inlining */
 export const statIcon = principleIcon;
 
@@ -52,7 +60,7 @@ const ext = (href) => /^https?:/.test(href) ? ' target="_blank" rel="noopener"' 
    the main "talk to us" CTA carries a face rather than a glyph. */
 export const btn = (label, href, kind = 'primary', opts = {}) => {
   const badge = opts.avatar
-    ? `<span class="btn__ava face"><img src="/${site.principalImage}" alt="" width="96" height="96" decoding="async"${opts.eager ? '' : ' loading="lazy"'}></span>`
+    ? `<span class="btn__ava face"><img src="/${site.avatar}" alt="" width="96" height="96" decoding="async"${opts.eager ? '' : ' loading="lazy"'}></span>`
     : opts.icon
       ? `<span class="btn__ico">${ico[opts.icon]}</span>`
       : `<span class="btn__ico">${ico.arrow}</span>`;
@@ -99,7 +107,7 @@ export const brandMark = ({ eager = false, nav = false } = {}) => {
   const L = site.logo;
   return `<span class="brand__crop" style="--lg-w:${L.w};--lg-h:${L.h};`
     + `--ink-x:${L.ink.x};--ink-y:${L.ink.y};--ink-w:${L.ink.w};--ink-h:${L.ink.h}">`
-    + `<img src="${encodeURI('/' + (nav && L.nav ? L.nav : L.src))}" alt="${esc(site.name)}"`
+    + `<img src="${encodeURI('/' + (L.web || (nav && L.nav ? L.nav : L.src)))}" alt="${esc(site.name)}"`
     + ` width="${L.w}" height="${L.h}" decoding="async"`
     + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + '>'
     + `</span>`;
@@ -182,7 +190,8 @@ export const footer = (current = '') => `
       </div>
       <div class="ftr__act">
         <div class="btn-row">
-          ${startBtn('primary')}
+          ${btn(site.footerCta.button, '/contact', 'primary', { avatar: true })}
+          ${site.booking ? btn('Book a quick call', '/book', 'ghost', { icon: 'calendar' }) : ''}
           ${waBtn('ghost')}
           ${telBtn('ghost')}
         </div>
@@ -235,7 +244,7 @@ export const footer = (current = '') => `
    and the verification / analytics tags from Admin › Settings. */
 const absUrl = (u) => !u ? '' : /^https?:\/\//.test(u) ? u : `${site.url}/${String(u).replace(/^\/+/, '')}`;
 export const page = ({ title, desc, current = '', body, needsForm = false, needsBooking = false, preload = '', noindex = false,
-  ogImage = '', ogType = 'website', canonical = '', jsonld = [], headExtra = '', ogTitle = '', ogDesc = '' }) => {
+  ogImage = '', ogType = 'website', canonical = '', jsonld = [], headExtra = '', ogTitle = '', ogDesc = '', twTitle = '', twDesc = '' }) => {
   const canon = canonical || `${site.url}${current || '/'}`;
   const img = absUrl(ogImage || site.seo.defaultOgImage);
   const S = site.seo;
@@ -257,12 +266,13 @@ ${S.googleVerification ? `<meta name="google-site-verification" content="${esc(S
 <meta property="og:description" content="${esc(ogDesc || desc)}">
 <meta property="og:url" content="${esc(canon)}">
 ${img ? `<meta property="og:image" content="${esc(img)}">
+<meta property="og:image:alt" content="${esc(ogTitle || title)}">
 ` : ''}<meta name="twitter:card" content="${img ? 'summary_large_image' : 'summary'}">
 ${S.twitterHandle ? `<meta name="twitter:site" content="${esc(S.twitterHandle)}">
 ` : ''}${img ? `<meta name="twitter:image" content="${esc(img)}">
 ` : ''}${headExtra}
-<meta name="twitter:title" content="${esc(ogTitle || title)}">
-<meta name="twitter:description" content="${esc(ogDesc || desc)}">
+<meta name="twitter:title" content="${esc(twTitle || ogTitle || title)}">
+<meta name="twitter:description" content="${esc(twDesc || ogDesc || desc)}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="${esc(site.name)} blog" href="/blog/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -270,14 +280,15 @@ ${S.twitterHandle ? `<meta name="twitter:site" content="${esc(S.twitterHandle)}"
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
 ${preload}<link rel="stylesheet" href="/styles/ostendic.css">
 <script type="application/ld+json">${JSON.stringify({
-  '@context': 'https://schema.org', '@type': 'Organization',
+  '@context': 'https://schema.org', '@type': 'Organization', '@id': `${site.url}/#organization`,
   name: site.name, url: site.url, email: site.email,
+  logo: { '@type': 'ImageObject', url: absUrl(site.logo.nav), width: site.logo.w, height: site.logo.h },
   description: site.sub,
   founder: { '@type': 'Person', name: site.principal, jobTitle: site.principalRole },
   ...(site.phone ? { telephone: site.phone.tel } : {}),
   ...(site.social.length ? { sameAs: site.social.map(([, h]) => h) } : {}),
-  knowsAbout: ['Website design and development', 'UI/UX design', 'Web applications', 'E-commerce', 'Agentic AI workflows', 'Process automation'],
-})}</script>
+  knowsAbout: ['Website design and development', 'UI/UX design', 'Web applications', 'Business process automation', 'AI agents', 'Agentic AI workflows', 'Business growth consulting', 'Digital transformation'],
+}).replace(/</g, '\\u003c')}</script>
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>
 `).join('')}${S.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(S.ga4)}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',${JSON.stringify(S.ga4)});</script>

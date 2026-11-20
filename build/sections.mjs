@@ -1,15 +1,19 @@
 /* ===========================================================================
    OSTENDIC — SECTION LIBRARY
-   Homepage narrative, in order:
-     hero → selected work → services (two chapters) → process → about → footer CTA
+   Homepage narrative, in order (pages.mjs › home):
+     hero → selected work → problems → services (three chapters) → who we
+     help → process → solutions → benefits → about → FAQ → footer CTA
+   Problems, who we help, solutions and benefits are glass cards with icons
+   over a blurred clip, the same treatment as the service pages.
    Each section has one job; no section repeats another's content.
-   Everything is static HTML. The only motion is the hero background video,
-   which never loads on small screens, data-saver or reduced motion.
+   Heading levels: one h1 (hero), an h2 per section, h3 inside sections.
+   Everything is static HTML. The only motion is the background video,
+   which never loads with data-saver or reduced motion.
    =========================================================================== */
 import { readFileSync, existsSync } from 'node:fs';
-import { site, heroCopy, homeCopy, pillars, process, processHome, aboutCopy, published, kindLabel, pagesCopy } from './data.mjs';
-import { stats, statsDevWarning } from './stats.mjs';
-import { esc, ico, btn, alink, head, startBtn, WebDevelopmentIcon, AgenticWorkflowsIcon, statIcon } from './ui.mjs';
+import { site, heroCopy, homeCopy, pillars, pillar, process, processHome, aboutCopy, published, kindLabel, pagesCopy } from './data.mjs';
+import { stats, statsDevWarning, STATS_ARE_PLACEHOLDER } from './stats.mjs';
+import { esc, ico, btn, alink, head, serviceIconFor, statIcon, principleIcon } from './ui.mjs';
 
 /* ---------- HERO ----------
    The vortex clip is atmosphere, not content: a poster paints immediately
@@ -28,11 +32,11 @@ export const hero = () => `
     ${head(heroCopy.lines, 'display', 'h1')}
     <p class="lead hero__lead">${esc(heroCopy.lead)}</p>
     <div class="btn-row hero__cta">
-      ${startBtn('primary', { eager: true })}
-      ${btn(heroCopy.secondaryButton, '#work', 'ghost')}
+      ${btn(heroCopy.primaryButton, '/contact', 'primary', { avatar: true, eager: true })}
+      ${btn(heroCopy.secondaryButton, '#services', 'ghost', { icon: 'right' })}
     </div>
     <ul class="hero__index" aria-label="Services">
-      ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="hero__index-t">${esc(p.title)}</span>${ico.right}</a></li>`).join('')}
+      ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="hero__index-t">${esc(p.short)}</span>${ico.right}</a></li>`).join('')}
     </ul>
   </div>
 </section>`;
@@ -149,7 +153,7 @@ const splitValue = (v) => {
   const m = String(v).match(/^(\d[\d.,]*)(.*)$/);
   return m ? `${esc(m[1])}${m[2] ? `<span class="statsbar__suffix">${esc(m[2])}</span>` : ''}` : esc(v);
 };
-export const statsBar = () => `
+export const statsBar = () => STATS_ARE_PLACEHOLDER ? '' : `
 <section class="statsbar" aria-label="Ostendic at a glance" data-fade>
   <div class="wrap">
     <ul class="statsbar__row">
@@ -164,7 +168,7 @@ export const statsBar = () => `
    fully visible; only the rail, the nodes and the numbers change. Without
    JS or with reduced motion the rail is drawn complete. */
 export const sequence = (items, cls = '') => `
-  <div class="seq ${cls}" data-progress>
+  <div class="seq ${cls}" data-progress style="--seq-n:${items.length}">
     <span class="seq__rail" aria-hidden="true"><span class="seq__fill"></span></span>
     <ol class="seq__list">
     ${items.map(({ n, title, body, get }) => `
@@ -179,27 +183,27 @@ export const sequence = (items, cls = '') => `
   </div>`;
 
 /* ---------- SERVICES ----------
-   One section, two chapters with the same information model but different
-   compositions. The heading column is sticky only inside .chap__main, so it
-   is released before the worked example below it (the earlier version made
-   the whole chapter its sticky container, and the pinned heading slid over
-   the example). */
+   One chapter per service area, all with the same information model. The
+   heading column is sticky only inside .chap__main, so it is released
+   before the worked example below it (the earlier version made the whole
+   chapter its sticky container, and the pinned heading slid over the
+   example). */
 /* Panels use the short `panel` copy; the service pages keep the full fields. */
 const facts = ({ panel: p }) => `
   <dl class="facts facts--panel">
     <div><dt>Who it helps</dt><dd>${esc(p.who)}</dd></div>
     <div><dt>The problem</dt><dd>${esc(p.problem)}</dd></div>
-    <div><dt>What we build</dt><dd>${esc(p.build)}</dd></div>
+    <div><dt>What we do</dt><dd>${esc(p.build)}</dd></div>
     <div><dt>A project can include</dt><dd><ul class="ticks">${p.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul></dd></div>
   </dl>`;
 
-const chapter = (s, link, icon = '', bg = '') => `
+const chapter = (s, { icon = '', bg = '', tag = 'h3', links = [] } = {}) => `
       <div class="chap__main">${bg}
         <header class="chap__head">
           ${icon}<span class="chap__n tnum">${s.n}</span>
-          <h3 class="chap__t">${esc(s.title)}</h3>
+          <${tag} class="chap__t">${esc(s.panel.title)}</${tag}>
           <p class="body">${esc(s.panel.summary)}</p>
-          ${alink(link, s.path)}
+          ${links.map(([label, href]) => alink(label, href)).join('')}
         </header>
         ${facts(s)}
       </div>`;
@@ -232,21 +236,29 @@ const RING_ICONS = ['step-1-enquiry.svg', 'step-2-agent.svg', 'step-3-approve.sv
 
 export const exampleRing = (s) => `
       <aside class="eg eg--ring" aria-labelledby="eg-${s.slug}">
-        <p class="eg__t" id="eg-${s.slug}">${esc(s.example.title)}</p>
+        <div class="eg__head">
+          <span class="eg__live" aria-hidden="true"><span class="eg__pulse"></span>Live workflow</span>
+          <p class="eg__t" id="eg-${s.slug}">${esc(s.example.title)}</p>
+        </div>
         <div class="loop" data-loop>
           <div class="loop__box">
             <div class="loop__tilt">
               <svg class="loop__svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="loop-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7B5CFA"/><stop offset=".55" stop-color="#4F7BFF"/><stop offset="1" stop-color="#22B5F2"/></linearGradient></defs>
                 <circle class="loop__track" cx="100" cy="100" r="100"/>
                 <circle class="loop__draw" cx="100" cy="100" r="100" pathLength="100"/>
                 <circle class="loop__draw loop__draw--done" cx="100" cy="100" r="100" pathLength="100"/>
               </svg>
               <span class="loop__arm" aria-hidden="true"><span class="loop__dot"></span></span>
-              ${RING_ICONS.map((icon, i) => `<span class="loop__shadow loop__at--${i}" aria-hidden="true"></span><span class="loop__node loop__at--${i}">${icon}</span>`).join('')}
+              ${RING_ICONS.map((icon, i) => `<span class="loop__shadow loop__at--${i}" aria-hidden="true"></span><span class="loop__node loop__at--${i}"><span class="loop__ripple" aria-hidden="true"></span><span class="loop__num tnum" aria-hidden="true">0${i + 1}</span>${icon}</span>`).join('')}
+            </div>
+            <div class="loop__hub" aria-hidden="true">
+              ${s.example.ring.map((t, i) => `<span class="loop__hub-s" data-s="${i + 1}"><b class="tnum">0${i + 1}</b><span>Step ${i + 1} of ${s.example.ring.length}</span></span>`).join('')}
+              <span class="loop__hub-s loop__hub-s--done"><b>${ico.check}</b><span>Handled, start to finish</span></span>
             </div>
           </div>
           <ol class="loop__steps">
-            ${s.example.ring.map(t => `<li class="loop__step">${esc(t)}</li>`).join('')}
+            ${s.example.ring.map((t, i) => `<li class="loop__step"><span class="loop__sn tnum" aria-hidden="true">0${i + 1}</span><span class="loop__st">${esc(t)}</span><span class="loop__bar" aria-hidden="true"></span></li>`).join('')}
           </ol>
         </div>
         <p class="eg__note">An illustration of the kind of workflow we build, not a client case.</p>
@@ -285,27 +297,142 @@ const sectionStill = (src, w, h, clip = '') => `
   </div>`;
 
 /* `icons` and `video` are on for the homepage only; /services reuses this without them. */
-export const serviceChapters = ({ withHead = true, icons = false, ring = false, video = false } = {}) => {
-  const [web, ai] = pillars;
-  return `
-<section class="section${video ? ' section--vid' : ''}" id="services">${video ? sectionVideo('/assets/web-development-bg.mp4') : ''}
-  <div class="wrap">
-    ${withHead ? `
+/* The homepage shows three areas (AI automation's chapter also links to
+   AI agent development); /services shows all four. The AI automation
+   chapter is the dark band and carries the worked example. `icons` and
+   `video` are on for the homepage only. */
+const HOME_AREAS = ['web-development', 'ai-automation', 'business-consulting'];
+const CHAPTER_CLIP = { 'web-development': '/assets/web-development-bg.mp4', 'business-consulting': '/assets/clients-vortex.mp4' };
+export const serviceChapters = ({ slugs = HOME_AREAS, withHead = true, icons = false, ring = false, video = false } = {}) => {
+  const tag = withHead ? 'h3' : 'h2';
+  let light = 0;
+  return slugs.map(slug => pillar[slug]).map((s, i) => {
+    const dark = s.slug === 'ai-automation';
+    const links = [[`More on ${s.title.replace(/ and UI\/UX Design$/, '')}`, s.path]];
+    if (dark && !slugs.includes('ai-agent-development')) links.push(['More on custom AI agents', pillar['ai-agent-development'].path]);
+    const icon = icons ? serviceIconFor(s.slug, { className: 'chap__icon' }) : '';
+    const cls = dark ? ' section--dark' : (light++ % 2 ? ' section--white' : '');
+    const clip = video && !dark && CHAPTER_CLIP[s.slug];
+    const head = withHead && i === 0 ? `
     <div class="shead">
       <p class="label">Services</p>
       <div class="shead__main">
         <h2 class="h2">${esc(homeCopy.servicesHeading)}</h2>
       </div>
-    </div>` : ''}
-    <article class="chap" id="${web.slug}">${chapter(web, 'More on web development and UI/UX', icons ? WebDevelopmentIcon({ className: 'chap__icon' }) : '')}
+    </div>` : '';
+    return `
+<section class="section${cls}${video ? ' section--vid' : ''}" id="${i === 0 ? 'services' : s.slug}">${clip ? sectionVideo(clip) : ''}
+  <div class="wrap">${head}
+    <article class="chap${dark ? ' chap--ai' : ''}"${i === 0 ? ` id="${s.slug}"` : ''}>${chapter(s, { icon, tag, links,
+      bg: dark && video ? sectionStill('/assets/agentic-ai-bg.webp', 1920, 1040, '/assets/agentic-ai-bg.mp4') : '' })}
+${dark && s.example && !ring ? example(s) : ''}
     </article>
   </div>
-</section>
-<section class="section section--dark${video ? ' section--vid' : ''}" id="${ai.slug}">
+</section>${dark && s.example && ring ? `
+<section class="section section--vid section--glass section--ring" id="workflow-example">${glassBg('hero-vortex')}
+  <span class="ring-orbs" aria-hidden="true"><span></span><span></span><span></span></span>
   <div class="wrap">
-    <article class="chap chap--ai">${chapter(ai, 'More on agentic AI workflows', icons ? AgenticWorkflowsIcon({ className: 'chap__icon' }) : '', video ? sectionStill('/assets/agentic-ai-bg.webp', 1920, 1040, '/assets/agentic-ai-bg.mp4') : '')}
-${ring ? exampleRing(ai) : example(ai)}
-    </article>
+${exampleRing(s)}
+  </div>
+</section>` : ''}`;
+  }).join('');
+};
+
+/* ---------- SHARED: glass cards and FAQ ----------
+   Frosted-glass cards over a full-strength clip, blurred and washed with
+   white. The clip's poster is the backdrop wherever the clip doesn't play
+   (phones that refuse autoplay, reduced motion, data saver), so the glass
+   always has something to blur. */
+export const glassBg = (name) => `
+  <div class="svc-bg glass-bg" aria-hidden="true">
+    <div class="svc-bg__media" style="background-image:url('/assets/${name}-poster.jpg')">
+      <video class="bgvid" muted loop playsinline preload="none" tabindex="-1"
+             disablepictureinpicture data-src="/assets/${name}.mp4"></video>
+    </div>
+  </div>`;
+
+const glassCards = (items, { cols = 3, numbered = false, link } = {}) => `
+    <ul class="glass-grid glass-grid--${cols} glass-cards">
+      ${items.map((x, i) => `<li class="glass">
+        <span class="glass-cards__top">
+          <span class="glass__tile">${x.icon ? principleIcon(`${x.icon}.svg`, { size: 28 }) : ico.check}</span>
+          ${numbered ? `<span class="glass__pill tnum">${String(i + 1).padStart(2, '0')}</span>` : ''}
+        </span>
+        <h3 class="h4">${esc(x.title)}</h3>
+        <p class="body-sm">${esc(x.text)}</p>
+        ${link ? link(x) : ''}
+      </li>`).join('')}
+    </ul>`;
+const cols = (n) => n >= 5 ? 5 : n;
+
+const shead = (label, heading, intro = '') => `
+    <div class="shead">
+      <p class="label">${esc(label)}</p>
+      <div class="shead__main">
+        <h2 class="h2">${esc(heading)}</h2>
+        ${intro ? `<p class="body">${esc(intro)}</p>` : ''}
+      </div>
+    </div>`;
+
+/* Questions as <details>, so every answer is in the HTML (crawlable and
+   readable without JS) but the list stays short to scan. */
+export const faqList = (items) => `
+    <div class="faq">
+      ${items.map((f, i) => `<details class="faq__item glass">
+        <summary><span class="faq__n tnum" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3 class="faq__q">${esc(f.q)}</h3><span class="faq__ico" aria-hidden="true">${ico.caret}</span></summary>
+        <div class="faq__a"><p class="body">${esc(f.a)}</p></div>
+      </details>`).join('')}
+    </div>`;
+
+/* glass cards over a blurred clip, like the other card sections */
+export const faqSection = (heading, items, { label = 'FAQ', clip = 'clients-vortex' } = {}) => !items.length ? '' : `
+<section class="section section--vid section--glass section--faq" id="faq">${glassBg(clip)}
+  <span class="ring-orbs" aria-hidden="true"><span></span><span></span><span></span></span>
+  <div class="wrap">${shead(label, heading)}
+    ${faqList(items)}
+  </div>
+</section>`;
+
+/* ---------- PROBLEMS ---------- */
+export const problemsSection = () => {
+  const P = homeCopy.problems;
+  return `
+<section class="section section--vid section--glass section--pain" id="problems">${glassBg('about-hero-bg')}
+  <div class="wrap">${shead('The challenge', P.heading, P.intro)}
+    ${glassCards(P.items, { cols: cols(P.items.length), numbered: true })}
+  </div>
+</section>`;
+};
+
+/* ---------- WHO WE HELP ---------- */
+export const audiencesSection = () => {
+  const A = homeCopy.audiences;
+  return `
+<section class="section section--vid section--glass" id="who-we-help">${glassBg('blog-bg')}
+  <div class="wrap">${shead('Who we help', A.heading)}
+    ${glassCards(A.items, { cols: A.items.length === 3 ? 3 : 4 })}
+  </div>
+</section>`;
+};
+
+/* ---------- SOLUTIONS ---------- */
+export const solutionsSection = () => {
+  const S = homeCopy.solutions;
+  return `
+<section class="section section--vid section--glass" id="solutions">${glassBg('demos-bg')}
+  <div class="wrap">${shead('Solutions', S.heading, S.intro)}
+    ${glassCards(S.items, { cols: 3, link: (x) => alink(pillar[x.service].short, pillar[x.service].path) })}
+  </div>
+</section>`;
+};
+
+/* ---------- BENEFITS ---------- */
+export const benefitsSection = () => {
+  const B = homeCopy.benefits;
+  return `
+<section class="section section--vid section--glass" id="benefits">${glassBg('agentic-ai-bg')}
+  <div class="wrap">${shead('What changes', B.heading, B.intro)}
+    ${glassCards(B.items, { cols: cols(B.items.length) })}
   </div>
 </section>`;
 };
@@ -342,7 +469,7 @@ export const processSection = ({ home = false } = {}) => home ? `
 /* Founder line: small photo, name, role. Homepage About teaser and the
    About page hero. `extra` goes after the name (e.g. a link). */
 export const founderSig = (extra = '') => `<div class="sig">
-          <span class="sig__img face"><img src="/${site.principalImage}" alt="${esc(site.principal)}" width="800" height="800" loading="lazy" decoding="async"></span>
+          <span class="sig__img face"><img src="/${site.avatar}" alt="${esc(site.principal)}" width="192" height="192" loading="lazy" decoding="async"></span>
           <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
           ${extra}
         </div>`;

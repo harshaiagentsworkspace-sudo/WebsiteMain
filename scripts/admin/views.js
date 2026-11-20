@@ -3,7 +3,7 @@
 import { h, icon, btn, badge, card, toast, modal, confirmBox, debounce, ago, fmtDate, linkBtn, autosize, clone } from './dom.js';
 import { S, api, changed, LABELS, isDirty } from './state.js';
 import { renderCards, renderField, renderObj, renderList, sub } from './forms.js';
-import { SCHEMAS, ROUTES } from '/build/schema.mjs';
+import { SCHEMAS, ROUTES, SERVICE_SLUGS, SERVICE_NAMES } from '/build/schema.mjs';
 import { analyzePost, analyzeListing, scoreDot, serpPreview, socialPreview, TITLE, DESC } from './seo.js';
 import { M, loadMedia } from './media.js';
 import { go } from './router.js';
@@ -186,10 +186,9 @@ export function enquiriesView(root, openId) {
 
 /* ===================== PAGES ===================== */
 const PAGE_LIST = [
-  ['home', '/', 'Home page', 'Hero, services panels, process and About teaser.'],
+  ['home', '/', 'Home page', 'Hero, problems, service panels, who we help, solutions, benefits, process, About teaser and FAQ.'],
   ['services', '/services', 'Services overview', 'The /services page head.'],
-  ['web-development', '/services/web-development', 'Web Development and UI/UX', 'Full service page.'],
-  ['agentic-ai-workflows', '/services/agentic-ai-workflows', 'Agentic AI Workflows', 'Full service page.'],
+  ...SERVICE_SLUGS.map(s => [s, `/services/${s}`, SERVICE_NAMES[s], 'Full service page, with its FAQ.']),
   ['work', '/work', 'Work', 'Page head and note. Projects are under Work.'],
   ['about', '/about', 'About', 'Hero, principles and services sections.'],
   ['blog', '/blog', 'Blog', 'Blog page heading. Posts are under Blog posts.'],
@@ -222,12 +221,14 @@ export function listingCard(route, { canonical } = {}) {
   const refresh = () => {
     const v = b.get();
     serp.replaceChildren(serpPreview({ url: siteUrl() + route, title: v.title, description: v.description }));
-    social.replaceChildren(socialPreview({ url: siteUrl() + route, title: v.title, description: v.description, image: v.ogImage || S.work.settings.seo.defaultOgImage }));
+    social.replaceChildren(socialPreview({ url: siteUrl() + route, title: v.ogTitle || v.title, description: v.ogDescription || v.description, image: v.ogImage || S.work.settings.seo.defaultOgImage }));
   };
   const bind = { ...b, changed: () => { changed(); refresh(); } };
   const fields = h('div', { class: 'stack' },
     renderField(s.fields.title, { get: () => bind.get().title, set: (v) => { bind.get().title = v; bind.changed(); } }, { soft: TITLE[1] }),
     renderField(s.fields.description, { get: () => bind.get().description, set: (v) => { bind.get().description = v; bind.changed(); } }, { soft: DESC[1] }),
+    ...['ogTitle', 'ogDescription', 'twitterTitle', 'twitterDescription'].map(k =>
+      renderField(s.fields[k], { get: () => bind.get()[k] || '', set: (v) => { if (v) bind.get()[k] = v; else delete bind.get()[k]; bind.changed(); } })),
     renderField(s.fields.ogImage, { get: () => bind.get().ogImage, set: (v) => { bind.get().ogImage = v; bind.changed(); } }),
     renderField(s.fields.noindex, { get: () => bind.get().noindex, set: (v) => { bind.get().noindex = v; bind.changed(); } }));
   refresh();
@@ -238,7 +239,7 @@ export function pageEditor(root, key) {
   const item = PAGE_LIST.find(p => p[0] === key);
   if (!item) { root.appendChild(h('p', { class: 'empty', text: 'Unknown page.' })); return; }
   const [, route, name] = item;
-  const contentName = key === 'home' ? 'home' : (key === 'web-development' || key === 'agentic-ai-workflows') ? 'services' : 'pages';
+  const contentName = key === 'home' ? 'home' : SERVICE_SLUGS.includes(key) ? 'services' : 'pages';
   root.append(h('div', { class: 'phead phead--edit' },
     h('div', { class: 'phead__left' }, btn('Back to pages', { iconOnly: true, icon: 'left', kind: 'plain', onclick: () => go('#/pages') }),
       h('h1', { class: 'phead__t', text: name }), h('code', { class: 'muted', text: route })),

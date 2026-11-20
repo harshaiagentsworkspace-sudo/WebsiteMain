@@ -24,13 +24,31 @@ const multi = (label, options, o = {}) => ({ t: 'multi', label, options, ...o })
 const opt = { optional: true };
 
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-export const SERVICE_SLUGS = ['web-development', 'agentic-ai-workflows'];
-export const ROUTES = ['/', '/services', '/services/web-development', '/services/agentic-ai-workflows',
+/* Service pages, in menu order. Renaming a slug changes a public URL: add a
+   permanent redirect from the old path (vercel.json) when you do. */
+export const SERVICE_SLUGS = ['web-development', 'ai-automation', 'ai-agent-development', 'business-consulting'];
+export const SERVICE_NAMES = {
+  'web-development': 'Web Development and UI/UX Design',
+  'ai-automation': 'AI Automation',
+  'ai-agent-development': 'AI Agent Development',
+  'business-consulting': 'Business Consulting',
+};
+/* card icons (workflow-ring-v2/<name>.svg), chosen per card in the admin */
+export const CARD_ICONS = ['step-1-enquiry', 'step-2-agent', 'step-3-approve', 'step-4-reminder',
+  'ai-01-agents', 'ai-02-multi-agent', 'ai-03-leads', 'ai-04-sales-marketing', 'ai-05-support', 'ai-06-automation', 'ai-07-integrations', 'ai-08-internal-systems',
+  'service-01-website', 'service-02-ui-ux', 'service-03-landing-page', 'service-04-ecommerce', 'service-05-cms', 'service-06-custom-app', 'service-07-responsive', 'service-08-redesign',
+  'principle-1-problem', 'principle-2-cost', 'principle-3-keep-running', 'principle-4-people',
+  'stat-1-projects', 'stat-2-clients', 'stat-3-rating'];
+export const ROUTES = ['/', '/services', ...SERVICE_SLUGS.map(s => `/services/${s}`),
   '/work', '/about', '/blog', '/contact', '/book', '/privacy', '/terms'];
 
 const seoEntry = (route) => obj(route, {
   title: text('Page title (browser tab and Google)', 70, { hint: 'Aim for 30–60 characters.' }),
   description: area('Meta description', 200, { hint: 'Aim for 70–160 characters. Shown under the title in Google.' }),
+  ogTitle: text('Social title', 100, { ...opt, hint: 'Title shown when the page is shared (LinkedIn, WhatsApp, Facebook). Empty = the page title.' }),
+  ogDescription: area('Social description', 200, { ...opt, hint: 'Empty = the meta description.' }),
+  twitterTitle: text('X / Twitter title', 100, { ...opt, hint: 'Empty = the social title.' }),
+  twitterDescription: area('X / Twitter description', 200, { ...opt, hint: 'Empty = the social description.' }),
   ogImage: image('Social share image', { ...opt, hint: 'Shown when the page is shared on LinkedIn, WhatsApp, X. 1200×630 works best. Empty = the site default.' }),
   noindex: bool('Hide this page from search engines'),
 });
@@ -39,16 +57,29 @@ const titled = (label, o = {}) => list(label, obj('Item', {
   title: text('Title', 80), text: area('Text', 400),
 }), { itemTitle: 'title', ...o });
 
+const iconCards = (label, o = {}) => list(label, obj('Card', {
+  title: text('Title', 80), text: area('Text', 400), icon: select('Icon', CARD_ICONS),
+}), { itemTitle: 'title', ...o });
+const faqList = (label, o = {}) => list(label, obj('Question', { q: text('Question', 200), a: area('Answer', 1200) }), { max: 12, itemTitle: 'q', ...o });
+
 const servicePage = (name) => obj(name, {
   title: text('Service name', 80),
+  heading: text('Page heading (H1)', 120, { ...opt, hint: 'The main heading at the top of the page. Empty = the service name.' }),
   short: text('Short name', 40, { hint: 'Used where space is tight.' }),
   summary: area('Summary', 300, { hint: 'Lead paragraph on the service page, the About page and /services.' }),
   who: area('Who it helps', 400),
   problem: area('The problem', 400),
   build: lines('What we build (tags)', { max: 12, itemMax: 80 }),
   includes: lines('What an engagement includes (steps)', { min: 2, max: 6, itemMax: 200 }),
-  services: titled('“What we build” cards', { min: 8, max: 8, fixed: true, hint: 'Exactly 8 cards, one per icon.' }),
+  servicesHeading: text('Cards heading', 100, { ...opt, hint: 'Empty = “What we build”.' }),
+  services: titled('Cards', { min: 3, max: 8, hint: 'Three to eight cards.' }),
   principles: titled('“What we hold to”', { min: 1, max: 6 }),
+  details: list('Detail sections', obj('Section', {
+    heading: text('Heading', 120),
+    paragraphs: paras('Paragraphs', { max: 4, itemMax: 900 }),
+    points: lines('Bullet points', { ...opt, min: 0, max: 10, itemMax: 240 }),
+  }), { max: 8, itemTitle: 'heading', hint: 'Longer explanations shown as their own sections, each with its own heading.' }),
+  faq: faqList('Frequently asked questions'),
   example: obj('Worked example', {
     title: text('Example title', 100),
     ring: lines('Short steps (home page ring)', { min: 2, max: 6, itemMax: 60 }),
@@ -95,6 +126,7 @@ export const SCHEMAS = {
     footerCta: obj('Footer invitation', {
       heading: text('Heading', 80),
       text: area('Text', 240, { hint: '{name} is replaced with the founder’s first name.' }),
+      button: text('Button label', 50, { hint: 'Goes to the contact form.' }),
     }),
   }),
 
@@ -102,14 +134,36 @@ export const SCHEMAS = {
     hero: obj('Hero (top of the page)', {
       headline: lines('Headline', { max: 3, itemMax: 80, hint: 'One line per row (up to 3). Put {curly braces} around words to set them in italics.' }),
       intro: area('Intro paragraph', 400),
-      secondaryButton: text('Second button label', 40, { hint: 'The first button is always the booking button.' }),
+      primaryButton: text('First button label', 50, { hint: 'Goes to the contact form.' }),
+      secondaryButton: text('Second button label', 40, { hint: 'Jumps to the services section.' }),
+    }),
+    problems: obj('Business problems', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      items: iconCards('Problems', { min: 3, max: 6 }),
     }),
     services: obj('Services', {
       heading: text('Section heading', 80),
-      panels: obj('Panels', Object.fromEntries(SERVICE_SLUGS.map(s => [s, obj(s === 'web-development' ? 'Web Development panel' : 'Agentic AI panel', {
+      panels: obj('Panels', Object.fromEntries(SERVICE_SLUGS.map(s => [s, obj(`${SERVICE_NAMES[s]} panel`, {
+        title: text('Panel heading', 80, { ...opt, hint: 'Empty = the service name.' }),
         summary: area('Summary', 240), who: area('Who it helps', 240), problem: area('The problem', 240),
         build: area('What we build', 300), includes: lines('A project can include', { max: 8, itemMax: 120 }),
       })]))),
+    }),
+    audiences: obj('Who we help', {
+      heading: text('Heading', 100),
+      items: iconCards('Groups', { min: 2, max: 6 }),
+    }),
+    benefits: obj('Business benefits', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      items: iconCards('Benefits', { min: 3, max: 6 }),
+    }),
+    solutions: obj('Business solutions', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      items: list('Solutions', obj('Solution', { title: text('Title', 80), text: area('Text', 400), icon: select('Icon', CARD_ICONS), service: select('Related service', SERVICE_SLUGS, { labels: SERVICE_NAMES }) }), { min: 2, max: 8, itemTitle: 'title' }),
+    }),
+    faq: obj('Frequently asked questions', {
+      heading: text('Heading', 100),
+      items: faqList('Questions', { min: 1 }),
     }),
     process: obj('How a project runs', {
       heading: text('Section heading', 80),
@@ -122,8 +176,7 @@ export const SCHEMAS = {
     }),
   }),
 
-  services: obj('Services', Object.fromEntries(SERVICE_SLUGS.map(s =>
-    [s, servicePage(s === 'web-development' ? 'Web Development and UI/UX Design' : 'Agentic AI Workflows')]))),
+  services: obj('Services', Object.fromEntries(SERVICE_SLUGS.map(s => [s, servicePage(SERVICE_NAMES[s])]))),
 
   pages: obj('Pages', {
     seo: obj('Search listing per page', Object.fromEntries(ROUTES.map(r => [r, seoEntry(r)]))),
@@ -158,7 +211,7 @@ export const SCHEMAS = {
       url: url('Live link'),
       linkLabel: text('Link button text', 40),
       area: text('Sector / type', 80),
-      pillars: multi('Services it relates to', SERVICE_SLUGS, { labels: { 'web-development': 'Web Development', 'agentic-ai-workflows': 'Agentic AI' } }),
+      pillars: multi('Services it relates to', SERVICE_SLUGS, { labels: SERVICE_NAMES }),
       scope: lines('Scope tags', { ...opt, min: 0, max: 10, itemMax: 60 }),
       what: area('What it is', 300),
       problem: area('The problem', 400),

@@ -6,8 +6,8 @@
     "principal": "Harsh Dubey",
     "principalRole": "Founder",
     "principalImage": "assets/harsh-dubey.jpg",
-    "sub": "Ostendic designs and builds websites and web applications, and the AI workflows businesses run behind them.",
-    "footer": "Ostendic builds websites, web applications and the AI workflows behind them."
+    "sub": "Ostendic helps businesses attract more customers, simplify repetitive work and grow smarter through websites, AI automation and practical business consulting.",
+    "footer": "Ostendic helps businesses grow with websites, AI automation, custom AI agents and practical consulting."
   },
   "contact": {
     "phoneDisplay": "",
@@ -18,7 +18,7 @@
   },
   "seo": {
     "titleSuffix": " | Ostendic",
-    "defaultOgImage": "",
+    "defaultOgImage": "assets/og-default.jpg",
     "twitterHandle": "",
     "googleVerification": "",
     "bingVerification": "",
@@ -29,8 +29,9 @@
       "A new website or a redesign",
       "UI/UX design",
       "A web app or online store",
-      "An AI workflow or automation",
-      "A website and an AI workflow",
+      "Automating a workflow",
+      "A custom AI agent",
+      "Business or growth consulting",
       "Not sure yet"
     ],
     "budgets": [
@@ -59,7 +60,8 @@
     ]
   },
   "footerCta": {
-    "heading": "Tell us what you’re working on.",
-    "text": "A short message is enough to start. You’ll hear back from {name} directly."
+    "heading": "What’s slowing your business down?",
+    "text": "Not enough enquiries? Too many repetitive tasks? A growth strategy that isn’t delivering? Tell us what you’re dealing with, and we’ll help you explore a practical next step.",
+    "button": "Let’s talk about your challenge"
   }
 }

@@ -15,8 +15,8 @@ if (STATS_ARE_PLACEHOLDER && isProduction) {
   throw new Error('The stats bar is showing placeholder numbers. Replace them with verified figures in Admin › Settings › Stats bar and turn off “These numbers are placeholders”.');
 }
 if (STATS_ARE_PLACEHOLDER) {
-  console.warn('[build] Stats bar is showing placeholder numbers (Admin › Settings › Stats bar). Not for deploy.');
+  console.warn('[build] Stats bar numbers are marked as placeholders, so the bar is hidden (Admin › Settings › Stats bar).');
 }
-export const statsDevWarning = STATS_ARE_PLACEHOLDER && !isProduction
-  ? '<script>console.warn("StatsBar is showing placeholder numbers");</script>'
-  : '';
+/* The bar itself is not rendered while the numbers are placeholders (see
+   statsBar in sections.mjs), so unverified figures never reach a visitor. */
+export const statsDevWarning = '';

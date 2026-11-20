@@ -97,6 +97,10 @@ const server = createServer(async (req, res) => {
     if (target) {
       await send(target, 200);
       console.log(`  200  ${url}${Date.now() - started > 20 ? `  (${Date.now() - started}ms)` : ''}`);
+    } else if (await exists(join(ROOT, '404.html'))) {
+      /* as Vercel does: the site's own 404 page, with a 404 status */
+      await send(join(ROOT, '404.html'), 404);
+      console.log(`  404  ${url}`);
     } else {
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(`<!doctype html><meta charset="utf-8"><title>404</title>

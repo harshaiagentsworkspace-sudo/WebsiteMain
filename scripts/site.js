@@ -4,6 +4,27 @@
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* ---------- analytics events ----------
+     Sent only when GA4 is configured (Admin › Settings › Search & sharing
+     loads gtag); otherwise every call is a no-op. Parameters never carry
+     personal details: no names, emails, phone numbers or message text. */
+  var track = window.ostTrack = function (name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var where = a.closest('header') ? 'header' : a.closest('footer') ? 'footer' : a.closest('.hero') ? 'hero' : 'content';
+    if (href.indexOf('mailto:') === 0) track('email_contact_click', { link_location: where });
+    else if (href.indexOf('tel:') === 0) track('phone_contact_click', { link_location: where });
+    else if (href.indexOf('https://wa.me/') === 0) track('whatsapp_contact_click', { link_location: where });
+    else if (a.classList.contains('btn--primary')) {
+      var label = (a.querySelector('.btn-label--full, .btn-label') || a).textContent.trim();
+      track('cta_click', { cta_text: label.slice(0, 80), cta_destination: href.split('#')[0] || location.pathname, link_location: where });
+    }
+  });
+
   /* ---------- mobile navigation ---------- */
   var burger = document.getElementById('burger');
   var mnav = document.getElementById('mnav');
@@ -193,7 +214,11 @@
         nodes[k].classList.toggle('is-on', on);
         shadows[k].classList.toggle('is-on', on);
         steps[k].classList.toggle('is-on', on);
+        /* the step being worked on now: its node pulses, its card shows a progress bar */
+        nodes[k].classList.toggle('is-now', k === n - 1);
+        steps[k].classList.toggle('is-now', k === n - 1);
       }
+      if (n > 0) loop.setAttribute('data-step', String(n)); else loop.removeAttribute('data-step');
     };
     var setDraw = function (frac) {
       loop.style.setProperty('--draw', (100 * (1 - frac)).toFixed(3));
@@ -440,6 +465,9 @@
       form.classList.remove('is-sending');
       label.textContent = original;
       if (ok) {
+        /* the service category is a menu choice, not personal data */
+        track('contact_form_submit', { form_name: 'contact', service_interest: form.help.value });
+        track('generate_lead', { form_name: 'contact', service_interest: form.help.value });
         form.reset();
         setStatus('ok', 'Thanks. We’ve got your message and we’ll reply by email.');
       } else {

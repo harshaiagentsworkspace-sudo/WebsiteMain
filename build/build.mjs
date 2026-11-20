@@ -6,7 +6,7 @@
 import { writeFileSync, mkdirSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { page } from './ui.mjs';
+import { page, pageHead, btn } from './ui.mjs';
 import { site, pillars, pending, pagesCopy } from './data.mjs';
 import * as P from './pages.mjs';
 import { posts, BLOG_IS_PLACEHOLDER, plainText, futureDated, src as mediaSrc } from './blog.mjs';
@@ -24,7 +24,8 @@ const SEO = pagesCopy.seo;
 /* page() arguments from a route's search listing */
 const seoFor = (route) => {
   const s = SEO[route];
-  return { title: s.title, desc: s.description, ogImage: s.ogImage || '', noindex: s.noindex, current: route };
+  return { title: s.title, desc: s.description, ogImage: s.ogImage || '', noindex: s.noindex, current: route,
+    ogTitle: s.ogTitle || '', ogDesc: s.ogDescription || '', twTitle: s.twitterTitle || '', twDesc: s.twitterDescription || '' };
 };
 const crumbs = (items) => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -33,15 +34,21 @@ const crumbs = (items) => ({
 
 const heroPreload = '<link rel="preload" as="image" href="/assets/hero-vortex-poster.jpg">\n';
 
+/* stable ids, so every page's structured data points at one Organization */
+const ORG = { '@id': `${site.url}/#organization` };
+
 add('index.html', page({ ...seoFor('/'), body: P.home(), preload: heroPreload,
-  jsonld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url }] }));
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: site.url,
+    description: SEO['/'].description, inLanguage: 'en-IN', publisher: ORG }] }));
 add('services.html', page({ ...seoFor('/services'), body: P.servicesIndex(),
   jsonld: [crumbs([['Home', '/'], ['Services', '/services']])] }));
 for (const s of pillars) add(`services/${s.slug}.html`, page({
   ...seoFor(s.path), body: P.pillarPage(s),
   jsonld: [
-    { '@context': 'https://schema.org', '@type': 'Service', name: s.title, description: s.summary, serviceType: s.title,
-      provider: { '@type': 'Organization', name: site.name, url: site.url }, areaServed: 'IN' },
+    { '@context': 'https://schema.org', '@type': 'Service', '@id': `${site.url}${s.path}#service`, name: s.title,
+      description: s.summary, serviceType: s.title, url: site.url + s.path, provider: ORG,
+      hasOfferCatalog: { '@type': 'OfferCatalog', name: s.servicesHeading,
+        itemListElement: s.services.map(([name, description]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name, description } })) } },
     crumbs([['Home', '/'], ['Services', '/services'], [s.title, s.path]]),
   ],
 }));
@@ -128,15 +135,25 @@ ${posts.map(p => `  <item>
 </rss>
 `);
 
+/* 404: Vercel serves /404.html, with a 404 status, for any URL that has no
+   page. Not indexed, not in the sitemap. */
+add('404.html', page({ title: `Page not found${site.seo.titleSuffix || ''}`, desc: 'This page doesn’t exist. It may have moved.',
+  noindex: true, current: '/404', body: pageHead({ label: '404', lines: ['This page doesn’t exist.'],
+    lead: 'It may have moved, or the link may be mistyped. These will take you somewhere useful.',
+    actions: btn('Go to the home page', '/', 'primary') + btn('See our services', '/services', 'ghost') + btn('Contact us', '/contact', 'ghost') }) }));
+
 /* Retired pages: their generated HTML is removed; vercel.json redirects
-   the old URLs. */
-for (const gone of ['careers.html', 'resources.html']) {
+   the old URLs. A renamed service page (agentic-ai-workflows) loses its
+   old file the same way. */
+for (const gone of ['careers.html', 'resources.html', 'services/agentic-ai-workflows.html']) {
   const f = join(ROOT, gone);
   if (existsSync(f)) rmSync(f);
 }
 
-/* sitemap + robots. Pages switched to noindex in the admin are left out. */
-const today = new Date().toISOString().slice(0, 10);
+/* sitemap + robots. Pages switched to noindex in the admin are left out.
+   Pages carry no <lastmod>: the build date isn't when the page changed,
+   and a wrong date teaches search engines to ignore the field. Blog posts
+   keep theirs (publishedAt / updatedAt). */
 const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/about',
   ...(BLOG_IS_PLACEHOLDER || SEO['/blog'].noindex ? [] : ['/blog']),
   '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'].filter(r => !SEO[r].noindex);
@@ -144,7 +161,7 @@ const blogUrls = BLOG_IS_PLACEHOLDER ? [] : posts.filter(p => !p.seo.noindex && 
 add('sitemap.xml',
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(r => `  <url><loc>${site.url}${r}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${routes.map(r => `  <url><loc>${site.url}${r}</loc></url>`).join('\n')}
 ${blogUrls.map(p => `  <url><loc>${site.url}/blog/${p.slug}</loc><lastmod>${p.updatedAt || p.publishedAt}</lastmod></url>`).join('\n')}
 </urlset>`);
 add('robots.txt', `User-agent: *\nAllow: /\nDisallow: /legacy/\nDisallow: /orbix-reference/\nDisallow: /form-studio/\nDisallow: /admin\nDisallow: /api/\nDisallow: /build/\nDisallow: /content/\n\nSitemap: ${site.url}/sitemap.xml\n`);

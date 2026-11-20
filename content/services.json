@@ -67,23 +67,45 @@
         "title": "Easy to maintain",
         "text": "Sensible platforms and clean structure, so the site stays easy to update after launch."
       }
-    ]
+    ],
+    "faq": [
+      {
+        "q": "Do you build custom websites, or use WordPress and Shopify?",
+        "a": "Both. A custom build suits sites with specific needs or a web application. WordPress or Shopify suits businesses that want to update pages or products themselves. We recommend one at the start and explain why."
+      },
+      {
+        "q": "Will the website work properly on phones?",
+        "a": "Yes. Most visitors arrive on a phone, so we design for that screen first and test on phones, tablets and desktops before launch."
+      },
+      {
+        "q": "Can we update the website ourselves after launch?",
+        "a": "Yes. We hand over the logins and notes you need, and choose a platform your team can manage."
+      },
+      {
+        "q": "Do you redesign existing websites?",
+        "a": "Yes. We review what the current site does well and where visitors drop off, then make the changes that make it clearer, faster and easier to use."
+      },
+      {
+        "q": "Do you also handle SEO or digital marketing?",
+        "a": "We build sites with search engines in mind: clear page titles and descriptions, fast pages, a sitemap and a clean structure. We don’t currently run ongoing SEO or advertising campaigns."
+      }
+    ],
+    "details": []
   },
-  "agentic-ai-workflows": {
-    "title": "Agentic AI Workflows",
-    "short": "Agentic AI workflows",
-    "summary": "Connected, AI-powered workflows that coordinate tasks across your tools and take repetitive manual work off your team.",
+  "ai-automation": {
+    "title": "AI Automation",
+    "heading": "Automate repetitive work. {Give your business room to grow.}",
+    "short": "AI automation",
+    "summary": "Workflow automation, with AI where it helps, that takes repetitive work off your team: enquiries handled, details moved between tools, follow-ups prepared and reports put together.",
     "who": "Businesses where the same manual steps repeat every day: answering enquiries, chasing leads, copying information between tools, preparing updates.",
     "problem": "Work gets stuck between tools and people. Leads wait for a reply, customer questions pile up, and someone spends hours moving information from one place to another.",
     "build": [
-      "AI agents for business operations",
-      "Multi-agent systems",
-      "Lead management and follow-up",
-      "Sales and marketing workflows",
+      "Enquiry handling",
+      "Lead follow-up",
       "Customer support workflows",
-      "Process automation",
-      "API and tool integrations",
-      "Internal business systems"
+      "Data entry between tools",
+      "Reporting",
+      "Tool and API integrations"
     ],
     "includes": [
       "Mapping the current process and where time is being lost",
@@ -92,26 +114,19 @@
       "Testing it on real cases before it goes live",
       "Documentation, and adjustments once your team is using it"
     ],
+    "servicesHeading": "Work we automate",
     "services": [
-      {
-        "title": "AI agents for business operations",
-        "text": "Agents that take on recurring tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters."
-      },
-      {
-        "title": "Multi-agent systems",
-        "text": "Several specialised agents working on a larger process, each responsible for one part, with clear handovers between them."
-      },
       {
         "title": "Lead management and follow-up",
         "text": "New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold."
       },
       {
-        "title": "Sales and marketing workflows",
-        "text": "Research, outreach preparation, content drafts and reporting, with your team approving what goes out."
+        "title": "Customer enquiry and support workflows",
+        "text": "Incoming questions sorted, answered from your own information where appropriate, and passed to a person when one is needed."
       },
       {
-        "title": "Customer support workflows",
-        "text": "Incoming questions sorted, answered from your own information where appropriate, and passed to a person when one is needed."
+        "title": "Sales and marketing workflows",
+        "text": "Research, outreach preparation, content drafts and campaign reporting, with your team approving what goes out."
       },
       {
         "title": "Process automation",
@@ -122,8 +137,8 @@
         "text": "Connections between your CRM, forms, email, spreadsheets and other tools, so information reaches the place it’s needed."
       },
       {
-        "title": "Internal business systems",
-        "text": "Purpose-built tools for a process specific to your business, designed around the way your team already works."
+        "title": "Reporting and internal tools",
+        "text": "Weekly numbers gathered from your tools and put into one summary, and small internal tools for the steps your team repeats."
       }
     ],
     "principles": [
@@ -138,6 +153,55 @@
       {
         "title": "Built around your tools",
         "text": "We connect the CRM, inbox, forms and spreadsheets you already use instead of replacing them."
+      }
+    ],
+    "details": [
+      {
+        "heading": "Which work is worth automating",
+        "paragraphs": [
+          "The best candidates are tasks your team does often, the same way each time, and that mostly move information from one place to another. If a task needs real judgement on every case, it may suit an AI agent with a person approving, or it may be better left as it is."
+        ],
+        "points": [
+          "It happens every day or every week",
+          "It follows roughly the same steps each time",
+          "It means copying details between tools, inboxes or spreadsheets",
+          "Delays cost you something: a slow reply, a missed follow-up, a late report"
+        ]
+      },
+      {
+        "heading": "People stay in control",
+        "paragraphs": [
+          "An automation should make your team faster, not hide what is happening. We decide with you which steps run on their own and which wait for a person to approve, and we keep a record of what each workflow did.",
+          "Before anything goes live, we test it on real past cases. If a step fails, the workflow stops and tells someone, rather than carrying on with bad information."
+        ]
+      },
+      {
+        "heading": "Working with the tools you already use",
+        "paragraphs": [
+          "We connect the CRM, inbox, forms and spreadsheets you already have, wherever they offer a supported connection, instead of asking you to switch. Where a workflow uses a paid third-party tool or an AI service, we tell you the running cost before we build it."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What kind of business is AI automation suitable for?",
+        "a": "Any business where the same manual steps repeat every day: answering similar enquiries, chasing leads, copying details between tools or preparing the same report each week. Small teams often feel the benefit most, because those hours come out of a few people’s days."
+      },
+      {
+        "q": "Do we need technical knowledge to use it?",
+        "a": "No. We build and connect the workflow, test it with you and hand over plain notes on how it works. Your team keeps using the tools they already know."
+      },
+      {
+        "q": "Will automation replace our staff?",
+        "a": "That isn’t the aim. Automation takes on the repetitive steps so your team can spend more time on customers and on work that needs judgement."
+      },
+      {
+        "q": "What happens if an automation makes a mistake?",
+        "a": "Steps that matter wait for a person to approve them, every run is logged, and a failed step stops the workflow and alerts someone. We also test on real past cases before going live."
+      },
+      {
+        "q": "How is this different from AI agent development?",
+        "a": "Automation follows the steps you define, with AI helping on parts such as reading or drafting. An AI agent decides how to handle each case within limits you set. Many projects start with automation; we suggest an agent only when the work needs it."
       }
     ],
     "example": {
@@ -155,5 +219,225 @@
         "If the customer hasn’t replied after a set time, it prepares a follow-up and reminds the right person."
       ]
     }
+  },
+  "ai-agent-development": {
+    "title": "AI Agent Development",
+    "heading": "Custom AI agents {built around your business workflows.}",
+    "short": "AI agents",
+    "summary": "Custom AI agents that read incoming work, handle routine cases inside your tools and hand anything unusual to a person, within limits you set.",
+    "who": "Businesses with a steady flow of work that needs reading and a first decision: requests to sort, documents to check, records to update, questions to answer from your own information.",
+    "problem": "Simple automations follow fixed rules, so they break when an email is worded differently or a case doesn’t fit the pattern. The work falls back on your team, and the automation is quietly switched off.",
+    "build": [
+      "Operations agents",
+      "Enquiry and support agents",
+      "Research and preparation agents",
+      "Multi-agent systems",
+      "Approval and review flows"
+    ],
+    "includes": [
+      "Defining the agent’s job, its limits and what it must hand to a person",
+      "Preparing the information it works from: your services, policies and past examples",
+      "Building it and connecting it to your tools, with the access it needs and no more",
+      "Testing it on real past cases and reviewing the results with you",
+      "Monitoring, documentation and adjustments after launch"
+    ],
+    "servicesHeading": "Agents we build",
+    "services": [
+      {
+        "title": "AI agents for business operations",
+        "text": "Agents that take on recurring tasks such as sorting requests, preparing documents or updating records, with people reviewing where it matters."
+      },
+      {
+        "title": "Multi-agent systems",
+        "text": "Several specialised agents working on a larger process, each responsible for one part, with clear handovers between them."
+      },
+      {
+        "title": "Agents with human approval",
+        "text": "Agents that prepare the work, such as a reply, a quote draft or a record update, and wait for a person to approve it before anything is sent or changed."
+      },
+      {
+        "title": "Agents that work from your own information",
+        "text": "Agents that answer questions and draft replies using your services, prices and policies, and say so when they don’t know."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Clear limits",
+        "text": "Each agent has one job, a defined set of actions it may take and a list of things it must never do on its own."
+      },
+      {
+        "title": "A person approves what matters",
+        "text": "Anything that commits your business, such as a price, a refund or a message to a customer, can wait for approval."
+      },
+      {
+        "title": "Every action is recorded",
+        "text": "You can see what the agent did, when and why, so problems are easy to find and fix."
+      }
+    ],
+    "details": [
+      {
+        "heading": "What an AI agent is",
+        "paragraphs": [
+          "An AI agent is software that uses a language model to work through a task: it reads what has come in, decides what kind of case it is, and takes the next step using the tools it has been given, such as looking up a record, drafting a reply or updating your CRM.",
+          "Unlike a chatbot, an agent doesn’t just answer questions. It does a piece of work, and it can be set up to stop and ask a person whenever it reaches a decision it shouldn’t make alone."
+        ]
+      },
+      {
+        "heading": "Automation or an agent: which do you need?",
+        "paragraphs": [
+          "If the steps are the same every time, a workflow automation is simpler, cheaper and more predictable. An agent earns its place when each case is a little different and needs reading and judgement before anything happens."
+        ],
+        "points": [
+          "Automation: the same input leads to the same steps, every time",
+          "Agent: the input varies, and the right next step depends on what it says",
+          "Often the answer is both: an automation hands the unclear cases to an agent, and the agent hands the hard ones to a person"
+        ]
+      },
+      {
+        "heading": "Where agents fit in a business",
+        "paragraphs": [
+          "Good first projects are tasks with plenty of volume, a clear definition of a good result and a person who can review the output."
+        ],
+        "points": [
+          "Reading and sorting incoming enquiries and support requests",
+          "Drafting replies and quotes from your own information for approval",
+          "Checking documents or forms against a list of requirements",
+          "Keeping CRM records and spreadsheets up to date",
+          "Preparing research summaries and briefings for your team"
+        ]
+      },
+      {
+        "heading": "Security, access and approvals",
+        "paragraphs": [
+          "An agent gets only the access its job needs. We agree with you which actions need approval, keep a log of everything it does, and explain which AI provider processes your data and under what terms before anything is connected."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the difference between a chatbot and an AI agent?",
+        "a": "A chatbot answers questions in a conversation. An AI agent carries out a task, such as sorting an enquiry, updating a record or preparing a reply, using the tools it has been connected to."
+      },
+      {
+        "q": "Can an agent work with our existing software?",
+        "a": "Usually, yes. Agents connect to tools that offer an API or a supported integration, such as many CRMs, inboxes, forms and spreadsheets. We check your tools before we propose anything."
+      },
+      {
+        "q": "Can we control what the agent is allowed to do?",
+        "a": "Yes. You decide its limits, which actions need a person’s approval and what it must always hand over. Those rules are part of the written scope."
+      },
+      {
+        "q": "Is our business data safe?",
+        "a": "The agent gets only the access it needs, and we tell you which AI provider processes your data and under what terms before anything is connected. Sensitive actions can always require approval."
+      },
+      {
+        "q": "Do we need an AI agent or a simpler automation?",
+        "a": "If the steps are the same every time, a simpler automation is usually the better choice. We’ll tell you which fits after looking at the work itself."
+      }
+    ]
+  },
+  "business-consulting": {
+    "title": "Business Consulting",
+    "heading": "Find the bottlenecks. {Build a clearer path to growth.}",
+    "short": "Business consulting",
+    "summary": "Practical growth and operations consulting. We look at how your business wins customers and gets work done, find what’s holding it back, and set out a clear, prioritised plan.",
+    "who": "Founders and owners of small and growing businesses who know something isn’t working, but not exactly what, or where to start.",
+    "problem": "Growth stalls for reasons that are hard to see from the inside: a sales process that loses enquiries, work that depends on one person, tools that don’t talk to each other, or too many priorities at once.",
+    "build": [
+      "Growth assessments",
+      "Process improvement",
+      "Digital transformation planning",
+      "Technology and AI adoption",
+      "Prioritised action plans"
+    ],
+    "includes": [
+      "A conversation about your goals and what isn’t working",
+      "A review of how enquiries, sales and delivery run today",
+      "Identifying the bottlenecks and the opportunities worth acting on first",
+      "A written, prioritised plan with practical next steps",
+      "Help putting it in place, if you want it"
+    ],
+    "servicesHeading": "Where consulting helps",
+    "services": [
+      {
+        "title": "Growth assessment",
+        "text": "A structured look at how customers find you, enquire and buy, and where they drop away."
+      },
+      {
+        "title": "Process improvement",
+        "text": "Mapping how work moves through the business, then removing the steps, delays and hand-offs that slow it down."
+      },
+      {
+        "title": "Digital transformation strategy",
+        "text": "Deciding which parts of the business should move to better tools or online channels, in what order and at what cost."
+      },
+      {
+        "title": "Technology and AI adoption",
+        "text": "Choosing the tools and AI uses that fit your business, and planning how your team will start using them."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Practical over theoretical",
+        "text": "Every recommendation comes with a next step your team can actually take."
+      },
+      {
+        "title": "Honest priorities",
+        "text": "We say what matters most and what can wait, even when the answer is “not now”."
+      },
+      {
+        "title": "Not tied to our own services",
+        "text": "If the right fix is a process change or someone else’s tool, the plan says so."
+      }
+    ],
+    "details": [
+      {
+        "heading": "Common challenges we look at",
+        "paragraphs": [
+          "Most engagements start from a feeling that the business should be doing better than it is. Usually the cause is one of a handful of things."
+        ],
+        "points": [
+          "Enquiries come in but too few turn into customers",
+          "The owner is involved in every decision and every task",
+          "Work is tracked in inboxes, chats and memory rather than one system",
+          "Tools have been added one by one and don’t connect",
+          "There is no shared view of what to work on first"
+        ]
+      },
+      {
+        "heading": "What a strategic assessment covers",
+        "paragraphs": [
+          "We look at the whole path from a customer’s first contact to the work being delivered: how people find and contact you, how enquiries are handled, how work is planned and done, which tools you rely on and where your team’s time goes. The result is a short written report that names the bottlenecks and ranks what to fix."
+        ]
+      },
+      {
+        "heading": "From plan to implementation",
+        "paragraphs": [
+          "A plan is only useful if it gets done. You can take it to your own team, to another provider, or ask us to carry out the parts we do: a website, a workflow automation or an AI agent. Either way, the plan is yours to keep."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What does a consulting engagement involve?",
+        "a": "A conversation about your goals, a review of how the business runs today, and a written, prioritised plan. The exact scope and price are agreed in writing before we start."
+      },
+      {
+        "q": "Is business consulting suitable for a small business?",
+        "a": "Yes. Small businesses often benefit most, because a few changes in how enquiries and work are handled make a visible difference to a small team."
+      },
+      {
+        "q": "Will you only recommend your own services?",
+        "a": "No. If the best fix is a process change, a different tool or another provider, the plan says so."
+      },
+      {
+        "q": "What do we get at the end?",
+        "a": "A written plan that names the bottlenecks, ranks what to fix first and sets out practical next steps, plus a conversation to walk through it."
+      },
+      {
+        "q": "Can you help put the plan into action?",
+        "a": "Yes, where it involves what we do: websites, workflow automation and AI agents. For anything else, the plan explains what to look for."
+      }
+    ]
   }
 }

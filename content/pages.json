@@ -1,14 +1,18 @@
 {
   "seo": {
     "/": {
-      "title": "Ostendic | Websites, UI/UX design and agentic AI workflows",
-      "description": "Ostendic designs and builds websites and web applications, and the AI workflows businesses run behind them.",
+      "title": "Digital Growth, AI Automation & Consulting | Ostendic",
+      "description": "Grow your business with websites that win enquiries, AI agents, workflow automation and business consulting. Practical solutions for smarter growth.",
+      "ogTitle": "Ostendic | Smarter Growth. Simpler Work.",
+      "ogDescription": "Digital growth, strategic consulting and practical AI automation for ambitious businesses.",
+      "twitterTitle": "Ostendic | Smarter Growth. Simpler Work.",
+      "twitterDescription": "Helping businesses grow smarter with digital strategy, AI automation and practical consulting.",
       "ogImage": "",
       "noindex": false
     },
     "/services": {
-      "title": "Services | Ostendic",
-      "description": "Two services: web development and UI/UX design, and agentic AI workflows that coordinate tasks across your tools and reduce repetitive manual work.",
+      "title": "Services: Websites, AI Automation & Consulting | Ostendic",
+      "description": "Four services from Ostendic: web development and UI/UX design, AI automation, custom AI agent development, and business growth and strategy consulting.",
       "ogImage": "",
       "noindex": false
     },
@@ -18,9 +22,21 @@
       "ogImage": "",
       "noindex": false
     },
-    "/services/agentic-ai-workflows": {
-      "title": "Agentic AI Workflows | Ostendic",
-      "description": "AI agents and connected workflows for lead follow-up, customer support, sales and marketing, process automation and tool integrations, designed with people kept in control.",
+    "/services/ai-automation": {
+      "title": "AI Automation Services for Businesses | Ostendic",
+      "description": "Automate repetitive work with AI-powered workflows: enquiry handling, lead follow-up, reporting and tool integrations, with people approving what matters.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/services/ai-agent-development": {
+      "title": "Custom AI Agent Development Services | Ostendic",
+      "description": "Custom AI agents built around your workflows. They read, sort and act on routine cases inside your tools, within clear limits and with human approval.",
+      "ogImage": "",
+      "noindex": false
+    },
+    "/services/business-consulting": {
+      "title": "Business Growth & Strategy Consulting | Ostendic",
+      "description": "Find the bottlenecks holding your business back. Practical growth, process improvement and digital transformation consulting with a clear, prioritised plan.",
       "ogImage": "",
       "noindex": false
     },
@@ -32,45 +48,45 @@
     },
     "/about": {
       "title": "About | Ostendic",
-      "description": "Ostendic is run by Harsh Dubey, designing and building websites, web applications and AI workflows.",
+      "description": "Ostendic is run by founder Harsh Dubey and helps businesses grow with websites, AI automation, custom AI agents and practical business consulting.",
       "ogImage": "",
       "noindex": false
     },
     "/blog": {
       "title": "Blog | Ostendic",
-      "description": "Plain talk about websites and AI workflows for small businesses.",
+      "description": "Plain talk about websites, AI automation and running a smarter small business.",
       "ogImage": "",
       "noindex": false
     },
     "/contact": {
       "title": "Contact | Ostendic",
-      "description": "Tell Ostendic about a website, UI/UX design or AI workflow project. Replies come from the founder directly.",
+      "description": "Tell Ostendic what’s slowing your business down: a website, an automation idea, an AI agent or a growth question. Replies come from the founder directly.",
       "ogImage": "",
       "noindex": false
     },
     "/book": {
       "title": "Book a quick call | Ostendic",
-      "description": "Book a quick call with Harsh Dubey of Ostendic about a website, UI/UX design or an AI workflow. Pick a date and time that suits you.",
+      "description": "Book a quick call with Harsh Dubey of Ostendic about a website, an automation idea, an AI agent or a growth challenge. Pick a time that suits you.",
       "ogImage": "",
       "noindex": false
     },
     "/privacy": {
       "title": "Privacy | Ostendic",
-      "description": "How Ostendic handles the information you send us.",
+      "description": "How Ostendic handles the details you send through the enquiry form: what we collect, why, how long we keep it and how to have it deleted.",
       "ogImage": "",
       "noindex": false
     },
     "/terms": {
       "title": "Terms | Ostendic",
-      "description": "Terms of use for the Ostendic website.",
+      "description": "Terms of use for the Ostendic website, and how project work is governed by the written scope and agreement for each engagement.",
       "ogImage": "",
       "noindex": false
     }
   },
   "services": {
     "label": "Services",
-    "heading": "Websites and web applications, and the AI workflows behind them",
-    "lead": "Ostendic works in two areas. They are often used together, but each stands on its own."
+    "heading": "Websites, AI automation and consulting, built around how your business works",
+    "lead": "Ostendic works in four areas. They often work together, but each stands on its own."
   },
   "work": {
     "label": "Work",
@@ -81,9 +97,9 @@
   },
   "about": {
     "heading": "Small businesses deserve to show up like the big ones.",
-    "lead": "Ostendic builds websites and AI workflows that help small businesses look credible, get noticed and run smoothly.",
+    "lead": "Ostendic helps small and growing businesses look credible, win more enquiries and run smoothly, with websites, AI automation and practical consulting.",
     "body": [
-      "We cover both sides of how a business shows up online: the website customers see, and the workflows that handle what happens after they get in touch.",
+      "We cover how a business shows up online, the workflows that handle what happens after a customer gets in touch, and the strategy that ties them together.",
       "Ostendic is small by design. Every project is scoped in writing, built with care and handed over in a form your team can run."
     ],
     "approachLabel": "How we work",
@@ -107,17 +123,17 @@
       }
     ],
     "servicesLabel": "What Ostendic does",
-    "servicesHeading": "Two services"
+    "servicesHeading": "Four services"
   },
   "contact": {
-    "heading": "Got something to build or fix?"
+    "heading": "Tell us your challenge."
   },
   "book": {
     "heading": "Book a quick call",
-    "lead": "A short call about what you want to build or fix, and the sensible next step. Harsh replies to emails within one business day."
+    "lead": "A short call about what’s slowing your business down, and the sensible next step. Harsh replies to emails within one business day."
   },
   "blog": {
-    "heading": "Plain talk about websites and AI workflows."
+    "heading": "Plain talk about websites, AI automation and growth."
   },
   "legal": {
     "updated": "Last updated 11 November 2026.",

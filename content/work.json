@@ -35,7 +35,7 @@
       "area": "Healthcare e-commerce · India",
       "pillars": [
         "web-development",
-        "agentic-ai-workflows"
+        "ai-automation"
       ],
       "scope": [
         "UI/UX design",
@@ -69,7 +69,7 @@
       "area": "Web application · AI analysis",
       "pillars": [
         "web-development",
-        "agentic-ai-workflows"
+        "ai-automation"
       ],
       "what": "A demo tool that helps shoppers decide if a product is worth buying.",
       "problem": "Online reviews are hard to trust, so it’s hard to know what’s actually worth buying.",
@@ -97,7 +97,7 @@
       "area": "Web application · AI review",
       "pillars": [
         "web-development",
-        "agentic-ai-workflows"
+        "ai-automation"
       ],
       "what": "A demo tool we built that scores a piece of content.",
       "problem": "Creators guess what will work, then post and hope.",
@@ -125,7 +125,7 @@
       "area": "Web application · AI analysis",
       "pillars": [
         "web-development",
-        "agentic-ai-workflows"
+        "ai-automation"
       ],
       "what": "A demo tool that gives you a structured first read on a business idea before you commit to building it.",
       "problem": "It’s easy to start building before you’ve checked whether an idea holds up. Market timing, competition and cost often get checked late, if at all.",

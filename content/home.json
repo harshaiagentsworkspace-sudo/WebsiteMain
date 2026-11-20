@@ -1,16 +1,49 @@
 {
   "hero": {
     "headline": [
-      "Websites your customers use,",
-      "{and the systems behind them.}"
+      "Smarter growth. Simpler work.",
+      "{Better business.}"
     ],
-    "intro": "Ostendic designs and builds websites and web applications, and sets up AI workflows that handle the follow-ups, routing and admin that happen after a customer gets in touch.",
-    "secondaryButton": "See selected work"
+    "intro": "Ostendic helps ambitious businesses attract more customers, simplify repetitive workflows and make smarter decisions through websites that win enquiries, AI automation and strategy-led consulting.",
+    "primaryButton": "Let’s solve your business challenge",
+    "secondaryButton": "Explore our solutions"
+  },
+  "problems": {
+    "heading": "What usually slows a business down",
+    "intro": "Most of the businesses we talk to are dealing with one or more of these.",
+    "items": [
+      {
+        "title": "Not enough customers getting in touch",
+        "text": "People find you, look around and leave. The enquiries that should be coming in aren’t.",
+        "icon": "step-1-enquiry"
+      },
+      {
+        "title": "A weak online presence",
+        "text": "A website that doesn’t explain what you do, or is awkward on a phone, quietly turns visitors away.",
+        "icon": "service-08-redesign"
+      },
+      {
+        "title": "Repetitive admin",
+        "text": "Hours go into copying details between tools, answering the same questions and chasing follow-ups.",
+        "icon": "ai-06-automation"
+      },
+      {
+        "title": "Workflows that leak time",
+        "text": "Work waits between people and tools, and too much depends on someone remembering to do it.",
+        "icon": "step-4-reminder"
+      },
+      {
+        "title": "No clear growth plan",
+        "text": "There are plenty of ideas, but no agreed view of what to fix first or what will actually move the business forward.",
+        "icon": "principle-1-problem"
+      }
+    ]
   },
   "services": {
-    "heading": "Two things we do, and do properly",
+    "heading": "Three ways we help",
     "panels": {
       "web-development": {
+        "title": "Websites and Digital Presence",
         "summary": "Websites and web apps that explain what you do, work well on a phone, and make it easy to get in touch or buy.",
         "who": "You need a new website, a better one, or a web app your customers use.",
         "problem": "Visitors can’t tell what you do, or how to get in touch. So they leave.",
@@ -22,38 +55,192 @@
           "Testing before launch"
         ]
       },
-      "agentic-ai-workflows": {
-        "summary": "AI workflows that connect your tools and take the repetitive work off your team.",
+      "ai-automation": {
+        "title": "AI Automation and Intelligent Agents",
+        "summary": "Workflow automation and custom AI agents that take repetitive work off your team, with people approving what matters.",
         "who": "Teams stuck repeating manual steps: answering enquiries, chasing leads, copying data between tools.",
         "problem": "Leads wait for a reply. Questions pile up. Someone spends hours moving data from one tool to another.",
-        "build": "AI agents for business operations, lead follow-up, support workflows, process automation, tool integrations.",
+        "build": "Enquiry and lead follow-up workflows, reporting automation, tool integrations and custom AI agents.",
         "includes": [
           "Mapping where time gets lost",
           "Designing it, including where a person approves",
           "Building it and connecting it to your tools",
           "Testing on real cases before going live"
         ]
+      },
+      "ai-agent-development": {
+        "title": "AI Agent Development",
+        "summary": "Custom AI agents that handle routine cases inside your tools, within limits you set.",
+        "who": "Teams with a steady flow of requests, documents or records that need reading and a first decision.",
+        "problem": "Fixed-rule automations break when a case doesn’t fit, and the work falls back on people.",
+        "build": "Operations agents, enquiry and support agents, multi-agent systems and approval flows.",
+        "includes": [
+          "Defining the agent’s job and limits",
+          "Building it and connecting it to your tools",
+          "Testing on real past cases",
+          "Monitoring after launch"
+        ]
+      },
+      "business-consulting": {
+        "title": "Business Strategy and Consulting",
+        "summary": "Strategy-led consulting that finds what’s slowing the business down and sets out a clear, prioritised plan.",
+        "who": "Founders and growing businesses that want an outside view of where growth is stuck.",
+        "problem": "Enquiries get lost, work depends on a few people, and there are too many priorities at once.",
+        "build": "Growth assessments, process improvement, digital transformation plans, technology and AI adoption.",
+        "includes": [
+          "Reviewing how you win and serve customers",
+          "Finding the bottlenecks",
+          "A written, prioritised plan",
+          "Help putting it in place"
+        ]
       }
     }
   },
+  "audiences": {
+    "heading": "Who we work with",
+    "items": [
+      {
+        "title": "Local businesses",
+        "text": "Shops, clinics, service providers and other local businesses that want more enquiries and less admin.",
+        "icon": "service-04-ecommerce"
+      },
+      {
+        "title": "Founders and growing companies",
+        "text": "Teams that have outgrown their first website and their manual processes, and want a clear next step.",
+        "icon": "stat-2-clients"
+      },
+      {
+        "title": "Agencies and service businesses",
+        "text": "Firms that sell their time and want to spend less of it on enquiries, follow-ups and reporting.",
+        "icon": "ai-04-sales-marketing"
+      },
+      {
+        "title": "International business teams",
+        "text": "Businesses outside India looking for a remote partner for websites, automation and strategy.",
+        "icon": "service-07-responsive"
+      }
+    ]
+  },
+  "benefits": {
+    "heading": "What the work is designed to change",
+    "intro": "We don’t promise numbers we can’t stand behind. These are the outcomes every project is planned around.",
+    "items": [
+      {
+        "title": "A stronger online presence",
+        "text": "A clear, fast website that explains what you do, so the people who find you understand it and get in touch.",
+        "icon": "service-01-website"
+      },
+      {
+        "title": "Less manual work",
+        "text": "Repetitive steps handled by workflows, so your team spends its time on customers and decisions.",
+        "icon": "ai-06-automation"
+      },
+      {
+        "title": "Enquiries handled properly",
+        "text": "Every enquiry logged, answered and followed up, rather than left waiting in an inbox.",
+        "icon": "ai-05-support"
+      },
+      {
+        "title": "Smoother processes",
+        "text": "Fewer hand-offs, fewer re-typed details and fewer tasks that depend on someone remembering.",
+        "icon": "ai-07-integrations"
+      },
+      {
+        "title": "Better decisions",
+        "text": "A clearer view of what’s working, and an agreed plan for what to do next.",
+        "icon": "step-3-approve"
+      }
+    ]
+  },
+  "solutions": {
+    "heading": "Practical ways we put this to work",
+    "intro": "A few of the things businesses ask us for most often.",
+    "items": [
+      {
+        "title": "Customer enquiry automation",
+        "text": "New enquiries from your website, email or forms logged in one place, sorted and answered from your own information, with your team approving replies.",
+        "service": "ai-automation",
+        "icon": "step-1-enquiry"
+      },
+      {
+        "title": "Lead follow-up workflows",
+        "text": "Reminders and follow-ups prepared on time, so leads don’t go cold while your team is busy.",
+        "service": "ai-automation",
+        "icon": "ai-03-leads"
+      },
+      {
+        "title": "Websites built to win enquiries",
+        "text": "A website that explains what you do in seconds and makes getting in touch easy on any device.",
+        "service": "web-development",
+        "icon": "service-01-website"
+      },
+      {
+        "title": "Reporting automation",
+        "text": "The numbers you check every week gathered from your tools and summarised automatically.",
+        "service": "ai-automation",
+        "icon": "ai-08-internal-systems"
+      },
+      {
+        "title": "AI agents for routine decisions",
+        "text": "Agents that read incoming requests, handle the routine ones and pass the rest to the right person.",
+        "service": "ai-agent-development",
+        "icon": "ai-01-agents"
+      },
+      {
+        "title": "Growth and process review",
+        "text": "An outside look at where enquiries, time and money are being lost, and a plan to fix it.",
+        "service": "business-consulting",
+        "icon": "principle-1-problem"
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Questions businesses ask us",
+    "items": [
+      {
+        "q": "What does Ostendic do?",
+        "a": "Ostendic helps businesses grow and run more smoothly in four ways: websites and web apps, AI automation for repetitive work, custom AI agents, and practical business consulting. Each can be used on its own or together."
+      },
+      {
+        "q": "How can AI automation help a small business?",
+        "a": "It takes on the repetitive steps that eat into a small team’s day: logging and answering enquiries, following up leads, copying details between tools and preparing reports. People still approve anything that matters."
+      },
+      {
+        "q": "Do you work with international clients?",
+        "a": "Yes. We work remotely, so we work with businesses in India and in other countries."
+      },
+      {
+        "q": "Do I need technical knowledge to work with you?",
+        "a": "No. We explain things in plain language, handle the technical work, and hand over notes your team can follow."
+      },
+      {
+        "q": "How do I know which service I need?",
+        "a": "Tell us what’s slowing the business down. If it’s how customers find and contact you, that usually points to the website. If it’s repetitive work, automation or an agent. If you’re not sure where the problem is, consulting is the place to start. We’ll tell you honestly if we’re not the right fit."
+      }
+    ]
+  },
   "process": {
-    "heading": "Four steps. Nothing hidden.",
+    "heading": "Five steps, agreed in writing",
     "steps": [
       {
-        "title": "Talk it through",
-        "text": "Tell us what’s not working. We’ll say if we can’t help."
+        "title": "Understand",
+        "text": "We start with your business, your customers and what isn’t working today."
       },
       {
-        "title": "Agree it in writing",
-        "text": "Scope, price and dates on paper before any work starts."
+        "title": "Identify",
+        "text": "We pinpoint what to fix first, and agree the scope and price in writing."
       },
       {
-        "title": "Build, with check-ins",
-        "text": "You see progress at set points, not just at the end."
+        "title": "Design",
+        "text": "We plan the website, workflow or strategy and show you before anything is built."
       },
       {
-        "title": "Launch and hand over",
-        "text": "You get the logins and notes to run it yourself."
+        "title": "Implement",
+        "text": "We build it, connect it to your tools and test it, with check-ins along the way."
+      },
+      {
+        "title": "Improve",
+        "text": "We hand over everything you need, review how it’s working and adjust."
       }
     ]
   },
@@ -61,8 +248,8 @@
     "heading": "We build the online side of your business,",
     "headingItalic": "so you can run the rest.",
     "paragraphs": [
-      "Ostendic builds websites and AI agentic workflows for businesses that want to look credible and run smoothly.",
-      "Your site brings people in. Your workflows handle what happens next. We build both, and hand them over so your team can run them."
+      "Ostendic helps businesses grow with websites, AI automation and practical consulting, built for teams that want to look credible and run smoothly.",
+      "Your website brings people in. Your workflows handle what happens next. A clear plan ties them together. We build and hand over each part so your team can run it."
     ]
   }
 }
