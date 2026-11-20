@@ -21,6 +21,22 @@ export const ico = {
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.01a9.94 9.94 0 0 0-8.5 15.1L2 22.01l5.05-1.32a9.94 9.94 0 1 0 4.99-18.68Zm0 1.8a8.14 8.14 0 1 1-4.15 15.14l-.3-.18-3 .78.8-2.92-.2-.31A8.14 8.14 0 0 1 12.04 3.8Zm4.7 10.3c-.26-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13s-.65.82-.8.99-.3.19-.55.06a6.6 6.6 0 0 1-1.96-1.21 7.3 7.3 0 0 1-1.35-1.68c-.14-.25 0-.38.11-.5.12-.12.26-.3.39-.45.12-.16.16-.26.25-.43a.47.47 0 0 0-.02-.45c-.06-.13-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.83 2.83 0 0 0-.88 2.1 4.9 4.9 0 0 0 1.03 2.6 11.2 11.2 0 0 0 4.3 3.8c.6.26 1.07.41 1.44.53.6.2 1.15.17 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.6.21-1.1.15-1.21-.06-.11-.23-.18-.48-.3Z"/></svg>',
 };
 
+/* ---------- social icons (footer) ----------
+   One round icon link per social profile (Admin › Settings › Social
+   profiles), matched by name; WhatsApp joins them when the number is set. */
+const socialIco = {
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".9" fill="currentColor" stroke="none"/></svg>',
+  facebook: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z"/></svg>',
+  linkedin: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.9 8.8H3.6V20h3.3V8.8ZM5.2 3.5a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8ZM20.4 13.6c0-3-1.6-5.1-4.4-5.1-1.5 0-2.5.8-2.9 1.6V8.8H9.9V20h3.3v-5.8c0-1.5.4-2.9 2.2-2.9 1.8 0 1.8 1.7 1.8 3V20h3.3l-.1-6.4Z"/></svg>',
+};
+const socialRow = () => {
+  const items = site.social.map(([l, h]) => [l, h, socialIco[String(l).toLowerCase().trim()]]).filter(([, , i]) => i);
+  if (links.whatsapp) items.push(['WhatsApp', links.whatsapp, ico.whatsapp]);
+  if (!items.length) return '';
+  return `<ul class="ftr__social" aria-label="${esc(site.name)} on social media">${items.map(([l, h, i]) =>
+    `<li><a href="${h}" target="_blank" rel="noopener" aria-label="${esc(site.name)} on ${esc(l)}">${i}</a></li>`).join('')}</ul>`;
+};
+
 /* ---------- service icons ----------
    Source of truth: assets/Service icons/*.svg. The files are read at build
    time and their contents are inlined unchanged (same viewBox, paths,
@@ -203,6 +219,7 @@ export const footer = (current = '') => `
       <div class="ftr__brand">
         <a class="brand brand--plaque" href="/" aria-label="${esc(site.name)} home">${brandMark()}</a>
         <p>${esc(site.footer)}</p>
+        ${socialRow()}
       </div>
       <div>
         <h3 class="ftr__h">Services</h3>

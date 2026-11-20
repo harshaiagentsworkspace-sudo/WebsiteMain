@@ -868,6 +868,12 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
 .ftr__cols li a { display: inline-block; padding: 6px 0; font-size: var(--t-sm); color: var(--ink-inv); opacity: .82; transition: opacity .2s; }
 .ftr__cols li a:hover { opacity: 1; }
 .ftr__brand p { color: var(--ink-inv-2); font-size: var(--t-sm); max-width: 34ch; margin-top: 16px; }
+.ftr__social { display: flex; gap: 10px; margin-top: 20px; }
+.ftr__cols .ftr__social { flex-direction: row; }
+.ftr__cols .ftr__social a { display: grid; padding: 0; opacity: 1; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--line-dark); color: var(--ink-inv); transition: background .2s, border-color .2s; }
+.ftr__cols .ftr__social a:hover { background: var(--bg-dark-2); border-color: var(--ink-inv-2); }
+.ftr__social svg { width: 18px; height: 18px; }
 .ftr__bar { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center;
   padding-block: 20px; border-top: 1px solid var(--line-dark); font-size: var(--t-xs); color: var(--ink-inv-2); }
 .ftr__bar nav { display: flex; gap: 8px 20px; }
