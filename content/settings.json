@@ -12,9 +12,11 @@
   "contact": {
     "phoneDisplay": "",
     "phoneTel": "",
-    "whatsapp": "",
+    "whatsapp": "918820208823",
     "booking": "https://calendly.com/harshkdubeyhd",
-    "social": []
+    "social": [
+      { "label": "Instagram", "url": "https://www.instagram.com/ostendic.co/" }
+    ]
   },
   "seo": {
     "titleSuffix": " | Ostendic",
