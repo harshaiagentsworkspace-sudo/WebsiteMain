@@ -12,14 +12,16 @@
      until it is filled in, and `build.mjs` prints a PENDING list on every
      build so the gaps stay visible.
 
-   Positioning: a digital growth and business solutions partner with four
-   service pages (SERVICE_SLUGS in schema.mjs):
-     01  Web Development and UI/UX Design
-     02  AI Automation
-     03  AI Agent Development
-     04  Business Consulting
-   The homepage presents three areas: websites (01), AI automation and
-   agents (02 + 03) and consulting (04).
+   Positioning (2026-11-23): an AI automation and AI integration company
+   with a secondary website development offering. Five service pages
+   (SERVICE_SLUGS in schema.mjs), in menu order:
+     01  AI Automation                (flagship)
+     02  Custom AI Agent Development
+     03  Workflow Automation          (child of AI Automation in the menu)
+     04  AI Consulting & Integration
+     05  Website Development          (secondary)
+   The homepage leads with AI: three core service chapters (01, 02, 04),
+   then a smaller website section.
    =========================================================================== */
 import { existsSync } from 'node:fs';
 import { loadContent } from './content.mjs';
@@ -83,6 +85,7 @@ export const links = {
 
 /* ---------- HOME PAGE ---------- */
 export const heroCopy = {
+  eyebrow: home.hero.eyebrow || '',
   lines: home.hero.headline,
   lead: home.hero.intro,
   primaryButton: home.hero.primaryButton,
@@ -90,12 +93,13 @@ export const heroCopy = {
 };
 export const homeCopy = {
   problems: home.problems,
-  audiences: home.audiences,
-  benefits: home.benefits,
   solutions: home.solutions,
+  web: home.web,
+  showcase: home.showcase,
+  audiences: home.audiences,
+  why: home.why,
   faq: home.faq,
   servicesHeading: home.services.heading,
-  about: { heading: home.about.heading, headingItalic: home.about.headingItalic },
 };
 
 /* ---------- SERVICES ----------
@@ -112,6 +116,7 @@ export const pillars = SERVICE_SLUGS.map((slug, i) => {
     services: tuples(s.services), principles: tuples(s.principles),
     details: s.details || [], faq: s.faq || [],
     ...(s.example ? { example: s.example } : {}),
+    ...(s.visual ? { visual: s.visual } : {}),
     /* short copy for the panels on the homepage and /services */
     panel: { ...panel, title: panel.title || s.title },
   };
@@ -132,6 +137,7 @@ export const process = [
 ];
 export const processHome = {
   heading: home.process.heading,
+  note: home.process.note || '',
   steps: home.process.steps.map((s, i) => [String(i + 1).padStart(2, '0'), s.title, s.text]),
 };
 
@@ -140,7 +146,6 @@ const APPROACH_ICONS = ['principle-1-problem.svg', 'principle-2-cost.svg', 'prin
 const A = pagesCopy.about;
 export const aboutCopy = {
   hero: { heading: A.heading, lead: A.lead, body: A.body },
-  teaser: home.about.paragraphs,
   approach: A.approach.map((x, i) => [x.title, x.text, APPROACH_ICONS[i]]),
 };
 
@@ -170,13 +175,30 @@ export const budgets = settings.form.budgets;
 export const interests = settings.form.interests;
 
 /* ---------- NAV ---------- */
+/* AI first, web development last. Workflow Automation sits under AI
+   Automation. Every entry is a plain <a href>, so all are crawlable. Work
+   and Blog are linked from the footer (Blog is placeholder posts for now). */
 export const nav = [
-  ['Services', '/services', pillars.map(p => [p.title, p.path])],
-  ['Work', '/work'],
+  ['AI Automation', '/services/ai-automation', [['AI Automation', '/services/ai-automation'], ['Workflow Automation', '/services/workflow-automation']]],
+  ['AI Agents', '/services/ai-agent-development'],
+  ['AI Consulting', '/services/ai-consulting'],
+  ['Web Development', '/services/web-development'],
   ['About', '/about'],
-  ['Blog', '/blog'],
   ['Contact', '/contact'],
 ];
+
+/* Enquiry-form option for each service page, so a service page's CTA
+   (/contact?service=<slug>) arrives with the right choice selected, and
+   analytics can tell AI enquiries from website enquiries. Matched on the
+   option text, so options edited in the admin keep working. */
+export const interestSlug = (label) => {
+  const l = String(label).toLowerCase();
+  return /agent/.test(l) ? 'ai-agent-development'
+    : /consult|strategy|integration/.test(l) ? 'ai-consulting'
+    : /web|site/.test(l) ? 'web-development'
+    : /automat/.test(l) ? 'ai-automation'
+    : '';
+};
 
 /* ---------- PENDING: printed on every build ---------- */
 export const pending = [

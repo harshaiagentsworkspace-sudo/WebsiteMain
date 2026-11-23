@@ -6,34 +6,99 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/services/agentic-ai-workflows", "destination": "/services/ai-automation", "permanent": true },
-    { "source": "/services/:slug(ui-ux-design|brand-design|ecommerce|saas-product-design|mvp-development|motion-design|creative-marketing|dashboard-design)", "destination": "/services/web-development", "permanent": false },
-    { "source": "/work/:slug", "destination": "/work", "permanent": false },
-    { "source": "/careers", "destination": "/contact", "permanent": false },
-    { "source": "/resources", "destination": "/", "permanent": false },
-    { "source": "/pricing", "destination": "/", "permanent": true }
+    {
+      "source": "/services/business-consulting",
+      "destination": "/services/ai-consulting",
+      "permanent": true
+    },
+    {
+      "source": "/services/ai-agents",
+      "destination": "/services/ai-agent-development",
+      "permanent": true
+    },
+    {
+      "source": "/services/agentic-ai-workflows",
+      "destination": "/services/ai-automation",
+      "permanent": true
+    },
+    {
+      "source": "/services/:slug(ui-ux-design|brand-design|ecommerce|saas-product-design|mvp-development|motion-design|creative-marketing|dashboard-design)",
+      "destination": "/services/web-development",
+      "permanent": false
+    },
+    {
+      "source": "/work/:slug",
+      "destination": "/work",
+      "permanent": false
+    },
+    {
+      "source": "/careers",
+      "destination": "/contact",
+      "permanent": false
+    },
+    {
+      "source": "/resources",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pricing",
+      "destination": "/",
+      "permanent": true
+    }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
+      ]
     },
     {
       "source": "/(styles|scripts)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
     },
     {
       "source": "/admin",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "same-origin" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
       ]
     },
     {
       "source": "/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }, { "key": "X-Robots-Tag", "value": "noindex" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ]
 }

@@ -26,13 +26,34 @@ const opt = { optional: true };
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /* Service pages, in menu order. Renaming a slug changes a public URL: add a
    permanent redirect from the old path (vercel.json) when you do. */
-export const SERVICE_SLUGS = ['web-development', 'ai-automation', 'ai-agent-development', 'business-consulting'];
+export const SERVICE_SLUGS = ['ai-automation', 'ai-agent-development', 'workflow-automation', 'ai-consulting', 'web-development'];
 export const SERVICE_NAMES = {
-  'web-development': 'Web Development and UI/UX Design',
   'ai-automation': 'AI Automation',
-  'ai-agent-development': 'AI Agent Development',
-  'business-consulting': 'Business Consulting',
+  'ai-agent-development': 'Custom AI Agent Development',
+  'workflow-automation': 'Workflow Automation',
+  'ai-consulting': 'AI Consulting & Integration',
+  'web-development': 'Website Development',
 };
+/* example workflow diagrams drawn in build/workflows.mjs (keep in step) */
+export const WORKFLOW_IDS = ['ai-call', 'lead-follow-up', 'order-to-invoice', 'weekly-report'];
+export const WORKFLOW_NAMES = {
+  'ai-call': 'AI call on every enquiry',
+  'lead-follow-up': 'Lead follow-up emails',
+  'order-to-invoice': 'Order to invoice',
+  'weekly-report': 'Weekly AI report',
+};
+/* stock photos in media/stock/ that cards can show (sizes and crops: build/mockups.mjs) */
+export const STOCK_PHOTOS = ['home-local', 'home-growing', 'home-services', 'home-international',
+  'automation-hero', 'automation-today', 'automation-after', 'agents-hero', 'agents-today', 'agents-after',
+  'workflow-hero', 'workflow-today', 'workflow-after', 'consulting-hero', 'consulting-today', 'consulting-after',
+  'web-hero', 'web-today', 'web-after', 'about-problem', 'about-cost', 'about-running', 'about-loop', 'about-clinic', 'about-food'];
+/* product mockups drawn in build/mockups.mjs (keep in step) */
+export const MOCK_IDS = ['inbox-messy', 'inbox-handled', 'lead-card', 'email-draft', 'invoice-extract', 'tool-chain',
+  'report-message', 'quote-tool', 'call-screen', 'chat-booking', 'missed-calls', 'task-checklist', 'agent-handoff',
+  'approval-card', 'knowledge-answer', 'order-chain', 'enquiry-timeline', 'sheet-manual', 'sheet-synced', 'process-map', 'enquiry-routing',
+  'form-to-doc', 'ai-plan', 'idea-cloud', 'roadmap', 'readiness-check', 'process-audit', 'impact-matrix',
+  'tool-compare', 'risk-list', 'team-guide', 'site-desktop', 'site-old', 'site-phone', 'site-form', 'landing-page',
+  'shop-product', 'cms-edit', 'web-app', 'search-result'];
 /* card icons (workflow-ring-v2/<name>.svg), chosen per card in the admin */
 export const CARD_ICONS = ['step-1-enquiry', 'step-2-agent', 'step-3-approve', 'step-4-reminder',
   'ai-01-agents', 'ai-02-multi-agent', 'ai-03-leads', 'ai-04-sales-marketing', 'ai-05-support', 'ai-06-automation', 'ai-07-integrations', 'ai-08-internal-systems',
@@ -59,6 +80,7 @@ const titled = (label, o = {}) => list(label, obj('Item', {
 
 const iconCards = (label, o = {}) => list(label, obj('Card', {
   title: text('Title', 80), text: area('Text', 400), icon: select('Icon', CARD_ICONS),
+  ...(o.photos ? { photo: select('Photo', ['', ...STOCK_PHOTOS], { ...opt, labels: { '': 'No photo' }, hint: 'A real photo shown at the top of the card (media/stock/).' }) } : {}),
 }), { itemTitle: 'title', ...o });
 const faqList = (label, o = {}) => list(label, obj('Question', { q: text('Question', 200), a: area('Answer', 1200) }), { max: 12, itemTitle: 'q', ...o });
 
@@ -80,6 +102,16 @@ const servicePage = (name) => obj(name, {
     points: lines('Bullet points', { ...opt, min: 0, max: 10, itemMax: 240 }),
   }), { max: 8, itemTitle: 'heading', hint: 'Longer explanations shown as their own sections, each with its own heading.' }),
   faq: faqList('Frequently asked questions'),
+  visual: obj('Visual page (replaces the cards, steps and principles above on the page)', {
+    lead: area('Hero line (one sentence)', 160),
+    before: obj('Before', { title: text('Title', 40), points: lines('Points', { min: 2, max: 3, itemMax: 60 }), mock: select('Mockup', MOCK_IDS) }),
+    after: obj('After', { title: text('Title', 40), points: lines('Points', { min: 2, max: 3, itemMax: 60 }), mock: select('Mockup', MOCK_IDS) }),
+    cardsHeading: text('Cards heading', 80),
+    cards: list('Cards', obj('Card', { title: text('Title', 60), text: area('Text (one short line)', 110), mock: select('Mockup', MOCK_IDS) }), { min: 3, max: 8, itemTitle: 'title' }),
+    workflow: obj('Example workflow', { id: select('Diagram', WORKFLOW_IDS, { labels: WORKFLOW_NAMES }), title: text('Heading', 90), done: text('Status when the run finishes', 90) }, { optional: true }),
+    steps: list('How it works', obj('Step', { title: text('Title', 40), text: text('Text', 90) }), { min: 3, max: 5, itemTitle: 'title' }),
+    promises: list('What we hold to', obj('Promise', { title: text('Title', 40), text: text('Text', 90) }), { min: 2, max: 4, itemTitle: 'title' }),
+  }, { optional: true }),
   example: obj('Worked example', {
     title: text('Example title', 100),
     ring: lines('Short steps (home page ring)', { min: 2, max: 6, itemMax: 60 }),
@@ -98,6 +130,7 @@ export const SCHEMAS = {
       principalRole: text('Founder role', 60),
       principalImage: image('Founder photo'),
       sub: area('Short description (default meta description)', 200),
+      tagline: text('Tagline', 80, opt),
       footer: area('Footer line', 200),
     }),
     contact: obj('Contact channels', {
@@ -132,16 +165,31 @@ export const SCHEMAS = {
 
   home: obj('Home page', {
     hero: obj('Hero (top of the page)', {
+      eyebrow: text('Eyebrow (small line above the headline)', 90, opt),
       headline: lines('Headline', { max: 3, itemMax: 80, hint: 'One line per row (up to 3). Put {curly braces} around words to set them in italics.' }),
       intro: area('Intro paragraph', 400),
-      primaryButton: text('First button label', 50, { hint: 'Goes to the contact form.' }),
-      secondaryButton: text('Second button label', 40, { hint: 'Jumps to the services section.' }),
+      primaryButton: text('First button label', 50, { hint: 'Goes to the AI Automation service page.' }),
+      secondaryButton: text('Second button label', 40, { hint: 'Goes to the enquiry form.' }),
     }),
     problems: obj('Business problems', {
       heading: text('Heading', 100), intro: area('Intro', 300, opt),
-      items: iconCards('Problems', { min: 3, max: 6 }),
+      items: iconCards('Problems', { min: 3, max: 8, photos: true }),
     }),
-    services: obj('Services', {
+    solutions: obj('AI automation solutions', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      items: list('Solutions', obj('Solution', { title: text('Title', 80), text: area('Text', 400), icon: select('Icon', CARD_ICONS), service: select('Related service', SERVICE_SLUGS, { labels: SERVICE_NAMES }) }), { min: 2, max: 8, itemTitle: 'title' }),
+    }),
+    showcase: obj('Automations in action (example workflows)', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      workflows: list('Workflows (one tab each)', obj('Workflow', {
+        id: select('Diagram', WORKFLOW_IDS, { labels: WORKFLOW_NAMES, hint: 'The drawing itself is built in code (build/workflows.mjs).' }),
+        tab: text('Tab label', 40), title: text('Title', 90), summary: area('Summary', 320),
+        done: text('Status when the example run finishes', 90),
+        steps: list('Steps', obj('Step', { title: text('Title', 60), text: area('Text', 260) }), { min: 2, max: 5, itemTitle: 'title' }),
+      }), { min: 1, max: 3, unique: 'id', itemTitle: 'tab' }),
+      note: area('Note under the workflows', 240, { hint: 'Say plainly that these are examples, not client work.' }),
+    }),
+    services: obj('Core services', {
       heading: text('Section heading', 80),
       panels: obj('Panels', Object.fromEntries(SERVICE_SLUGS.map(s => [s, obj(`${SERVICE_NAMES[s]} panel`, {
         title: text('Panel heading', 80, { ...opt, hint: 'Empty = the service name.' }),
@@ -149,30 +197,28 @@ export const SCHEMAS = {
         build: area('What we build', 300), includes: lines('A project can include', { max: 8, itemMax: 120 }),
       })]))),
     }),
+    web: obj('Website development (secondary service)', {
+      heading: text('Heading', 100),
+      intro: area('Intro', 400),
+      points: lines('What it covers', { min: 2, max: 8, itemMax: 120 }),
+      button: text('Button label', 50, { hint: 'Goes to the Website Development page.' }),
+    }),
     audiences: obj('Who we help', {
       heading: text('Heading', 100),
-      items: iconCards('Groups', { min: 2, max: 6 }),
-    }),
-    benefits: obj('Business benefits', {
-      heading: text('Heading', 100), intro: area('Intro', 300, opt),
-      items: iconCards('Benefits', { min: 3, max: 6 }),
-    }),
-    solutions: obj('Business solutions', {
-      heading: text('Heading', 100), intro: area('Intro', 300, opt),
-      items: list('Solutions', obj('Solution', { title: text('Title', 80), text: area('Text', 400), icon: select('Icon', CARD_ICONS), service: select('Related service', SERVICE_SLUGS, { labels: SERVICE_NAMES }) }), { min: 2, max: 8, itemTitle: 'title' }),
-    }),
-    faq: obj('Frequently asked questions', {
-      heading: text('Heading', 100),
-      items: faqList('Questions', { min: 1 }),
+      items: iconCards('Groups', { min: 2, max: 6, photos: true }),
     }),
     process: obj('How a project runs', {
       heading: text('Section heading', 80),
       steps: list('Steps', obj('Step', { title: text('Title', 60), text: area('Text', 200) }), { min: 2, max: 6, itemTitle: 'title' }),
+      note: area('Note under the steps', 400, { ...opt, hint: 'e.g. how data, approvals and human oversight are handled.' }),
     }),
-    about: obj('About teaser', {
+    why: obj('Why Ostendic', {
+      heading: text('Heading', 100), intro: area('Intro', 300, opt),
+      items: iconCards('Reasons', { min: 3, max: 6 }),
+    }),
+    faq: obj('Frequently asked questions', {
       heading: text('Heading', 100),
-      headingItalic: text('Heading, italic ending', 80, opt),
-      paragraphs: paras('Paragraphs', { max: 4, itemMax: 500 }),
+      items: faqList('Questions', { min: 1 }),
     }),
   }),
 
@@ -191,6 +237,10 @@ export const SCHEMAS = {
       approachLabel: text('Principles label', 40), approachHeading: text('Principles heading', 120),
       approach: titled('Principles', { min: 4, max: 4, fixed: true, hint: 'Four, one per icon.' }),
       servicesLabel: text('Services label', 40), servicesHeading: text('Services heading', 120),
+      clients: obj('“The businesses we build for” photos', {
+        label: text('Label', 40), heading: text('Heading', 120), note: text('Note under the photos', 160, opt),
+        items: list('Photos', obj('Photo', { label: text('Caption', 40), photo: select('Photo', STOCK_PHOTOS) }), { min: 3, max: 6, itemTitle: 'label' }),
+      }, { optional: true }),
     }),
     contact: obj('/contact', { heading: text('Heading', 120) }),
     book: obj('/book', { heading: text('Heading', 120), lead: area('Lead', 300) }),
@@ -396,7 +446,7 @@ export function check(s, v, label, errors) {
     else if (v < s.min || v > s.max) errors.push(`${label} must be between ${s.min} and ${s.max}`);
     return;
   }
-  if (s.t === 'select') { if (!s.options.includes(v)) errors.push(`${label} must be one of: ${s.options.join(', ')}`); return; }
+  if (s.t === 'select') { if (empty && s.optional) return; if (!s.options.includes(v)) errors.push(`${label} must be one of: ${s.options.join(', ')}`); return; }
   if (s.t === 'multi') {
     if (!Array.isArray(v) || v.some(x => !s.options.includes(x))) errors.push(`${label} has an unknown choice`);
     return;

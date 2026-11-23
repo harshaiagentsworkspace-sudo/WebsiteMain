@@ -1,107 +1,14 @@
 {
-  "web-development": {
-    "title": "Web Development and UI/UX Design",
-    "short": "Web development & UI/UX",
-    "summary": "Websites, web applications and digital products that explain what a business does, work properly on a phone and make it easy for customers to get in touch or buy.",
-    "who": "Businesses that need a new website, a better one, or a web application their customers or team will use every day.",
-    "problem": "Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.",
-    "build": [
-      "Business websites",
-      "Landing pages",
-      "E-commerce stores",
-      "Shopify and WordPress sites",
-      "Custom web applications",
-      "Website redesigns"
-    ],
-    "includes": [
-      "Planning the pages, content and the path a visitor takes",
-      "UI/UX design for phone, tablet and desktop",
-      "Development as a custom build, or on WordPress or Shopify if you want to manage it yourself",
-      "Testing across devices and browsers before launch",
-      "Launch, and a handover of everything you need to run it"
-    ],
-    "services": [
-      {
-        "title": "Website design and development",
-        "text": "Business websites planned around what visitors need to understand, then designed and built to load quickly on any device."
-      },
-      {
-        "title": "UI/UX design",
-        "text": "User flows, wireframes and interface design that make a website or product easier to understand and easier to use."
-      },
-      {
-        "title": "Landing pages",
-        "text": "Focused pages for a campaign, product or offer, with one clear message and one clear next step."
-      },
-      {
-        "title": "E-commerce development",
-        "text": "Online stores designed around how customers browse, compare and buy, from product page to checkout."
-      },
-      {
-        "title": "Shopify and WordPress",
-        "text": "Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work."
-      },
-      {
-        "title": "Custom web applications",
-        "text": "Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done."
-      },
-      {
-        "title": "Responsive front-end development",
-        "text": "Layouts built for the phone first and refined for larger screens, so every visitor gets the complete experience."
-      },
-      {
-        "title": "Redesigns and improvements",
-        "text": "A review of an existing site, followed by the changes that make it clearer, faster and easier to use."
-      }
-    ],
-    "principles": [
-      {
-        "title": "Clarity first",
-        "text": "A visitor should understand what you do, who it’s for and what to do next within a few seconds."
-      },
-      {
-        "title": "Designed for the phone",
-        "text": "Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought."
-      },
-      {
-        "title": "Easy to maintain",
-        "text": "Sensible platforms and clean structure, so the site stays easy to update after launch."
-      }
-    ],
-    "faq": [
-      {
-        "q": "Do you build custom websites, or use WordPress and Shopify?",
-        "a": "Both. A custom build suits sites with specific needs or a web application. WordPress or Shopify suits businesses that want to update pages or products themselves. We recommend one at the start and explain why."
-      },
-      {
-        "q": "Will the website work properly on phones?",
-        "a": "Yes. Most visitors arrive on a phone, so we design for that screen first and test on phones, tablets and desktops before launch."
-      },
-      {
-        "q": "Can we update the website ourselves after launch?",
-        "a": "Yes. We hand over the logins and notes you need, and choose a platform your team can manage."
-      },
-      {
-        "q": "Do you redesign existing websites?",
-        "a": "Yes. We review what the current site does well and where visitors drop off, then make the changes that make it clearer, faster and easier to use."
-      },
-      {
-        "q": "Do you also handle SEO or digital marketing?",
-        "a": "We build sites with search engines in mind: clear page titles and descriptions, fast pages, a sitemap and a clean structure. We don’t currently run ongoing SEO or advertising campaigns."
-      }
-    ],
-    "details": []
-  },
   "ai-automation": {
     "title": "AI Automation",
-    "heading": "Automate repetitive work. {Give your business room to grow.}",
+    "heading": "Automate Repetitive Business Workflows {with AI.}",
     "short": "AI automation",
-    "summary": "Workflow automation, with AI where it helps, that takes repetitive work off your team: enquiries handled, details moved between tools, follow-ups prepared and reports put together.",
+    "summary": "We design and build automated workflows, with AI where it genuinely helps, that take repetitive work off your team: enquiries sorted, details moved between tools, follow-ups prepared and reports assembled.",
     "who": "Businesses where the same manual steps repeat every day: answering enquiries, chasing leads, copying information between tools, preparing updates.",
     "problem": "Work gets stuck between tools and people. Leads wait for a reply, customer questions pile up, and someone spends hours moving information from one place to another.",
     "build": [
       "Enquiry handling",
-      "Lead follow-up",
+      "Lead qualification and follow-up",
       "Customer support workflows",
       "Data entry between tools",
       "Reporting",
@@ -114,19 +21,19 @@
       "Testing it on real cases before it goes live",
       "Documentation, and adjustments once your team is using it"
     ],
-    "servicesHeading": "Work we automate",
+    "servicesHeading": "What AI automation can handle",
     "services": [
       {
-        "title": "Lead management and follow-up",
-        "text": "New enquiries captured, qualified, routed to the right person and followed up consistently, so fewer leads go cold."
+        "title": "Lead qualification and follow-up",
+        "text": "New enquiries captured, checked against your criteria, routed to the right person and followed up consistently, so fewer leads go cold."
       },
       {
         "title": "Customer enquiry and support workflows",
         "text": "Incoming questions sorted, answered from your own information where appropriate, and passed to a person when one is needed."
       },
       {
-        "title": "Sales and marketing workflows",
-        "text": "Research, outreach preparation, content drafts and campaign reporting, with your team approving what goes out."
+        "title": "Document and data processing",
+        "text": "Details extracted from emails, forms and documents, checked against your rules and entered into the right system."
       },
       {
         "title": "Process automation",
@@ -157,6 +64,12 @@
     ],
     "details": [
       {
+        "heading": "What AI adds to automation",
+        "paragraphs": [
+          "Traditional automation moves information along fixed paths. AI models add the ability to read and interpret: understanding what an email is asking, pulling details out of a document, summarising a long thread or drafting a reply in your tone. Combined, they can handle processes that used to need a person at every step."
+        ]
+      },
+      {
         "heading": "Which work is worth automating",
         "paragraphs": [
           "The best candidates are tasks your team does often, the same way each time, and that mostly move information from one place to another. If a task needs real judgement on every case, it may suit an AI agent with a person approving, or it may be better left as it is."
@@ -169,7 +82,33 @@
         ]
       },
       {
-        "heading": "People stay in control",
+        "heading": "Benefits and limitations",
+        "paragraphs": [
+          "Done well, automation reduces time spent on routine tasks, makes responses more consistent and keeps information up to date across your tools. How much it helps depends on how often a task happens and how much of it follows a pattern, so we estimate it from your process rather than promising a figure.",
+          "AI has limits too. Language models can misread an unusual request or state something incorrect with confidence. That is why we test on real cases, ground answers in your own information, and keep a person approving anything that commits your business."
+        ],
+        "points": [
+          "Good fit: frequent, repetitive tasks with clear inputs",
+          "Good fit: work that is mostly reading, sorting or moving information",
+          "Poor fit: decisions that need expert judgement on every case",
+          "Poor fit: processes that change completely from one week to the next"
+        ]
+      },
+      {
+        "heading": "Practical examples",
+        "paragraphs": [
+          "Typical applications, described as possibilities rather than past client results:"
+        ],
+        "points": [
+          "A website enquiry is categorised, logged in your CRM and a draft reply is prepared for your approval",
+          "New leads are checked against your criteria and the strongest are sent to the right person",
+          "Order or invoice details are extracted from emails and entered into a spreadsheet or accounting tool",
+          "A weekly summary of enquiries, sales or support requests is assembled and emailed on a set day",
+          "Customer questions are answered from your published policies, with anything unusual passed to a person"
+        ]
+      },
+      {
+        "heading": "Human oversight: people stay in control",
         "paragraphs": [
           "An automation should make your team faster, not hide what is happening. We decide with you which steps run on their own and which wait for a person to approve, and we keep a record of what each workflow did.",
           "Before anything goes live, we test it on real past cases. If a step fails, the workflow stops and tells someone, rather than carrying on with bad information."
@@ -179,6 +118,12 @@
         "heading": "Working with the tools you already use",
         "paragraphs": [
           "We connect the CRM, inbox, forms and spreadsheets you already have, wherever they offer a supported connection, instead of asking you to switch. Where a workflow uses a paid third-party tool or an AI service, we tell you the running cost before we build it."
+        ]
+      },
+      {
+        "heading": "How we implement it",
+        "paragraphs": [
+          "We start small: one workflow, mapped with the people who do the work today. Once the design is agreed in writing, we build it, test it on real past cases and, where it makes sense, run it alongside the manual process for a short period before switching over. You get documentation, and after launch we review how it performs and adjust."
         ]
       }
     ],
@@ -202,8 +147,107 @@
       {
         "q": "How is this different from AI agent development?",
         "a": "Automation follows the steps you define, with AI helping on parts such as reading or drafting. An AI agent decides how to handle each case within limits you set. Many projects start with automation; we suggest an agent only when the work needs it."
+      },
+      {
+        "q": "How is AI automation different from workflow automation?",
+        "a": "Our Workflow Automation service connects tools and automates rule-based steps. AI Automation adds AI models for the steps that involve reading, interpreting or drafting text. Many projects combine both."
+      },
+      {
+        "q": "How long does it take to automate a workflow?",
+        "a": "It depends on the number of steps and tools involved. One well-defined workflow is a much smaller project than a process that spans several systems. We give you a timeline in the written scope once we have mapped the work."
       }
     ],
+    "visual": {
+      "lead": "Enquiries answered, leads followed up and details moved between your tools, without anyone copying and pasting.",
+      "before": {
+        "title": "Today",
+        "mock": "inbox-messy",
+        "points": [
+          "Enquiries wait hours for a reply",
+          "Leads forgotten on busy days",
+          "Hours of copy and paste"
+        ]
+      },
+      "after": {
+        "title": "With AI automation",
+        "mock": "inbox-handled",
+        "points": [
+          "Every enquiry answered in minutes",
+          "Follow-ups go out on their own",
+          "Your team approves what matters"
+        ]
+      },
+      "cardsHeading": "What it takes off your plate",
+      "cards": [
+        {
+          "title": "Lead follow-up",
+          "text": "Every lead checked, scored and followed up on time.",
+          "mock": "lead-card"
+        },
+        {
+          "title": "Enquiry replies",
+          "text": "Replies drafted from your own FAQs, ready to approve.",
+          "mock": "email-draft"
+        },
+        {
+          "title": "Document data",
+          "text": "Invoices and forms read and entered for you.",
+          "mock": "invoice-extract"
+        },
+        {
+          "title": "Tool connections",
+          "text": "Form, CRM, sheet and email kept in sync.",
+          "mock": "tool-chain"
+        },
+        {
+          "title": "Reports",
+          "text": "Your weekly numbers, summarised and sent to your phone.",
+          "mock": "report-message"
+        },
+        {
+          "title": "Internal tools",
+          "text": "One-click quotes and documents for repeat tasks.",
+          "mock": "quote-tool"
+        }
+      ],
+      "workflow": {
+        "id": "lead-follow-up",
+        "title": "Watch a lead follow-up run",
+        "done": "Leads emailed, replies checked, follow-ups sent"
+      },
+      "steps": [
+        {
+          "title": "Map",
+          "text": "We find where your time goes."
+        },
+        {
+          "title": "Design",
+          "text": "We decide what runs alone and what you approve."
+        },
+        {
+          "title": "Build & test",
+          "text": "Connected to your tools, tested on real cases."
+        },
+        {
+          "title": "Launch & tune",
+          "text": "Live, documented and adjusted as you use it."
+        }
+      ],
+      "promises": [
+        {
+          "title": "Tied to real work",
+          "text": "Every workflow starts from a task you do today."
+        },
+        {
+          "title": "People stay in control",
+          "text": "Anything that needs judgement goes to a person."
+        },
+        {
+          "title": "Your existing tools",
+          "text": "We connect what you use. No forced switch."
+        }
+      ]
+    },
     "example": {
       "title": "An example: following up new enquiries",
       "ring": [
@@ -221,15 +265,16 @@
     }
   },
   "ai-agent-development": {
-    "title": "AI Agent Development",
-    "heading": "Custom AI agents {built around your business workflows.}",
+    "title": "Custom AI Agent Development",
+    "heading": "Custom AI Agents {Built for Real Business Workflows.}",
     "short": "AI agents",
     "summary": "Custom AI agents that read incoming work, handle routine cases inside your tools and hand anything unusual to a person, within limits you set.",
     "who": "Businesses with a steady flow of work that needs reading and a first decision: requests to sort, documents to check, records to update, questions to answer from your own information.",
     "problem": "Simple automations follow fixed rules, so they break when an email is worded differently or a case doesn’t fit the pattern. The work falls back on your team, and the automation is quietly switched off.",
     "build": [
-      "Operations agents",
       "Enquiry and support agents",
+      "Internal knowledge assistants",
+      "Operations agents",
       "Research and preparation agents",
       "Multi-agent systems",
       "Approval and review flows"
@@ -294,7 +339,7 @@
         ]
       },
       {
-        "heading": "Where agents fit in a business",
+        "heading": "Business applications",
         "paragraphs": [
           "Good first projects are tasks with plenty of volume, a clear definition of a good result and a person who can review the output."
         ],
@@ -307,9 +352,27 @@
         ]
       },
       {
-        "heading": "Security, access and approvals",
+        "heading": "Tool integration",
         "paragraphs": [
-          "An agent gets only the access its job needs. We agree with you which actions need approval, keep a log of everything it does, and explain which AI provider processes your data and under what terms before anything is connected."
+          "An agent is only as useful as the tools it can use. We connect agents to your systems through their APIs or supported integrations, such as your CRM, helpdesk, inbox, calendar, spreadsheets or document store, and give each one a defined set of actions: look up a record, draft a reply, create a task, update a field."
+        ]
+      },
+      {
+        "heading": "Approval controls",
+        "paragraphs": [
+          "You decide which actions an agent may take on its own and which need a person’s sign-off. Typical rules: anything sent to a customer, any price or commitment, and any change to financial or personal records waits for approval. The agent prepares the work; a person confirms it."
+        ]
+      },
+      {
+        "heading": "Security considerations",
+        "paragraphs": [
+          "An agent gets only the access its job needs, with its own credentials where the tool allows. Before anything is connected, we explain which AI provider processes your data and under what terms, avoid sending data the task doesn’t need, and keep a log of every action the agent takes."
+        ]
+      },
+      {
+        "heading": "Monitoring and maintenance",
+        "paragraphs": [
+          "After launch, we review the agent’s logs and outputs with you, look at the cases it handed to a person, and refine its instructions, information and limits. AI models and the tools they connect to change over time, so agents need periodic checks to keep working as intended."
         ]
       }
     ],
@@ -333,47 +396,374 @@
       {
         "q": "Do we need an AI agent or a simpler automation?",
         "a": "If the steps are the same every time, a simpler automation is usually the better choice. We’ll tell you which fits after looking at the work itself."
+      },
+      {
+        "q": "What happens if the agent gets something wrong?",
+        "a": "Because sensitive actions wait for approval, most mistakes are caught before they reach a customer. Every action is logged, so an error can be traced and the agent’s instructions or limits adjusted. We test on real past cases before launch to find weak spots early."
       }
-    ]
+    ],
+    "visual": {
+      "lead": "AI agents that answer customers, call new leads and handle routine tasks inside your tools, day and night, within limits you set.",
+      "before": {
+        "title": "Today",
+        "mock": "missed-calls",
+        "points": [
+          "Calls missed while you’re busy",
+          "Questions wait until morning",
+          "Routine requests pile up"
+        ]
+      },
+      "after": {
+        "title": "With an AI agent",
+        "mock": "call-screen",
+        "points": [
+          "Every call answered, day or night",
+          "Replies from your own information",
+          "A person approves what matters"
+        ]
+      },
+      "cardsHeading": "What an agent can do for you",
+      "cards": [
+        {
+          "title": "Handles routine requests",
+          "text": "Reads the request, checks the facts, prepares the action.",
+          "mock": "task-checklist"
+        },
+        {
+          "title": "Agents that work as a team",
+          "text": "One sorts, one researches, one replies.",
+          "mock": "agent-handoff"
+        },
+        {
+          "title": "You approve what matters",
+          "text": "Refunds, offers and anything unusual wait for a yes.",
+          "mock": "approval-card"
+        },
+        {
+          "title": "Answers from your documents",
+          "text": "Every answer points to the policy it came from.",
+          "mock": "knowledge-answer"
+        }
+      ],
+      "workflow": {
+        "id": "ai-call",
+        "title": "Watch an AI agent call a new enquiry",
+        "done": "Enquiry called, appointment booked, owner notified"
+      },
+      "steps": [
+        {
+          "title": "Define the job",
+          "text": "What it does, and what it hands to a person."
+        },
+        {
+          "title": "Give it your knowledge",
+          "text": "Services, prices, policies and past examples."
+        },
+        {
+          "title": "Connect & test",
+          "text": "Only the access it needs, tested on real cases."
+        },
+        {
+          "title": "Monitor",
+          "text": "Every action logged, reviewed and improved."
+        }
+      ],
+      "promises": [
+        {
+          "title": "Clear limits",
+          "text": "It only does the job it was built for."
+        },
+        {
+          "title": "A person approves",
+          "text": "Anything that commits your business waits for you."
+        },
+        {
+          "title": "Every action recorded",
+          "text": "You can always see what it did and why."
+        }
+      ]
+    }
   },
-  "business-consulting": {
-    "title": "Business Consulting",
-    "heading": "Find the bottlenecks. {Build a clearer path to growth.}",
-    "short": "Business consulting",
-    "summary": "Practical growth and operations consulting. We look at how your business wins customers and gets work done, find what’s holding it back, and set out a clear, prioritised plan.",
-    "who": "Founders and owners of small and growing businesses who know something isn’t working, but not exactly what, or where to start.",
-    "problem": "Growth stalls for reasons that are hard to see from the inside: a sales process that loses enquiries, work that depends on one person, tools that don’t talk to each other, or too many priorities at once.",
+  "workflow-automation": {
+    "title": "Workflow Automation",
+    "heading": "Connect Your Tools. {Automate Repetitive Processes.}",
+    "short": "Workflow automation",
+    "summary": "We map your business processes, connect the tools involved and automate the repetitive, rule-based steps, with error handling and monitoring so you can rely on the result.",
+    "who": "Businesses where the same information is re-typed between forms, inboxes, CRMs, spreadsheets and accounting tools, or where tasks wait for someone to pass them on.",
+    "problem": "Most businesses run on several tools that don’t talk to each other. People bridge the gaps by copying, pasting and reminding each other, and details get missed or entered twice.",
     "build": [
-      "Growth assessments",
-      "Process improvement",
-      "Digital transformation planning",
-      "Technology and AI adoption",
-      "Prioritised action plans"
+      "Workflow mapping",
+      "Tool and API integrations",
+      "Lead routing",
+      "Reporting automation",
+      "Administrative workflows",
+      "Notifications and reminders"
     ],
     "includes": [
-      "A conversation about your goals and what isn’t working",
-      "A review of how enquiries, sales and delivery run today",
-      "Identifying the bottlenecks and the opportunities worth acting on first",
-      "A written, prioritised plan with practical next steps",
-      "Help putting it in place, if you want it"
+      "Mapping the current process step by step, with the people who run it",
+      "Designing the automated flow, its triggers and its exceptions",
+      "Connecting the tools involved and building the workflow",
+      "Adding error handling, alerts and logging",
+      "Testing, launch, documentation and monitoring"
     ],
-    "servicesHeading": "Where consulting helps",
+    "servicesHeading": "What we automate",
     "services": [
       {
-        "title": "Growth assessment",
-        "text": "A structured look at how customers find you, enquire and buy, and where they drop away."
+        "title": "Workflow mapping",
+        "text": "A clear picture of how a process runs today: each step, each tool, each hand-off and where time is lost."
       },
       {
-        "title": "Process improvement",
-        "text": "Mapping how work moves through the business, then removing the steps, delays and hand-offs that slow it down."
+        "title": "Tool integrations",
+        "text": "Your CRM, forms, inbox, spreadsheets, calendar and accounting software connected, so data flows between them."
       },
       {
-        "title": "Digital transformation strategy",
-        "text": "Deciding which parts of the business should move to better tools or online channels, in what order and at what cost."
+        "title": "Lead management",
+        "text": "Leads captured from every source into one place, assigned to the right person and followed up on schedule."
       },
       {
-        "title": "Technology and AI adoption",
-        "text": "Choosing the tools and AI uses that fit your business, and planning how your team will start using them."
+        "title": "Customer enquiry workflows",
+        "text": "Enquiries logged, acknowledged and routed by type, so nothing sits unanswered in a shared inbox."
+      },
+      {
+        "title": "Reporting automation",
+        "text": "Data collected from your tools on a schedule and assembled into a consistent report."
+      },
+      {
+        "title": "Administrative processes",
+        "text": "Onboarding steps, document requests, approvals and reminders that run the same way every time."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Reliable before clever",
+        "text": "A predictable workflow that runs correctly every day is worth more than an impressive one that fails quietly."
+      },
+      {
+        "title": "Failures are visible",
+        "text": "If a step fails, the workflow stops and alerts someone, instead of passing on bad data."
+      },
+      {
+        "title": "Documented and handed over",
+        "text": "You get a written description of each workflow, so your team understands what it does."
+      }
+    ],
+    "details": [
+      {
+        "heading": "How this differs from AI automation",
+        "paragraphs": [
+          "Workflow automation handles processes with clear rules: when this happens, do that. It doesn’t need AI to work, which makes it predictable and inexpensive to run. When a step involves reading or interpreting text, such as understanding an email or drafting a reply, we add AI to the workflow. That is what our AI Automation service covers."
+        ]
+      },
+      {
+        "heading": "Workflow mapping comes first",
+        "paragraphs": [
+          "Before building anything, we document how the process runs today with the people who do it. This often reveals steps that can be removed entirely, which is cheaper than automating them."
+        ],
+        "points": [
+          "What starts the process",
+          "Every step, tool and hand-off",
+          "The exceptions, and how they are handled today",
+          "Where delays and errors happen"
+        ]
+      },
+      {
+        "heading": "Error handling and monitoring",
+        "paragraphs": [
+          "Real-world data is messy: a form is missing a field, a service is briefly unavailable, a record already exists. We design for these cases with validation, retries and alerts to a named person when something needs attention. Every run is logged, so you can see what happened and when."
+        ]
+      },
+      {
+        "heading": "Integrations with the tools you use",
+        "paragraphs": [
+          "We connect tools through their official APIs and integrations, and check that your software supports what the workflow needs before proposing anything. Where a workflow relies on a paid platform, we tell you the running cost up front."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is workflow automation?",
+        "a": "Software that carries out the steps of a business process automatically when something happens, such as a form submission, a new email or a scheduled time. It moves information between tools, creates records, sends notifications and triggers the next step."
+      },
+      {
+        "q": "Which tools can you connect?",
+        "a": "Most modern business software with an API or built-in integrations can be connected, including many CRMs, email providers, form builders, spreadsheets, calendars and accounting tools. We confirm what’s possible with your specific tools before proposing a solution."
+      },
+      {
+        "q": "Do we need AI for workflow automation?",
+        "a": "No. Many valuable workflows are purely rule-based. We add AI only where a step needs reading, classifying or drafting text."
+      },
+      {
+        "q": "What happens if a workflow fails?",
+        "a": "It stops, logs the error and alerts the person responsible, rather than carrying on with incomplete data. We design and test these failure cases before launch."
+      },
+      {
+        "q": "Can you improve workflows we already have?",
+        "a": "Yes. We can review existing automations, fix fragile steps, add error handling and monitoring, or rebuild them where that is simpler."
+      }
+    ],
+    "visual": {
+      "lead": "Your tools connected and your repetitive steps automated: one order becomes a customer, an invoice and a sheet row by itself.",
+      "before": {
+        "title": "Today",
+        "mock": "sheet-manual",
+        "points": [
+          "Copying from email into sheets",
+          "Typos and missed rows",
+          "Invoices typed up by hand"
+        ]
+      },
+      "after": {
+        "title": "With workflow automation",
+        "mock": "sheet-synced",
+        "points": [
+          "Every order lands in the right place",
+          "Invoices created and sent",
+          "Failures flagged straight away"
+        ]
+      },
+      "cardsHeading": "What we automate",
+      "cards": [
+        {
+          "title": "Process mapping",
+          "text": "Every step written down, so we automate the right ones.",
+          "mock": "process-map"
+        },
+        {
+          "title": "Tool integrations",
+          "text": "Forms, CRM, sheets and email talking to each other.",
+          "mock": "tool-chain"
+        },
+        {
+          "title": "Lead management",
+          "text": "New leads captured, assigned and followed up.",
+          "mock": "lead-card"
+        },
+        {
+          "title": "Enquiry routing",
+          "text": "Each enquiry sent to the right person with context.",
+          "mock": "enquiry-routing"
+        },
+        {
+          "title": "Reporting",
+          "text": "Numbers gathered and sent on a schedule.",
+          "mock": "report-message"
+        },
+        {
+          "title": "Admin and documents",
+          "text": "Forms turned into agreements, quotes and invoices.",
+          "mock": "form-to-doc"
+        }
+      ],
+      "workflow": {
+        "id": "order-to-invoice",
+        "title": "Watch an order become an invoice",
+        "done": "Customer added, invoice emailed, sheet updated"
+      },
+      "steps": [
+        {
+          "title": "Map",
+          "text": "Your process, step by step, with the people who run it."
+        },
+        {
+          "title": "Design",
+          "text": "Triggers, rules and what happens when things go wrong."
+        },
+        {
+          "title": "Build",
+          "text": "Your tools connected, with alerts and logs."
+        },
+        {
+          "title": "Hand over",
+          "text": "Tested, documented and monitored."
+        }
+      ],
+      "promises": [
+        {
+          "title": "Reliable before clever",
+          "text": "Simple, predictable steps you can trust."
+        },
+        {
+          "title": "Failures are visible",
+          "text": "If something breaks, someone is told."
+        },
+        {
+          "title": "Documented",
+          "text": "You know exactly what runs and why."
+        }
+      ]
+    },
+    "example": {
+      "title": "An example: routing a new lead",
+      "ring": [
+        "Form submitted",
+        "Lead added to CRM",
+        "Owner assigned",
+        "Follow-up scheduled"
+      ],
+      "steps": [
+        "A prospect fills in the enquiry form on your website.",
+        "The details are checked and added to your CRM, without creating a duplicate.",
+        "The lead is assigned to the right person by service or region, and they are notified.",
+        "A follow-up task is scheduled, and a reminder goes out if it hasn’t been completed on time."
+      ]
+    }
+  },
+  "ai-consulting": {
+    "title": "AI Consulting & Integration",
+    "heading": "Find Where AI Fits. {Make It Work for Your Business.}",
+    "short": "AI consulting",
+    "summary": "Practical AI consulting: we review how your business runs, identify where automation and AI can genuinely help, choose suitable tools and plan how they integrate with your existing systems.",
+    "who": "Owners and teams who want to use AI responsibly but aren’t sure which tasks it suits, which tools to trust or how it would fit with the software they already use.",
+    "problem": "There is no shortage of AI tools, but little clarity on where they help, what they cost to run, what the risks are or how they connect to existing systems. Experiments stall, or tools are bought and never used.",
+    "build": [
+      "AI readiness assessments",
+      "Workflow audits",
+      "Automation opportunity mapping",
+      "Technology selection",
+      "Integration planning",
+      "Implementation roadmaps",
+      "Team enablement"
+    ],
+    "includes": [
+      "A conversation about your goals, workflows and tools",
+      "A review of the processes where time is being lost",
+      "A shortlist of AI and automation opportunities, with feasibility and risks",
+      "A written, prioritised roadmap with practical next steps",
+      "Help implementing it, if you want it"
+    ],
+    "servicesHeading": "Where AI consulting helps",
+    "services": [
+      {
+        "title": "AI readiness assessment",
+        "text": "A look at your processes, data and tools to judge where AI is practical now and what would need to change first."
+      },
+      {
+        "title": "Workflow audits",
+        "text": "Mapping how key processes run today, where time is lost and which steps are suitable for automation."
+      },
+      {
+        "title": "Opportunity identification",
+        "text": "A ranked list of automation and AI opportunities, weighed by effort, cost, risk and likely value."
+      },
+      {
+        "title": "Technology selection",
+        "text": "Choosing tools and AI services that fit your needs, budget and existing systems, with running costs explained."
+      },
+      {
+        "title": "Integration planning",
+        "text": "How a new AI capability will connect to your CRM, inbox, documents and other software, and what each connection needs."
+      },
+      {
+        "title": "Implementation roadmaps",
+        "text": "A written, phased plan: what to do first, what can wait and what each step involves."
+      },
+      {
+        "title": "Risk assessment",
+        "text": "Data protection, accuracy, vendor dependence and approval needs, considered before anything is connected."
+      },
+      {
+        "title": "Team enablement",
+        "text": "Helping your team understand new workflows and tools, and how to use AI safely in their roles."
       }
     ],
     "principles": [
@@ -382,62 +772,360 @@
         "text": "Every recommendation comes with a next step your team can actually take."
       },
       {
-        "title": "Honest priorities",
-        "text": "We say what matters most and what can wait, even when the answer is “not now”."
+        "title": "Honest about fit",
+        "text": "If AI isn’t the right answer for a task, or the timing is wrong, the roadmap says so."
       },
       {
-        "title": "Not tied to our own services",
-        "text": "If the right fix is a process change or someone else’s tool, the plan says so."
+        "title": "Not tied to one vendor",
+        "text": "We recommend tools on fit and cost, and say when a simpler option will do."
       }
     ],
     "details": [
       {
-        "heading": "Common challenges we look at",
+        "heading": "Common starting points",
         "paragraphs": [
-          "Most engagements start from a feeling that the business should be doing better than it is. Usually the cause is one of a handful of things."
+          "Most engagements start with a sense that AI could help, without a clear view of where."
         ],
         "points": [
-          "Enquiries come in but too few turn into customers",
-          "The owner is involved in every decision and every task",
-          "Work is tracked in inboxes, chats and memory rather than one system",
-          "Tools have been added one by one and don’t connect",
-          "There is no shared view of what to work on first"
+          "The team is experimenting with AI tools, but nothing is part of daily work yet",
+          "Repetitive tasks take up hours every week, and it’s unclear which can be automated",
+          "AI tools have been bought, but they don’t connect to the systems you use",
+          "There are concerns about data privacy, accuracy or cost that need a clear answer",
+          "Leadership wants a realistic plan rather than a list of tools"
         ]
       },
       {
-        "heading": "What a strategic assessment covers",
+        "heading": "What an AI readiness assessment covers",
         "paragraphs": [
-          "We look at the whole path from a customer’s first contact to the work being delivered: how people find and contact you, how enquiries are handled, how work is planned and done, which tools you rely on and where your team’s time goes. The result is a short written report that names the bottlenecks and ranks what to fix."
+          "We look at your key workflows, the tools and data they depend on, and how your team works today. The result is a short written report that names the most promising opportunities, the risks and prerequisites of each, and a recommended order."
         ]
       },
       {
-        "heading": "From plan to implementation",
+        "heading": "Risk and responsible use",
         "paragraphs": [
-          "A plan is only useful if it gets done. You can take it to your own team, to another provider, or ask us to carry out the parts we do: a website, a workflow automation or an AI agent. Either way, the plan is yours to keep."
+          "AI brings specific risks: incorrect outputs, data sent to third-party providers, dependence on a single vendor, and decisions made without enough oversight. We assess these for each opportunity and recommend controls, such as approval steps, access limits and logging, before anything is built."
+        ]
+      },
+      {
+        "heading": "From roadmap to implementation and ongoing improvement",
+        "paragraphs": [
+          "A roadmap is only useful if it gets done. You can take it to your own team or another provider, or ask us to implement the parts we build: workflow automation, AI automation and custom AI agents. Once solutions are running, we can review them periodically and refine them as your processes and the available tools change."
         ]
       }
     ],
     "faq": [
       {
-        "q": "What does a consulting engagement involve?",
-        "a": "A conversation about your goals, a review of how the business runs today, and a written, prioritised plan. The exact scope and price are agreed in writing before we start."
+        "q": "What does an AI consulting engagement involve?",
+        "a": "A conversation about your goals, a review of the workflows and tools involved, and a written, prioritised roadmap. The scope and price are agreed in writing before we start."
       },
       {
-        "q": "Is business consulting suitable for a small business?",
-        "a": "Yes. Small businesses often benefit most, because a few changes in how enquiries and work are handled make a visible difference to a small team."
+        "q": "Do we need data or technical staff in place first?",
+        "a": "No. Part of the assessment is understanding what you already have and what each opportunity would need. Many useful automations work with the tools and records a business already keeps."
       },
       {
         "q": "Will you only recommend your own services?",
-        "a": "No. If the best fix is a process change, a different tool or another provider, the plan says so."
+        "a": "No. If the best option is an off-the-shelf tool, a process change or another provider, the roadmap says so."
       },
       {
-        "q": "What do we get at the end?",
-        "a": "A written plan that names the bottlenecks, ranks what to fix first and sets out practical next steps, plus a conversation to walk through it."
+        "q": "How do you handle data privacy?",
+        "a": "We identify what data each opportunity involves, which providers would process it and under what terms, and recommend controls before anything is connected. We avoid sending data a task doesn’t need."
       },
       {
-        "q": "Can you help put the plan into action?",
-        "a": "Yes, where it involves what we do: websites, workflow automation and AI agents. For anything else, the plan explains what to look for."
+        "q": "Can you help put the roadmap into action?",
+        "a": "Yes, for the parts we build: workflow automation, AI automation and custom AI agents. For anything else, the roadmap explains what to look for."
       }
-    ]
+    ],
+    "visual": {
+      "lead": "We look at how your business runs, find where AI genuinely helps and give you a clear, prioritised plan.",
+      "before": {
+        "title": "Today",
+        "mock": "idea-cloud",
+        "points": [
+          "Lots of AI noise, no clear start",
+          "Unsure which tools fit",
+          "Worried about data and cost"
+        ]
+      },
+      "after": {
+        "title": "With a clear AI plan",
+        "mock": "roadmap",
+        "points": [
+          "Quick wins first",
+          "Tools chosen for your setup",
+          "Risks known up front"
+        ]
+      },
+      "cardsHeading": "What you get",
+      "cards": [
+        {
+          "title": "Readiness check",
+          "text": "Where your data, processes and team stand today.",
+          "mock": "readiness-check"
+        },
+        {
+          "title": "Workflow audit",
+          "text": "Where the week actually goes, task by task.",
+          "mock": "process-audit"
+        },
+        {
+          "title": "Opportunity map",
+          "text": "Ideas ranked by impact and effort.",
+          "mock": "impact-matrix"
+        },
+        {
+          "title": "Tool selection",
+          "text": "Options compared against your needs, not a vendor’s.",
+          "mock": "tool-compare"
+        },
+        {
+          "title": "Integration plan",
+          "text": "How new AI fits the tools you already use.",
+          "mock": "tool-chain"
+        },
+        {
+          "title": "Risk review",
+          "text": "Privacy, oversight and failure handled up front.",
+          "mock": "risk-list"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Talk",
+          "text": "Your goals, tools and where time goes."
+        },
+        {
+          "title": "Review",
+          "text": "The processes that cost you the most."
+        },
+        {
+          "title": "Shortlist",
+          "text": "Opportunities, with feasibility and risks."
+        },
+        {
+          "title": "Plan",
+          "text": "A written, prioritised roadmap. We can build it too."
+        }
+      ],
+      "promises": [
+        {
+          "title": "Practical",
+          "text": "Ideas you can act on this quarter."
+        },
+        {
+          "title": "Honest about fit",
+          "text": "If AI isn’t the answer, we say so."
+        },
+        {
+          "title": "Vendor-neutral",
+          "text": "We recommend what suits you, not a partner."
+        }
+      ]
+    }
+  },
+  "web-development": {
+    "title": "Website Development",
+    "short": "Web development",
+    "summary": "Custom business websites that explain what you do, work properly on every device, load quickly and make it easy for visitors to get in touch, built on sound technical SEO foundations.",
+    "who": "Businesses that need a new website, a better one, or a web application their customers or team will use every day.",
+    "problem": "Many business websites don’t say clearly what the business does, are awkward to use on a phone, or make it hard to enquire or buy. Visitors leave before they ever get in touch.",
+    "build": [
+      "Business websites",
+      "Landing pages",
+      "Custom builds",
+      "WordPress and Shopify sites",
+      "Web applications",
+      "Website redesigns"
+    ],
+    "includes": [
+      "Planning the pages, content and the path a visitor takes",
+      "Design for phone, tablet and desktop",
+      "Development as a custom build, or on WordPress or Shopify if you want to manage it yourself",
+      "Technical SEO set-up, performance checks and testing across devices before launch",
+      "Launch, and a handover of everything you need to run it"
+    ],
+    "services": [
+      {
+        "title": "Website design and development",
+        "text": "Business websites planned around what visitors need to understand, then designed and built to load quickly on any device."
+      },
+      {
+        "title": "UI/UX and conversion-focused design",
+        "text": "User flows and interface design that make it obvious what you offer and easy for visitors to take the next step."
+      },
+      {
+        "title": "Lead-generation landing pages",
+        "text": "Focused pages for a service, campaign or offer, with one clear message and one clear next step."
+      },
+      {
+        "title": "E-commerce development",
+        "text": "Online stores designed around how customers browse, compare and buy, from product page to checkout."
+      },
+      {
+        "title": "Shopify and WordPress",
+        "text": "Sites and stores on platforms your team can update without a developer, set up and extended to fit how you work."
+      },
+      {
+        "title": "Custom web applications",
+        "text": "Portals, booking tools, dashboards and other browser-based software your customers or staff use to get things done."
+      },
+      {
+        "title": "Technical SEO and performance",
+        "text": "Clean page structure, titles and descriptions, structured data, a sitemap and fast-loading pages, so search engines can understand and index the site."
+      },
+      {
+        "title": "Redesigns and improvements",
+        "text": "A review of an existing site, followed by the changes that make it clearer, faster and easier to use."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Clarity first",
+        "text": "A visitor should understand what you do, who it’s for and what to do next within a few seconds."
+      },
+      {
+        "title": "Designed for the phone",
+        "text": "Most of your visitors arrive on a phone. We design for that screen first, not as an afterthought."
+      },
+      {
+        "title": "Easy to maintain",
+        "text": "Sensible platforms and clean structure, so the site stays easy to update after launch."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Do you build custom websites, or use WordPress and Shopify?",
+        "a": "Both. A custom build suits sites with specific needs or a web application. WordPress or Shopify suits businesses that want to update pages or products themselves. We recommend one at the start and explain why."
+      },
+      {
+        "q": "Will the website work properly on phones?",
+        "a": "Yes. Most visitors arrive on a phone, so we design for that screen first and test on phones, tablets and desktops before launch."
+      },
+      {
+        "q": "Can we update the website ourselves after launch?",
+        "a": "Yes. We hand over the logins and notes you need, and choose a platform your team can manage."
+      },
+      {
+        "q": "Do you redesign existing websites?",
+        "a": "Yes. We review what the current site does well and where visitors drop off, then make the changes that make it clearer, faster and easier to use."
+      },
+      {
+        "q": "Do you also handle SEO or digital marketing?",
+        "a": "We build sites with search engines in mind: clear page titles and descriptions, fast pages, a sitemap and a clean structure. We don’t currently run ongoing SEO or advertising campaigns."
+      }
+    ],
+    "visual": {
+      "lead": "Websites that say what you do in seconds, work beautifully on a phone and turn visits into enquiries and orders.",
+      "before": {
+        "title": "Today",
+        "mock": "site-old",
+        "points": [
+          "Hard to use on a phone",
+          "No clear way to enquire",
+          "Looks dated, loses trust"
+        ]
+      },
+      "after": {
+        "title": "With a new website",
+        "mock": "site-phone",
+        "points": [
+          "Clear on every screen",
+          "Enquire or order in one tap",
+          "Easy for you to update"
+        ]
+      },
+      "cardsHeading": "What we build",
+      "cards": [
+        {
+          "title": "Websites that bring enquiries",
+          "text": "Every page leads to one clear next step.",
+          "mock": "site-form"
+        },
+        {
+          "title": "Landing pages",
+          "text": "One offer, one message, one button.",
+          "mock": "landing-page"
+        },
+        {
+          "title": "Online stores",
+          "text": "From product page to checkout, built to sell.",
+          "mock": "shop-product"
+        },
+        {
+          "title": "WordPress and Shopify",
+          "text": "Change text, prices and offers yourself.",
+          "mock": "cms-edit"
+        },
+        {
+          "title": "Web applications",
+          "text": "Booking tools, portals and dashboards.",
+          "mock": "web-app"
+        },
+        {
+          "title": "Built to be found",
+          "text": "Clean structure and fast pages search engines understand.",
+          "mock": "search-result"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Plan",
+          "text": "Pages, content and the path to an enquiry."
+        },
+        {
+          "title": "Design",
+          "text": "Phone first, then tablet and desktop."
+        },
+        {
+          "title": "Build",
+          "text": "Custom, or on WordPress or Shopify."
+        },
+        {
+          "title": "Launch",
+          "text": "SEO set-up, speed checks and handover."
+        }
+      ],
+      "promises": [
+        {
+          "title": "Clarity first",
+          "text": "Visitors understand what you do in seconds."
+        },
+        {
+          "title": "Designed for the phone",
+          "text": "Where most of your visitors are."
+        },
+        {
+          "title": "Easy to maintain",
+          "text": "Update it yourself, without a developer."
+        }
+      ]
+    },
+    "details": [
+      {
+        "heading": "Built to turn visitors into enquiries",
+        "paragraphs": [
+          "A business website has one main job: help the right visitors understand what you offer and make it easy for them to get in touch. We plan each page around the questions visitors arrive with, place clear calls to action where they are needed and keep forms short."
+        ]
+      },
+      {
+        "heading": "Technical SEO foundations",
+        "paragraphs": [
+          "Every site we build includes the technical groundwork search engines expect: a logical heading structure, unique page titles and descriptions, clean URLs, canonical tags, an XML sitemap, structured data where it applies, and compressed images. We don’t currently run ongoing SEO or advertising campaigns, but the site is ready for them."
+        ]
+      },
+      {
+        "heading": "Performance and responsive design",
+        "paragraphs": [
+          "Most visitors arrive on a phone, often on a mobile connection. We design for small screens first, keep pages light, load images and video only when needed, and test on real devices and browsers before launch."
+        ]
+      },
+      {
+        "heading": "Integrations",
+        "paragraphs": [
+          "A website can connect to the tools you already use: enquiry forms that reach your inbox or CRM, booking calendars, WhatsApp, analytics and e-commerce platforms. Where it helps, a website can also feed an automation, for example routing each new enquiry to the right person."
+        ]
+      }
+    ],
+    "heading": "Professional Websites {Built for Growing Businesses.}",
+    "servicesHeading": "What we build"
   }
 }

@@ -186,7 +186,7 @@ export function enquiriesView(root, openId) {
 
 /* ===================== PAGES ===================== */
 const PAGE_LIST = [
-  ['home', '/', 'Home page', 'Hero, problems, service panels, who we help, solutions, benefits, process, About teaser and FAQ.'],
+  ['home', '/', 'Home page', 'Hero, problems, AI solutions, service panels, website section, use cases, who we help, process, why Ostendic and FAQ.'],
   ['services', '/services', 'Services overview', 'The /services page head.'],
   ...SERVICE_SLUGS.map(s => [s, `/services/${s}`, SERVICE_NAMES[s], 'Full service page, with its FAQ.']),
   ['work', '/work', 'Work', 'Page head and note. Projects are under Work.'],

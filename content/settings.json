@@ -6,8 +6,9 @@
     "principal": "Harsh Dubey",
     "principalRole": "Founder",
     "principalImage": "assets/harsh-dubey.jpg",
-    "sub": "Ostendic helps businesses attract more customers, simplify repetitive work and grow smarter through websites, AI automation and practical business consulting.",
-    "footer": "Ostendic helps businesses grow with websites, AI automation, custom AI agents and practical consulting."
+    "sub": "Ostendic helps businesses automate repetitive work, integrate intelligent AI systems, and build smarter digital experiences.",
+    "tagline": "Smarter Systems. Simpler Work. Better Business.",
+    "footer": "AI automation, custom AI agents, AI consulting and website development for businesses in India and abroad."
   },
   "contact": {
     "phoneDisplay": "",
@@ -15,7 +16,10 @@
     "whatsapp": "918820208823",
     "booking": "https://calendly.com/harshkdubeyhd",
     "social": [
-      { "label": "Instagram", "url": "https://www.instagram.com/ostendic.co/" }
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/ostendic.co/"
+      }
     ]
   },
   "seo": {
@@ -28,13 +32,11 @@
   },
   "form": {
     "interests": [
-      "A new website or a redesign",
-      "UI/UX design",
-      "A web app or online store",
-      "Automating a workflow",
-      "A custom AI agent",
-      "Business or growth consulting",
-      "Not sure yet"
+      "AI Automation",
+      "Custom AI Agents",
+      "AI Consulting & Integration",
+      "Website Development",
+      "Not Sure Yet"
     ],
     "budgets": [
       "Not sure yet",
@@ -62,8 +64,8 @@
     ]
   },
   "footerCta": {
-    "heading": "What’s slowing your business down?",
-    "text": "Not enough enquiries? Too many repetitive tasks? A growth strategy that isn’t delivering? Tell us what you’re dealing with, and we’ll help you explore a practical next step.",
-    "button": "Let’s talk about your challenge"
+    "heading": "Still Doing Work That Could Be Automated?",
+    "text": "Tell us which repetitive tasks are taking up your team’s time. We’ll help you explore whether automation makes sense for your business.",
+    "button": "Let’s Discuss Your Workflow"
   }
 }

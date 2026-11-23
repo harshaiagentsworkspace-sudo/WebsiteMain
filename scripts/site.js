@@ -11,6 +11,19 @@
   var track = window.ostTrack = function (name, params) {
     if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
   };
+  /* service_category: 'ai' (AI automation, agents, workflow automation,
+     AI consulting), 'web' (website development) or 'general'. Lets GA4
+     separate AI enquiries (the primary goal) from website enquiries. */
+  var categoryOf = function (slug) {
+    if (!slug) return 'general';
+    return slug === 'web-development' ? 'web' : /^(ai-|workflow-)/.test(slug) ? 'ai' : 'general';
+  };
+  var slugIn = function (href) {
+    var m = String(href).match(/\/services\/([a-z-]+)/) || String(href).match(/[?&]service=([a-z-]+)/);
+    return m ? m[1] : '';
+  };
+  var pageService = slugIn(location.pathname);
+  if (pageService) track('service_page_view', { service_slug: pageService, service_category: categoryOf(pageService) });
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
@@ -21,7 +34,9 @@
     else if (href.indexOf('https://wa.me/') === 0) track('whatsapp_contact_click', { link_location: where });
     else if (a.classList.contains('btn--primary')) {
       var label = (a.querySelector('.btn-label--full, .btn-label') || a).textContent.trim();
-      track('cta_click', { cta_text: label.slice(0, 80), cta_destination: href.split('#')[0] || location.pathname, link_location: where });
+      var svc = slugIn(href) || pageService;
+      track('cta_click', { cta_text: label.slice(0, 80), cta_destination: href.split('#')[0] || location.pathname, link_location: where,
+        service_slug: svc, service_category: categoryOf(svc) });
     }
   });
 
@@ -390,6 +405,74 @@
     window.addEventListener('hashchange', function () { select(fromHash()); });
   }
 
+  /* ---------- example workflows (home: automations in action) ----------
+     Without JS every workflow is shown, static, one under another. With JS
+     they become tabs; each one plays a pretend run the first time it is
+     seen, and its button replays it. Wide canvases can be dragged with
+     the mouse (touch scrolls natively). */
+  var wfs = document.querySelectorAll('[data-wf]');
+  if (wfs.length) {
+    var wfStart = function (wf) {
+      var st = wf.querySelector('.wf__status');
+      clearTimeout(wf._wfT);
+      wf.classList.remove('is-run'); void wf.offsetWidth; wf.classList.add('is-run');
+      wf._wfSeen = true;
+      st.classList.remove('is-ok'); st.textContent = 'Running the example…';
+      wf._wfT = setTimeout(function () {
+        st.classList.add('is-ok'); st.textContent = wf.getAttribute('data-wf-done') || 'Example run finished';
+      }, reduce.matches ? 50 : +wf.getAttribute('data-wf-ms') || 4000);
+    };
+    var wio = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !en.target._wfSeen && en.target.offsetParent) wfStart(en.target);
+      });
+    }, { threshold: 0.4 }) : null;
+    [].forEach.call(wfs, function (wf) {
+      var b = wf.querySelector('[data-wf-run]');
+      b.hidden = false;
+      b.addEventListener('click', function () { wfStart(wf); });
+      if (wio) wio.observe(wf);
+
+      var cv = wf.querySelector('.wf__canvas'), drag = null;
+      var pannable = function () { cv.classList.toggle('is-pannable', cv.scrollWidth > cv.clientWidth + 2); };
+      pannable(); window.addEventListener('resize', pannable);
+      cv.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || !cv.classList.contains('is-pannable')) return;
+        drag = { x: e.clientX, s: cv.scrollLeft }; cv.classList.add('is-panning'); cv.setPointerCapture(e.pointerId);
+      });
+      cv.addEventListener('pointermove', function (e) { if (drag) cv.scrollLeft = drag.s - (e.clientX - drag.x); });
+      var end = function () { drag = null; cv.classList.remove('is-panning'); };
+      cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    });
+
+    var tablist = document.querySelector('.wf-tabs');
+    if (tablist) {
+      var tabs = [].slice.call(tablist.querySelectorAll('[data-wf-tab]'));
+      var show = function (tab, focus) {
+        tabs.forEach(function (t) {
+          var on = t === tab, panel = document.getElementById(t.getAttribute('aria-controls'));
+          t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; panel.hidden = !on;
+          if (on) {
+            var wf = panel.querySelector('[data-wf]'), cv = wf.querySelector('.wf__canvas');
+            cv.classList.toggle('is-pannable', cv.scrollWidth > cv.clientWidth + 2);
+            if (focus !== null) wfStart(wf);
+          }
+        });
+        if (focus) tab.focus();
+      };
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { show(t, false); });
+        t.addEventListener('keydown', function (e) {
+          var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!k) return;
+          e.preventDefault(); show(tabs[(i + k + tabs.length) % tabs.length], true);
+        });
+      });
+      tablist.hidden = false;
+      show(tabs[0], null);
+    }
+  }
+
   /* ---------- enquiry form ---------- */
   var form = document.getElementById('leadForm');
   if (!form) return;
@@ -400,6 +483,22 @@
   var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   var openedAt = Date.now();
   var mail = window.OSTENDIC_EMAIL || 'harsh@ostendic.com';
+
+  /* a service page's CTA links to /contact?service=<slug>: preselect the
+     matching "Service interest" option (workflow automation counts as AI
+     automation) */
+  var wanted = (location.search.match(/[?&]service=([a-z-]+)/) || [])[1];
+  if (wanted) {
+    if (wanted === 'workflow-automation') wanted = 'ai-automation';
+    Array.prototype.some.call(form.help.options, function (o) {
+      if (o.getAttribute('data-svc') === wanted) { o.selected = true; return true; }
+      return false;
+    });
+  }
+  var interestSlug = function () {
+    var o = form.help.options[form.help.selectedIndex];
+    return o ? o.getAttribute('data-svc') || '' : '';
+  };
 
   var check = function (f) {
     var input = f.querySelector('input, textarea, select');
@@ -466,8 +565,9 @@
       label.textContent = original;
       if (ok) {
         /* the service category is a menu choice, not personal data */
-        track('contact_form_submit', { form_name: 'contact', service_interest: form.help.value });
-        track('generate_lead', { form_name: 'contact', service_interest: form.help.value });
+        var cat = interestSlug() ? categoryOf(interestSlug()) : 'unsure';
+        track('contact_form_submit', { form_name: 'contact', service_interest: form.help.value, service_category: cat });
+        track('generate_lead', { form_name: 'contact', service_interest: form.help.value, service_category: cat, lead_type: cat === 'web' ? 'website' : cat === 'ai' ? 'ai_automation' : 'unsure' });
         form.reset();
         setStatus('ok', 'Thanks. We’ve got your message and we’ll reply by email.');
       } else {

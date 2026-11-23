@@ -3,25 +3,31 @@
    =========================================================================== */
 import {
   site, links, pillars, aboutCopy, published, bookingProvider,
-  budgets, interests, pagesCopy as PC, homeCopy,
+  budgets, interests, interestSlug, pagesCopy as PC, homeCopy,
 } from './data.mjs';
 import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark, serviceIconFor } from './ui.mjs';
 import * as S from './sections.mjs';
+import { mock, heroScene, sidePhoto, stockImg } from './mockups.mjs';
 import { posts, readingTime, renderBody, fmtDate, src as mediaSrc } from './blog.mjs';
 import { sanitizeInline, SERVICE_SLUGS } from './schema.mjs';
 
-/* ========================= HOME ========================= */
+/* ========================= HOME =========================
+   AI first: the automation offer, the problems it solves and the three
+   core AI services come before the (secondary) website section. The
+   closing "Still doing work that could be automated?" invitation is the
+   footer CTA, shared by every page. */
 export const home = () => `
 ${S.hero()}
 ${S.statsBar()}
-${S.selectedWork()}
 ${S.problemsSection()}
+${S.solutionsSection()}
+${S.showcaseSection()}
 ${S.serviceChapters({ icons: true, ring: true, video: true })}
+${S.webSection()}
+${S.selectedWork()}
 ${S.audiencesSection()}
 ${S.processSection({ home: true })}
-${S.solutionsSection()}
-${S.benefitsSection()}
-${S.aboutTeaser()}
+${S.whySection()}
 ${S.faqSection(homeCopy.faq.heading, homeCopy.faq.items, { clip: 'hero-vortex' })}
 `;
 
@@ -41,10 +47,11 @@ ${S.processSection()}
    data saver), so the glass always has something to blur.
    [intro + cards, related work, principles, worked example] */
 const glassClips = {
-  'web-development': ['work-bg', 'demos-bg', 'clients-vortex'],
   'ai-automation': ['about-hero-bg', 'hero-vortex', 'process-bg', 'agentic-ai-bg'],
   'ai-agent-development': ['agentic-ai-bg', 'process-bg', 'about-hero-bg'],
-  'business-consulting': ['about-bg', 'clients-vortex', 'work-bg'],
+  'workflow-automation': ['process-bg', 'clients-vortex', 'work-bg', 'hero-vortex'],
+  'ai-consulting': ['about-bg', 'clients-vortex', 'work-bg'],
+  'web-development': ['work-bg', 'demos-bg', 'clients-vortex'],
 };
 const glassBg = S.glassBg;
 
@@ -52,11 +59,13 @@ const glassBg = S.glassBg;
    count doesn't match its icon list shows a tick instead, so editing the
    cards in the admin can never break the build. */
 const CARD_ICONS = {
+  'ai-automation': ['ai-03-leads', 'ai-05-support', 'step-2-agent', 'ai-06-automation', 'ai-07-integrations', 'ai-08-internal-systems'],
+  'ai-agent-development': ['ai-01-agents', 'ai-02-multi-agent', 'step-3-approve', 'step-2-agent'],
+  'workflow-automation': ['principle-1-problem', 'ai-07-integrations', 'ai-03-leads', 'step-1-enquiry', 'ai-08-internal-systems', 'ai-06-automation'],
+  'ai-consulting': ['principle-1-problem', 'ai-06-automation', 'ai-01-agents', 'service-06-custom-app',
+    'ai-07-integrations', 'principle-3-keep-running', 'step-3-approve', 'principle-4-people'],
   'web-development': ['service-01-website', 'service-02-ui-ux', 'service-03-landing-page', 'service-04-ecommerce',
     'service-05-cms', 'service-06-custom-app', 'service-07-responsive', 'service-08-redesign'],
-  'ai-automation': ['ai-03-leads', 'ai-05-support', 'ai-04-sales-marketing', 'ai-06-automation', 'ai-07-integrations', 'ai-08-internal-systems'],
-  'ai-agent-development': ['ai-01-agents', 'ai-02-multi-agent', 'step-3-approve', 'step-2-agent'],
-  'business-consulting': ['principle-1-problem', 'ai-06-automation', 'service-06-custom-app', 'principle-4-people'],
 };
 const cardIcon = (slug, i, count) => {
   const list = CARD_ICONS[slug] || [];
@@ -64,14 +73,16 @@ const cardIcon = (slug, i, count) => {
 };
 const gridCols = (n) => n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : Math.min(n, 4);
 
-/* the main call to action on each service page */
+/* the main call to action on each service page; it opens the enquiry form
+   with this service already chosen */
 const SERVICE_CTA = {
-  'web-development': 'Talk about your website',
-  'ai-automation': 'Discuss an automation idea',
-  'ai-agent-development': 'Discuss an AI agent idea',
-  'business-consulting': 'Talk about your growth strategy',
+  'ai-automation': 'Discuss Your Workflow',
+  'ai-agent-development': 'Discuss an AI Agent Idea',
+  'workflow-automation': 'Let’s Discuss Your Business Process',
+  'ai-consulting': 'Find Automation Opportunities',
+  'web-development': 'Talk About Your Website',
 };
-const serviceActions = (s) => btn(SERVICE_CTA[s.slug] || 'Tell us your challenge', '/contact', 'primary', { avatar: true, eager: true })
+const serviceActions = (s) => btn(SERVICE_CTA[s.slug] || 'Tell Us What’s Taking Your Time', S.enquiryHref(s.slug), 'primary', { avatar: true, eager: true })
   + (site.booking ? btn('Book a quick call', '/book', 'ghost', { icon: 'calendar' }) : waBtn('ghost'));
 
 /* longer explanations: heading on the left, text on the right, hairline
@@ -91,9 +102,163 @@ const detailBlocks = (details) => `
   </div>
 </section>`;
 
+/* closing call to action and the other services, shared by both layouts */
+const serviceTail = (s, others) => `
+<section class="section section--sm svc-cta">
+  <div class="wrap svc-cta__in">
+    <h2 class="h3">${esc(s.slug === 'web-development' ? 'Planning a new website, or a better one?' : 'Tell us what’s taking your team’s time.')}</h2>
+    <div class="btn-row">${serviceActions(s)}</div>
+  </div>
+</section>
+<section class="section section--sm section--white">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">Related services</p>
+      <div class="shead__main"><h2 class="h2">Other ways we can help</h2></div>
+    </div>
+    <ul class="related">
+      ${others.map(o => `<li><a class="related__link" href="${o.path}">
+        <span class="related__ico">${serviceIconFor(o.slug, { size: 28 })}</span>
+        <span class="related__t"><strong class="h4">${esc(o.title)}</strong><span class="body-sm">${esc(o.summary)}</span></span>
+        <span class="related__go">${ico.right}</span>
+      </a></li>`).join('')}
+    </ul>
+  </div>
+</section>
+`;
+
+/* Visual service pages (the AI services). Pictures first, few words:
+   hero with a product mockup of the result, before/after scenes, cards
+   that each show the thing in use, an example workflow that runs, then
+   short steps and promises. The long explanations stay on the page but
+   folded away ("In more detail"), after the FAQ. Mockups: mockups.mjs. */
+const X_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+const OK_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+
+const relatedWork = (work) => !work.length ? '' : `
+<section class="section">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">Related work</p>
+      <div class="shead__main"><h2 class="h2">Where we have applied this</h2></div>
+    </div>
+    <ul class="mini-work">
+      ${work.map(p => `
+      <li>
+        <a class="glass" href="/work#${p.slug}">
+          ${p.brand || p.mark
+            ? (({ logo, w, h, bg }) => `<span class="mini-work__logo"${bg ? ` style="background:${bg}"` : ''}><img src="/${logo}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async"></span>`)(p.mark || p.brand)
+            : `<img src="/${p.images.desktop}" alt="" width="1600" height="1000" loading="lazy" decoding="async">`}
+          <span class="mini-work__t"><strong>${esc(p.name)}</strong><span class="body-sm">${esc(p.what)}</span></span>
+        </a>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>`;
+
+const moreDetail = (details) => !details.length ? '' : `
+<section class="section section--white section--sm" id="more-detail">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">In more detail</p>
+      <div class="shead__main"><h2 class="h3">For those who like the full picture</h2></div>
+    </div>
+    <div class="faq faq--plain">
+      ${details.map(d => `<details class="faq__item">
+        <summary><h3 class="faq__q">${esc(d.heading)}</h3><span class="faq__ico" aria-hidden="true">${ico.caret}</span></summary>
+        <div class="faq__a">
+          ${d.paragraphs.map(p => `<p class="body">${esc(p)}</p>`).join('')}
+          ${d.points && d.points.length ? `<ul class="ticks">${d.points.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul>` : ''}
+        </div>
+      </details>`).join('')}
+    </div>
+  </div>
+</section>`;
+
+const visualServicePage = (s, tail) => {
+  const V = s.visual;
+  const work = published.filter(p => p.pillars.includes(s.slug));
+  const side = (k) => {
+    const b = V[k];
+    return `<div class="ba__side ba__side--${k}">
+        <p class="ba__tag"><span class="ba__ico">${k === 'before' ? X_ICO : OK_ICO}</span>${esc(b.title)}</p>
+        <div class="ba__stage${sidePhoto(s.slug, k) ? ' ba__stage--photo' : ''}" aria-hidden="true">${sidePhoto(s.slug, k)}${mock(b.mock)}</div>
+        <ul class="ba__pts">${b.points.map(p => `<li><span class="ba__ico">${k === 'before' ? X_ICO : OK_ICO}</span>${esc(p)}</li>`).join('')}</ul>
+      </div>`;
+  };
+  return `
+<section class="svh">
+  <div class="wrap svh__in">
+    <div class="svh__text">
+      <p class="label svh__label"><span class="svh__ico">${serviceIconFor(s.slug, { size: 20 })}</span>${esc(s.title)}</p>
+      ${head([s.heading], 'h1', 'h1')}
+      <p class="lead">${esc(V.lead)}</p>
+      <div class="btn-row">${serviceActions(s)}</div>
+    </div>
+    <div class="svh__visual">${heroScene(s.slug)}</div>
+  </div>
+</section>
+
+<section class="section section--white sv-ba">
+  <div class="wrap">
+    <div class="ba">
+      ${side('before')}
+      <span class="ba__arrow" aria-hidden="true">${ico.right}</span>
+      ${side('after')}
+    </div>
+  </div>
+</section>
+
+<section class="section sv-cards">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">${esc(s.short.charAt(0).toUpperCase() + s.short.slice(1))}</p>
+      <div class="shead__main"><h2 class="h2">${esc(V.cardsHeading)}</h2></div>
+    </div>
+    <ul class="vcards vcards--${V.cards.length}">
+      ${V.cards.map(c => `<li class="vcard">
+        <div class="vcard__stage" aria-hidden="true">${mock(c.mock)}</div>
+        <div class="vcard__t"><h3 class="h4">${esc(c.title)}</h3><p class="body-sm">${esc(c.text)}</p></div>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>
+${V.workflow ? `
+<section class="section section--white sv-wf">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">See it run</p>
+      <div class="shead__main"><h2 class="h2">${esc(V.workflow.title)}</h2></div>
+    </div>
+    ${S.workflowFigure(V.workflow.id, { name: V.workflow.title, title: V.workflow.title, done: V.workflow.done })}
+    <p class="wf__note label">Example workflow, shown for illustration. Every build is designed around your own tools and rules.</p>
+  </div>
+</section>` : ''}
+
+<section class="section sv-how">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">How it works</p>
+      <div class="shead__main"><h2 class="h2">From first call to up and running.</h2></div>
+    </div>
+    <ol class="how how--${V.steps.length}">
+      ${V.steps.map((st, n) => `<li class="how__step"><span class="how__n tnum">${n + 1}</span><h3 class="h4">${esc(st.title)}</h3><p class="body-sm">${esc(st.text)}</p></li>`).join('')}
+    </ol>
+    <ul class="promises">
+      ${V.promises.map(p => `<li><span class="promises__ico">${OK_ICO}</span><span><b>${esc(p.title)}</b><span class="body-sm">${esc(p.text)}</span></span></li>`).join('')}
+    </ul>
+  </div>
+</section>
+${relatedWork(work)}
+${S.faqSection('Frequently asked questions', s.faq, { clip: 'demos-bg' })}
+${moreDetail(s.details)}
+${tail}`;
+};
+
 export const pillarPage = (s) => {
-  const clips = glassClips[s.slug];
   const others = pillars.filter(p => p.slug !== s.slug);
+  if (s.visual) return visualServicePage(s, serviceTail(s, others));
+  const clips = glassClips[s.slug];
   const work = published.filter(p => p.pillars.includes(s.slug));
   return `
 ${pageHead({
@@ -164,21 +329,7 @@ ${work.length ? `
   </div>
 </section>` : ''}
 ${S.faqSection('Frequently asked questions', s.faq, { clip: 'demos-bg' })}
-<section class="section section--sm section--white">
-  <div class="wrap">
-    <div class="shead">
-      <p class="label">Related services</p>
-      <div class="shead__main"><h2 class="h2">Other ways we can help</h2></div>
-    </div>
-    <ul class="related">
-      ${others.map(o => `<li><a class="related__link" href="${o.path}">
-        <span class="related__ico">${serviceIconFor(o.slug, { size: 28 })}</span>
-        <span class="related__t"><strong class="h4">${esc(o.title)}</strong><span class="body-sm">${esc(o.summary)}</span></span>
-        <span class="related__go">${ico.right}</span>
-      </a></li>`).join('')}
-    </ul>
-  </div>
-</section>
+${serviceTail(s, others)}
 `;
 };
 
@@ -226,6 +377,28 @@ ${pageHead({
 `;
 
 /* ========================= ABOUT ========================= */
+/* About: the principles get a photo of the situation each one is about.
+   Stock people never stand in for the Ostendic team: the founder is the
+   only face of the company; photos show the businesses we build for. */
+const ABOUT_PHOTOS = ['about-problem', 'about-cost', 'about-running', 'about-loop'];
+const aboutClients = () => {
+  const C = PC.about.clients;
+  if (!C || !C.items.length) return '';
+  return `
+<section class="section section--white about-clients">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">${esc(C.label)}</p>
+      <div class="shead__main"><h2 class="h2">${esc(C.heading)}</h2></div>
+    </div>
+    <ul class="mosaic mosaic--${C.items.length}">
+      ${C.items.map(x => `<li class="mosaic__item">${stockImg(x.photo)}<span class="mosaic__cap">${esc(x.label)}</span></li>`).join('')}
+    </ul>
+    ${C.note ? `<p class="label mosaic__note">${esc(C.note)}</p>` : ''}
+  </div>
+</section>`;
+};
+
 export const about = () => `
 <section class="phead phead--vid">${S.sectionVideo('/assets/about-hero-bg.mp4')}
   <div class="wrap about-hero">
@@ -248,10 +421,12 @@ ${S.statsBar()}
       <div class="shead__main"><h2 class="h2">${esc(PC.about.approachHeading)}</h2></div>
     </div>
     <ul class="glass-grid glass-grid--4">
-      ${aboutCopy.approach.map(([t, d, icon]) => `<li class="glass"><span class="glass__tile">${principleIcon(icon, { size: 28 })}</span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></li>`).join('')}
+      ${aboutCopy.approach.map(([t, d, icon], n) => `<li class="glass${ABOUT_PHOTOS[n] ? ' glass--photo' : ''}">${ABOUT_PHOTOS[n] ? `<figure class="glass__photo">${stockImg(ABOUT_PHOTOS[n])}</figure>` : ''}<span class="glass-cards__top"><span class="glass__tile">${principleIcon(icon, { size: 28 })}</span></span><h3 class="h4">${esc(t)}</h3><p class="body-sm">${esc(d)}</p></li>`).join('')}
     </ul>
   </div>
 </section>
+
+${aboutClients()}
 
 <section class="section section--vid section--glass">${glassBg('demos-bg')}
   <div class="wrap">
@@ -259,7 +434,7 @@ ${S.statsBar()}
       <p class="label">${esc(PC.about.servicesLabel)}</p>
       <div class="shead__main"><h2 class="h2">${esc(PC.about.servicesHeading)}</h2></div>
     </div>
-    <ul class="glass-grid glass-grid--2">
+    <ul class="glass-grid glass-grid--${pillars.length % 2 ? 3 : 2}">
       ${pillars.map(p => `<li><a class="glass glass--link" href="${p.path}"><span class="glass__tile">${serviceIconFor(p.slug, { size: 28 })}</span><span class="glass__pill tnum">Service ${p.n}</span><h3 class="h3">${esc(p.title)}</h3><p class="body-sm">${esc(p.summary)}</p><span class="glass__go">Learn more${ico.right}</span></a></li>`).join('')}
     </ul>
     <div class="btn-row">${startBtn('primary')}</div>
@@ -285,7 +460,7 @@ export const contact = () => {
             <span class="err" id="e-name">Please tell us your name.</span>
           </div>
           <div class="field" data-req>
-            <label for="f-email">Email</label>
+            <label for="f-email">Business email</label>
             <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
             <span class="err" id="e-email">That email doesn’t look right.</span>
           </div>
@@ -296,22 +471,22 @@ export const contact = () => {
             <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
           </div>
           <div class="field">
-            <label for="f-company">Business name <span class="opt">(optional)</span></label>
+            <label for="f-company">Company name <span class="opt">(optional)</span></label>
             <input id="f-company" name="company" type="text" autocomplete="organization">
           </div>
         </div>
         <div class="field">
-          <label for="f-help">What can we help with?</label>
-          <select id="f-help" name="help">${interests.map(i => `<option>${esc(i)}</option>`).join('')}</select>
+          <label for="f-help">Service interest</label>
+          <select id="f-help" name="help">${interests.map(i => `<option data-svc="${interestSlug(i)}">${esc(i)}</option>`).join('')}</select>
         </div>
         <div class="field">
           <label for="f-budget">Rough budget <span class="opt">(optional)</span></label>
           <select id="f-budget" name="budget">${budgets.map(b => `<option>${esc(b)}</option>`).join('')}</select>
         </div>
         <div class="field" data-req>
-          <label for="f-project">Tell us a bit about it</label>
+          <label for="f-project">Your business challenge</label>
           <textarea id="f-project" name="project" required minlength="10" aria-describedby="e-project"
-            placeholder="A few sentences is plenty. What’s slowing the business down, or what do you want to build or fix?"></textarea>
+            placeholder="A few sentences is plenty. Which tasks take up your team’s time, which tools are involved, or what do you need from a website?"></textarea>
           <span class="err" id="e-project">Add a sentence or two so we know where to start.</span>
         </div>
         <!-- Spam trap: hidden from people and assistive tech; bots fill it. -->
@@ -483,9 +658,9 @@ export const blogPost = (p) => {
       ${p.tags && p.tags.length ? `<ul class="post__tags" aria-label="Tags">${p.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
     </div>
     <aside class="post__cta" aria-label="Get in touch">
-      <h2 class="h3">What’s slowing your business down?</h2>
+      <h2 class="h3">Still doing work that could be automated?</h2>
       <div class="post__cta-row">
-        ${btn('Tell us your challenge', '/contact', 'primary')}
+        ${btn('Tell Us What’s Taking Your Time', S.enquiryHref(''), 'primary')}
         ${site.booking ? `<a class="alink" href="/contact#book">Or book a quick call${ico.arrow}</a>` : ''}
       </div>
     </aside>

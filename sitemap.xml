@@ -2,10 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.ostendic.com/</loc></url>
   <url><loc>https://www.ostendic.com/services</loc></url>
-  <url><loc>https://www.ostendic.com/services/web-development</loc></url>
   <url><loc>https://www.ostendic.com/services/ai-automation</loc></url>
   <url><loc>https://www.ostendic.com/services/ai-agent-development</loc></url>
-  <url><loc>https://www.ostendic.com/services/business-consulting</loc></url>
+  <url><loc>https://www.ostendic.com/services/workflow-automation</loc></url>
+  <url><loc>https://www.ostendic.com/services/ai-consulting</loc></url>
+  <url><loc>https://www.ostendic.com/services/web-development</loc></url>
   <url><loc>https://www.ostendic.com/work</loc></url>
   <url><loc>https://www.ostendic.com/about</loc></url>
   <url><loc>https://www.ostendic.com/contact</loc></url>

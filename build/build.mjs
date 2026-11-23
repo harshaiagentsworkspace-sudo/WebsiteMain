@@ -52,10 +52,13 @@ for (const s of pillars) add(`services/${s.slug}.html`, page({
     crumbs([['Home', '/'], ['Services', '/services'], [s.title, s.path]]),
   ],
 }));
-add('work.html', page({ ...seoFor('/work'), body: P.work() }));
-add('about.html', page({ ...seoFor('/about'), body: P.about(), jsonld: [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: SEO['/about'].title, url: site.url + '/about' }] }));
+add('work.html', page({ ...seoFor('/work'), body: P.work(), jsonld: [crumbs([['Home', '/'], ['Work', '/work']])] }));
+add('about.html', page({ ...seoFor('/about'), body: P.about(), jsonld: [
+  { '@context': 'https://schema.org', '@type': 'AboutPage', name: SEO['/about'].title, url: site.url + '/about', about: ORG },
+  crumbs([['Home', '/'], ['About', '/about']])] }));
 add('contact.html', page({ ...seoFor('/contact'), body: P.contact(), needsForm: true, needsBooking: !!site.booking,
-  jsonld: [{ '@context': 'https://schema.org', '@type': 'ContactPage', name: SEO['/contact'].title, url: site.url + '/contact' }] }));
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'ContactPage', name: SEO['/contact'].title, url: site.url + '/contact', about: ORG },
+    crumbs([['Home', '/'], ['Contact', '/contact']])] }));
 
 /* booking: only with a real scheduler configured */
 if (site.booking) add('book.html', page({ ...seoFor('/book'), body: P.book(), needsBooking: true }));
@@ -143,9 +146,9 @@ add('404.html', page({ title: `Page not found${site.seo.titleSuffix || ''}`, des
     actions: btn('Go to the home page', '/', 'primary') + btn('See our services', '/services', 'ghost') + btn('Contact us', '/contact', 'ghost') }) }));
 
 /* Retired pages: their generated HTML is removed; vercel.json redirects
-   the old URLs. A renamed service page (agentic-ai-workflows) loses its
-   old file the same way. */
-for (const gone of ['careers.html', 'resources.html', 'services/agentic-ai-workflows.html']) {
+   the old URLs. A renamed service page (agentic-ai-workflows,
+   business-consulting → ai-consulting) loses its old file the same way. */
+for (const gone of ['careers.html', 'resources.html', 'services/agentic-ai-workflows.html', 'services/business-consulting.html']) {
   const f = join(ROOT, gone);
   if (existsSync(f)) rmSync(f);
 }

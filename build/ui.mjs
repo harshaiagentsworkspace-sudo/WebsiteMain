@@ -61,10 +61,11 @@ export const AgenticWorkflowsIcon = serviceIcon('agentic-ai-workflows.svg');
 export const principleIcon = (file, opts) => svgFile('../workflow-ring-v2/')(file)(opts);
 /* one icon per service page (homepage chapters, About, /services) */
 const SERVICE_ICON = {
-  'web-development': WebDevelopmentIcon,
   'ai-automation': AgenticWorkflowsIcon,
   'ai-agent-development': (o) => principleIcon('ai-01-agents.svg', o),
-  'business-consulting': (o) => principleIcon('principle-1-problem.svg', o),
+  'workflow-automation': (o) => principleIcon('ai-07-integrations.svg', o),
+  'ai-consulting': (o) => principleIcon('principle-1-problem.svg', o),
+  'web-development': WebDevelopmentIcon,
 };
 export const serviceIconFor = (slug, opts) => (SERVICE_ICON[slug] || AgenticWorkflowsIcon)(opts);
 /* Stats bar icons (workflow-ring-v2/stat-*.svg), same inlining */
@@ -168,6 +169,7 @@ export const header = (current = '') => `
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
   <nav class="mnav__in" aria-label="Mobile">
+    <a class="mnav__link" href="/"${current === '/' ? ' aria-current="page"' : ''}>Home</a>
     ${nav.map(([l, h, kids]) => kids
       /* an item with children (Services) opens in place to its pages;
          it doesn't lead to an overview page of its own */
@@ -218,6 +220,7 @@ export const footer = (current = '') => `
     <div class="ftr__cols">
       <div class="ftr__brand">
         <a class="brand brand--plaque" href="/" aria-label="${esc(site.name)} home">${brandMark()}</a>
+        ${site.tagline ? `<p class="ftr__tag">${esc(site.tagline)}</p>` : ''}
         <p>${esc(site.footer)}</p>
         ${socialRow()}
       </div>
@@ -228,6 +231,7 @@ export const footer = (current = '') => `
       <div>
         <h3 class="ftr__h">Ostendic</h3>
         <ul>
+          <li><a href="/services">All services</a></li>
           <li><a href="/work">Work</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/blog">Blog</a></li>
@@ -301,10 +305,11 @@ ${preload}<link rel="stylesheet" href="/styles/ostendic.css">
   name: site.name, url: site.url, email: site.email,
   logo: { '@type': 'ImageObject', url: absUrl(site.logo.nav), width: site.logo.w, height: site.logo.h },
   description: site.sub,
+  ...(site.tagline ? { slogan: site.tagline } : {}),
   founder: { '@type': 'Person', name: site.principal, jobTitle: site.principalRole },
   ...(site.phone ? { telephone: site.phone.tel } : {}),
   ...(site.social.length ? { sameAs: site.social.map(([, h]) => h) } : {}),
-  knowsAbout: ['Website design and development', 'UI/UX design', 'Web applications', 'Business process automation', 'AI agents', 'Agentic AI workflows', 'Business growth consulting', 'Digital transformation'],
+  knowsAbout: ['AI automation', 'AI agent development', 'Business workflow automation', 'AI integration', 'AI consulting', 'Website design and development', 'Technical SEO'],
 }).replace(/</g, '\\u003c')}</script>
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>
 `).join('')}${S.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(S.ga4)}"></script>

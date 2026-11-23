@@ -1,19 +1,26 @@
 /* ===========================================================================
    OSTENDIC — SECTION LIBRARY
-   Homepage narrative, in order (pages.mjs › home):
-     hero → selected work → problems → services (three chapters) → who we
-     help → process → solutions → benefits → about → FAQ → footer CTA
-   Problems, who we help, solutions and benefits are glass cards with icons
-   over a blurred clip, the same treatment as the service pages.
+   Homepage narrative, in order (pages.mjs › home), AI first:
+     hero → problems → AI solutions → example workflow
+     (automations in action) → core services (three AI chapters +
+     the workflow ring) → websites (secondary) → selected work → who we
+     help → process → why Ostendic → FAQ → footer CTA
+   Problems, solutions, who we help and why Ostendic are glass
+   cards with icons over a blurred clip, as on the service pages.
    Each section has one job; no section repeats another's content.
    Heading levels: one h1 (hero), an h2 per section, h3 inside sections.
-   Everything is static HTML. The only motion is the background video,
-   which never loads with data-saver or reduced motion.
+   Everything is static HTML. Motion: the background video (never with
+   data-saver or reduced motion) and the example workflows' pretend runs.
    =========================================================================== */
 import { readFileSync, existsSync } from 'node:fs';
 import { site, heroCopy, homeCopy, pillars, pillar, process, processHome, aboutCopy, published, kindLabel, pagesCopy } from './data.mjs';
 import { stats, statsDevWarning, STATS_ARE_PLACEHOLDER } from './stats.mjs';
 import { esc, ico, btn, alink, head, serviceIconFor, statIcon, principleIcon } from './ui.mjs';
+import { WORKFLOWS, workflowSvg, runMs, stepCount } from './workflows.mjs';
+import { stockImg } from './mockups.mjs';
+
+/* the enquiry form, arriving with a service preselected */
+export const enquiryHref = (slug) => `/contact${slug ? `?service=${slug}` : ''}#message`;
 
 /* ---------- HERO ----------
    The vortex clip is atmosphere, not content: a poster paints immediately
@@ -29,11 +36,12 @@ export const hero = () => `
     <span class="hero__scrim"></span>
   </div>
   <div class="wrap hero__in">
+    ${heroCopy.eyebrow ? `<p class="hero__eyebrow">${esc(heroCopy.eyebrow)}</p>` : ''}
     ${head(heroCopy.lines, 'display', 'h1')}
     <p class="lead hero__lead">${esc(heroCopy.lead)}</p>
     <div class="btn-row hero__cta">
-      ${btn(heroCopy.primaryButton, '/contact', 'primary', { avatar: true, eager: true })}
-      ${btn(heroCopy.secondaryButton, '#services', 'ghost', { icon: 'right' })}
+      ${btn(heroCopy.primaryButton, pillar['ai-automation'].path, 'primary', { icon: 'right' })}
+      ${btn(heroCopy.secondaryButton, enquiryHref('ai-automation'), 'ghost', { avatar: true, eager: true })}
     </div>
     <ul class="hero__index" aria-label="Services">
       ${pillars.map(p => `<li><a href="${p.path}"><span class="tnum">${p.n}</span><span class="hero__index-t">${esc(p.short)}</span>${ico.right}</a></li>`).join('')}
@@ -197,10 +205,10 @@ const facts = ({ panel: p }) => `
     <div><dt>A project can include</dt><dd><ul class="ticks">${p.includes.map(b => `<li>${ico.check}<span>${esc(b)}</span></li>`).join('')}</ul></dd></div>
   </dl>`;
 
-const chapter = (s, { icon = '', bg = '', tag = 'h3', links = [] } = {}) => `
+const chapter = (s, { icon = '', bg = '', tag = 'h3', links = [], n = s.n } = {}) => `
       <div class="chap__main">${bg}
         <header class="chap__head">
-          ${icon}<span class="chap__n tnum">${s.n}</span>
+          ${icon}<span class="chap__n tnum">${n}</span>
           <${tag} class="chap__t">${esc(s.panel.title)}</${tag}>
           <p class="body">${esc(s.panel.summary)}</p>
           ${links.map(([label, href]) => alink(label, href)).join('')}
@@ -296,20 +304,23 @@ const sectionStill = (src, w, h, clip = '') => `
     </div>
   </div>`;
 
-/* `icons` and `video` are on for the homepage only; /services reuses this without them. */
-/* The homepage shows three areas (AI automation's chapter also links to
-   AI agent development); /services shows all four. The AI automation
-   chapter is the dark band and carries the worked example. `icons` and
-   `video` are on for the homepage only. */
-const HOME_AREAS = ['web-development', 'ai-automation', 'business-consulting'];
-const CHAPTER_CLIP = { 'web-development': '/assets/web-development-bg.mp4', 'business-consulting': '/assets/clients-vortex.mp4' };
+/* The homepage shows the three core AI areas (web development has its own,
+   smaller section further down); /services shows all five. The AI
+   automation chapter is the dark band and carries the worked example.
+   `icons` and `video` are on for the homepage only. */
+const HOME_AREAS = ['ai-automation', 'ai-agent-development', 'ai-consulting'];
+const CHAPTER_CLIP = { 'ai-agent-development': '/assets/clients-vortex.mp4', 'ai-consulting': '/assets/about-bg.mp4', 'web-development': '/assets/web-development-bg.mp4' };
+/* extra links under a chapter heading (skipped when that page is itself
+   one of the chapters shown) */
+const CHAPTER_LINKS = {
+  'ai-automation': [['Workflow automation', '/services/workflow-automation']],
+};
 export const serviceChapters = ({ slugs = HOME_AREAS, withHead = true, icons = false, ring = false, video = false } = {}) => {
   const tag = withHead ? 'h3' : 'h2';
   let light = 0;
   return slugs.map(slug => pillar[slug]).map((s, i) => {
     const dark = s.slug === 'ai-automation';
-    const links = [[`More on ${s.title.replace(/ and UI\/UX Design$/, '')}`, s.path]];
-    if (dark && !slugs.includes('ai-agent-development')) links.push(['More on custom AI agents', pillar['ai-agent-development'].path]);
+    const links = [[`Explore ${s.title}`, s.path], ...(CHAPTER_LINKS[s.slug] || []).filter(([, h]) => !slugs.some(x => pillar[x].path === h))];
     const icon = icons ? serviceIconFor(s.slug, { className: 'chap__icon' }) : '';
     const cls = dark ? ' section--dark' : (light++ % 2 ? ' section--white' : '');
     const clip = video && !dark && CHAPTER_CLIP[s.slug];
@@ -323,7 +334,7 @@ export const serviceChapters = ({ slugs = HOME_AREAS, withHead = true, icons = f
     return `
 <section class="section${cls}${video ? ' section--vid' : ''}" id="${i === 0 ? 'services' : s.slug}">${clip ? sectionVideo(clip) : ''}
   <div class="wrap">${head}
-    <article class="chap${dark ? ' chap--ai' : ''}"${i === 0 ? ` id="${s.slug}"` : ''}>${chapter(s, { icon, tag, links,
+    <article class="chap${dark ? ' chap--ai' : ''}"${i === 0 ? ` id="${s.slug}"` : ''}>${chapter(s, { icon, tag, links, n: String(i + 1).padStart(2, '0'),
       bg: dark && video ? sectionStill('/assets/agentic-ai-bg.webp', 1920, 1040, '/assets/agentic-ai-bg.mp4') : '' })}
 ${dark && s.example && !ring ? example(s) : ''}
     </article>
@@ -353,7 +364,8 @@ export const glassBg = (name) => `
 
 const glassCards = (items, { cols = 3, numbered = false, link } = {}) => `
     <ul class="glass-grid glass-grid--${cols} glass-cards">
-      ${items.map((x, i) => `<li class="glass">
+      ${items.map((x, i) => `<li class="glass${x.photo && stockImg(x.photo) ? ' glass--photo' : ''}">
+        ${x.photo && stockImg(x.photo) ? `<figure class="glass__photo">${stockImg(x.photo)}</figure>` : ''}
         <span class="glass-cards__top">
           <span class="glass__tile">${x.icon ? principleIcon(`${x.icon}.svg`, { size: 28 }) : ico.check}</span>
           ${numbered ? `<span class="glass__pill tnum">${String(i + 1).padStart(2, '0')}</span>` : ''}
@@ -363,7 +375,7 @@ const glassCards = (items, { cols = 3, numbered = false, link } = {}) => `
         ${link ? link(x) : ''}
       </li>`).join('')}
     </ul>`;
-const cols = (n) => n >= 5 ? 5 : n;
+const cols = (n) => n % 4 === 0 || n === 7 ? 4 : n % 3 === 0 ? 3 : Math.min(n, 5);
 
 const shead = (label, heading, intro = '') => `
     <div class="shead">
@@ -410,7 +422,7 @@ export const audiencesSection = () => {
   return `
 <section class="section section--vid section--glass" id="who-we-help">${glassBg('blog-bg')}
   <div class="wrap">${shead('Who we help', A.heading)}
-    ${glassCards(A.items, { cols: A.items.length === 3 ? 3 : 4 })}
+    ${glassCards(A.items, { cols: cols(A.items.length) })}
   </div>
 </section>`;
 };
@@ -420,19 +432,91 @@ export const solutionsSection = () => {
   const S = homeCopy.solutions;
   return `
 <section class="section section--vid section--glass" id="solutions">${glassBg('demos-bg')}
-  <div class="wrap">${shead('Solutions', S.heading, S.intro)}
-    ${glassCards(S.items, { cols: 3, link: (x) => alink(pillar[x.service].short, pillar[x.service].path) })}
+  <div class="wrap">${shead('AI automation solutions', S.heading, S.intro)}
+    ${glassCards(S.items, { cols: cols(S.items.length), link: (x) => alink(pillar[x.service].title, pillar[x.service].path) })}
   </div>
 </section>`;
 };
 
-/* ---------- BENEFITS ---------- */
-export const benefitsSection = () => {
-  const B = homeCopy.benefits;
+/* ---------- WEBSITES (secondary service) ----------
+   Deliberately quieter than the AI chapters: one light band, a ghost
+   button, no worked example. */
+export const webSection = () => {
+  const W = homeCopy.web;
   return `
-<section class="section section--vid section--glass" id="benefits">${glassBg('agentic-ai-bg')}
-  <div class="wrap">${shead('What changes', B.heading, B.intro)}
-    ${glassCards(B.items, { cols: cols(B.items.length) })}
+<section class="section section--white" id="websites">
+  <div class="wrap">
+    <div class="websec">
+      <div class="websec__head">
+        <p class="label websec__label"><span class="websec__ico">${serviceIconFor('web-development', { size: 22 })}</span>Also from Ostendic: website development</p>
+        <h2 class="h2">${esc(W.heading)}</h2>
+        <p class="body">${esc(W.intro)}</p>
+        <div class="btn-row">${btn(W.button, pillar['web-development'].path, 'ghost', { icon: 'right' })}</div>
+      </div>
+      <ul class="ticks ticks--lg websec__list">${W.points.map(p => `<li>${ico.check}<span>${esc(p)}</span></li>`).join('')}</ul>
+    </div>
+  </div>
+</section>`;
+};
+
+/* One example workflow in its editor frame: name bar, canvas, run button.
+   Used by the homepage tabs and the service pages; site.js plays it. */
+export const workflowFigure = (id, { name, title, done, desc = '' }) => !WORKFLOWS[id] ? '' : `
+      <figure class="wf" data-wf data-wf-ms="${runMs(id)}" data-wf-done="${esc(done)}">
+        <div class="wf__bar">
+          <span class="wf__crumb">Ostendic <span aria-hidden="true">/</span> <b>${esc(name)}</b></span>
+          <span class="wf__tabs" aria-hidden="true"><span class="is-on">Editor</span><span>Executions</span></span>
+          <span class="tag tag--demo">Example</span>
+        </div>
+        <div class="wf__canvas" tabindex="0" role="region" aria-label="${esc(name)}: workflow diagram">
+        ${workflowSvg(id, title, desc || title)}
+        </div>
+        <div class="wf__foot">
+          <button type="button" class="wf__run" data-wf-run hidden><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Run example</button>
+          <span class="wf__status" aria-live="polite">${stepCount(id)} steps<span class="wf__hint"> · drag or scroll sideways to see them all</span></span>
+        </div>
+      </figure>`;
+
+/* ---------- AUTOMATIONS IN ACTION ----------
+   Example workflows (diagrams in workflows.mjs, copy in home.json ›
+   showcase.workflows), one per tab. Without JS every workflow is shown,
+   one under another; site.js turns them into tabs and plays each run.
+   Labelled as examples, never as client work. */
+export const showcaseSection = () => {
+  const W = homeCopy.showcase;
+  const list = (W && W.workflows || []).filter(x => WORKFLOWS[x.id]);
+  if (!list.length) return '';
+  return `
+<section class="section section--white" id="automations">
+  <div class="wrap">${shead('Automations in action', W.heading, W.intro)}
+    <div class="wf-tabs" role="tablist" aria-label="Example workflows" hidden>
+      ${list.map((x, i) => `<button type="button" role="tab" class="wf-tab" id="wf-tab-${x.id}" data-wf-tab="${x.id}" aria-controls="wf-panel-${x.id}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}>${esc(x.tab)}</button>`).join('\n      ')}
+    </div>
+    ${list.map(x => `<div class="wf-panel" id="wf-panel-${x.id}" role="tabpanel" aria-labelledby="wf-tab-${x.id}">
+      <div class="wf-panel__head">
+        <h3 class="h3">${esc(x.title)}</h3>
+        <p class="body">${esc(x.summary)}</p>
+      </div>
+      ${workflowFigure(x.id, { name: x.tab, title: x.title, done: x.done, desc: x.steps.map(st => `${st.title}: ${st.text}`).join(' ') })}
+      <ol class="wf-steps wf-steps--${Math.min(x.steps.length, 5)}">
+        ${x.steps.map((st, i) => `<li><span class="tnum">${String(i + 1).padStart(2, '0')}</span><h4 class="h4">${esc(st.title)}</h4><p class="body-sm">${esc(st.text)}</p></li>`).join('\n        ')}
+      </ol>
+    </div>`).join('\n    ')}
+    <p class="wf__note label">${esc(W.note)}</p>
+  </div>
+</section>`;
+};
+
+/* ---------- WHY OSTENDIC ----------
+   Reasons as cards, then the founder line: a real person, not a logo
+   wall or testimonials. */
+export const whySection = () => {
+  const W = homeCopy.why;
+  return `
+<section class="section section--vid section--glass" id="why-ostendic">${glassBg('about-hero-bg')}
+  <div class="wrap">${shead('Why Ostendic', W.heading, W.intro)}
+    ${glassCards(W.items, { cols: cols(W.items.length) })}
+    <div class="why__sig glass">${founderSig(alink('More about Ostendic', '/about'))}</div>
   </div>
 </section>`;
 };
@@ -442,12 +526,13 @@ export const processSection = ({ home = false } = {}) => home ? `
 <section class="section roadmap roadmap--home section--vid" id="process">${sectionVideo('/assets/process-bg.mp4')}
   <div class="wrap">
     <div class="shead">
-      <p class="label">How a project runs</p>
+      <p class="label">Our AI consulting process</p>
       <div class="shead__main">
         <h2 class="h2">${esc(processHome.heading)}</h2>
       </div>
     </div>
     ${sequence(processHome.steps.map(([n, title, body]) => ({ n, title, body })), 'seq--road')}
+    ${processHome.note ? `<p class="roadmap__note"><span class="roadmap__note-ico">${principleIcon('principle-4-people.svg', { size: 24 })}</span><span>${esc(processHome.note)}</span></p>` : ''}
   </div>
 </section>` : `
 <section class="section roadmap" id="process">
@@ -473,19 +558,3 @@ export const founderSig = (extra = '') => `<div class="sig">
           <span class="sig__id"><strong>${esc(site.principal)}</strong><span>${esc(site.principalRole)}, ${esc(site.name)}</span></span>
           ${extra}
         </div>`;
-
-export const aboutTeaser = () => `
-<section class="section section--vid" id="about">${sectionVideo('/assets/about-bg.mp4')}
-  <div class="wrap">
-    <div class="shead shead--flush">
-      <p class="label">About</p>
-      <div class="shead__main">
-        <h2 class="h2">${esc(homeCopy.about.heading)}${homeCopy.about.headingItalic ? ` <em class="em">${esc(homeCopy.about.headingItalic)}</em>` : ''}</h2>
-        <div class="about-t">
-          ${aboutCopy.teaser.map(p => `<p class="body">${esc(p)}</p>`).join('')}
-        </div>
-        ${founderSig(alink('More about Ostendic', '/about'))}
-      </div>
-    </div>
-  </div>
-</section>`;
