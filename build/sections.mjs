@@ -17,7 +17,7 @@ import { site, heroCopy, homeCopy, pillars, pillar, process, processHome, aboutC
 import { stats, statsDevWarning, STATS_ARE_PLACEHOLDER } from './stats.mjs';
 import { esc, ico, btn, alink, head, serviceIconFor, statIcon, principleIcon } from './ui.mjs';
 import { WORKFLOWS, workflowSvg, runMs, stepCount } from './workflows.mjs';
-import { stockImg } from './mockups.mjs';
+import { stockImg, heroScene } from './mockups.mjs';
 
 /* the enquiry form, arriving with a service preselected */
 export const enquiryHref = (slug) => `/contact${slug ? `?service=${slug}` : ''}#message`;
@@ -439,21 +439,23 @@ export const solutionsSection = () => {
 };
 
 /* ---------- WEBSITES (secondary service) ----------
-   Deliberately quieter than the AI chapters: one light band, a ghost
-   button, no worked example. */
+   Glass over the web-development clip: the copy and the points as frosted
+   tiles on the left, the website itself (desktop + phone + notifications,
+   the same scene as the Web Development hero) on the right. */
 export const webSection = () => {
   const W = homeCopy.web;
   return `
-<section class="section section--white" id="websites">
+<section class="section section--vid section--glass websec-band" id="websites">${glassBg('web-development-bg')}
   <div class="wrap">
     <div class="websec">
       <div class="websec__head">
         <p class="label websec__label"><span class="websec__ico">${serviceIconFor('web-development', { size: 22 })}</span>Also from Ostendic: website development</p>
         <h2 class="h2">${esc(W.heading)}</h2>
         <p class="body">${esc(W.intro)}</p>
-        <div class="btn-row">${btn(W.button, pillar['web-development'].path, 'ghost', { icon: 'right' })}</div>
+        <ul class="websec__pts">${W.points.map(p => `<li><span class="websec__tick">${ico.check}</span><span>${esc(p)}</span></li>`).join('')}</ul>
+        <div class="btn-row">${btn(W.button, pillar['web-development'].path, 'primary', { icon: 'right' })}${btn('Talk About Your Website', enquiryHref('web-development'), 'ghost')}</div>
       </div>
-      <ul class="ticks ticks--lg websec__list">${W.points.map(p => `<li>${ico.check}<span>${esc(p)}</span></li>`).join('')}</ul>
+      <div class="websec__visual">${heroScene('web-development')}</div>
     </div>
   </div>
 </section>`;
@@ -487,7 +489,7 @@ export const showcaseSection = () => {
   const list = (W && W.workflows || []).filter(x => WORKFLOWS[x.id]);
   if (!list.length) return '';
   return `
-<section class="section section--white" id="automations">
+<section class="section section--vid section--glass" id="automations">${glassBg('about-hero-bg')}
   <div class="wrap">${shead('Automations in action', W.heading, W.intro)}
     <div class="wf-tabs" role="tablist" aria-label="Example workflows" hidden>
       ${list.map((x, i) => `<button type="button" role="tab" class="wf-tab" id="wf-tab-${x.id}" data-wf-tab="${x.id}" aria-controls="wf-panel-${x.id}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}>${esc(x.tab)}</button>`).join('\n      ')}
@@ -535,7 +537,7 @@ export const processSection = ({ home = false } = {}) => home ? `
     ${processHome.note ? `<p class="roadmap__note"><span class="roadmap__note-ico">${principleIcon('principle-4-people.svg', { size: 24 })}</span><span>${esc(processHome.note)}</span></p>` : ''}
   </div>
 </section>` : `
-<section class="section roadmap" id="process">
+<section class="section roadmap section--vid section--glass" id="process">${glassBg('process-bg')}
   <div class="wrap">
     <div class="shead">
       <p class="label">How a project runs</p>

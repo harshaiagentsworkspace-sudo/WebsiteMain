@@ -93,7 +93,7 @@ export const servicesIndex = () => {
   </div>
 </section>
 ${P.matcher && P.matcher.length ? `
-<section class="section section--white" id="where-to-start">
+<section class="section section--vid section--glass" id="where-to-start">${glassBg('agentic-ai-bg')}
   <div class="wrap">
     <div class="shead">
       <p class="label">Where to start</p>
@@ -109,7 +109,7 @@ ${P.matcher && P.matcher.length ? `
   </div>
 </section>` : ''}
 
-<section class="section sv-wf" id="see-it-run">
+<section class="section sv-wf section--vid section--glass" id="see-it-run">${glassBg('clients-vortex')}
   <div class="wrap">
     <div class="shead">
       <p class="label">See it run</p>
@@ -121,7 +121,7 @@ ${P.matcher && P.matcher.length ? `
 </section>
 ${S.processSection()}
 ${P.faq && P.faq.length ? S.faqSection('Questions about our services', P.faq, { clip: 'clients-vortex' }) : ''}
-<section class="section section--sm svc-cta">
+<section class="section section--sm svc-cta svc-cta--panel">
   <div class="wrap svc-cta__in">
     <h2 class="h3">Tell us what’s taking your team’s time.</h2>
     <div class="btn-row">${btn('Tell Us What’s Taking Your Time', S.enquiryHref(''), 'primary', { avatar: true })}${site.booking ? btn('Book a quick call', '/book', 'ghost', { icon: 'calendar' }) : waBtn('ghost')}</div>
@@ -192,13 +192,13 @@ const detailBlocks = (details) => `
 
 /* closing call to action and the other services, shared by both layouts */
 const serviceTail = (s, others) => `
-<section class="section section--sm svc-cta">
+<section class="section section--sm svc-cta svc-cta--panel">
   <div class="wrap svc-cta__in">
     <h2 class="h3">${esc(s.slug === 'web-development' ? 'Planning a new website, or a better one?' : 'Tell us what’s taking your team’s time.')}</h2>
     <div class="btn-row">${serviceActions(s)}</div>
   </div>
 </section>
-<section class="section section--sm section--white">
+<section class="section section--sm section--vid section--glass">${glassBg((glassClips[s.slug] || ['work-bg']).slice(-1)[0])}
   <div class="wrap">
     <div class="shead">
       <p class="label">Related services</p>
@@ -224,7 +224,7 @@ const X_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const OK_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
 
 const relatedWork = (work) => !work.length ? '' : `
-<section class="section">
+<section class="section section--vid section--glass">${glassBg('work-bg')}
   <div class="wrap">
     <div class="shead">
       <p class="label">Related work</p>
@@ -245,7 +245,7 @@ const relatedWork = (work) => !work.length ? '' : `
 </section>`;
 
 const moreDetail = (details) => !details.length ? '' : `
-<section class="section section--white section--sm" id="more-detail">
+<section class="section section--sm section--tint" id="more-detail">
   <div class="wrap">
     <div class="shead">
       <p class="label">In more detail</p>
@@ -290,7 +290,7 @@ const visualServicePage = (s, tail) => {
   </div>
 </section>
 
-<section class="section section--white sv-ba">
+<section class="section sv-ba section--vid section--glass">${glassBg((glassClips[s.slug] || [])[2] || glassClips[s.slug][0])}
   <div class="wrap">
     <div class="ba">
       ${side('before')}
@@ -315,7 +315,7 @@ const visualServicePage = (s, tail) => {
   </div>
 </section>
 ${V.workflow ? `
-<section class="section section--white sv-wf">
+<section class="section sv-wf section--vid section--glass">${glassBg(glassClips[s.slug].slice(-1)[0])}
   <div class="wrap">
     <div class="shead">
       <p class="label">See it run</p>
@@ -476,7 +476,7 @@ const aboutClients = () => {
   const C = PC.about.clients;
   if (!C || !C.items.length) return '';
   return `
-<section class="section section--white about-clients">
+<section class="section about-clients section--vid section--glass">${glassBg('clients-vortex')}
   <div class="wrap">
     <div class="shead">
       <p class="label">${esc(C.label)}</p>

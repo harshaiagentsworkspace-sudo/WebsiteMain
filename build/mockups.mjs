@@ -273,16 +273,16 @@ export const mock = (id) => (MOCKS[id] ? MOCKS[id]() : '');
    relief). [file, width, height, object-position] */
 const STOCK = {
   'ai-automation': {
-    hero: ['automation-hero', 1400, 788, '30% 35%'], before: ['automation-today', 1400, 788, '45% 28%'], after: ['automation-after', 1400, 788, '50% 30%'] },
+    hero: ['automation-hero', 1400, 788, '30% 35%'], before: ['automation-today', 1400, 788, '45% 28%'], after: ['automation-after', 1200, 860, '50% 30%'] },
   'ai-agent-development': {
     hero: ['agents-hero', 1400, 934, '12% 30%'], before: ['agents-today', 1200, 800, '62% 35%'], after: ['agents-after', 1200, 800, '50% 55%'] },
   'workflow-automation': {
     hero: ['workflow-hero', 1200, 800, '42% 45%'], before: ['workflow-today', 1200, 800, '78% 40%'], after: ['workflow-after', 1400, 788, '25% 32%'] },
   'web-development': {
-    hero: ['web-hero', 1200, 800, '78% 40%'], before: ['web-today', 1200, 900, '40% 45%'], after: ['web-after', 720, 900, '50% 48%'] },
+    before: ['web-today', 1200, 900, '40% 45%'], after: ['web-after', 1200, 800, '58% 40%'] },
   'services': { hero: ['services-hero', 1200, 800, '74% 40%'] },
   'ai-consulting': {
-    hero: ['consulting-hero', 1200, 654, '72% 45%'], before: ['consulting-today', 1400, 934, '50% 35%'], after: ['consulting-after', 1200, 676, '55% 40%'] },
+    hero: ['consulting-hero', 1200, 654, '72% 45%'], before: ['consulting-today', 1200, 900, '45% 35%'], after: ['consulting-after', 1200, 800, '48% 35%'] },
 };
 const photo = ([f, w, h, pos], eager = false) => `<img src="/media/stock/${f}.webp" alt="" width="${w}" height="${h}" style="object-position:${pos}" decoding="async"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>`;
 /* any stock photo by file name (homepage cards): sizes and crops from STOCK,
@@ -297,7 +297,7 @@ const HOME_PHOTOS = {
   'about-running': ['about-running', 900, 600, '45% 40%'], 'about-loop': ['about-loop', 600, 900, '50% 40%'],
   'about-clinic': ['about-clinic', 900, 600, '50% 30%'], 'about-food': ['about-food', 900, 600, '62% 35%'],
   'home-local': ['home-local', 600, 900, '50% 45%'], 'home-growing': ['home-growing', 900, 600, '50% 45%'],
-  'home-services': ['home-services', 900, 600, '50% 35%'], 'home-international': ['home-international', 900, 506, '64% 30%'],
+  'home-services': ['home-services', 900, 600, '50% 35%'], 'home-international': ['home-international', 1200, 900, '70% 30%'],
 };
 const PHOTO_BY_FILE = { ...HOME_PHOTOS, ...Object.fromEntries(Object.values(STOCK).flatMap(s => Object.values(s)).map(p => [p[0], p])) };
 export const stockImg = (file) => PHOTO_BY_FILE[file] ? photo(PHOTO_BY_FILE[file]) : '';
@@ -313,7 +313,8 @@ export const HERO_SCENES = {
   'ai-automation': { main: 'enquiry-timeline', toasts: [['spark', 'New lead qualified', 'Neha Joshi · Hot lead'], ['mail', 'Reply drafted', 'Waiting for your approval', 'ai']] },
   'ai-agent-development': { main: 'chat-booking', toasts: [['calendar', 'Appointment booked', 'Tue 10:30 · confirmation sent'], ['bell', 'Summary sent', 'To the clinic owner', 'ai']] },
   'workflow-automation': { main: 'order-chain', toasts: [['sheet', 'Sheet updated', 'Row 214 · nobody typed it']] },
-  'web-development': { main: 'site-desktop', toasts: [['mail', 'New enquiry', 'From your website · 2 min ago'], ['spark', 'Loads in 1.1 s', 'On a phone', 'ai']] },
+  /* Web Development: no person, just the website on desktop and phone */
+  'web-development': { main: 'site-desktop', device: 'site-phone', toasts: [['mail', 'New enquiry', 'Site visit request · 2 min ago'], ['search', 'Found on Google', '“4 bhk flats in baner pune”', 'ai'], ['spark', 'Loads in 1.1 s', 'On a phone']] },
   'services': { main: 'enquiry-timeline', toasts: [['calendar', 'AI agent booked a call', 'Tue 10:30 · new enquiry'], ['file', 'Invoice sent', 'Created from order #1043', 'ai']] },
   'ai-consulting': { main: 'ai-plan', toasts: [['spark', 'Opportunities found', '3 quick wins, 1 bigger project', 'ai']] },
 };
@@ -324,6 +325,7 @@ export const heroScene = (slug) => {
   return `<div class="mk-scene mk-scene--${slug}${ph ? ' mk-scene--photo' : ''}" aria-hidden="true">
     ${ph ? `<div class="mk-scene__photo">${photo(ph, true)}</div>` : ''}
     <div class="mk-scene__main">${mock(h.main)}</div>
+    ${h.device ? `<div class="mk-scene__device">${mock(h.device)}</div>` : ''}
     ${h.toasts.map(([ic, t, s, k], n) => `<div class="mk-scene__toast mk-scene__toast--${n}" style="--n:${n}">${toast(ic, t, s, k)}</div>`).join('')}
   </div>`;
 };

@@ -9,7 +9,7 @@ service page: hero, "Today" (before) and "After".
 |---|---|
 | automation-hero.webp | https://unsplash.com/photos/Gvvtc1rfCI8 |
 | automation-today.webp | https://unsplash.com/photos/jJCmXQajQWI |
-| automation-after.webp | https://unsplash.com/photos/jsf4Sq26Syg |
+| automation-after.webp | https://unsplash.com/photos/N_l8ldK_Vmc |
 | agents-hero.webp | https://unsplash.com/photos/3NtMpcAkwQc |
 | agents-today.webp | https://unsplash.com/photos/RcPx_WTQyrM |
 | agents-after.webp | https://unsplash.com/photos/FQ470_Ofjjo |
@@ -17,8 +17,8 @@ service page: hero, "Today" (before) and "After".
 | workflow-today.webp | https://unsplash.com/photos/YJKStOsMx50 |
 | workflow-after.webp | https://unsplash.com/photos/cA9yfugUDZ4 |
 | consulting-hero.webp | https://unsplash.com/photos/_zxvCsGzi8Y |
-| consulting-today.webp | https://unsplash.com/photos/9LwA7kToz9g |
-| consulting-after.webp | https://unsplash.com/photos/cW4lLTavU80 |
+| consulting-today.webp | https://unsplash.com/photos/9cQ9YWHhlMk |
+| consulting-after.webp | https://unsplash.com/photos/wECq1hW92Us |
 
 Homepage ("Who we help" cards; the problem cards reuse the "Today" photos above):
 
@@ -27,7 +27,7 @@ Homepage ("Who we help" cards; the problem cards reuse the "Today" photos above)
 | home-local.webp | https://unsplash.com/photos/lFJJM6hmne4 |
 | home-growing.webp | https://unsplash.com/photos/RdEFWm0N84o |
 | home-services.webp | https://unsplash.com/photos/H-7Tq6VH6V4 |
-| home-international.webp | https://unsplash.com/photos/BYfOeMXaZgw |
+| home-international.webp | https://unsplash.com/photos/RZ4iCj_9Yho |
 
 Web Development page and About page:
 
@@ -35,7 +35,7 @@ Web Development page and About page:
 |---|---|
 | web-hero.webp | https://unsplash.com/photos/kgc1vAw1Tl8 |
 | web-today.webp | https://unsplash.com/photos/GEEiLxzPdGE |
-| web-after.webp | https://unsplash.com/photos/3wacD2E3b-I |
+| web-after.webp | https://unsplash.com/photos/ueUYcRPXnXw |
 | about-problem.webp | https://unsplash.com/photos/N9GM1X5EU_s |
 | about-cost.webp | https://unsplash.com/photos/Qxw6i75WZ4A |
 | about-running.webp | https://unsplash.com/photos/Vr3180EBxjk |
@@ -68,4 +68,5 @@ og-blog-*.jpg are 1200×630 JPG crops of the blog covers, for link previews.
 
 Replaced 2026-11-24 with premium, established-business photos (same
 Unsplash License check): web-hero, web-today, workflow-hero, workflow-today,
-agents-today, agents-after, consulting-after. URLs above are the new sources.
+agents-today, agents-after, consulting-after; then automation-after,
+web-after, consulting-today, home-international. URLs above are the new sources.
