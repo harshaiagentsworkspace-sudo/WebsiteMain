@@ -279,6 +279,7 @@ const STOCK = {
     hero: ['workflow-hero', 1200, 796, '48% 55%'], before: ['workflow-today', 734, 1100, '50% 28%'], after: ['workflow-after', 1400, 788, '25% 32%'] },
   'web-development': {
     hero: ['web-hero', 1200, 842, '28% 30%'], before: ['web-today', 900, 676, '50% 30%'], after: ['web-after', 720, 900, '50% 48%'] },
+  'services': { hero: ['services-hero', 1200, 800, '74% 40%'] },
   'ai-consulting': {
     hero: ['consulting-hero', 1200, 654, '72% 45%'], before: ['consulting-today', 1400, 934, '50% 35%'], after: ['consulting-after', 826, 1100, '50% 62%'] },
 };
@@ -286,6 +287,10 @@ const photo = ([f, w, h, pos], eager = false) => `<img src="/media/stock/${f}.we
 /* any stock photo by file name (homepage cards): sizes and crops from STOCK,
    plus the photos used only on the homepage */
 const HOME_PHOTOS = {
+  'services-hero': ['services-hero', 1200, 800, '74% 40%'],
+  'sector-health': ['sector-health', 750, 1000, '50% 50%'], 'sector-hospitality': ['sector-hospitality', 1200, 800, '50% 40%'],
+  'sector-realestate': ['sector-realestate', 1200, 804, '50% 40%'], 'sector-manufacturing': ['sector-manufacturing', 1200, 900, '50% 45%'],
+  'sector-professional': ['sector-professional', 826, 1000, '50% 25%'], 'sector-scaleups': ['sector-scaleups', 1200, 676, '55% 40%'],
   'contact-message': ['contact-message', 1200, 676, '50% 30%'],
   'about-problem': ['about-problem', 900, 600, '50% 40%'], 'about-cost': ['about-cost', 900, 534, '45% 40%'],
   'about-running': ['about-running', 900, 600, '45% 40%'], 'about-loop': ['about-loop', 600, 900, '50% 40%'],
@@ -295,6 +300,8 @@ const HOME_PHOTOS = {
 };
 const PHOTO_BY_FILE = { ...HOME_PHOTOS, ...Object.fromEntries(Object.values(STOCK).flatMap(s => Object.values(s)).map(p => [p[0], p])) };
 export const stockImg = (file) => PHOTO_BY_FILE[file] ? photo(PHOTO_BY_FILE[file]) : '';
+/* a notification card on its own (service cards on /services) */
+export const toastCard = ([ic, t, s, k]) => toast(ic, t, s, k);
 
 /* the photo strip above a before/after mockup; k = 'before' | 'after' */
 export const sidePhoto = (slug, k) => STOCK[slug] && STOCK[slug][k] ? `<div class="ba__photo">${photo(STOCK[slug][k])}</div>` : '';
@@ -306,6 +313,7 @@ export const HERO_SCENES = {
   'ai-agent-development': { main: 'chat-booking', toasts: [['calendar', 'Appointment booked', 'Tue 10:30 · confirmation sent'], ['bell', 'Summary sent', 'To the clinic owner', 'ai']] },
   'workflow-automation': { main: 'order-chain', toasts: [['sheet', 'Sheet updated', 'Row 214 · nobody typed it']] },
   'web-development': { main: 'site-desktop', toasts: [['mail', 'New enquiry', 'From your website · 2 min ago'], ['spark', 'Loads in 1.1 s', 'On a phone', 'ai']] },
+  'services': { main: 'enquiry-timeline', toasts: [['calendar', 'AI agent booked a call', 'Tue 10:30 · new enquiry'], ['file', 'Invoice sent', 'Created from order #1043', 'ai']] },
   'ai-consulting': { main: 'ai-plan', toasts: [['spark', 'Opportunities found', '3 quick wins, 1 bigger project', 'ai']] },
 };
 export const heroScene = (slug) => {

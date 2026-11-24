@@ -46,7 +46,8 @@ export const WORKFLOW_NAMES = {
 export const STOCK_PHOTOS = ['home-local', 'home-growing', 'home-services', 'home-international',
   'automation-hero', 'automation-today', 'automation-after', 'agents-hero', 'agents-today', 'agents-after',
   'workflow-hero', 'workflow-today', 'workflow-after', 'consulting-hero', 'consulting-today', 'consulting-after',
-  'web-hero', 'web-today', 'web-after', 'about-problem', 'about-cost', 'about-running', 'about-loop', 'about-clinic', 'about-food'];
+  'web-hero', 'web-today', 'web-after', 'about-problem', 'about-cost', 'about-running', 'about-loop', 'about-clinic', 'about-food',
+  'services-hero', 'sector-health', 'sector-hospitality', 'sector-realestate', 'sector-manufacturing', 'sector-professional', 'sector-scaleups'];
 /* product mockups drawn in build/mockups.mjs (keep in step) */
 export const MOCK_IDS = ['inbox-messy', 'inbox-handled', 'lead-card', 'email-draft', 'invoice-extract', 'tool-chain',
   'report-message', 'quote-tool', 'call-screen', 'chat-booking', 'missed-calls', 'task-checklist', 'agent-handoff',
@@ -226,7 +227,13 @@ export const SCHEMAS = {
 
   pages: obj('Pages', {
     seo: obj('Search listing per page', Object.fromEntries(ROUTES.map(r => [r, seoEntry(r)]))),
-    services: obj('/services', { label: text('Label', 40), heading: text('Heading', 120), lead: area('Lead', 300) }),
+    services: obj('/services', {
+      label: text('Label', 40), heading: text('Heading', 120), lead: area('Lead', 300),
+      aiHeading: text('AI services heading', 120, opt), webHeading: text('Website heading', 120, opt),
+      matcherHeading: text('“Start with the problem” heading', 120, opt),
+      matcher: list('Problem → service', obj('Row', { problem: text('Problem', 90), service: select('Service', SERVICE_SLUGS, { labels: SERVICE_NAMES }) }), { min: 0, max: 8, itemTitle: 'problem', optional: true }),
+      faq: faqList('Questions', { min: 0, optional: true }),
+    }),
     work: obj('/work', {
       label: text('Label', 40), heading: text('Heading', 120),
       selectedHeading: text('Home page “Selected work” heading', 120),

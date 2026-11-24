@@ -2,12 +2,12 @@
    OSTENDIC — PAGE COMPOSITIONS
    =========================================================================== */
 import {
-  site, links, pillars, aboutCopy, published, bookingProvider,
+  site, links, pillars, pillar, aboutCopy, published, bookingProvider,
   budgets, interests, interestSlug, pagesCopy as PC, homeCopy,
 } from './data.mjs';
 import { esc, ico, btn, alink, head, pageHead, startBtn, waBtn, telBtn, principleIcon, brandMark, serviceIconFor } from './ui.mjs';
 import * as S from './sections.mjs';
-import { mock, heroScene, sidePhoto, stockImg } from './mockups.mjs';
+import { mock, heroScene, sidePhoto, stockImg, toastCard } from './mockups.mjs';
 import { posts, readingTime, renderBody, fmtDate, src as mediaSrc } from './blog.mjs';
 import { sanitizeInline, SERVICE_SLUGS } from './schema.mjs';
 
@@ -32,15 +32,103 @@ ${S.faqSection(homeCopy.faq.heading, homeCopy.faq.items, { clip: 'hero-vortex' }
 `;
 
 /* ========================= SERVICES ========================= */
-export const servicesIndex = () => `
-${pageHead({
-  label: PC.services.label,
-  lines: [PC.services.heading],
-  lead: PC.services.lead,
-})}
-${S.serviceChapters({ slugs: SERVICE_SLUGS, withHead: false })}
+/* /services: pictures first. Hero with a real photo and live-looking
+   notifications, the four AI services as large photo cards and website
+   development as a wide card, a problem → service matcher, one example
+   workflow that runs, the process and an FAQ. Glass sections over clips. */
+const SVC_CARD = {
+  'ai-automation': ['automation-hero', ['spark', 'Reply sent', 'Enquiry answered at 09:02']],
+  'ai-agent-development': ['agents-hero', ['calendar', 'Appointment booked', 'Tue 10:30, confirmed']],
+  'workflow-automation': ['workflow-after', ['file', 'Invoice #1043 created', 'From a new order']],
+  'ai-consulting': ['consulting-hero', ['spark', '3 quick wins found', 'In your AI plan', 'ai']],
+  'web-development': ['web-after', ['mail', 'New enquiry', 'From your website']],
+};
+const svcCard = (s, wide = false) => {
+  const [photo, t] = SVC_CARD[s.slug] || [];
+  const chips = (s.visual ? s.visual.cards.slice(0, 3).map(c => c.title) : s.build.slice(0, 3));
+  return `<li class="scard${wide ? ' scard--wide' : ''}">
+        <a class="scard__in" href="${s.path}">
+          <span class="scard__media">${photo ? stockImg(photo) : ''}${t ? `<span class="scard__toast">${toastCard(t)}</span>` : ''}</span>
+          <span class="scard__body">
+            <span class="scard__ico">${serviceIconFor(s.slug, { size: 22 })}</span>
+            <strong class="h3">${esc(s.title)}</strong>
+            <span class="body">${esc(s.visual ? s.visual.lead : s.summary)}</span>
+            <span class="scard__chips">${chips.map(c => `<span>${esc(c)}</span>`).join('')}</span>
+            <span class="scard__go">Explore ${esc(s.short)}${ico.right}</span>
+          </span>
+        </a>
+      </li>`;
+};
+export const servicesIndex = () => {
+  const P = PC.services;
+  const ai = pillars.filter(s => s.slug !== 'web-development');
+  const web = pillars.find(s => s.slug === 'web-development');
+  return `
+<section class="svh">
+  <div class="wrap svh__in">
+    <div class="svh__text">
+      <p class="label svh__label"><span class="svh__ico">${serviceIconFor('ai-automation', { size: 20 })}</span>${esc(P.label)}</p>
+      ${head([P.heading], 'h1', 'h1')}
+      <p class="lead">${esc(P.lead)}</p>
+      <div class="btn-row">${btn('Tell Us What’s Taking Your Time', S.enquiryHref(''), 'primary', { avatar: true, eager: true })}${site.booking ? btn('Book a quick call', '/book', 'ghost', { icon: 'calendar' }) : waBtn('ghost')}</div>
+    </div>
+    <div class="svh__visual">${heroScene('services')}</div>
+  </div>
+</section>
+
+<section class="section section--vid section--glass" id="ai-services">${glassBg('demos-bg')}
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">AI services</p>
+      <div class="shead__main"><h2 class="h2">${esc(P.aiHeading || 'AI services')}</h2></div>
+    </div>
+    <ul class="scards">
+      ${ai.map(s => svcCard(s)).join('')}
+    </ul>
+    ${web ? `<div class="shead shead--sub">
+      <p class="label">Also from Ostendic</p>
+      <div class="shead__main"><h2 class="h3">${esc(P.webHeading || 'Website development')}</h2></div>
+    </div>
+    <ul class="scards scards--one">${svcCard(web, true)}</ul>` : ''}
+  </div>
+</section>
+${P.matcher && P.matcher.length ? `
+<section class="section section--white" id="where-to-start">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">Where to start</p>
+      <div class="shead__main"><h2 class="h2">${esc(P.matcherHeading || 'Start with the problem')}</h2></div>
+    </div>
+    <ul class="matcher">
+      ${P.matcher.map(m => { const s = pillar[m.service]; return `<li><a class="matcher__row" href="${s.path}">
+        <span class="matcher__q">“${esc(m.problem)}”</span>
+        <span class="matcher__arrow" aria-hidden="true">${ico.right}</span>
+        <span class="matcher__svc"><span class="matcher__ico">${serviceIconFor(s.slug, { size: 20 })}</span>${esc(s.title)}</span>
+      </a></li>`; }).join('')}
+    </ul>
+  </div>
+</section>` : ''}
+
+<section class="section sv-wf" id="see-it-run">
+  <div class="wrap">
+    <div class="shead">
+      <p class="label">See it run</p>
+      <div class="shead__main"><h2 class="h2">One enquiry, handled from first message to booked call.</h2></div>
+    </div>
+    ${S.workflowFigure('ai-call', { name: 'AI call on every enquiry', title: 'AI call on every enquiry', done: 'Enquiry called, appointment booked, owner notified' })}
+    <p class="wf__note label">Example workflow, shown for illustration. Every build is designed around your own tools and rules.</p>
+  </div>
+</section>
 ${S.processSection()}
+${P.faq && P.faq.length ? S.faqSection('Questions about our services', P.faq, { clip: 'clients-vortex' }) : ''}
+<section class="section section--sm svc-cta">
+  <div class="wrap svc-cta__in">
+    <h2 class="h3">Tell us what’s taking your team’s time.</h2>
+    <div class="btn-row">${btn('Tell Us What’s Taking Your Time', S.enquiryHref(''), 'primary', { avatar: true })}${site.booking ? btn('Book a quick call', '/book', 'ghost', { icon: 'calendar' }) : waBtn('ghost')}</div>
+  </div>
+</section>
 `;
+};
 
 /* Service pages: frosted-glass cards over a full-strength clip. The poster
    is the backdrop wherever the clip doesn't play (phones, reduced motion,
@@ -175,6 +263,9 @@ const moreDetail = (details) => !details.length ? '' : `
   </div>
 </section>`;
 
+/* hero background clips on the visual service pages (web development kept
+   the clip it had before the redesign) */
+const HERO_CLIP = { 'web-development': '/assets/web-development-bg.mp4' };
 const visualServicePage = (s, tail) => {
   const V = s.visual;
   const work = published.filter(p => p.pillars.includes(s.slug));
@@ -187,7 +278,7 @@ const visualServicePage = (s, tail) => {
       </div>`;
   };
   return `
-<section class="svh">
+<section class="svh${HERO_CLIP[s.slug] ? ' svh--vid' : ''}">${HERO_CLIP[s.slug] ? S.sectionVideo(HERO_CLIP[s.slug]) : ''}
   <div class="wrap svh__in">
     <div class="svh__text">
       <p class="label svh__label"><span class="svh__ico">${serviceIconFor(s.slug, { size: 20 })}</span>${esc(s.title)}</p>
@@ -209,7 +300,7 @@ const visualServicePage = (s, tail) => {
   </div>
 </section>
 
-<section class="section sv-cards">
+<section class="section sv-cards section--vid section--glass">${glassBg(glassClips[s.slug][1] || glassClips[s.slug][0])}
   <div class="wrap">
     <div class="shead">
       <p class="label">${esc(s.short.charAt(0).toUpperCase() + s.short.slice(1))}</p>
@@ -235,7 +326,7 @@ ${V.workflow ? `
   </div>
 </section>` : ''}
 
-<section class="section sv-how">
+<section class="section sv-how section--vid section--glass">${glassBg(glassClips[s.slug][0])}
   <div class="wrap">
     <div class="shead">
       <p class="label">How it works</p>

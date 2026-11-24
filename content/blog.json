@@ -175,7 +175,7 @@
         "noindex": false,
         "ogTitle": "",
         "ogDescription": "",
-        "ogImage": ""
+        "ogImage": "media/stock/og-blog-website.jpg"
       }
     },
     {
@@ -345,14 +345,14 @@
         }
       ],
       "seo": {
-        "title": "Why Website Visitors Leave Without Contacting You (and How to Fix It)",
+        "title": "Why Visitors Leave Your Website Without Contacting You",
         "description": "Six common reasons visitors leave a business website without getting in touch, a 15-minute check you can run today, and the order to fix things in.",
         "focusKeyword": "why visitors leave website",
         "canonical": "",
         "noindex": false,
         "ogTitle": "",
         "ogDescription": "",
-        "ogImage": ""
+        "ogImage": "media/stock/og-blog-visitors.jpg"
       }
     },
     {
@@ -545,7 +545,7 @@
         "noindex": false,
         "ogTitle": "",
         "ogDescription": "",
-        "ogImage": ""
+        "ogImage": "media/stock/og-blog-workflow.jpg"
       }
     }
   ]

@@ -158,7 +158,7 @@
       }
     ],
     "visual": {
-      "lead": "Enquiries answered, leads followed up and details moved between your tools, without anyone copying and pasting.",
+      "lead": "We set up AI that answers enquiries, follows up leads and moves information between your tools, so your team can stop copying and pasting.",
       "before": {
         "title": "Today",
         "mock": "inbox-messy",
@@ -403,7 +403,7 @@
       }
     ],
     "visual": {
-      "lead": "AI agents that answer customers, call new leads and handle routine tasks inside your tools, day and night, within limits you set.",
+      "lead": "An AI agent that picks up enquiries day and night. It answers from your own information, books appointments and hands anything tricky to you.",
       "before": {
         "title": "Today",
         "mock": "missed-calls",
@@ -602,7 +602,7 @@
       }
     ],
     "visual": {
-      "lead": "Your tools connected and your repetitive steps automated: one order becomes a customer, an invoice and a sheet row by itself.",
+      "lead": "We connect the tools you already use, so an order, a form or an email turns into the right records, invoices and messages on its own.",
       "before": {
         "title": "Today",
         "mock": "sheet-manual",
@@ -836,7 +836,7 @@
       }
     ],
     "visual": {
-      "lead": "We look at how your business runs, find where AI genuinely helps and give you a clear, prioritised plan.",
+      "lead": "Not sure where AI fits in your business? We look at how you work, find the quick wins and give you a clear, prioritised plan.",
       "before": {
         "title": "Today",
         "mock": "idea-cloud",
@@ -1014,7 +1014,7 @@
       }
     ],
     "visual": {
-      "lead": "Websites that say what you do in seconds, work beautifully on a phone and turn visits into enquiries and orders.",
+      "lead": "A website that explains what you do in seconds, looks great on a phone and turns visitors into enquiries.",
       "before": {
         "title": "Today",
         "mock": "site-old",

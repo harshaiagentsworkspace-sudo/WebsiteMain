@@ -156,10 +156,12 @@ for (const gone of ['careers.html', 'resources.html', 'services/agentic-ai-workf
 /* sitemap + robots. Pages switched to noindex in the admin are left out.
    Pages carry no <lastmod>: the build date isn't when the page changed,
    and a wrong date teaches search engines to ignore the field. Blog posts
-   keep theirs (publishedAt / updatedAt). */
+   keep theirs (publishedAt / updatedAt). Privacy and Terms stay indexable
+   but are left out, so the sitemap points search engines at the pages
+   that matter. */
 const routes = ['/', '/services', ...pillars.map(s => s.path), '/work', '/about',
   ...(BLOG_IS_PLACEHOLDER || SEO['/blog'].noindex ? [] : ['/blog']),
-  '/contact', ...(site.booking ? ['/book'] : []), '/privacy', '/terms'].filter(r => !SEO[r].noindex);
+  '/contact', ...(site.booking ? ['/book'] : [])].filter(r => !SEO[r].noindex);
 const blogUrls = BLOG_IS_PLACEHOLDER ? [] : posts.filter(p => !p.seo.noindex && !p.seo.canonical);
 add('sitemap.xml',
 `<?xml version="1.0" encoding="UTF-8"?>

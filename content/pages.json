@@ -1,8 +1,8 @@
 {
   "seo": {
     "/": {
-      "title": "AI Automation & AI Agent Development | Ostendic",
-      "description": "Automate repetitive business tasks with custom AI agents, intelligent workflows and AI integration. Explore Ostendic’s AI consulting and web development services.",
+      "title": "AI Automation & AI Agents for Businesses | Ostendic",
+      "description": "Ostendic builds AI automations, AI agents and websites that answer enquiries, follow up leads and take repetitive work off your team.",
       "ogImage": "",
       "noindex": false,
       "ogTitle": "Ostendic | AI Automation & Intelligent Business Solutions",
@@ -11,56 +11,56 @@
       "twitterDescription": "Automate repetitive work, integrate intelligent AI agents, and simplify business operations with practical AI solutions."
     },
     "/services": {
-      "title": "AI Automation, AI Agents & Website Services | Ostendic",
-      "description": "Ostendic’s services: AI automation, custom AI agent development, workflow automation, AI consulting and integration, and website development for businesses.",
+      "title": "AI Automation, AI Agents & Web Development | Ostendic",
+      "description": "Every Ostendic service in one place: AI automation, AI agents, workflow automation, AI consulting and websites. Find your fit in a minute.",
       "ogImage": "",
       "noindex": false
     },
     "/services/ai-automation": {
       "title": "AI Automation Services for Businesses | Ostendic",
-      "description": "Automate repetitive business workflows with AI: enquiry handling, lead qualification, data entry, reporting and tool integrations, with human approval built in.",
+      "description": "AI automation that answers enquiries, follows up leads and moves data between your tools. Built around your workflow, with you in control.",
       "ogImage": "",
       "noindex": false
     },
     "/services/ai-agent-development": {
-      "title": "Custom AI Agent Development Services | Ostendic",
-      "description": "Custom AI agents built for real business workflows: support agents, knowledge assistants and operations agents, with approval controls, security and monitoring.",
+      "title": "AI Agent Development: Chat & Voice Agents | Ostendic",
+      "description": "Custom AI agents that answer customers, call new leads and book appointments around the clock, using your own information and limits you set.",
       "ogImage": "",
       "noindex": false
     },
     "/services/workflow-automation": {
-      "title": "Business Workflow Automation Services | Ostendic",
-      "description": "Connect your business tools and automate repetitive processes: workflow mapping, integrations, lead management, reporting automation, error handling and monitoring.",
+      "title": "Workflow Automation Services | Ostendic",
+      "description": "We connect your forms, CRM, sheets and email so orders, invoices and updates happen on their own, with alerts if anything fails.",
       "ogImage": "",
       "noindex": false
     },
     "/services/ai-consulting": {
-      "title": "AI Consulting & Business Integration Services | Ostendic",
-      "description": "Find where AI fits in your business: AI readiness assessments, workflow audits, tool selection, integration planning, risk assessment and implementation roadmaps.",
+      "title": "AI Consulting for Businesses | Ostendic",
+      "description": "Practical AI consulting: we find where AI saves your team time, compare the tools and give you a clear, prioritised roadmap to act on.",
       "ogImage": "",
       "noindex": false
     },
     "/services/web-development": {
-      "title": "Custom Website Development Services | Ostendic",
-      "description": "Custom, responsive business websites with technical SEO foundations, fast performance and conversion-focused design. Custom builds, WordPress and Shopify.",
+      "title": "Website Development for Growing Businesses | Ostendic",
+      "description": "Fast, mobile-first business websites, landing pages and online stores built to turn visitors into enquiries, and easy for you to update.",
       "ogImage": "",
       "noindex": false
     },
     "/work": {
-      "title": "Work | Ostendic",
-      "description": "Products Ostendic has designed and built, each labelled as a client project, demo build or sample.",
+      "title": "Our Work: Websites & AI Builds | Ostendic",
+      "description": "Websites, demos and AI builds by Ostendic, each clearly labelled as a client project, a demo or a sample, so you know what you’re looking at.",
       "ogImage": "",
       "noindex": false
     },
     "/about": {
       "title": "About Ostendic | AI Automation & Web Development",
-      "description": "Ostendic is a founder-led company run by Harsh Dubey. We help businesses automate repetitive work, build practical AI agents, integrate AI and develop websites.",
+      "description": "Ostendic is a founder-led studio building AI automations, AI agents and websites for businesses in India and abroad. Meet the founder.",
       "ogImage": "",
       "noindex": false
     },
     "/blog": {
-      "title": "Blog | Ostendic",
-      "description": "Plain talk about AI automation, AI agents and building smarter business websites.",
+      "title": "AI Automation & Website Guides for Businesses | Ostendic",
+      "description": "Plain-English guides on AI automation, AI agents and websites that bring in enquiries, written for business owners, not engineers.",
       "ogImage": "",
       "noindex": false
     },
@@ -91,8 +91,55 @@
   },
   "services": {
     "label": "Services",
-    "heading": "AI automation first, and websites built to match",
-    "lead": "Ostendic works in five areas. Four focus on AI automation and integration; the fifth is website design and development. Each can stand on its own or work together."
+    "heading": "AI Automation, AI Agents and Websites That Work for You",
+    "lead": "Pick where you want to start. Automate the repetitive work, put an AI agent on your enquiries, connect your tools, find where AI fits, or get a website that actually brings in business.",
+    "aiHeading": "Four ways AI can take work off your plate",
+    "webHeading": "And a website that brings in the work",
+    "matcherHeading": "Not sure where to start? Start with the problem.",
+    "matcher": [
+      {
+        "problem": "We answer the same enquiries all day",
+        "service": "ai-agent-development"
+      },
+      {
+        "problem": "Leads go cold before anyone follows up",
+        "service": "ai-automation"
+      },
+      {
+        "problem": "We copy details from one tool into another",
+        "service": "workflow-automation"
+      },
+      {
+        "problem": "We know AI could help, but not where",
+        "service": "ai-consulting"
+      },
+      {
+        "problem": "Our website doesn’t bring in enquiries",
+        "service": "web-development"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Which service should I start with?",
+        "a": "Start with the task that costs you the most time or the most missed business. If that’s enquiries, an AI agent or AI automation usually comes first. If you’re not sure, a short consulting call will map it out."
+      },
+      {
+        "q": "Can I combine more than one service?",
+        "a": "Yes, and many projects do. A website that captures enquiries, an automation that sorts them and an AI agent that replies can all be scoped as one project."
+      },
+      {
+        "q": "Do I have to change the tools I already use?",
+        "a": "Usually not. We connect the CRM, inbox, forms, spreadsheets and WhatsApp you already use, as long as they allow connections."
+      },
+      {
+        "q": "How is the price worked out?",
+        "a": "Every project is scoped and priced in writing before any work starts, based on what it needs to do. You know the cost, and what’s included, up front."
+      },
+      {
+        "q": "Do you work with businesses outside India?",
+        "a": "Yes. We work remotely with businesses in India and abroad, by video call, email and WhatsApp."
+      }
+    ]
   },
   "work": {
     "label": "Work",
@@ -103,57 +150,61 @@
   },
   "about": {
     "heading": "Practical AI for businesses that want to work smarter.",
-    "lead": "Ostendic helps businesses automate repetitive work, integrate intelligent AI systems, and build smarter digital experiences.",
+    "lead": "Ostendic builds AI automations, AI agents and websites that take repetitive work off your team and turn more enquiries into customers.",
     "body": [
-      "We design and build workflow automations and custom AI agents that take routine work off your team, help you decide where AI genuinely fits, and develop professional websites that make it easy for customers to get in touch.",
-      "Ostendic is founder-led and small by design. Every project is scoped in writing, built with care and handed over in a form your team can run."
+      "Good businesses lose hours every week to work a computer could do: answering the same questions, chasing leads, copying details from one tool into another. We build automations and AI agents around how you already work, and websites that make it easy for customers to say yes.",
+      "We’re founder-led and small by design. You talk to the person building your system, every project is scoped and priced in writing, and you end up with something your team can actually run."
     ],
     "approachLabel": "How we work",
     "approachHeading": "Four things we hold to on every project",
     "approach": [
       {
         "title": "Start with the business problem",
-        "text": "Before choosing a platform, a design direction or an AI tool, we want to understand what isn’t working and what a good result would look like for you."
+        "text": "Before we talk about tools, we want to know what’s slowing you down and what a good result looks like for you."
       },
       {
         "title": "Say what it costs before starting",
-        "text": "Every piece of work is scoped and priced in writing before it begins, including what is not included."
+        "text": "You get the scope and the price in writing before any work starts, including what isn’t included."
       },
       {
         "title": "Build what you can keep running",
-        "text": "We choose platforms and tools your team can live with after launch, and hand over what you need to manage them."
+        "text": "We pick tools your team can live with after launch, and hand over everything you need to run them."
       },
       {
         "title": "Keep people in the loop",
-        "text": "In AI workflows, routine steps can be automated. Decisions that need judgement stay with a person."
+        "text": "Automation handles the routine steps. Anything that needs judgement stays with a person."
       }
     ],
     "servicesLabel": "What Ostendic does",
     "servicesHeading": "What we do",
     "clients": {
       "label": "Who we build for",
-      "heading": "Real businesses, with real work to get through.",
-      "note": "The kind of businesses we build for. People shown are illustrative, not Ostendic clients.",
+      "heading": "Built for businesses where every enquiry is worth a lot.",
+      "note": "The sectors we design for. Photos are illustrative, not Ostendic clients.",
       "items": [
         {
-          "label": "Shops & retail",
-          "photo": "workflow-hero"
+          "label": "Hospitals & clinics",
+          "photo": "sector-health"
         },
         {
-          "label": "Clinics & practices",
-          "photo": "about-clinic"
+          "label": "Hotels & hospitality",
+          "photo": "sector-hospitality"
         },
         {
-          "label": "Food & hospitality",
-          "photo": "about-food"
+          "label": "Real estate developers",
+          "photo": "sector-realestate"
         },
         {
-          "label": "Local services",
-          "photo": "home-local"
+          "label": "Manufacturers",
+          "photo": "sector-manufacturing"
         },
         {
-          "label": "Growing teams",
-          "photo": "home-growing"
+          "label": "Professional firms",
+          "photo": "sector-professional"
+        },
+        {
+          "label": "Scale-ups & D2C brands",
+          "photo": "sector-scaleups"
         }
       ]
     }

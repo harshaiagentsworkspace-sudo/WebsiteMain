@@ -51,3 +51,17 @@ Blog and Contact:
 | blog-visitors.webp | https://unsplash.com/photos/_IlOP4ptPlY |
 | blog-workflow.webp | https://unsplash.com/photos/TJTw4djEhGg |
 | contact-message.webp | https://unsplash.com/photos/x83XsWGsC0Q |
+
+All Services hero and the About "Who we build for" sectors:
+
+| File | Unsplash photo |
+|---|---|
+| services-hero.webp | https://unsplash.com/photos/qine2R6oU5E |
+| sector-health.webp | https://unsplash.com/photos/xj611Vq9ky0 |
+| sector-hospitality.webp | https://unsplash.com/photos/ym_EI-DTS1g |
+| sector-realestate.webp | https://unsplash.com/photos/_LPq34yoVGs |
+| sector-manufacturing.webp | https://unsplash.com/photos/S-2oN_mJSPg |
+| sector-professional.webp | https://unsplash.com/photos/sK0vhHlSQJw |
+| sector-scaleups.webp | https://unsplash.com/photos/cW4lLTavU80 |
+
+og-blog-*.jpg are 1200×630 JPG crops of the blog covers, for link previews.
