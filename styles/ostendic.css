@@ -1326,8 +1326,13 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
 .post__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .post__btn { margin: .2em 0; }
 .post__toc { width: 100%; padding: 16px 20px; border-radius: 14px; background: rgba(17,19,20,.035); border: 1px solid var(--line); }
-.post__toc ol { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; list-style: decimal; padding-left: 1.2em; font-size: var(--t-sm); }
-.post__toc .post__toc-3 { margin-left: 1em; list-style: circle; }
+/* numbered by top-level headings only; sub-headings get a dash and no number */
+.post__toc ol { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; list-style: none; padding-left: 0; font-size: var(--t-sm); counter-reset: toc; }
+.post__toc ol > li::before { display: inline-block; min-width: 1.6em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.post__toc ol > li:not(.post__toc-3):not(.post__toc-4) { counter-increment: toc; }
+.post__toc ol > li:not(.post__toc-3):not(.post__toc-4)::before { content: counter(toc) "."; }
+.post__toc .post__toc-3, .post__toc .post__toc-4 { padding-left: 1.6em; }
+.post__toc .post__toc-3::before, .post__toc .post__toc-4::before { content: "–"; min-width: 1.2em; }
 .post__toc a { color: var(--ink-2); }
 .post__toc a:hover { color: var(--ink); text-decoration: underline; }
 .post__faq { width: 100%; margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }

@@ -1,17 +1,21 @@
 {
-  "indexable": false,
+  "indexable": true,
   "posts": [
     {
       "title": "Does your business really need a website?",
       "slug": "does-your-business-need-a-website",
       "category": "Websites",
-      "tags": [],
-      "excerpt": "A quick way to tell, and what to do if the answer is yes.",
+      "tags": [
+        "Small business",
+        "Websites",
+        "Getting started"
+      ],
+      "excerpt": "A simple test, the honest cases where you can wait, and what a small-business website actually needs to do.",
       "draft": false,
-      "publishedAt": "2026-11-14",
+      "publishedAt": "2026-11-24",
       "updatedAt": "",
       "author": "Harsh Dubey",
-      "toc": false,
+      "toc": true,
       "featuredImage": {
         "src": "media/stock/blog-website.webp",
         "alt": "A shop owner in front of his store, talking on his phone"
@@ -19,26 +23,154 @@
       "body": [
         {
           "type": "p",
-          "html": "If customers search for you before they call, you need a website. That’s the simple test."
+          "html": "Plenty of good businesses run on referrals, a WhatsApp number and a Google Maps pin. So it’s a fair question: do you actually need a website, or is it one more thing to pay for and forget about?"
         },
         {
           "type": "p",
-          "html": "Think about the last time you looked up a restaurant, a clinic or a shop. You probably checked Google first. If you found nothing, or only a map pin, you may have gone somewhere else."
+          "html": "Here is a simple way to decide, the honest cases where you can wait, and what a website has to do to be worth having."
+        },
+        {
+          "type": "h2",
+          "html": "The quick test"
         },
         {
           "type": "p",
-          "html": "A good small-business site doesn’t need to be big. It needs to say what you do, show where you are and make it easy to call or message you. One clear page can do that."
+          "html": "You need a website if any of these are true:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "<b>People search for what you do before they call.</b> If someone types “physiotherapist near me” or “corporate gift hampers in Pune”, you want to be one of the answers.",
+            "<b>You get enquiries from people who don’t already know you.</b> Strangers want to check you’re real before they get in touch.",
+            "<b>You sell to other businesses.</b> A buyer at a company will look you up, and often has to show a colleague who you are.",
+            "<b>Your competitors have one.</b> When a customer compares three options, the one with no website usually loses by default.",
+            "<b>You answer the same questions every day.</b> Prices, timings, location, what’s included. A website can answer them before the phone rings."
+          ]
         },
         {
           "type": "p",
-          "html": "Start there. Add more once people are using it."
+          "html": "If none of these apply, you may genuinely be fine without one for now. That’s the next section."
+        },
+        {
+          "type": "h2",
+          "html": "When you can wait"
+        },
+        {
+          "type": "p",
+          "html": "A website is not always the first thing to spend on. You can reasonably hold off if:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "All your work comes from referrals and you’re already turning people away.",
+            "Your customers find you walking past, and almost nobody searches for you online.",
+            "You haven’t yet decided exactly what you sell or to whom. A website built around a guess usually gets rebuilt."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "In those cases, two free steps cover most of the gap: a complete <b>Google Business Profile</b> (hours, photos, services, phone number) and a <b>WhatsApp Business</b> profile with a short catalogue. Do those properly and revisit the question in a few months."
+        },
+        {
+          "type": "h2",
+          "html": "What a website does that social media can’t"
+        },
+        {
+          "type": "p",
+          "html": "An Instagram page or a Maps listing is useful, but it isn’t yours, and it isn’t built to turn a visitor into an enquiry. A website is different in a few practical ways:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "<b>You own it.</b> Platforms change their rules, reach and layout. Your domain and your site stay put.",
+            "<b>It shows up for what you do, not just your name.</b> A page about a service can appear when people search for that service.",
+            "<b>It answers questions in order.</b> What you do, who it’s for, what it costs, how to start. Social feeds show your latest post, not your best explanation.",
+            "<b>It makes the next step obvious.</b> A call button, a WhatsApp button or a short form, right where someone decides.",
+            "<b>It reassures bigger customers.</b> Companies, institutions and overseas clients expect to find a proper website before they deal with you."
+          ]
+        },
+        {
+          "type": "h2",
+          "html": "What a small-business website actually needs"
+        },
+        {
+          "type": "p",
+          "html": "It doesn’t need to be big. It needs to do six things well:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "<b>Say what you do, for whom and where, in the first screen.</b> If a visitor has to scroll to understand it, many won’t.",
+            "<b>List your services clearly</b>, with prices or a starting price where you can. “Contact us for pricing” on everything puts people off.",
+            "<b>Show real proof.</b> Photos of your actual work, premises or team, and a link to your Google reviews.",
+            "<b>Give one obvious way to get in touch</b>: call, WhatsApp or a short form, visible on every page.",
+            "<b>Work properly on a phone.</b> Most of your visitors will be on one.",
+            "<b>Load quickly</b>, including on mobile data."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "That can be a single, well-made page. More pages make sense once you know which services people ask about most."
+        },
+        {
+          "type": "h2",
+          "html": "What it doesn’t need on day one"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Dozens of pages written to fill space.",
+            "Heavy animations and sliders that slow it down.",
+            "A blog, unless you’ll actually write for it.",
+            "Every feature a website builder offers."
+          ]
+        },
+        {
+          "type": "quote",
+          "html": "A clear one-page site that answers real questions beats a ten-page site nobody reads."
+        },
+        {
+          "type": "h2",
+          "html": "How to start without overspending"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "<b>Register the domain in your own name</b>, with an email address you control. This is the most common thing small businesses lose.",
+            "<b>Start with one page</b> that covers the six points above.",
+            "<b>Link it to your Google Business Profile</b> and your WhatsApp.",
+            "<b>Choose a platform you can update yourself</b>, so changing a price or adding a photo doesn’t need a developer.",
+            "<b>Add pages based on real questions</b> once people start using it."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "Whoever builds it, make sure you end up with the logins for the domain, the hosting and the site itself. A website you can’t access isn’t really yours."
+        },
+        {
+          "type": "button",
+          "label": "Talk about your website",
+          "href": "/services/web-development"
         }
       ],
-      "faq": [],
+      "faq": [
+        {
+          "q": "Is an Instagram page enough instead of a website?",
+          "a": "It can be a good start, especially for visual businesses. But you don’t own the page, it won’t show up for most service searches, and it isn’t built to turn a visitor into an enquiry. Many businesses use both: social media for reach, a website for the decision."
+        },
+        {
+          "q": "How much does a small-business website cost?",
+          "a": "It depends on how many pages you need, whether you want to sell online, and whether you’ll update it yourself. A focused one-page site costs far less than an online store. We scope and price every project in writing before starting, so you know the cost up front."
+        },
+        {
+          "q": "Can I update the website myself?",
+          "a": "Yes, if it’s built on a platform designed for that, such as WordPress or Shopify, or with a simple editor. Ask for this at the start: changing prices, photos and opening hours shouldn’t need a developer."
+        }
+      ],
       "seo": {
-        "title": "",
-        "description": "",
-        "focusKeyword": "",
+        "title": "Does Your Business Really Need a Website? A Simple Test",
+        "description": "A plain test for whether your business needs a website, when you can wait, and what a small-business site must do to bring in enquiries.",
+        "focusKeyword": "does my business need a website",
         "canonical": "",
         "noindex": false,
         "ogTitle": "",
@@ -50,13 +182,17 @@
       "title": "Why visitors leave before they get in touch",
       "slug": "why-visitors-leave-before-getting-in-touch",
       "category": "Websites",
-      "tags": [],
-      "excerpt": "Four common reasons a website loses people, and how to fix each one.",
+      "tags": [
+        "Websites",
+        "Enquiries",
+        "Mobile"
+      ],
+      "excerpt": "The six most common reasons a business website loses people, a 15-minute check you can do today, and what to fix first.",
       "draft": false,
-      "publishedAt": "2026-11-14",
+      "publishedAt": "2026-11-24",
       "updatedAt": "",
       "author": "Harsh Dubey",
-      "toc": false,
+      "toc": true,
       "featuredImage": {
         "src": "media/stock/blog-visitors.webp",
         "alt": "A woman frowning at her phone"
@@ -64,22 +200,154 @@
       "body": [
         {
           "type": "p",
-          "html": "Most visitors don’t leave because your business is wrong for them. They leave because the site made things hard."
+          "html": "Most people who leave your website without getting in touch weren’t the wrong customers. They were the right customers who hit a small obstacle and gave up. The good news is that the same few obstacles cause most of it, and most of them are cheap to fix."
+        },
+        {
+          "type": "h2",
+          "html": "1. The first screen doesn’t say what you do"
         },
         {
           "type": "p",
-          "html": "Four things cause most of it. The page doesn’t say what you do. It’s awkward on a phone. There’s no clear next step, like a call button or a short form. Or it loads too slowly to wait for."
+          "html": "A visitor decides very quickly whether they’re in the right place. If the top of your homepage says “Welcome” or “Excellence since 2009” instead of what you actually do, for whom and where, many will leave before they find out."
         },
         {
           "type": "p",
-          "html": "Pick one and fix it this week. Open your site on your phone and ask a friend to find your phone number. If it takes more than a few seconds, you’ve found your first fix."
+          "html": "<b>Fix:</b> make the first line answer “what do you do, and for whom?” in plain words. For example: “Physiotherapy clinic in Baner, Pune, for sports injuries and back pain.”"
+        },
+        {
+          "type": "h2",
+          "html": "2. It’s awkward on a phone"
+        },
+        {
+          "type": "p",
+          "html": "Most visitors to a local business website are on their phone. Small text, buttons too close together, menus that don’t open, pop-ups that cover the page: each one is a small reason to leave."
+        },
+        {
+          "type": "p",
+          "html": "<b>Fix:</b> open your own site on your phone and try to do the one thing a customer wants to do, such as calling you or finding your prices. If it’s fiddly for you, it’s fiddly for them."
+        },
+        {
+          "type": "h2",
+          "html": "3. There’s no obvious next step"
+        },
+        {
+          "type": "p",
+          "html": "Visitors shouldn’t have to hunt for how to contact you. A phone number buried in the footer or a contact page three clicks away loses people who were ready to talk."
+        },
+        {
+          "type": "p",
+          "html": "<b>Fix:</b> put one clear action at the top of every page and again after your services: a call button, a WhatsApp button or a short form. Pick the one your customers actually prefer."
+        },
+        {
+          "type": "h2",
+          "html": "4. It loads too slowly"
+        },
+        {
+          "type": "p",
+          "html": "Large photos straight from a camera, too many plugins and heavy sliders make pages slow, especially on mobile data. People rarely wait."
+        },
+        {
+          "type": "p",
+          "html": "<b>Fix:</b> compress images, remove plugins and effects you don’t need, and test the site on mobile data, not your office Wi-Fi."
+        },
+        {
+          "type": "h2",
+          "html": "5. There’s not enough reason to trust you"
+        },
+        {
+          "type": "p",
+          "html": "Before someone shares their phone number, they look for signs that you’re real and reliable. Missing signals make them hesitate:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Stock photos instead of your real work, premises or team.",
+            "No address, no business name, or no person behind it.",
+            "No prices or starting prices anywhere.",
+            "A copyright year from several years ago, or broken links."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "<b>Fix:</b> add real photos, your address and hours, a starting price for your main services, and a link to your Google reviews."
+        },
+        {
+          "type": "h2",
+          "html": "6. The form asks too much"
+        },
+        {
+          "type": "p",
+          "html": "Long forms with compulsory fields for company size, budget, address and “how did you hear about us” feel like paperwork. Many people stop halfway."
+        },
+        {
+          "type": "p",
+          "html": "<b>Fix:</b> ask for a name, a way to reply and one free-text box. Collect everything else in the conversation."
+        },
+        {
+          "type": "h2",
+          "html": "A 15-minute check you can do today"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Open your website on your phone, using mobile data.",
+            "Time how long it takes to find your phone number or WhatsApp button.",
+            "Ask someone who doesn’t know your business to look at the first screen for five seconds, then tell you what you do.",
+            "Fill in your own contact form and check that the message actually arrives.",
+            "Check that your phone number, address and opening hours are correct everywhere.",
+            "Search for your business name and see what a stranger sees first."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "Write down anything that took more than a few seconds or didn’t work. That list is your plan."
+        },
+        {
+          "type": "h2",
+          "html": "What to fix first"
+        },
+        {
+          "type": "p",
+          "html": "If you can only do a few things, go in this order:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "<b>Clarity</b>: the first line says what you do, for whom and where.",
+            "<b>Contact</b>: one obvious way to get in touch, on every page.",
+            "<b>Phone</b>: the site works properly on a small screen.",
+            "<b>Speed</b>: compressed images and fewer plugins.",
+            "<b>Trust</b>: real photos, prices, address and reviews."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "Most sites don’t need a full redesign. A handful of focused fixes, in the right order, usually makes the biggest difference."
+        },
+        {
+          "type": "button",
+          "label": "Get your website reviewed",
+          "href": "/services/web-development"
         }
       ],
-      "faq": [],
+      "faq": [
+        {
+          "q": "How can I see where visitors leave my website?",
+          "a": "A free analytics tool such as Google Analytics shows which pages people arrive on and where they leave. Even without one, the 15-minute check in this article will find the most common problems."
+        },
+        {
+          "q": "Should I add a chatbot to stop people leaving?",
+          "a": "Only if it answers real questions well. A chatbot that can’t help is worse than none. For many small businesses, a visible WhatsApp button does the same job more simply."
+        },
+        {
+          "q": "Do I need a full redesign?",
+          "a": "Often not. Fixing the first screen, the contact options, mobile layout and speed can make a big difference without starting again. A redesign makes sense when the site can’t be updated or the platform itself is the problem."
+        }
+      ],
       "seo": {
-        "title": "",
-        "description": "",
-        "focusKeyword": "",
+        "title": "Why Website Visitors Leave Without Contacting You (and How to Fix It)",
+        "description": "Six common reasons visitors leave a business website without getting in touch, a 15-minute check you can run today, and the order to fix things in.",
+        "focusKeyword": "why visitors leave website",
         "canonical": "",
         "noindex": false,
         "ogTitle": "",
@@ -91,13 +359,17 @@
       "title": "What an AI workflow actually does",
       "slug": "what-an-ai-workflow-actually-does",
       "category": "AI workflows",
-      "tags": [],
-      "excerpt": "A plain example of how a new enquiry gets followed up without anything slipping.",
+      "tags": [
+        "AI automation",
+        "Workflows",
+        "Getting started"
+      ],
+      "excerpt": "A plain explanation with a step-by-step example: what the AI part does, what plain automation does, and where a person stays in charge.",
       "draft": false,
-      "publishedAt": "2026-11-14",
+      "publishedAt": "2026-11-24",
       "updatedAt": "",
       "author": "Harsh Dubey",
-      "toc": false,
+      "toc": true,
       "featuredImage": {
         "src": "media/stock/blog-workflow.webp",
         "alt": "A woman taking notes at her laptop"
@@ -105,26 +377,170 @@
       "body": [
         {
           "type": "p",
-          "html": "An AI workflow is a set of steps that runs by itself in the background. It doesn’t replace your team. It handles the boring parts."
+          "html": "“AI workflow” sounds bigger than it is. In practice it’s a set of steps that runs on its own when something happens, with AI handling the parts that involve reading or writing language. Everything else is ordinary automation, and a person stays in charge of the decisions that matter."
+        },
+        {
+          "type": "h2",
+          "html": "The plain definition"
         },
         {
           "type": "p",
-          "html": "Here’s a simple example. A new enquiry arrives. The workflow saves the details, drafts a reply and asks a person to approve it. Then it sets a reminder to follow up."
+          "html": "Every workflow has three parts:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "<b>A trigger</b>: something happens. A form is submitted, an email arrives, it’s Monday at 8 am.",
+            "<b>Steps</b>: things that happen as a result. Save the details, check a rule, send a message, update a sheet.",
+            "<b>An outcome</b>: the work is done, or it’s waiting for a person to approve it."
+          ]
         },
         {
           "type": "p",
-          "html": "Nothing waits in an inbox. Nothing gets forgotten. And a person still decides what gets sent."
+          "html": "Most of those steps are plain automation: moving information from one tool to another, following rules you set. The AI part is usually one or two steps where something has to be <b>read, understood or written</b>, such as working out what an email is asking for, or drafting a reply."
+        },
+        {
+          "type": "h2",
+          "html": "An example: a new website enquiry"
         },
         {
           "type": "p",
-          "html": "That’s the idea behind what we build: software does the repetitive steps, and people keep the decisions."
+          "html": "Here’s how a typical enquiry workflow could run for a small business. This is an example of the kind of workflow we build, not a specific client’s setup."
+        },
+        {
+          "type": "ol",
+          "items": [
+            "<b>A customer fills in the contact form</b> on your website. That’s the trigger.",
+            "<b>The details are saved</b> to your CRM or a Google Sheet automatically. Nobody copies anything.",
+            "<b>AI reads the message</b> and sorts it: a price question, a booking request, a complaint or something else.",
+            "<b>AI drafts a reply</b> using your own FAQs, prices and policies, not general internet knowledge.",
+            "<b>You approve the reply</b> with one tap, or edit it first. Nothing goes out without a person seeing it.",
+            "<b>A follow-up is scheduled.</b> If the customer doesn’t reply in two days, a polite reminder goes out in the same thread.",
+            "<b>You get a short summary</b> at the end of the day: new enquiries, replies sent, anything that needs you."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "The result: every enquiry gets a quick, accurate reply, nothing is forgotten on a busy day, and you still decide what’s said in your name."
+        },
+        {
+          "type": "h2",
+          "html": "What the AI part is good at"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Reading messy, free-text messages and working out what they’re about.",
+            "Pulling details out of emails, PDFs and invoices: names, dates, amounts.",
+            "Drafting replies in your tone, from your own information.",
+            "Summarising long threads, call notes or a week of activity."
+          ]
+        },
+        {
+          "type": "h3",
+          "html": "And what plain automation does better"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Moving data between tools exactly as it is.",
+            "Running things on a schedule.",
+            "Following clear rules: “if the order is over a certain value, notify the owner”."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "A good workflow uses AI only where it adds something. Using it for steps that a simple rule can handle just adds cost and room for error."
+        },
+        {
+          "type": "h2",
+          "html": "What it doesn’t do"
+        },
+        {
+          "type": "p",
+          "html": "An AI workflow doesn’t replace your judgement. It shouldn’t decide prices, make promises, approve refunds or handle anything sensitive on its own. Language models can also misread an unusual message or state something wrong with confidence."
+        },
+        {
+          "type": "p",
+          "html": "That’s why sensible workflows include <b>approvals</b> for anything that commits your business, <b>answers grounded in your own documents</b>, and <b>a log</b> of what each step did, so you can always check."
+        },
+        {
+          "type": "h2",
+          "html": "Good first workflows for a small business"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Replying to website and WhatsApp enquiries, with you approving the drafts.",
+            "Following up leads who haven’t replied.",
+            "Reading invoices or order emails and entering the details into a sheet or accounting tool.",
+            "Sending appointment reminders and confirmations.",
+            "A weekly summary of enquiries, sales and anything overdue."
+          ]
+        },
+        {
+          "type": "h2",
+          "html": "How to tell if a task is worth automating"
+        },
+        {
+          "type": "p",
+          "html": "Look for tasks that tick most of these boxes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "It happens every day or every week.",
+            "It follows roughly the same steps each time.",
+            "It mostly means reading, copying or sending information.",
+            "Delays cost you something: a slow reply, a missed follow-up, a late report.",
+            "The information is already digital, in email, forms or spreadsheets."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "If a task needs real expertise on every single case, it may be better left with a person, or handled by AI that drafts and a person who decides."
+        },
+        {
+          "type": "h2",
+          "html": "What you need to get started"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "A list of the tools you already use: email, WhatsApp, forms, CRM, spreadsheets, accounting.",
+            "One process that eats up time, described step by step as it happens today.",
+            "A few real examples: past enquiries, replies you were happy with, your FAQs and prices.",
+            "A decision on who approves what."
+          ]
+        },
+        {
+          "type": "p",
+          "html": "Start with one workflow, run it with approvals switched on, and expand once you trust it."
+        },
+        {
+          "type": "button",
+          "label": "See what we can automate for you",
+          "href": "/services/ai-automation"
         }
       ],
-      "faq": [],
+      "faq": [
+        {
+          "q": "Do I need to change the tools I use?",
+          "a": "Usually not. Most workflows connect the tools you already have, such as Gmail, WhatsApp Business, Google Sheets, a CRM or accounting software, as long as those tools allow connections."
+        },
+        {
+          "q": "Is my customer data safe?",
+          "a": "It depends on the tools involved, which is why we decide that together at the start. Good practice is to connect only what a workflow needs, keep sensitive steps behind a person’s approval, and keep a log of everything the workflow does."
+        },
+        {
+          "q": "What happens if the AI gets something wrong?",
+          "a": "That’s what approvals and logs are for. Drafts wait for a person before anything is sent, and if a step fails, the workflow stops and tells someone instead of carrying on."
+        }
+      ],
       "seo": {
-        "title": "",
-        "description": "",
-        "focusKeyword": "",
+        "title": "What an AI Workflow Actually Does: a Plain Example for Businesses",
+        "description": "A plain-English explanation of AI workflows for businesses, with a step-by-step enquiry example, good first tasks to automate, and where people stay in control.",
+        "focusKeyword": "AI workflow for business",
         "canonical": "",
         "noindex": false,
         "ogTitle": "",
