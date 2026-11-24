@@ -1,76 +1,76 @@
 {
   "hero": {
     "headline": [
-      "Less Manual Work.",
-      "{More Intelligent Business.}"
+      "Your Business, Running on AI.",
+      "{Your Team, Back on What Matters.}"
     ],
-    "intro": "Ostendic helps businesses automate repetitive workflows, deploy practical AI agents, and integrate AI into their existing systems, so teams spend less time on routine tasks and more time growing the business.",
-    "primaryButton": "Explore AI Automation",
-    "secondaryButton": "Discuss Your Workflow"
+    "intro": "We build AI agents that answer and call every enquiry, automations that follow up and move your data, and websites that bring in the work. You get the hours back. Your customers get a faster reply.",
+    "primaryButton": "See What AI Can Do for You",
+    "secondaryButton": "Tell Us What’s Slowing You"
   },
   "problems": {
-    "heading": "Your Business Shouldn’t Run on Endless Manual Work.",
-    "intro": "These are the tasks that quietly fill a working week. Many of them can be simplified, connected or partly automated.",
+    "heading": "How Many Hours Did Your Team Lose to Busywork This Week?",
+    "intro": "If any of these sound familiar, that’s time and revenue slipping away every single day. The good news: most of it can be handed to AI.",
     "items": [
       {
-        "title": "Repetitive customer enquiries",
-        "text": "The same questions about prices, availability and process, answered by hand again and again.",
+        "title": "The same questions, all day",
+        "text": "Prices, availability, “how does it work?” Your team answers them by hand while the enquiries that matter wait in line.",
         "icon": "step-1-enquiry",
         "photo": "agents-today"
       },
       {
-        "title": "Time-consuming follow-ups",
-        "text": "Leads and customers chased one message at a time, or forgotten when the team is busy.",
+        "title": "Leads that go cold",
+        "text": "A lead that waits hours for a reply often books with someone else. When everyone’s busy, follow-ups are the first thing to slip.",
         "icon": "step-4-reminder",
         "photo": "automation-today"
       },
       {
-        "title": "Manual data entry",
-        "text": "Details copied from emails and forms into CRMs, spreadsheets and invoices, with mistakes along the way.",
+        "title": "Copy, paste, repeat",
+        "text": "Details typed from emails and forms into your CRM, sheets and invoices. Slow, boring and easy to get wrong.",
         "icon": "ai-06-automation",
         "photo": "workflow-today"
       },
       {
-        "title": "Disconnected business tools",
-        "text": "Your CRM, inbox, forms and spreadsheets each hold part of the picture, and none of them talk to each other.",
+        "title": "Tools that don’t talk",
+        "text": "Your CRM, inbox, forms and spreadsheets each hold part of the story, so your people end up being the glue.",
         "icon": "ai-07-integrations",
         "photo": "consulting-today"
       }
     ]
   },
   "solutions": {
-    "heading": "Intelligent Automation Built Around Your Business.",
-    "intro": "Examples of what we can design and build. Each one starts from how your business works today and keeps people in charge of the decisions that matter.",
+    "heading": "Put AI on the Work Nobody Wants to Do.",
+    "intro": "Here’s what we build. Every system is designed around how your business already runs, and your people stay in charge of the decisions that matter.",
     "items": [
       {
-        "title": "Workflow automation",
-        "text": "Repetitive multi-step processes mapped and automated, so information moves between your tools without being re-typed.",
+        "title": "Workflows that run themselves",
+        "text": "An order, form or email turns into the right records, invoices and messages automatically. No re-typing, no missed steps.",
         "service": "workflow-automation",
         "icon": "ai-06-automation"
       },
       {
-        "title": "AI-powered lead qualification",
-        "text": "New leads read and checked against criteria you define, with the promising ones routed to the right person quickly.",
+        "title": "AI that qualifies your leads",
+        "text": "Every new lead is read and scored against your criteria, and the promising ones land with the right person in minutes, not days.",
         "service": "ai-automation",
         "icon": "ai-03-leads"
       },
       {
-        "title": "Customer enquiry automation",
-        "text": "Enquiries from your website, email or forms logged in one place, categorised and answered from your own information, with your team approving replies.",
+        "title": "Enquiries answered in minutes",
+        "text": "Website, email and WhatsApp enquiries collected in one place and answered from your own information, with your team approving where you want.",
         "service": "ai-automation",
         "icon": "step-1-enquiry"
       },
       {
-        "title": "Custom AI agents",
-        "text": "Agents that work through suitable multi-step tasks inside your tools, within limits you set and with approval where it matters.",
+        "title": "AI agents that take action",
+        "text": "Agents that call leads, book appointments and update your tools, working inside the limits you set and asking before anything important.",
         "service": "ai-agent-development",
         "icon": "ai-02-multi-agent"
       }
     ]
   },
   "showcase": {
-    "heading": "Automations That Work While You’re Busy.",
-    "intro": "Three examples of the workflows we build, from a simple email follow-up to an AI voice agent that phones every new enquiry within a minute. Pick one and press run.",
+    "heading": "Watch an Automation Do a Day’s Work in Seconds.",
+    "intro": "Pick a workflow and press run. From a simple follow-up email to an AI voice agent that calls every new enquiry within a minute.",
     "workflows": [
       {
         "id": "ai-call",
@@ -155,9 +155,9 @@
     "panels": {
       "ai-automation": {
         "title": "AI Automation & Workflow Solutions",
-        "summary": "Automate repetitive processes, connect business tools, and reduce operational friction.",
-        "who": "Teams that repeat the same manual steps every day: answering enquiries, following up leads, copying data between tools.",
-        "problem": "Work waits between people and tools. Leads wait for a reply, and hours go into moving information by hand.",
+        "summary": "Hand the repetitive work to AI: enquiries answered, leads followed up and data moved between your tools, automatically.",
+        "who": "Teams doing the same manual steps every day: replying to enquiries, chasing leads, copying data from one tool to another.",
+        "problem": "Work waits between people and tools. Leads wait for a reply, and good hours disappear into moving information by hand.",
         "build": "Enquiry and lead workflows, data entry between tools, reporting automation and integrations, with AI where it helps.",
         "includes": [
           "Mapping where time is lost today",
@@ -168,9 +168,9 @@
       },
       "ai-agent-development": {
         "title": "Custom AI Agent Development",
-        "summary": "Develop intelligent agents that assist with business workflows, information retrieval, customer interactions, and suitable multi-step tasks.",
-        "who": "Teams with a steady flow of requests, documents or questions that need reading and a first decision.",
-        "problem": "Fixed-rule automations break when a case doesn’t fit the pattern, and the work falls back on people.",
+        "summary": "AI agents that answer customers, call new leads, book appointments and handle multi-step tasks inside your tools, day and night.",
+        "who": "Businesses with a steady stream of enquiries, requests or documents that someone has to read and act on.",
+        "problem": "Simple rule-based automations break the moment a case doesn’t fit, and the work lands back on your team.",
         "build": "Enquiry and support agents, internal knowledge assistants, operations agents and agents that prepare work for approval.",
         "includes": [
           "Defining the agent’s job and limits",
@@ -181,9 +181,9 @@
       },
       "workflow-automation": {
         "title": "Workflow Automation",
-        "summary": "Connect your tools and automate repetitive, rule-based processes, with error handling and monitoring built in.",
-        "who": "Businesses where information is re-typed between forms, inboxes, CRMs and spreadsheets.",
-        "problem": "Tools don’t talk to each other, so people bridge the gaps by hand, and details slip through.",
+        "summary": "Your tools connected and your repeat processes automated, with alerts the moment anything needs a person.",
+        "who": "Businesses where the same details get re-typed across forms, inboxes, CRMs and spreadsheets.",
+        "problem": "Your tools don’t talk to each other, so people fill the gaps by hand, and details slip through.",
         "build": "Workflow mapping, tool integrations, lead routing, reporting automation and administrative workflows.",
         "includes": [
           "Mapping the process step by step",
@@ -194,9 +194,9 @@
       },
       "ai-consulting": {
         "title": "AI Strategy & Integration",
-        "summary": "Identify practical AI opportunities and integrate solutions into existing business systems.",
-        "who": "Owners and teams who want to use AI but aren’t sure where it fits or where to start.",
-        "problem": "Plenty of AI tools, but little clarity on which tasks they suit, what they cost to run or how they fit your systems.",
+        "summary": "Find exactly where AI will save you time and money, and get a clear, prioritised plan to make it happen.",
+        "who": "Owners and leadership teams who know AI matters but want a clear answer on where to start.",
+        "problem": "Hundreds of AI tools, lots of noise, and very little clarity on which ones fit your business or what they really cost.",
         "build": "AI readiness assessments, workflow audits, tool selection, integration planning and implementation roadmaps.",
         "includes": [
           "Reviewing your workflows and tools",
@@ -207,9 +207,9 @@
       },
       "web-development": {
         "title": "Website Development",
-        "summary": "Professional, responsive and SEO-friendly business websites that explain what you do and make it easy to enquire.",
-        "who": "Businesses that need a new website, or a better one.",
-        "problem": "Visitors can’t tell what you do or how to get in touch, so they leave.",
+        "summary": "Fast, mobile-first websites that explain what you do in seconds and turn visitors into enquiries.",
+        "who": "Businesses that need a new website, or one that finally pulls its weight.",
+        "problem": "Visitors can’t quickly tell what you do or how to reach you, so they leave and call a competitor.",
         "build": "Business websites, landing pages, custom builds, WordPress and Shopify sites, redesigns.",
         "includes": [
           "Planning the pages and the visitor’s path",
@@ -221,148 +221,147 @@
     }
   },
   "web": {
-    "heading": "Websites Built for Modern Businesses.",
-    "intro": "Alongside our AI work, Ostendic designs and develops professional business websites: responsive, fast, built on sound technical SEO foundations and structured so visitors understand what you do and know how to get in touch.",
+    "heading": "A Website That Wins You Work, Not Just One That Exists.",
+    "intro": "Your website is often the first conversation a customer has with you. We design and build fast, mobile-first sites that make it obvious what you do and easy to say yes, and we can connect them straight to your automations.",
     "points": [
-      "Custom website development",
-      "Business websites and landing pages",
-      "Responsive design for phone, tablet and desktop",
-      "Technical SEO foundations",
-      "Conversion-focused user experience",
-      "Performance optimisation",
-      "Integrations such as forms, booking, WhatsApp and CRM"
+      "Custom-designed business websites and landing pages",
+      "Looks sharp on phone, tablet and desktop",
+      "SEO foundations built in from day one",
+      "Clear paths from visitor to enquiry",
+      "Fast loading, so nobody bounces",
+      "Forms, booking, WhatsApp and CRM connected"
     ],
     "button": "Explore Website Development"
   },
   "audiences": {
-    "heading": "Who We Help",
+    "heading": "Built for Businesses Where Every Enquiry Counts.",
     "items": [
       {
-        "title": "Local businesses",
-        "text": "Clinics, shops, service providers and other local businesses handling a steady stream of enquiries and admin with a small team.",
-        "icon": "service-04-ecommerce",
-        "photo": "home-local"
-      },
-      {
-        "title": "Growing companies",
-        "text": "Teams whose manual processes worked at a smaller size and are now starting to slow things down.",
-        "icon": "stat-2-clients",
-        "photo": "home-growing"
-      },
-      {
-        "title": "Service providers",
-        "text": "Consultants, practices and firms whose days fill up with scheduling, follow-ups and paperwork.",
+        "title": "Hospitals & clinics",
+        "text": "Patient enquiries answered, appointments booked and reminders sent, so your front desk can focus on the people in front of them.",
         "icon": "ai-05-support",
-        "photo": "home-services"
+        "photo": "sector-health"
       },
       {
-        "title": "International businesses",
-        "text": "Businesses outside India looking for a remote partner for AI automation and websites. We work remotely, by video call and email.",
+        "title": "Real estate & hospitality",
+        "text": "High-value enquiries called back in minutes, site visits and bookings scheduled, and every lead followed up until it’s closed.",
+        "icon": "ai-03-leads",
+        "photo": "sector-realestate"
+      },
+      {
+        "title": "Manufacturers & B2B",
+        "text": "Orders, quotes, invoices and dealer updates flowing between your systems without anyone re-typing them.",
+        "icon": "ai-06-automation",
+        "photo": "sector-manufacturing"
+      },
+      {
+        "title": "Businesses worldwide",
+        "text": "Based in India, working with clients everywhere. We run projects remotely by video call, email and WhatsApp.",
         "icon": "service-07-responsive",
         "photo": "home-international"
       }
     ]
   },
   "process": {
-    "heading": "From Repetitive Processes to Smarter Systems.",
+    "heading": "From Busywork to a System That Runs Itself.",
     "steps": [
       {
         "title": "Discover",
-        "text": "We learn how your existing workflows run, which tools you use and where time is being lost."
+        "text": "We learn how your business runs today, which tools you use and where the hours really go."
       },
       {
         "title": "Identify",
-        "text": "We find the tasks that are suitable for automation, and say plainly which ones aren’t."
+        "text": "We pick the tasks worth automating first, and tell you honestly which ones aren’t."
       },
       {
         "title": "Design",
-        "text": "We define the solution, the integrations, the data it will use and where a person approves."
+        "text": "We design the solution: the tools it connects, the data it uses and where a person signs off."
       },
       {
         "title": "Implement",
-        "text": "We build and deploy the approved solution, test it on real cases and hand over documentation."
+        "text": "We build it, test it on real cases and hand over everything your team needs to run it."
       },
       {
         "title": "Optimise",
-        "text": "We monitor how it performs once your team is using it, and refine it based on what we see."
+        "text": "Once it’s live, we watch how it performs and keep improving it based on real results."
       }
     ],
-    "note": "Responsible by design: before anything is built, we agree with you what data each workflow may access, which AI services process it and under what terms, and which actions wait for a person’s approval. Workflows keep a log of what they did, and a failure alerts someone instead of carrying on silently."
+    "note": "Responsible by design. Before anything is built, we agree what data each workflow can access, which AI services process it and which actions wait for a person’s approval. Every workflow keeps a log, and if something fails, someone is alerted straight away."
   },
   "why": {
-    "heading": "Practical AI, built around how your business works.",
-    "intro": "Ostendic is founder-led and small by design. Every project is scoped in writing, built with care and handed over so your team can run it.",
+    "heading": "AI That Fits Your Business, Not the Other Way Round.",
+    "intro": "Ostendic is founder-led and deliberately small. You work directly with the person building your system, and every project is scoped and priced in writing.",
     "items": [
       {
-        "title": "Business-first thinking",
-        "text": "We start with the problem and what the manual work costs you today, not with a tool we want to sell.",
+        "title": "We start with your business",
+        "text": "First we find what the manual work is costing you. Then we pick the tools, never the other way round.",
         "icon": "principle-1-problem"
       },
       {
-        "title": "Practical AI implementation",
-        "text": "We use AI where it clearly helps, and recommend simpler automation, or no change, where that’s the better answer.",
+        "title": "AI only where it pays off",
+        "text": "If simpler automation, or no change at all, is the better answer, we’ll tell you.",
         "icon": "ai-01-agents"
       },
       {
-        "title": "Custom workflow design",
-        "text": "Workflows are designed around your process, your exceptions and your team, not a generic template.",
+        "title": "Built around how you work",
+        "text": "Your process, your exceptions, your team. No generic templates.",
         "icon": "ai-02-multi-agent"
       },
       {
-        "title": "Integration with existing tools",
-        "text": "We connect the software you already use wherever it supports integration, instead of asking you to replace it.",
+        "title": "Works with your existing tools",
+        "text": "We connect the software you already use instead of asking you to replace it.",
         "icon": "ai-07-integrations"
       },
       {
-        "title": "Human-centred automation",
-        "text": "Routine steps are automated. Decisions that need judgement stay with your people, with approvals where they matter.",
+        "title": "People stay in control",
+        "text": "Routine steps run on their own. Decisions that need judgement stay with your team.",
         "icon": "principle-4-people"
       },
       {
-        "title": "Clear communication",
-        "text": "Plain language, a written scope and price before work starts, and documentation your team can follow.",
+        "title": "No jargon, no surprises",
+        "text": "Plain language, a written scope and price before work starts, and handover notes your team can follow.",
         "icon": "principle-2-cost"
       }
     ]
   },
   "faq": {
-    "heading": "Frequently Asked Questions",
+    "heading": "Questions Business Owners Ask Us",
     "items": [
       {
-        "q": "What is AI automation for businesses?",
-        "a": "AI automation combines workflow automation, which moves information between tools and triggers the next step, with AI models that can read, classify, summarise or draft text. Together they can handle the routine parts of a process, such as sorting enquiries or preparing reports, while people handle the parts that need judgement."
+        "q": "What is AI automation, in simple terms?",
+        "a": "It’s software that handles the routine parts of your work for you. Workflow automation moves information between your tools and triggers the next step, and AI reads, sorts, summarises and drafts replies. Together they can answer enquiries, follow up leads or prepare reports, while your team handles anything that needs judgement."
       },
       {
-        "q": "How can AI help reduce repetitive work?",
-        "a": "By taking on steps that follow a pattern: reading and sorting incoming messages, extracting details from emails or documents, drafting standard replies, updating records and assembling regular reports. How much time this saves depends on the process, so we look at the actual work before estimating anything."
+        "q": "How much time can AI automation save my team?",
+        "a": "It depends on the work. Tasks that happen often and follow a pattern, like replying to common enquiries, chasing leads or copying data between tools, are where the biggest savings usually are. We look at your actual process before estimating anything, so you get a realistic picture, not a sales pitch."
       },
       {
-        "q": "What types of business tasks can be automated?",
-        "a": "Good candidates happen often, follow similar steps each time and mostly involve moving or reading information: enquiry handling, lead routing, follow-up reminders, data entry between tools, scheduled reports and answering common questions from your own documents. Tasks that need careful judgement on every case usually keep a person in charge."
+        "q": "Which business tasks can be automated?",
+        "a": "The best candidates happen often and follow similar steps each time: handling enquiries, routing and qualifying leads, follow-up reminders, appointment booking, data entry between tools, invoices and weekly reports. Tasks that need careful judgement on every case usually keep a person in charge."
       },
       {
-        "q": "Do I need to replace existing software?",
-        "a": "Usually not. We connect the tools you already use, such as your CRM, inbox, forms and spreadsheets, wherever they offer an API or a supported integration. If a tool can’t be connected, we explain the options before anything is built."
+        "q": "Will I have to replace my existing software?",
+        "a": "Usually not. We connect the tools you already use, such as your CRM, inbox, forms, spreadsheets and WhatsApp, wherever they support it. If something can’t be connected, we explain your options before anything is built."
       },
       {
-        "q": "What is the difference between AI agents and traditional automation?",
-        "a": "Traditional automation follows fixed rules: the same input always leads to the same steps. An AI agent uses a language model to interpret each case and choose its next step from a set of actions you allow. Agents suit work that varies from case to case; fixed automation is simpler and more predictable when the steps never change. Many solutions use both."
+        "q": "What’s the difference between an AI agent and regular automation?",
+        "a": "Regular automation follows fixed rules: the same input always leads to the same steps. An AI agent understands each case and decides its next step from a set of actions you allow, like answering a question, booking a slot or passing it to your team. Agents handle variety; fixed automation is simpler when the steps never change. Most systems use both."
       },
       {
-        "q": "Can small businesses benefit from AI automation?",
-        "a": "Often, yes. In a small team, repetitive tasks take time from the same few people who also serve customers. Automating one or two time-consuming tasks is usually a sensible first step, and it doesn’t need technical staff on your side."
+        "q": "Can an AI agent really call my leads?",
+        "a": "Yes. An AI voice agent can phone each new enquiry within a minute, introduce itself as an AI assistant, answer questions from your own information and book a time in your calendar. Anything it can’t handle goes straight to your team, and every call is logged with a summary."
       },
       {
-        "q": "Can Ostendic integrate AI with existing tools?",
-        "a": "Yes, where the tools support it. We work with the integrations and APIs your software provides, and check this before proposing a solution. We also explain which AI provider would process your data and what it costs to run."
+        "q": "Is my business data safe?",
+        "a": "We agree up front what data each workflow can access, which AI provider processes it and under what terms. Actions that matter can wait for a person’s approval, and every workflow keeps a log of what it did."
       },
       {
-        "q": "Does Ostendic also develop websites?",
-        "a": "Yes. Website design and development is our second area of work: responsive, SEO-friendly business websites with a clear structure and a straightforward way to get in touch."
+        "q": "Do you build websites too?",
+        "a": "Yes. Alongside our AI work we design and build fast, mobile-first business websites that turn visitors into enquiries, and we can connect them straight to your automations."
       },
       {
         "q": "How do we get started?",
-        "a": "Tell us which tasks are taking up your team’s time, through the enquiry form or a short call. We’ll ask a few questions about the process and the tools involved, then tell you honestly whether automation makes sense and what a first step could look like."
+        "a": "Tell us which tasks are eating your team’s time, through the enquiry form or a quick call. We’ll ask a few questions, then tell you honestly whether automation makes sense and what a good first step looks like."
       }
     ]
   }
