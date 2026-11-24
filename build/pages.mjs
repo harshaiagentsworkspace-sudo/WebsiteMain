@@ -500,7 +500,7 @@ export const about = () => `
       ${aboutCopy.hero.body.map(p => `<p class="body">${esc(p)}</p>`).join('\n      ')}
       ${S.founderSig()}
     </div>
-    <figure class="about-hero__logo">${brandMark({ eager: true, nav: true })}</figure>
+    <div class="about-hero__visual">${heroScene('about')}</div>
   </div>
 </section>
 ${S.statsBar()}
@@ -525,9 +525,8 @@ ${aboutClients()}
       <p class="label">${esc(PC.about.servicesLabel)}</p>
       <div class="shead__main"><h2 class="h2">${esc(PC.about.servicesHeading)}</h2></div>
     </div>
-    <ul class="glass-grid glass-grid--${pillars.length % 2 ? 3 : 2}">
-      ${pillars.map(p => `<li><a class="glass glass--link" href="${p.path}"><span class="glass__tile">${serviceIconFor(p.slug, { size: 28 })}</span><span class="glass__pill tnum">Service ${p.n}</span><h3 class="h3">${esc(p.title)}</h3><p class="body-sm">${esc(p.summary)}</p><span class="glass__go">Learn more${ico.right}</span></a></li>`).join('')}
-    </ul>
+    <ul class="scards">${pillars.filter(p => p.slug !== 'web-development').map(p => svcCard(p)).join('')}</ul>
+    ${pillar['web-development'] ? `<ul class="scards scards--one about-web">${svcCard(pillar['web-development'], true)}</ul>` : ''}
     <div class="btn-row">${startBtn('primary')}</div>
   </div>
 </section>
@@ -623,7 +622,7 @@ export const contact = () => {
       ${tabs}
     </div>
     <aside class="contact__side" aria-label="Other ways to reach us">
-      <figure class="contact__photo">${stockImg('contact-message')}<figcaption>A few lines from your phone is plenty.</figcaption></figure>
+      <figure class="contact__photo">${stockImg('contact-message')}<figcaption>A few lines is all we need to get started.</figcaption></figure>
       <ul class="direct">${direct}</ul>
       <div class="contact__who"><p class="label">Who you’ll talk to</p>${S.founderSig()}</div>
     </aside>

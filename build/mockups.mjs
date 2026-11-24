@@ -292,9 +292,9 @@ const HOME_PHOTOS = {
   'sector-health': ['sector-health', 750, 1000, '50% 50%'], 'sector-hospitality': ['sector-hospitality', 1200, 800, '50% 40%'],
   'sector-realestate': ['sector-realestate', 1200, 804, '50% 40%'], 'sector-manufacturing': ['sector-manufacturing', 1200, 900, '50% 45%'],
   'sector-professional': ['sector-professional', 826, 1000, '50% 25%'], 'sector-scaleups': ['sector-scaleups', 1200, 676, '55% 40%'],
-  'contact-message': ['contact-message', 1200, 676, '50% 30%'],
-  'about-problem': ['about-problem', 900, 600, '50% 40%'], 'about-cost': ['about-cost', 900, 534, '45% 40%'],
-  'about-running': ['about-running', 900, 600, '45% 40%'], 'about-loop': ['about-loop', 600, 900, '50% 40%'],
+  'contact-message': ['contact-message', 1200, 800, '50% 35%'],
+  'about-problem': ['about-problem', 1200, 800, '50% 40%'], 'about-cost': ['about-cost', 1200, 800, '62% 40%'],
+  'about-running': ['about-running', 1200, 800, '50% 45%'], 'about-loop': ['about-loop', 1200, 800, '68% 40%'],
   'about-clinic': ['about-clinic', 900, 600, '50% 30%'], 'about-food': ['about-food', 900, 600, '62% 35%'],
   'home-local': ['home-local', 600, 900, '50% 45%'], 'home-growing': ['home-growing', 900, 600, '50% 45%'],
   'home-services': ['home-services', 900, 600, '50% 35%'], 'home-international': ['home-international', 1200, 900, '70% 30%'],
@@ -315,6 +315,7 @@ export const HERO_SCENES = {
   'workflow-automation': { main: 'order-chain', toasts: [['sheet', 'Sheet updated', 'Row 214 · nobody typed it']] },
   /* Web Development: no person, just the website on desktop and phone */
   'web-development': { main: 'site-desktop', device: 'site-phone', toasts: [['mail', 'New enquiry', 'Site visit request · 2 min ago'], ['search', 'Found on Google', '“4 bhk flats in baner pune”', 'ai'], ['spark', 'Loads in 1.1 s', 'On a phone']] },
+  'about': { main: 'enquiry-timeline', device: 'chat-booking', toasts: [['spark', 'Enquiry answered', 'In under a minute'], ['file', 'Invoice sent', 'Created from order #1043', 'ai'], ['mail', 'New enquiry', 'From your website']] },
   'services': { main: 'enquiry-timeline', toasts: [['calendar', 'AI agent booked a call', 'Tue 10:30 · new enquiry'], ['file', 'Invoice sent', 'Created from order #1043', 'ai']] },
   'ai-consulting': { main: 'ai-plan', toasts: [['spark', 'Opportunities found', '3 quick wins, 1 bigger project', 'ai']] },
 };

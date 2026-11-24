@@ -36,10 +36,10 @@ Web Development page and About page:
 | web-hero.webp | https://unsplash.com/photos/kgc1vAw1Tl8 |
 | web-today.webp | https://unsplash.com/photos/GEEiLxzPdGE |
 | web-after.webp | https://unsplash.com/photos/ueUYcRPXnXw |
-| about-problem.webp | https://unsplash.com/photos/N9GM1X5EU_s |
-| about-cost.webp | https://unsplash.com/photos/Qxw6i75WZ4A |
-| about-running.webp | https://unsplash.com/photos/Vr3180EBxjk |
-| about-loop.webp | https://unsplash.com/photos/nrcrU20C9Fo |
+| about-problem.webp | https://unsplash.com/photos/CO76VQZWeTw |
+| about-cost.webp | https://unsplash.com/photos/kgc1vAw1Tl8 |
+| about-running.webp | https://unsplash.com/photos/Mv4gduCPx5Q |
+| about-loop.webp | https://unsplash.com/photos/7eSLtuTYmbU |
 | about-clinic.webp | https://unsplash.com/photos/H9lg5Noj660 |
 | about-food.webp | https://unsplash.com/photos/-tJfonfU7Qc |
 
@@ -50,7 +50,7 @@ Blog and Contact:
 | blog-website.webp | https://unsplash.com/photos/flw_criwzM0 |
 | blog-visitors.webp | https://unsplash.com/photos/_IlOP4ptPlY |
 | blog-workflow.webp | https://unsplash.com/photos/TJTw4djEhGg |
-| contact-message.webp | https://unsplash.com/photos/x83XsWGsC0Q |
+| contact-message.webp | https://unsplash.com/photos/JFD4nvAn0X4 |
 
 All Services hero and the About "Who we build for" sectors:
 
@@ -70,3 +70,5 @@ Replaced 2026-11-24 with premium, established-business photos (same
 Unsplash License check): web-hero, web-today, workflow-hero, workflow-today,
 agents-today, agents-after, consulting-after; then automation-after,
 web-after, consulting-today, home-international. URLs above are the new sources.
+Also replaced 2026-11-24: about-problem, about-cost, about-running, about-loop,
+contact-message (premium photos, Unsplash License checked).

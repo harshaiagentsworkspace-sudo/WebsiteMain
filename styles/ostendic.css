@@ -2321,3 +2321,114 @@ html[data-ctab="message"] #tab-message { background: var(--ink); border-color: v
 /* "In more detail": a quiet tinted band instead of bare white */
 .section--tint { background: linear-gradient(180deg, #F3F4F1, #ECEEEA); }
 .section--tint .faq__item { background: rgba(255,255,255,.75); }
+
+/* About hero: the "what we build" scene in place of the logo */
+.about-hero:has(.about-hero__visual) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
+.about-hero__visual { grid-area: photo; min-width: 0; }
+.mk-scene--about { max-width: 560px; padding: 44px 0 56px; }
+.mk-scene--about::before { inset: 0 0 0 6%; background-image: none; border-color: rgba(255,255,255,.9);
+  background: linear-gradient(150deg, rgba(255,255,255,.72), rgba(255,255,255,.42)); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.mk-scene--about .mk-scene__main { width: 78%; max-width: 400px; margin: 0; }
+.mk-scene--about .mk-scene__device { width: 44%; max-width: 230px; right: 0; bottom: 0; }
+.mk-scene--about .mk-scene__toast--0 { right: -10px; top: 4px; }
+.mk-scene--about .mk-scene__toast--1 { left: -6px; bottom: 24px; }
+.mk-scene--about .mk-scene__toast--2 { display: none; }
+.about-web { margin-top: clamp(16px, 2vw, 24px); }
+@media (max-width: 900px) { .about-hero:has(.about-hero__visual) { grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "photo"; } }
+@media (max-width: 560px) {
+  .mk-scene--about { padding: 24px 0 64px; }
+  .mk-scene--about::before { inset: 0; }
+  .mk-scene--about .mk-scene__main { width: 92%; }
+  .mk-scene--about .mk-scene__toast--0 { right: 0; top: 0; }
+  .mk-scene--about .mk-scene__toast--1 { left: 0; bottom: 4px; }
+}
+.mk-scene--about .mk-scene__toast--0 { top: -22px; }
+
+/* ===================== PHONES =====================
+   No sliders: every card list stays a visible grid of rows and columns.
+   On phones the cards themselves get smaller (padding, type, photos,
+   icons, mockups) so two fit side by side. Applies sitewide. */
+@media (max-width: 640px) {
+  /* glass cards (home problems / solutions / who we help / why, About
+     "four things", service-page lists) */
+  .glass-grid, .glass-grid--2, .glass-grid--3, .glass-grid--4, .glass-grid--5 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .glass-grid .glass, .glass-cards .glass { padding: 14px; gap: 6px; border-radius: 18px; }
+  .glass-grid .glass--photo { padding-top: 0; }
+  .glass-grid .glass__photo { margin: 0 -14px; height: 96px; }
+  .glass-grid .glass--photo .glass-cards__top { margin-top: -20px; }
+  .glass-grid .glass__tile { width: 36px; height: 36px; border-radius: 11px; }
+  .glass-grid .glass__tile svg { width: 20px; height: 20px; }
+  .glass-grid .glass__tile + .h4 { margin-top: 6px; }
+  .glass-grid .glass__pill { font-size: 10.5px; padding: 2px 7px; }
+  .glass-grid .glass .h4, .glass-grid .glass .h3 { font-size: 14.5px; line-height: 1.25; letter-spacing: -.01em; }
+  .glass-grid .glass .body-sm { font-size: 12.5px; line-height: 1.45; }
+  .glass-grid .glass .alink { font-size: 12.5px; }
+  .glass-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* service photo cards (/services, About "What we do") */
+  .scards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .scards--one { grid-template-columns: minmax(0, 1fr) !important; }
+  .scard__in { border-radius: 18px; }
+  .scard__media { height: 104px; }
+  .scard__toast { display: none; }
+  .scard__body { padding: 12px; gap: 6px; }
+  .scard__ico { width: 32px; height: 32px; margin-top: -28px; border-radius: 10px; }
+  .scard__ico svg { width: 18px; height: 18px; }
+  .scard__body .h3 { font-size: 15px; line-height: 1.25; }
+  .scard__body .body { font-size: 12.5px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .scard__chips { display: none; }
+  .scard__go { font-size: 12.5px; gap: 4px; }
+  .scard--wide .scard__in { grid-template-columns: 40% minmax(0, 1fr); }
+  .scard--wide .scard__media { min-height: 0; height: auto; }
+  .scard--wide .scard__ico { margin-top: 0; }
+
+  /* service-page cards with a mockup on top: the mockup scaled down */
+  .vcards, .vcards--4, .vcards--8 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .vcard { border-radius: 18px; }
+  .vcard__stage { min-height: 0; height: 150px; padding: 10px; overflow: hidden; }
+  .vcard__stage > * { zoom: .55; max-width: 330px; }
+  .vcard__t { padding: 10px 12px 12px; gap: 4px; }
+  .vcard__t .h4 { font-size: 14.5px; line-height: 1.25; }
+  .vcard__t .body-sm { font-size: 12.5px; line-height: 1.45; }
+  .vcards > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* related services, related work, demo builds */
+  .related { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .related__link { padding: 14px; gap: 8px; border-radius: 18px; }
+  .related__ico svg { width: 22px; height: 22px; }
+  .related__t .h4 { font-size: 14.5px; }
+  .related__t .body-sm { font-size: 12.5px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .related > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .mini-work { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .mini-work a, .mini-work a.glass { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 10px; border-radius: 16px; }
+  .mini-work__t strong { font-size: 14px; } .mini-work__t .body-sm { font-size: 12px; }
+  .demos__list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 18px 10px !important; }
+  .demo { gap: 6px; } .demo .h4 { font-size: 14.5px; } .demo .body-sm { font-size: 12.5px; }
+  .demos__list > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* paired info boxes: one column, they were too narrow side by side */
+  .facts--panel:not(.facts--case), .facts--panel { grid-template-columns: minmax(0, 1fr) !important; }
+  .facts--panel > div { grid-column: auto !important; }
+
+  /* comfortable tap targets (44px) */
+  .ftr a, .ftr__cols a { display: inline-flex; align-items: center; min-height: 44px; }
+  .alink { min-height: 44px; }
+  .post__toc a { display: inline-block; padding: 9px 0; }
+  .post__back { display: inline-flex; align-items: center; min-height: 44px; }
+  .faq__item summary, .post__faq summary { min-height: 52px; }
+  .form__note a { display: inline-block; padding: 12px 4px; margin: -12px -4px; }
+  .demo h4 a, .demos__list h4 a { display: inline-block; padding: 8px 0; }
+  .glass__pill { font-size: 11px; }
+
+  /* mockup scenes: keep the text readable at phone width */
+  .mk-scene .mk-site__nav span:not(.mk-site__btn) { display: none; }
+  .mk-scene .mk-site__hero { grid-template-columns: minmax(0, 1fr); }
+  .mk-scene .mk-site__img { display: none; }
+  .mk-scene .mk-site__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mk-scene .mk-site__row > :nth-child(3) { display: none; }
+  .mk-scene--web-development .mk-scene__main { width: 64%; }
+  .mk-scene--web-development .mk-scene__device { width: 46%; }
+  .mk-scene--about { margin-top: 28px; }
+  .mk-scene--about .mk-scene__device { display: none; }
+  .mk-scene--about .mk-scene__main { width: 100%; }
+}
