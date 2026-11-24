@@ -203,63 +203,64 @@ export const MOCKS = {
   'team-guide': () => win('Guide · Using the enquiry assistant', `<ol class="mk-ol"><li>Check drafts in the <b>Review</b> tab</li><li>Approve, or edit and send</li><li>Flag anything odd with one click</li></ol>
     <div class="mk-foot">${i('user')} 20-minute team walkthrough</div>`),
 
-  /* ---------- websites (Web Development page): a made-up gift shop ---------- */
-  'site-desktop': () => `<div class="mk mk-win mk-browser"><div class="mk__bar"><span class="mk__dots"><i></i><i></i><i></i></span><span class="mk-url">${i('shield')}riyasgiftcorner.in</span></div>
+  /* ---------- websites (Web Development page): a made-up premium real
+     estate developer (and a premium D2C label for the store card) ---------- */
+  'site-desktop': () => `<div class="mk mk-win mk-browser"><div class="mk__bar"><span class="mk__dots"><i></i><i></i><i></i></span><span class="mk-url">${i('shield')}aranyaestates.in</span></div>
     <div class="mk-site">
-      <div class="mk-site__nav"><b>Riya’s <em>Gift Corner</em></b><span>Hampers</span><span>Corporate</span><span>About</span><span class="mk-site__btn">Order now</span></div>
-      <div class="mk-site__hero"><div><small>Same-day delivery in Pune</small><h4>Gifts for every occasion, wrapped with care.</h4>
-        <div class="mk-btns"><span class="mk-btn mk-btn--pri">Shop hampers</span><span class="mk-btn">${i('chat')} WhatsApp us</span></div></div>
-        <div class="mk-site__img"><span class="mk-gift"></span></div></div>
-      <div class="mk-site__row">${['Diwali hampers', 'Birthday boxes', 'Corporate gifts'].map((t, k) => `<span class="mk-site__tile mk-site__tile--${k}"><i></i>${t}</span>`).join('')}</div>
+      <div class="mk-site__nav"><b>Aranya <em>Estates</em></b><span>Projects</span><span>Amenities</span><span>About</span><span class="mk-site__btn">Book a visit</span></div>
+      <div class="mk-site__hero"><div><small>3 &amp; 4 BHK residences · Baner, Pune</small><h4>Homes designed around the way you live.</h4>
+        <div class="mk-btns"><span class="mk-btn mk-btn--pri">Book a site visit</span><span class="mk-btn">${i('chat')} WhatsApp us</span></div></div>
+        <div class="mk-site__img"><img src="/media/stock/sector-realestate.webp" alt="" width="1200" height="804" loading="lazy" decoding="async"></div></div>
+      <div class="mk-site__row">${['Floor plans', 'Amenities', 'Price list'].map((t, k) => `<span class="mk-site__tile mk-site__tile--${k}"><i></i>${t}</span>`).join('')}</div>
     </div></div>`,
 
-  'site-old': () => `<div class="mk mk-win mk-browser mk-old"><div class="mk__bar"><span class="mk__dots"><i></i><i></i><i></i></span><span class="mk-url mk-url--bad">${i('x')}riyasgiftcorner.com/index.html</span></div>
+  'site-old': () => `<div class="mk mk-win mk-browser mk-old"><div class="mk__bar"><span class="mk__dots"><i></i><i></i><i></i></span><span class="mk-url mk-url--bad">${i('x')}aranyaestates.com/index.html</span></div>
     <div class="mk-old__body">
-      <div class="mk-old__marquee">★ WELCOME TO OUR WEBSITE ★ BEST GIFTS IN TOWN ★</div>
-      <p class="mk-old__h">Riya Gift Corner</p>
-      <p class="mk-old__p">We are leading gift shop since 2009. We are dealing in all types of gifts items, hampers, soft toys, show pieces etc. For more details please visit our shop.</p>
+      <div class="mk-old__marquee">★ WELCOME TO OUR WEBSITE ★ NEW LAUNCH ★ BOOK NOW ★</div>
+      <p class="mk-old__h">Aranya Estates</p>
+      <p class="mk-old__p">We are leading builders since 2009. We are dealing in all types of residential and commercial projects, flats, plots etc. For more details please visit our site office.</p>
       <div class="mk-old__cols"><span class="mk-old__img">${i('x')}</span><span class="mk-old__links"><u>Home</u> | <u>Products</u> | <u>Gallery</u> | <u>Contact</u></span></div>
       <div class="mk-old__uc">🚧 Page under construction 🚧</div>
       <p class="mk-old__p">Visitors: 004213 · Best viewed in 1024×768</p>
     </div></div>`,
 
-  'site-phone': () => `<div class="mk mk-phone mk-mob"><div class="mk-mob__top"><b>Riya’s <em>Gift Corner</em></b><span class="mk-mob__menu"><i></i><i></i><i></i></span></div>
-    <div class="mk-mob__img"><span class="mk-gift"></span></div>
-    <div class="mk-mob__body"><h4>Gifts for every occasion.</h4><p>Hampers delivered the same day across Pune.</p>
-      <span class="mk-btn mk-btn--pri mk-btn--block">Shop hampers</span>
+  'site-phone': () => `<div class="mk mk-phone mk-mob"><div class="mk-mob__top"><b>Aranya <em>Estates</em></b><span class="mk-mob__menu"><i></i><i></i><i></i></span></div>
+    <div class="mk-mob__img"><img src="/media/stock/sector-realestate.webp" alt="" width="1200" height="804" loading="lazy" decoding="async"></div>
+    <div class="mk-mob__body"><h4>Homes designed around you.</h4><p>3 &amp; 4 BHK residences in Baner, Pune.</p>
+      <span class="mk-btn mk-btn--pri mk-btn--block">Book a site visit</span>
       <div class="mk-mob__row">${[0, 1, 2].map(k => `<span class="mk-site__tile mk-site__tile--${k}"><i></i></span>`).join('')}</div></div>
     <div class="mk-mob__bar"><span>${i('phone')} Call</span><span class="mk-mob__wa">${i('chat')} WhatsApp</span></div></div>`,
 
-  'site-form': () => card(`<b class="mk-h">Ask about a custom hamper</b>
+  'site-form': () => card(`<b class="mk-h">Book a private site visit</b>
     <div class="mk-input"><span>Name</span>Ananya Kulkarni</div><div class="mk-input"><span>Phone</span>98•• ••• 412</div>
-    <div class="mk-input mk-input--area"><span>What do you need?</span>40 hampers for our office, by Friday</div>
+    <div class="mk-input mk-input--area"><span>What are you looking for?</span>4 BHK, visit this Saturday morning</div>
     <span class="mk-btn mk-btn--pri mk-btn--block">Send enquiry</span>
-    <div class="mk-foot">${i('check')} Thanks! We’ll reply within the hour.</div>`),
+    <div class="mk-foot">${i('check')} Thanks! Our team will call you within the hour.</div>`),
 
-  'landing-page': () => `<div class="mk mk-phone mk-mob mk-lp"><div class="mk-mob__body">${chip('Diwali 2026', 'warn')}<h4>Corporate gift hampers, delivered to every desk.</h4>
-    <ul class="mk-steps">${step('done', 'Your logo on every box')}${step('done', 'From 20 to 2,000 hampers')}${step('done', 'Delivered across India')}</ul>
-    <span class="mk-btn mk-btn--pri mk-btn--block">Get a quote in 1 hour</span></div></div>`,
+  'landing-page': () => `<div class="mk mk-phone mk-mob mk-lp"><div class="mk-mob__body">${chip('New launch', 'warn')}<h4>Sky villas in Baner. Only 24 residences.</h4>
+    <ul class="mk-steps">${step('done', 'Private terrace with every home')}${step('done', 'Clubhouse, pool and gym')}${step('done', 'RERA registered')}</ul>
+    <span class="mk-btn mk-btn--pri mk-btn--block">Get the price list</span></div></div>`,
 
-  'shop-product': () => card(`<div class="mk-prod__img"><span class="mk-gift mk-gift--sm"></span>${chip('Bestseller', 'ok')}</div>
-    <div class="mk-person"><span><b>Brass diya gift set</b><small>Hand-polished · gift wrapped</small></span><b class="mk-price">₹1,299</b></div>
+  'shop-product': () => card(`<div class="mk-prod__img mk-prod__img--silk">${chip('New season', 'ok')}</div>
+    <div class="mk-person"><span><b>Kanjivaram silk saree</b><small>Handwoven · pure zari</small></span><b class="mk-price">₹28,900</b></div>
     <div class="mk-btns"><span class="mk-btn mk-btn--pri">Add to cart</span><span class="mk-btn">Buy now</span><span class="mk-cart">${i('check')} Cart (2)</span></div>`),
 
-  'cms-edit': () => win('Edit page · Home', `<div class="mk-cms"><div class="mk-cms__page"><small>Heading</small><span class="mk-cms__edit">Gifts for every occasion<i class="mk-caret"></i></span>
-      <small>Offer banner</small><span class="mk-cms__field">Free wrapping this week</span></div>
+  'cms-edit': () => win('Edit page · Home', `<div class="mk-cms"><div class="mk-cms__page"><small>Heading</small><span class="mk-cms__edit">Homes designed around you<i class="mk-caret"></i></span>
+      <small>Offer banner</small><span class="mk-cms__field">Site visits open this weekend</span></div>
       <div class="mk-cms__side"><span class="mk-btn mk-btn--pri">Publish</span><span class="mk-btn">Preview</span></div></div>
     <div class="mk-foot">${i('check')} Updated by you. No developer needed.</div>`, { right: chip('Draft saved', 'ok') }),
 
   'web-app': () => win('Bookings · Today', `${[
-      ['10:00', 'Ananya K.', 'Hamper pickup', ['Confirmed', 'ok']],
-      ['11:30', 'Rohit S.', 'Custom order call', ['New', 'ai']],
-      ['14:00', 'Meera P.', 'Corporate quote', ['Confirmed', 'ok']],
-      ['16:15', 'Vikram J.', 'Delivery slot', ['Rescheduled', '']],
+      ['10:00', 'Ananya K.', 'Site visit · 4 BHK', ['Confirmed', 'ok']],
+      ['11:30', 'Rohit S.', 'Price list call', ['New', 'ai']],
+      ['14:00', 'Meera P.', 'Sample flat tour', ['Confirmed', 'ok']],
+      ['16:15', 'Vikram J.', 'Home loan meeting', ['Rescheduled', '']],
     ].map(([t, n, w, [s, k]]) => `<div class="mk-row"><span class="mk-time">${t}</span><span class="mk-row__t"><b>${n}</b><small>${w}</small></span>${chip(s, k)}</div>`).join('')}`, { right: chip('4 today', '') }),
 
-  'search-result': () => card(`<div class="mk-search">${i('search')}gift hampers in Pune</div>
-    <div class="mk-serp"><small>riyasgiftcorner.in › hampers</small><b>Gift Hampers in Pune · Same-Day Delivery | Riya’s Gift Corner</b>
-      <p>Diwali, birthday and corporate hampers, wrapped by hand and delivered across Pune the same day. Order online or on WhatsApp.</p>
-      <div class="mk-tags">${chip('Diwali hampers')}${chip('Corporate gifts')}${chip('Contact')}</div></div>
+  'search-result': () => card(`<div class="mk-search">${i('search')}4 bhk flats in baner pune</div>
+    <div class="mk-serp"><small>aranyaestates.in › residences</small><b>3 &amp; 4 BHK Flats in Baner, Pune · Book a Site Visit | Aranya Estates</b>
+      <p>RERA-registered 3 and 4 BHK residences with private terraces, a clubhouse and pool. See floor plans and book a visit online.</p>
+      <div class="mk-tags">${chip('Floor plans')}${chip('Price list')}${chip('Book a visit')}</div></div>
     <div class="mk-foot">${i('check')} Mobile-friendly · loads in 1.1 s</div>`),
 };
 export const MOCK_IDS = Object.keys(MOCKS);
@@ -274,14 +275,14 @@ const STOCK = {
   'ai-automation': {
     hero: ['automation-hero', 1400, 788, '30% 35%'], before: ['automation-today', 1400, 788, '45% 28%'], after: ['automation-after', 1400, 788, '50% 30%'] },
   'ai-agent-development': {
-    hero: ['agents-hero', 1400, 934, '12% 30%'], before: ['agents-today', 1400, 930, '35% 28%'], after: ['agents-after', 826, 1100, '72% 42%'] },
+    hero: ['agents-hero', 1400, 934, '12% 30%'], before: ['agents-today', 1200, 800, '62% 35%'], after: ['agents-after', 1200, 800, '50% 55%'] },
   'workflow-automation': {
-    hero: ['workflow-hero', 1200, 796, '48% 55%'], before: ['workflow-today', 734, 1100, '50% 28%'], after: ['workflow-after', 1400, 788, '25% 32%'] },
+    hero: ['workflow-hero', 1200, 800, '42% 45%'], before: ['workflow-today', 1200, 800, '78% 40%'], after: ['workflow-after', 1400, 788, '25% 32%'] },
   'web-development': {
-    hero: ['web-hero', 1200, 842, '28% 30%'], before: ['web-today', 900, 676, '50% 30%'], after: ['web-after', 720, 900, '50% 48%'] },
+    hero: ['web-hero', 1200, 800, '78% 40%'], before: ['web-today', 1200, 900, '40% 45%'], after: ['web-after', 720, 900, '50% 48%'] },
   'services': { hero: ['services-hero', 1200, 800, '74% 40%'] },
   'ai-consulting': {
-    hero: ['consulting-hero', 1200, 654, '72% 45%'], before: ['consulting-today', 1400, 934, '50% 35%'], after: ['consulting-after', 826, 1100, '50% 62%'] },
+    hero: ['consulting-hero', 1200, 654, '72% 45%'], before: ['consulting-today', 1400, 934, '50% 35%'], after: ['consulting-after', 1200, 676, '55% 40%'] },
 };
 const photo = ([f, w, h, pos], eager = false) => `<img src="/media/stock/${f}.webp" alt="" width="${w}" height="${h}" style="object-position:${pos}" decoding="async"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>`;
 /* any stock photo by file name (homepage cards): sizes and crops from STOCK,

@@ -11,14 +11,14 @@ service page: hero, "Today" (before) and "After".
 | automation-today.webp | https://unsplash.com/photos/jJCmXQajQWI |
 | automation-after.webp | https://unsplash.com/photos/jsf4Sq26Syg |
 | agents-hero.webp | https://unsplash.com/photos/3NtMpcAkwQc |
-| agents-today.webp | https://unsplash.com/photos/YZj4IAmNEMA |
-| agents-after.webp | https://unsplash.com/photos/LkV4zv2ybJM |
-| workflow-hero.webp | https://unsplash.com/photos/0NTl61e9fTk |
-| workflow-today.webp | https://unsplash.com/photos/hDb2CmhQ5jc |
+| agents-today.webp | https://unsplash.com/photos/RcPx_WTQyrM |
+| agents-after.webp | https://unsplash.com/photos/FQ470_Ofjjo |
+| workflow-hero.webp | https://unsplash.com/photos/KwhErXpzTNQ |
+| workflow-today.webp | https://unsplash.com/photos/YJKStOsMx50 |
 | workflow-after.webp | https://unsplash.com/photos/cA9yfugUDZ4 |
 | consulting-hero.webp | https://unsplash.com/photos/_zxvCsGzi8Y |
 | consulting-today.webp | https://unsplash.com/photos/9LwA7kToz9g |
-| consulting-after.webp | https://unsplash.com/photos/qMnPOToyQ4c |
+| consulting-after.webp | https://unsplash.com/photos/cW4lLTavU80 |
 
 Homepage ("Who we help" cards; the problem cards reuse the "Today" photos above):
 
@@ -33,8 +33,8 @@ Web Development page and About page:
 
 | File | Unsplash photo |
 |---|---|
-| web-hero.webp | https://unsplash.com/photos/dQ_wawhNzT4 |
-| web-today.webp | https://unsplash.com/photos/ChlmPNBVhsg |
+| web-hero.webp | https://unsplash.com/photos/kgc1vAw1Tl8 |
+| web-today.webp | https://unsplash.com/photos/GEEiLxzPdGE |
 | web-after.webp | https://unsplash.com/photos/3wacD2E3b-I |
 | about-problem.webp | https://unsplash.com/photos/N9GM1X5EU_s |
 | about-cost.webp | https://unsplash.com/photos/Qxw6i75WZ4A |
@@ -65,3 +65,7 @@ All Services hero and the About "Who we build for" sectors:
 | sector-scaleups.webp | https://unsplash.com/photos/cW4lLTavU80 |
 
 og-blog-*.jpg are 1200×630 JPG crops of the blog covers, for link previews.
+
+Replaced 2026-11-24 with premium, established-business photos (same
+Unsplash License check): web-hero, web-today, workflow-hero, workflow-today,
+agents-today, agents-after, consulting-after. URLs above are the new sources.
