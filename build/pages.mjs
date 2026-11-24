@@ -532,7 +532,9 @@ export const contact = () => {
       ${tabs}
     </div>
     <aside class="contact__side" aria-label="Other ways to reach us">
+      <figure class="contact__photo">${stockImg('contact-message')}<figcaption>A few lines from your phone is plenty.</figcaption></figure>
       <ul class="direct">${direct}</ul>
+      <div class="contact__who"><p class="label">Who you’ll talk to</p>${S.founderSig()}</div>
     </aside>
   </div>
 </section>

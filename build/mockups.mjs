@@ -286,6 +286,7 @@ const photo = ([f, w, h, pos], eager = false) => `<img src="/media/stock/${f}.we
 /* any stock photo by file name (homepage cards): sizes and crops from STOCK,
    plus the photos used only on the homepage */
 const HOME_PHOTOS = {
+  'contact-message': ['contact-message', 1200, 676, '50% 30%'],
   'about-problem': ['about-problem', 900, 600, '50% 40%'], 'about-cost': ['about-cost', 900, 534, '45% 40%'],
   'about-running': ['about-running', 900, 600, '45% 40%'], 'about-loop': ['about-loop', 600, 900, '50% 40%'],
   'about-clinic': ['about-clinic', 900, 600, '50% 30%'], 'about-food': ['about-food', 900, 600, '62% 35%'],

@@ -175,14 +175,19 @@ export const budgets = settings.form.budgets;
 export const interests = settings.form.interests;
 
 /* ---------- NAV ---------- */
-/* AI first, web development last. Workflow Automation sits under AI
-   Automation. Every entry is a plain <a href>, so all are crawlable. Work
-   and Blog are linked from the footer (Blog is placeholder posts for now). */
+/* One "AI Services" menu holds the four AI pages (each with a one-line
+   description in the dropdown); Web Development stays on its own, as the
+   secondary service. Every entry is a plain <a href>, so all are
+   crawlable. Children: [label, href, description, service slug]. */
 export const nav = [
-  ['AI Automation', '/services/ai-automation', [['AI Automation', '/services/ai-automation'], ['Workflow Automation', '/services/workflow-automation']]],
-  ['AI Agents', '/services/ai-agent-development'],
-  ['AI Consulting', '/services/ai-consulting'],
+  ['AI Services', '/services', [
+    ['AI Automation', '/services/ai-automation', 'Enquiries, follow-ups and data entry, handled', 'ai-automation'],
+    ['Workflow Automation', '/services/workflow-automation', 'Your tools connected, repeat steps automated', 'workflow-automation'],
+    ['AI Agents', '/services/ai-agent-development', 'Agents that answer, call and act for you', 'ai-agent-development'],
+    ['AI Consulting', '/services/ai-consulting', 'Find where AI fits, with a clear plan', 'ai-consulting'],
+  ]],
   ['Web Development', '/services/web-development'],
+  ['Blog', '/blog'],
   ['About', '/about'],
   ['Contact', '/contact'],
 ];

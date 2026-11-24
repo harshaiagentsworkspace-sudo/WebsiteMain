@@ -42,3 +42,12 @@ Web Development page and About page:
 | about-loop.webp | https://unsplash.com/photos/nrcrU20C9Fo |
 | about-clinic.webp | https://unsplash.com/photos/H9lg5Noj660 |
 | about-food.webp | https://unsplash.com/photos/-tJfonfU7Qc |
+
+Blog and Contact:
+
+| File | Unsplash photo |
+|---|---|
+| blog-website.webp | https://unsplash.com/photos/flw_criwzM0 |
+| blog-visitors.webp | https://unsplash.com/photos/_IlOP4ptPlY |
+| blog-workflow.webp | https://unsplash.com/photos/TJTw4djEhGg |
+| contact-message.webp | https://unsplash.com/photos/x83XsWGsC0Q |

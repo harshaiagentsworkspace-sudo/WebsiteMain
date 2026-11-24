@@ -1,3 +1,19 @@
 {
-  "items": {}
+  "items": {
+    "media/stock/blog-website.webp": {
+      "alt": "A shop owner in front of his store, talking on his phone",
+      "w": 1200,
+      "h": 800
+    },
+    "media/stock/blog-visitors.webp": {
+      "alt": "A woman frowning at her phone",
+      "w": 1200,
+      "h": 800
+    },
+    "media/stock/blog-workflow.webp": {
+      "alt": "A woman taking notes at her laptop",
+      "w": 1200,
+      "h": 800
+    }
+  }
 }

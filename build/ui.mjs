@@ -131,15 +131,21 @@ export const brandMark = ({ eager = false, nav = false } = {}) => {
 };
 
 /* ---------- header ----------
-   Services opens a two-item menu on hover and keyboard focus (CSS only);
-   the parent stays a real link to /services. */
+   "AI Services" opens a menu of the four AI pages on hover and keyboard
+   focus (CSS only): icon, name and one line each, plus a link to the
+   overview. The parent stays a real link to /services, and is marked
+   current only on one of its own pages (not on Web Development). */
 const isCurrent = (current, h) => current === h || (h !== '/' && current.startsWith(h + '/'));
 const navItem = (current) => ([l, h, kids]) => {
-  const link = `<a href="${h}"${isCurrent(current, h) ? ' aria-current="page"' : ''}>${esc(l)}${kids ? `<span class="nav__caret">${ico.caret}</span>` : ''}</a>`;
+  const here = kids ? current === h || kids.some(([, kh]) => isCurrent(current, kh)) : isCurrent(current, h);
+  const link = `<a href="${h}"${here ? ' aria-current="page"' : ''}>${esc(l)}${kids ? `<span class="nav__caret">${ico.caret}</span>` : ''}</a>`;
   if (!kids) return link;
   return `<div class="nav__dd">${link}
         <div class="nav__menu">
-          ${kids.map(([kl, kh]) => `<a href="${kh}"${current === kh ? ' aria-current="page"' : ''}>${esc(kl)}</a>`).join('')}
+          ${kids.map(([kl, kh, kd, ks]) => `<a class="nav__item" href="${kh}"${isCurrent(current, kh) ? ' aria-current="page"' : ''}>
+            ${ks ? `<span class="nav__ico">${serviceIconFor(ks, { size: 20 })}</span>` : ''}
+            <span class="nav__txt"><b>${esc(kl)}</b>${kd ? `<small>${esc(kd)}</small>` : ''}</span></a>`).join('')}
+          <a class="nav__all" href="${h}">See all services${ico.arrow}</a>
         </div>
       </div>`;
 };
